@@ -23,6 +23,7 @@ import {
 import { WebSocketClient } from './WebSocketClient';
 import { Player, Recorder } from './Audio';
 import { BASE_ENDPOINT } from '@/config';
+import AudioInteractiveAnimation from './AudioInteractiveAnimation';
 
 interface Message {
   id: string;
@@ -163,22 +164,26 @@ useEffect(() => {
   );
 
   // Continuously read from WebSocket
+  const [audioData, setAudioData] = useState<Int16Array | null>(null);
+
   const receiveLoop = useCallback(async () => {
     const player = await initAudioPlayer();
     if (!webSocketClient.current) return;
-
+  
     for await (const message of webSocketClient.current) {
-      if (message.type === 'text') {
+      if (message.type === "text") {
         const data = JSON.parse(message.data) as WSMessage;
         await handleWSMessage(data);
-      } else if (message.type === 'binary' && player) {
-        // This is raw PCM in your code, but we’re just using Player’s .play() method
-        // that currently plays a placeholder .mp3. For real streaming PCM, you’d need
-        // to implement a proper approach to decode/play raw data.
-        player.play(new Int16Array(message.data));
+      } else if (message.type === "binary") {
+        const buffer = new Int16Array(message.data);
+        setAudioData(buffer); // Pass audio data to the animation
+        if (player) {
+          player.play(buffer); // Play the audio
+        }
       }
     }
   }, [handleWSMessage, initAudioPlayer]);
+  
 
   const handleConnect = async () => {
     if (isConnected) {
@@ -277,12 +282,17 @@ useEffect(() => {
       setValidEndpoint(false);
     }
   };
+  
 
   // ----- Render -----
   return (
     <View style={styles.container}>
    
+   <View style={styles.topHalf}>
+  <AudioInteractiveAnimation audioData={audioData} />
+</View>
 
+      <View style={styles.bottomHalf}>
       {/* Main chat area */}
       <View style={styles.chatArea}>
         {/* Messages list */}
@@ -343,6 +353,7 @@ useEffect(() => {
           </TouchableOpacity>
         </View>
       </View>
+      </View>
     </View>
   );
 }
@@ -351,8 +362,14 @@ useEffect(() => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row', // On mobile, might want column or wrap
     backgroundColor: '#fff',
+  },
+  topHalf: {
+    flex: 1,
+  },
+  bottomHalf: {
+    flex: 1,
+    backgroundColor: "#FFF",
   },
   sidebar: {
     width: 250,
