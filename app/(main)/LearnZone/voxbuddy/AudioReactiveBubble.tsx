@@ -70,21 +70,21 @@ const styles: { [key: string]: any } = StyleSheet.create({
     width: 200,
     height: 200,
     borderRadius: 100,
-    backgroundColor: "#44555d",
+    backgroundColor: "#acd4d5",
   },
   circle1: {
-    backgroundColor: "#648899",
+    backgroundColor: "#9ac3bb",
   },
   circle2: {
-    backgroundColor: "#557788",
+    backgroundColor: "#82bec1",
   },
   circle3: {
-    backgroundColor: "#446677",
+    backgroundColor: "#59a9ac",
   },
   circle4: {
-    backgroundColor: "#335566",
+    backgroundColor: "#2f9397",
   },
   circle5: {
-    backgroundColor: "#224455",
+    backgroundColor: "#03767a",
   },
 });
