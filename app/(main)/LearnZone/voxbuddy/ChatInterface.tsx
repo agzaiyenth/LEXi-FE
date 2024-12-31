@@ -41,6 +41,7 @@ interface WSMessage {
   greeting?: string;
 }
 
+
 /**
  * We centralize Audio logic in a custom hook to mimic your original approach.
  */
@@ -106,6 +107,12 @@ export default function ChatInterface() {
       scrollViewRef.current?.scrollToEnd({ animated: true });
     }, 200);
   }, [messages]);
+// Automatically connect to the default endpoint on page load
+useEffect(() => {
+  if (!isConnected) {
+    handleConnect();
+  }
+}, []);
 
   const handleWSMessage = useCallback(
     async (message: WSMessage) => {
@@ -274,36 +281,7 @@ export default function ChatInterface() {
   // ----- Render -----
   return (
     <View style={styles.container}>
-      {/* Sidebar-like container: in mobile, we’ll just stack vertically */}
-      <View style={styles.sidebar}>
-        {/* Simple "Accordion" replacement: we just show/hide an input */}
-        <Text style={styles.sectionTitle}>Middle Tier Endpoint</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Endpoint"
-          value={endpoint}
-          onChangeText={validateEndpoint}
-          editable={!isConnected}
-        />
-
-        <TouchableOpacity
-          style={[
-            styles.connectButton,
-            isConnected ? styles.disconnectButton : null,
-          ]}
-          onPress={handleConnect}
-          disabled={isConnecting || !validEndpoint}
-        >
-          {/* <Icon name="power" size={18} color="#fff" style={{ marginRight: 4 }} /> */}
-          <Text style={styles.connectButtonText}>
-            {isConnecting
-              ? 'Connecting...'
-              : isConnected
-              ? 'Disconnect'
-              : 'Connect'}
-          </Text>
-        </TouchableOpacity>
-      </View>
+   
 
       {/* Main chat area */}
       <View style={styles.chatArea}>
