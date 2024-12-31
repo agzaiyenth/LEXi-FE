@@ -1,3 +1,4 @@
+// app/(main)/_layout.tsx
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Redirect } from 'expo-router';
 import React from 'react';
@@ -10,9 +11,6 @@ import LearnScreen from './LearnZone';
 import PlayScreen from './PlaySpace';
 import ExploreScreen from './Explore';
 import AccountScreen from './Account';
-
-// Import screens from (main) folder
-
 
 // Create a Bottom Tab Navigator
 const Tab = createBottomTabNavigator();
