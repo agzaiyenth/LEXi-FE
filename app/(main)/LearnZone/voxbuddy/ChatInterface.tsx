@@ -23,7 +23,8 @@ import {
 import { WebSocketClient } from './WebSocketClient';
 import { Player, Recorder } from './Audio';
 import { BASE_ENDPOINT } from '@/config';
-import AudioInteractiveAnimation from './AudioInteractiveAnimation';
+import AudioReactiveBubble from './AudioReactiveBubble';
+// import AudioInteractiveAnimation from './AudioInteractiveAnimation';
 
 interface Message {
   id: string;
@@ -288,10 +289,13 @@ useEffect(() => {
   return (
     <View style={styles.container}>
    
-   <View style={styles.topHalf}>
+   {/* <View style={styles.topHalf}>
   <AudioInteractiveAnimation audioData={audioData} />
-</View>
-
+</View> */}
+ <View style={styles.topHalf}>
+        {/* Render the bubble that reacts to the audio volume */}
+        <AudioReactiveBubble audioData={audioData} />
+      </View>
       <View style={styles.bottomHalf}>
       {/* Main chat area */}
       <View style={styles.chatArea}>
