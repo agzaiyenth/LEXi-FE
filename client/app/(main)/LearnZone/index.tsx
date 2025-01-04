@@ -1,18 +1,19 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { useRouter } from 'expo-router'; // If using expo-router, or use your navigation method
+import { Link, useRouter } from 'expo-router'; // If using expo-router, or use your navigation method
 import React from 'react';
 import theme from '../../../src/theme';
 
-const LearnScreen = () => {
-  const router = useRouter(); // Create router instance for navigation
+//Temporary LearnZone component to navigate to SmartReadUploadScreen
 
+const LearnScreen = () => {
+  const router = useRouter(); 
   const navigateToSmartReadUpload = () => {
     router.push('/(main)/LearnZone/SmartRead/uploadScreen'); // Navigate to SmartReadUploadScreen
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>LearnScreen</Text>
+      <Text style={styles.title}>LearnZone</Text>
 
       {/* Button to navigate to SmartRead Upload */}
       <TouchableOpacity style={styles.button} onPress={navigateToSmartReadUpload}>
@@ -21,6 +22,7 @@ const LearnScreen = () => {
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
