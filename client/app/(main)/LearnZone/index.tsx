@@ -1,13 +1,15 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { Link, useRouter } from 'expo-router'; // If using expo-router, or use your navigation method
+import { Link, useRouter } from 'expo-router'; 
 import React from 'react';
 import theme from '../../../src/theme';
+import UploadScreen from './SmartRead/uploadScreen';
 
 //Temporary LearnZone component to navigate to SmartReadUploadScreen
 
 const LearnScreen = () => {
   const router = useRouter(); 
   const navigateToSmartReadUpload = () => {
+    console.log('Navigating to SmartRead');
     router.push('/(main)/LearnZone/SmartRead/uploadScreen'); // Navigate to SmartReadUploadScreen
   };
 
@@ -30,18 +32,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: theme.spacing.large,
-    backgroundColor: theme.colors.background.offWhite, // Use off-white background
+    backgroundColor: theme.colors.background.offWhite, 
   },
   title: {
     fontSize: theme.fonts.sizes.large,
     fontWeight: 'bold',
-    color: theme.colors.blacks.medium, // Dark text for title
+    color: theme.colors.blacks.medium, 
   },
   button: {
     marginTop: theme.spacing.large,
     paddingVertical: theme.spacing.medium,
     paddingHorizontal: theme.spacing.extraLarge,
-    backgroundColor: theme.colors.primary.medium, // Use medium shade of primary color
+    backgroundColor: theme.colors.primary.medium, 
     borderRadius: 25,
     alignItems: 'center',
   },
