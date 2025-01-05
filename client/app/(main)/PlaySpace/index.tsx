@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity, Pressable } from 'react-native';
+import { View, Text, Image, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../../AppNavigator'; 
+import theme from '../../../src/theme';
 
 interface Game {
   id: string;
@@ -11,7 +11,7 @@ interface Game {
 }
 
 const PlayScreen: React.FC = () => {
-  const navigation =  useNavigation<NavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const games: Game[] = [
     {
@@ -87,49 +87,49 @@ const PlayScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#CCE5E1', 
-    paddingTop: 20,
-    minHeight: '100%', 
+    backgroundColor: theme.colors.primary.light,
+    paddingTop: theme.spacing.large,
+    minHeight: '100%',
   },
   header: {
-    fontSize: 24,
+    fontSize: theme.fonts.sizes.large,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 20,
-    color: '#003D35',
+    marginBottom: theme.spacing.medium,
+    color: theme.colors.primary.dark1,
   },
   flatListContainer: {
-    paddingHorizontal: 10,
+    paddingHorizontal: theme.spacing.medium,
   },
   card: {
-    backgroundColor: '#F9F9F9',
-    borderRadius: 12,
-    padding: 10,
-    margin: 10,
+    backgroundColor: theme.colors.primary.light2,
+    borderRadius: theme.spacing.small,
+    padding: theme.spacing.medium,
+    margin: theme.spacing.small,
     flex: 1,
     alignItems: 'center',
-    shadowColor: '#000',
+    shadowColor: theme.colors.blacks.dark,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     height: 200, 
     width: 150, 
-    shadowRadius: 4,
+    shadowRadius: theme.spacing.small / 2,
     elevation: 2,
   },
   cardImage: {
     width: 120,
     height: 125,
-    borderRadius: 8,
+    borderRadius: theme.spacing.small,
   },
   cardTitle: {
-    fontSize: 14,
+    fontSize: theme.fonts.sizes.small,
     fontWeight: 'bold',
-    color: '#003D35',
-    marginTop: 8,
+    color: theme.colors.primary.dark1,
+    marginTop: theme.spacing.small,
   },
   cardTheory: {
     fontSize: 12,
-    color: '#6C8A81',
+    color: theme.colors.primary.medium,
   },
 });
 
