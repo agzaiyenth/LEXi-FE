@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 
+
 const LearnScreen = () => {
   return (
     <View style={styles.wrapper}>
