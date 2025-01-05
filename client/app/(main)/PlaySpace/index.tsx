@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity, Pressable } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import PopTheBalloonGame from './PopBalloon';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '../../AppNavigator'; 
 
 interface Game {
   id: string;
@@ -11,7 +11,7 @@ interface Game {
 }
 
 const PlayScreen: React.FC = () => {
-  const navigation = useNavigation();
+  const navigation =  useNavigation<NavigationProp<RootStackParamList>>();
 
   const games: Game[] = [
     {
