@@ -10,6 +10,7 @@ import LearnScreen from './LearnZone';
 import PlayScreen from './PlaySpace';
 import ExploreScreen from './Explore';
 import AccountScreen from './Account';
+import QuestionnaireScreen from './Detection-System';
 
 // Import screens from (main) folder
 
@@ -40,6 +41,7 @@ export default function AppLayout() {
       <Tab.Screen name="PlaySpace" component={PlayScreen} options={{ title: 'Play' }} />
       <Tab.Screen name="Explore+" component={ExploreScreen} options={{ title: 'Explore' }} />
       <Tab.Screen name="Account" component={AccountScreen} options={{ title: 'Account' }} />
+      <Tab.Screen name="Question" component={QuestionnaireScreen} options={{ title: 'Question' }} />
     </Tab.Navigator>
   );
 }
@@ -77,6 +79,8 @@ const CustomTabBar = ({ state, descriptors, navigation }: any) => {
               return 'public';
             case 'Account':
               return 'account-circle';
+            case 'Question':
+              return 'camera';
             default:
               return 'home';
           }

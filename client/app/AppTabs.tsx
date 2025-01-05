@@ -65,7 +65,7 @@ const CustomTabBar = ({ state, descriptors, navigation }:any) => {
             case 'Account':
               return 'account-circle';
             case 'Detection':
-                return 'detection';
+                return 'camera';
             default:
               return 'home';
           }
