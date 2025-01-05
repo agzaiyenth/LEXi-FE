@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity, Pressable } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import PopTheBalloonGame from './PopBalloon';
 
 interface Game {
   id: string;
@@ -9,56 +11,64 @@ interface Game {
 }
 
 const PlayScreen: React.FC = () => {
+  const navigation = useNavigation();
+
   const games: Game[] = [
     {
       id: '1',
       title: 'Pop The Balloon',
       theory: 'Phonological Deficit',
-      image:  require('@/assets/images/games/ballon.png'), 
+      image: require('@/assets/images/games/ballon.png'),
     },
     {
       id: '2',
       title: 'Game Name',
       theory: 'Therapy Theory',
-      image: 'https://via.placeholder.com/150', 
+      image: 'https://via.placeholder.com/150',
     },
     {
       id: '3',
       title: 'Game Name',
       theory: 'Therapy Theory',
-      image: 'https://via.placeholder.com/150', 
+      image: 'https://via.placeholder.com/150',
     },
     {
       id: '4',
       title: 'Game Name',
       theory: 'Therapy Theory',
-      image: 'https://via.placeholder.com/150', 
+      image: 'https://via.placeholder.com/150',
     },
     {
       id: '5',
       title: 'Game Name',
       theory: 'Therapy Theory',
-      image: 'https://via.placeholder.com/150', 
+      image: 'https://via.placeholder.com/150',
     },
     {
       id: '6',
       title: 'Game Name',
       theory: 'Therapy Theory',
-      image: 'https://via.placeholder.com/150', 
+      image: 'https://via.placeholder.com/150',
     },
   ];
 
   const renderGameCard = ({ item }: { item: Game }) => (
-    <TouchableOpacity style={styles.card}>
-      <Image 
-        source={typeof item.image === 'string' ? { uri: item.image } : item.image} 
-        style={styles.cardImage} 
+    <TouchableOpacity
+      style={styles.card}
+      onPress={() => {
+        if (item.id === '1') {
+          navigation.navigate('PopTheBalloonGame');
+        }
+      }}
+    >
+      <Image
+        source={typeof item.image === 'string' ? { uri: item.image } : item.image}
+        style={styles.cardImage}
       />
       <Text style={styles.cardTitle}>{item.title}</Text>
       <Text style={styles.cardTheory}>{item.theory}</Text>
     </TouchableOpacity>
   );
-  
 
   return (
     <View style={styles.container}>
@@ -70,15 +80,16 @@ const PlayScreen: React.FC = () => {
         numColumns={2}
         contentContainerStyle={styles.flatListContainer}
       />
-      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1.2,
+    flex: 1,
     backgroundColor: '#CCE5E1', 
     paddingTop: 20,
+    minHeight: '100%', 
   },
   header: {
     fontSize: 24,
@@ -100,8 +111,8 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-    height: 200,
-    width: 150,
+    height: 200, 
+    width: 150, 
     shadowRadius: 4,
     elevation: 2,
   },
