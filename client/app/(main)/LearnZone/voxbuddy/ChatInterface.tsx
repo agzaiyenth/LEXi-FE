@@ -23,8 +23,10 @@ import {
 import { WebSocketClient } from './WebSocketClient';
 import { Player, Recorder } from './Audio';
 import { BASE_ENDPOINT } from '@/config';
+
 import AudioInteractiveAnimation from './AudioInteractiveAnimation';
 import theme from '@/src/theme';
+
 
 interface Message {
   id: string;
@@ -288,6 +290,7 @@ useEffect(() => {
   // ----- Render -----
   return (
     <View style={styles.container}>
+
    
    <View style={styles.topHalf}>
    <View >

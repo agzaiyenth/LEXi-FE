@@ -1,11 +1,16 @@
 // app/(main)/LearnZone/index.tsx
+/*
+This is the main index stack for the LearnZone .
+It contains stack screens for the LearnZone .
+*/
+
 import React from 'react';
 import VoxBuddy from './VoxBuddy'; 
 import LearnMainScreen from './LearnMainScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 
 export type LearnZoneParamList = {
-  LearnMain: undefined; // No parameters for the main screen
+  LearnMain: undefined; 
   VoxBuddy: undefined; // No parameters for VoxBuddy
 };
 
