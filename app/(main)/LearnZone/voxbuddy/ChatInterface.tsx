@@ -24,6 +24,7 @@ import { WebSocketClient } from './WebSocketClient';
 import { Player, Recorder } from './Audio';
 import { BASE_ENDPOINT } from '@/config';
 import AudioInteractiveAnimation from './AudioInteractiveAnimation';
+import theme from '@/src/theme';
 
 interface Message {
   id: string;
@@ -289,6 +290,9 @@ useEffect(() => {
     <View style={styles.container}>
    
    <View style={styles.topHalf}>
+   <View >
+  <Text style={styles.sectionTitle}>VoxBuddy</Text> 
+    </View>
   <AudioInteractiveAnimation audioData={audioData} />
 </View>
 
@@ -362,48 +366,37 @@ useEffect(() => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.primary.light2,
   },
   topHalf: {
-    flex: 1,
+    flex: 3,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 26,
   },
   bottomHalf: {
-    flex: 1,
-    backgroundColor: "#FFF",
-  },
-  sidebar: {
-    width: 250,
-    backgroundColor: '#f9f9f9',
-    padding: 16,
-    borderRightWidth: 1,
-    borderColor: '#ccc',
+    flex: 5,
+    backgroundColor: theme.colors.secondary.light2,
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
   },
   sectionTitle: {
-    fontSize: 16,
+    fontSize: 26,
     fontWeight: '600',
     marginBottom: 8,
+    color: theme.colors.blacks.medium
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: theme.colors.background.offWhite,
     paddingHorizontal: 8,
     paddingVertical: 6,
     marginBottom: 16,
     borderRadius: 4,
   },
-  connectButton: {
-    flexDirection: 'row',
-    backgroundColor: '#0a84ff',
-    padding: 12,
-    borderRadius: 4,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  disconnectButton: {
-    backgroundColor: '#ff3b30',
-  },
+
   connectButtonText: {
-    color: '#fff',
+    color: theme.colors.background.offWhite,
     fontSize: 14,
   },
   chatArea: {
@@ -421,13 +414,15 @@ const styles = StyleSheet.create({
   },
   userBubble: {
     alignSelf: 'flex-end',
-    backgroundColor: '#dbeafe', // light blue
+    backgroundColor: theme.colors.primary.dark3, // light blue
     maxWidth: '80%',
+    color:theme.colors.background.offWhite
   },
   assistantBubble: {
     alignSelf: 'flex-start',
-    backgroundColor: '#e5e7eb', // light gray
+    backgroundColor: theme.colors.primary.medium2, // light gray
     maxWidth: '80%',
+    color:theme.colors.background.offWhite
   },
   statusBubble: {
     alignSelf: 'center',
