@@ -1,3 +1,4 @@
+
 // app/(main)/LearnZone/LearnMainScreen.tsx
 /* 
 This is the main screen for the LearnZone . 
@@ -20,6 +21,7 @@ const LearnMainScreen = () => {
       <Text style={styles.title}>Welcome to LearnZone</Text>
       <Button
         title="Go to Vox Buddy"
+
         onPress={() => navigation.navigate('VoxBuddy')} 
       />
       <Button

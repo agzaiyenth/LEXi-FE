@@ -1,5 +1,5 @@
 // theme.ts
- export  const theme = {
+export  const theme = {
   colors: {
     primary: {
       dark1: '#264653',  // Darkest shade

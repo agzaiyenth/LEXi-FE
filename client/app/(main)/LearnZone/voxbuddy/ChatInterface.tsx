@@ -23,9 +23,10 @@ import {
 import { WebSocketClient } from './WebSocketClient';
 import { Player, Recorder } from './Audio';
 import { BASE_ENDPOINT } from '@/config';
-import AudioReactiveBubble from './AudioReactiveBubble';
+
+import AudioInteractiveAnimation from './AudioInteractiveAnimation';
 import theme from '@/src/theme';
-// import AudioInteractiveAnimation from './AudioInteractiveAnimation';
+
 
 interface Message {
   id: string;
@@ -289,15 +290,15 @@ useEffect(() => {
   // ----- Render -----
   return (
     <View style={styles.container}>
-  
- <View style={styles.topHalf}>
-  <View >
+
+   
+   <View style={styles.topHalf}>
+   <View >
   <Text style={styles.sectionTitle}>VoxBuddy</Text> 
     </View>
- 
-        {/* Render the bubble that reacts to the audio volume */}
-        <AudioReactiveBubble audioData={audioData} />
-      </View>
+  <AudioInteractiveAnimation audioData={audioData} />
+</View>
+
       <View style={styles.bottomHalf}>
       {/* Main chat area */}
       <View style={styles.chatArea}>
