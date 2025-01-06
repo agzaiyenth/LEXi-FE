@@ -25,8 +25,8 @@ const LearnMainScreen = () => {
         onPress={() => navigation.navigate('VoxBuddy')} 
       />
       <Button
-        title="Go to Smarty read"
-        onPress={() => navigation.navigate('VoxBuddy')}   // @AmandaHanz update this navigation
+        title="Go to Smart read"
+        onPress={() => navigation.navigate('SmartRead')}   // @AmandaHanz update this navigation
       />
       <Button
         title="Go to read with me"
