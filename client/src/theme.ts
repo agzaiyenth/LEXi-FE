@@ -1,5 +1,7 @@
 // theme.ts
- export  const theme = {
+
+export  const theme = {
+  
   colors: {
     primary: {
       dark1: '#264653',  // Darkest shade
@@ -33,8 +35,8 @@
     },
   },
   fonts: {
-    regular: 'System',
-    bold: 'System',
+    regular: 'MyFont',
+    bold: 'MyFont',
     sizes: {
       small: 16,
       medium: 20,

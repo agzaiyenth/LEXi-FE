@@ -3,7 +3,7 @@ import { useRouter } from 'expo-router';
 import React from 'react';
 import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import theme from '../../src/theme';
-
+import GlobalStyles from '../../src/globalFont';
 const { width: screenWidth } = Dimensions.get('window'); // Get the screen width
 
 export default function LandingScreen() {
@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   text: {
+    fontFamily: theme.fonts.regular,
     fontSize: theme.fonts.sizes.medium,
     fontWeight: 'bold',
     color: theme.colors.background.beige,
