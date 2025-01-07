@@ -21,7 +21,7 @@ const UploadScreen = () => {
             style={styles.uploadIcon}
             resizeMode="contain"
           />
-          <Text style={styles.fileTypesText}>JPEG, PNG, PDF, and WORD formats, up to 50MB</Text>
+          <Text style={styles.fileTypesText}> PDF, and WORD formats, up to 50MB</Text>
           <TouchableOpacity style={styles.browseButton}>
             <Text style={styles.browseButtonText}>BROWSE FILES</Text>
           </TouchableOpacity>
@@ -77,7 +77,7 @@ const UploadScreen = () => {
     fileTypesText: {
       textAlign: 'center',
       fontSize: theme.fonts.sizes.small,
-      color: theme.colors.background.dark,
+      color: theme.colors.primary.dark2,
       marginBottom: theme.spacing.large,
     },
     browseButton: {
@@ -100,7 +100,7 @@ const UploadScreen = () => {
     footerText: {
       fontSize: theme.fonts.sizes.small,
       fontWeight: '500',
-      color: theme.colors.background.dark,
+      color: theme.colors.primary.dark1,
       marginBottom: theme.spacing.small,
     },
     mascotIcon: {

@@ -29,6 +29,7 @@ const LearnZone = () => {
       <Stack.Screen name="VoxBuddy" component={VoxBuddy} />
       <Stack.Screen name="SmartRead" component={SmartRead} />
 
+
     </Stack.Navigator>
   );
 };
