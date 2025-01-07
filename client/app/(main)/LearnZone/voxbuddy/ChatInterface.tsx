@@ -23,10 +23,9 @@ import {
 import { WebSocketClient } from './WebSocketClient';
 import { Player, Recorder } from './Audio';
 import { BASE_ENDPOINT } from '@/config';
-
-import AudioInteractiveAnimation from './AudioInteractiveAnimation';
+import AudioReactiveVisualizer from './AudioReactiveVisualizer';
 import theme from '@/src/theme';
-import AudioReactiveVisualizer from './AudioReactiveBubble';
+
 
 
 interface Message {
@@ -285,7 +284,7 @@ const disconnect = async () => {
    <View >
   <Text style={styles.sectionTitle}>VoxBuddy</Text> 
     </View>
-  {/* <AudioInteractiveAnimation audioData={audioData} /> */}
+
   <AudioReactiveVisualizer audioData={audioData}/>
 </View>
 
