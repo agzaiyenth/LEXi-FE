@@ -190,47 +190,44 @@ useEffect(() => {
 
   const handleConnect = async () => {
     if (isConnected) {
-      // Disconnect
-      await disconnect();
-    } else {
-      const statusMessageId = `status-${Date.now()}`;
-      const connectingMsg: Message = {
+        await disconnect(); // Ensure proper cleanup
+    }
+    
+    const statusMessageId = `status-${Date.now()}`;
+    const connectingMsg: Message = {
         id: statusMessageId,
         type: 'status',
         content: 'Connecting...',
-      };
-      currentConnectingMessage.current = connectingMsg;
+    };
+    currentConnectingMessage.current = connectingMsg;
 
-      // Clear old messages
-      messageMap.current.clear();
-      messageMap.current.set(statusMessageId, connectingMsg);
-      setMessages(Array.from(messageMap.current.values()));
+    messageMap.current.clear();
+    messageMap.current.set(statusMessageId, connectingMsg);
+    setMessages(Array.from(messageMap.current.values()));
 
-      setIsConnecting(true);
-      try {
+    setIsConnecting(true);
+    try {
         webSocketClient.current = new WebSocketClient(new URL(endpoint));
         setIsConnected(true);
-        receiveLoop();
-      } catch (error) {
+        receiveLoop(); // Start receiving messages on the new connection
+    } catch (error) {
         console.error('Connection failed:', error);
-      } finally {
+    } finally {
         setIsConnecting(false);
-      }
     }
-  };
+};
 
-  const disconnect = async () => {
-    setIsConnected(false);
-    if (isRecording) {
-      await toggleRecording();
-    }
-    audioRecorderRef.current?.stop();
-    await audioPlayerRef.current?.clear();
-    await webSocketClient.current?.close();
-    webSocketClient.current = null;
-    messageMap.current.clear();
-    setMessages([]);
-  };
+
+const disconnect = async () => {
+  if (webSocketClient.current) {
+      await webSocketClient.current.close();
+      webSocketClient.current = null; // Clear the client reference
+  }
+  setIsConnected(false);
+  setMessages([]);
+};
+
+
 
   const sendMessage = async () => {
     if (currentMessage.trim() && webSocketClient.current) {
@@ -276,16 +273,7 @@ useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const validateEndpoint = (url: string) => {
-    setEndpoint(url);
-    try {
-      new URL(url);
-      setValidEndpoint(true);
-    } catch {
-      setValidEndpoint(false);
-    }
-  };
-  
+
 
   // ----- Render -----
   return (
