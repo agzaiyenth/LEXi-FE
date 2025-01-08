@@ -25,6 +25,7 @@ import { Player, Recorder } from './Audio';
 import { BASE_ENDPOINT } from '@/config';
 import AudioReactiveVisualizer from './AudioReactiveVisualizer';
 import theme from '@/src/theme';
+import { Entypo, Ionicons, MaterialIcons } from "@expo/vector-icons";
 
 
 
@@ -332,20 +333,17 @@ const disconnect = async () => {
             onPress={toggleRecording}
             disabled={!isConnected}
           >
-            {/* <Icon
-              name={isRecording ? 'microphone' : 'microphone-off'}
-              size={20}
-              color="#000"
-            /> */}
-            <Text>{isRecording ? '⏹' : '🎙'}</Text>
+           
+            {isRecording ? <Entypo name="controller-stop" size={20} color="#fef8ea" /> : <Ionicons name="mic" size={20} color="#fef8ea" />}
+      
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.iconButton}
             onPress={sendMessage}
             disabled={!isConnected}
           >
-            <Text>✅</Text>
-            {/* <Icon name="send" size={20} color="#000" /> */}
+            
+            <MaterialIcons name="send" size={20} color="#fef8ea" />
           </TouchableOpacity>
         </View>
       </View>
@@ -433,18 +431,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ccc',
     paddingHorizontal: 8,
-    borderRadius: 4,
+    borderRadius: 9,
     marginRight: 8,
     height: 40,
   },
   iconButton: {
-    paddingHorizontal: 12,
+    paddingHorizontal: 8,
     paddingVertical: 8,
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 4,
+    borderColor: '#9ac3bb',
+    borderRadius: 20,
     marginRight: 6,
-    backgroundColor: '#fff',
+    backgroundColor: '#9ac3bb',
   },
   recordingButton: {
     backgroundColor: '#fee2e2', // light red
