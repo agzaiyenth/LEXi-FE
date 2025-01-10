@@ -31,11 +31,11 @@ import { Entypo, Ionicons, MaterialIcons } from "@expo/vector-icons";
 
 interface Message {
   id: string;
-  type: 'user' | 'assistant' | 'status';
+  type: 'user' | 'assistant';
   content: string;
 }
 
-type WSControlAction = 'speech_started' | 'connected' | 'text_done';
+type WSControlAction = 'speech_started' | 'connected' | 'text_done' | 'status';
 
 interface WSMessage {
   id?: string;
@@ -88,14 +88,11 @@ const useAudioHandlers = () => {
 };
 
 export default function ChatInterface() {
-  const [endpoint, setEndpoint] = useState(`ws://${BASE_ENDPOINT}/realtime`);
+  const [endpoint] = useState(`ws://${BASE_ENDPOINT}/realtime`);
   const [messages, setMessages] = useState<Message[]>([]);
   const [currentMessage, setCurrentMessage] = useState('');
   const [isRecording, setIsRecording] = useState(false);
-  const [isConnected, setIsConnected] = useState(false);
-  const [isConnecting, setIsConnecting] = useState(false);
-  const [validEndpoint, setValidEndpoint] = useState(true);
-
+  const [connectionState, setConnectionState] = useState<'connecting' | 'connected' | 'disconnected'>('connecting');
   const webSocketClient = useRef<WebSocketClient | null>(null);
   const messageMap = useRef(new Map<string, Message>());
   const currentConnectingMessage = useRef<Message>();
@@ -107,65 +104,71 @@ export default function ChatInterface() {
 
   // Scroll to bottom every time messages change
   useEffect(() => {
-    // Wait a tick to ensure layout is done
     setTimeout(() => {
       scrollViewRef.current?.scrollToEnd({ animated: true });
     }, 200);
   }, [messages]);
-// Automatically connect to the default endpoint on page load
-useEffect(() => {
-  if (!isConnected) {
-    handleConnect();
-  }
-}, []);
 
+  // Automatically connect to the default endpoint on page load
+  useEffect(() => {
+    if (connectionState !== 'connected') {
+      handleConnect();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (connectionState === 'disconnected') {
+        const reconnectTimeout = setTimeout(() => {
+            handleConnect();
+        }, 5000); 
+        return () => clearTimeout(reconnectTimeout); 
+    }
+}, [connectionState]);
+
+  // Clean up on unmount
+  useEffect(() => {
+    return () => {
+      disconnect();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const handleWSMessage = useCallback(
     async (message: WSMessage) => {
-      switch (message.type) {
-        case 'transcription':
-          if (message.id && currentUserMessage.current) {
+        if (message.type === 'control') {
+            if (message.action === 'status') {
+                setConnectionState(message.greeting === 'connected' ? 'connected' : 'disconnected');
+            } else if (message.action === 'speech_started') {
+                audioPlayerRef.current?.clear();
+                const contrivedId = 'userMessage' + Math.random();
+                currentUserMessage.current = {
+                    id: contrivedId,
+                    type: 'user',
+                    content: '...',
+                };
+                messageMap.current.set(contrivedId, currentUserMessage.current);
+                setMessages(Array.from(messageMap.current.values()));
+            }
+        } else if (message.type === 'transcription' && message.id && currentUserMessage.current) {
             currentUserMessage.current.content = message.text || '';
             setMessages(Array.from(messageMap.current.values()));
-          }
-          break;
-        case 'text_delta':
-          if (message.id) {
+        } else if (message.type === 'text_delta' && message.id) {
             const existingMessage = messageMap.current.get(message.id);
             if (existingMessage) {
-              existingMessage.content += message.delta || '';
+                existingMessage.content += message.delta || '';
             } else {
-              const newMessage: Message = {
-                id: message.id,
-                type: 'assistant',
-                content: message.delta || '',
-              };
-              messageMap.current.set(message.id, newMessage);
+                const newMessage: Message = {
+                    id: message.id,
+                    type: 'assistant',
+                    content: message.delta || '',
+                };
+                messageMap.current.set(message.id, newMessage);
             }
             setMessages(Array.from(messageMap.current.values()));
-          }
-          break;
-        case 'control':
-          if (message.action === 'connected' && message.greeting) {
-            if (currentConnectingMessage.current) {
-              currentConnectingMessage.current.content = message.greeting;
-              setMessages(Array.from(messageMap.current.values()));
-            }
-          } else if (message.action === 'speech_started') {
-            audioPlayerRef.current?.clear();
-            const contrivedId = 'userMessage' + Math.random();
-            currentUserMessage.current = {
-              id: contrivedId,
-              type: 'user',
-              content: '...',
-            };
-            messageMap.current.set(contrivedId, currentUserMessage.current);
-            setMessages(Array.from(messageMap.current.values()));
-          }
-          break;
-      }
+        }
     },
     [audioPlayerRef, setMessages]
-  );
+);
+
 
   // Continuously read from WebSocket
   const [audioData, setAudioData] = useState<Int16Array | null>(null);
@@ -173,7 +176,7 @@ useEffect(() => {
   const receiveLoop = useCallback(async () => {
     const player = await initAudioPlayer();
     if (!webSocketClient.current) return;
-  
+
     for await (const message of webSocketClient.current) {
       if (message.type === "text") {
         const data = JSON.parse(message.data) as WSMessage;
@@ -187,48 +190,38 @@ useEffect(() => {
       }
     }
   }, [handleWSMessage, initAudioPlayer]);
-  
+
 
   const handleConnect = async () => {
-    if (isConnected) {
-        await disconnect(); // Ensure proper cleanup
+    if (connectionState !== 'disconnected') {
+      await disconnect(); // Ensure proper cleanup
     }
-    
+
+    setConnectionState('connecting');
     const statusMessageId = `status-${Date.now()}`;
-    const connectingMsg: Message = {
-        id: statusMessageId,
-        type: 'status',
-        content: 'Connecting...',
-    };
-    currentConnectingMessage.current = connectingMsg;
+    
+   
 
     messageMap.current.clear();
-    messageMap.current.set(statusMessageId, connectingMsg);
     setMessages(Array.from(messageMap.current.values()));
 
-    setIsConnecting(true);
     try {
-        webSocketClient.current = new WebSocketClient(new URL(endpoint));
-        setIsConnected(true);
-        receiveLoop(); // Start receiving messages on the new connection
+      webSocketClient.current = new WebSocketClient(new URL(endpoint));
+      setConnectionState('connected');
+      receiveLoop(); // Start receiving messages on the new connection
     } catch (error) {
-        console.error('Connection failed:', error);
-    } finally {
-        setIsConnecting(false);
+      console.error('Connection failed:', error);
+      setConnectionState('disconnected');
     }
-};
+  };
 
-
-const disconnect = async () => {
-  if (webSocketClient.current) {
+  const disconnect = async () => {
+    if (webSocketClient.current) {
       await webSocketClient.current.close();
       webSocketClient.current = null; // Clear the client reference
-  }
-  setIsConnected(false);
-  setMessages([]);
-};
-
-
+    }
+    setConnectionState('disconnected');
+  };
 
   const sendMessage = async () => {
     if (currentMessage.trim() && webSocketClient.current) {
@@ -266,13 +259,6 @@ const disconnect = async () => {
     }
   };
 
-  // Clean up on unmount
-  useEffect(() => {
-    return () => {
-      disconnect();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
 
 
@@ -280,79 +266,100 @@ const disconnect = async () => {
   return (
     <View style={styles.container}>
 
-   
-   <View style={styles.topHalf}>
-   <View >
-  <Text style={styles.sectionTitle}>VoxBuddy</Text> 
-    </View>
 
-  <AudioReactiveVisualizer audioData={audioData}/>
-</View>
+      <View style={styles.topHalf}>
+        <View >
+          <Text style={styles.sectionTitle}>VoxBuddy</Text>
+        </View>
+
+        <AudioReactiveVisualizer audioData={audioData} />
+      </View>
 
       <View style={styles.bottomHalf}>
-      {/* Main chat area */}
-      <View style={styles.chatArea}>
-        {/* Messages list */}
-        <ScrollView
-          style={styles.messagesContainer}
-          ref={scrollViewRef}
-          onContentSizeChange={() =>
-            scrollViewRef.current?.scrollToEnd({ animated: true })
-          }
-        >
-          {messages.map((msg) => (
-            <View
-              key={msg.id}
-              style={[
-                styles.messageBubble,
-                msg.type === 'user'
-                  ? styles.userBubble
-                  : msg.type === 'assistant'
-                  ? styles.assistantBubble
-                  : styles.statusBubble,
-              ]}
-            >
-              <Text>{msg.content}</Text>
-            </View>
-          ))}
-        </ScrollView>
+        {/* Main chat area */}
+        <View style={styles.chatArea}>
+        <Text style={styles.connectionStatus}>
+    {connectionState === 'connecting' && 'Connecting to VoxBuddy...'}
+    {connectionState === 'connected' && 'Connected to VoxBuddy'}
+    {connectionState === 'disconnected' && 'Disconnected. Retrying...'}
+</Text>
 
-        {/* Input area */}
-        <View style={styles.inputRow}>
-          <TextInput
-            style={styles.messageInput}
-            value={currentMessage}
-            onChangeText={(t) => setCurrentMessage(t)}
-            placeholder="Type your message..."
-            editable={isConnected}
-            // in RN, use onSubmitEditing or a "Send" button
-            onSubmitEditing={sendMessage}
-          />
-          <TouchableOpacity
-            style={[styles.iconButton, isRecording && styles.recordingButton]}
-            onPress={toggleRecording}
-            disabled={!isConnected}
+
+          {/* Messages list */}
+          <ScrollView
+            style={styles.messagesContainer}
+            ref={scrollViewRef}
+            onContentSizeChange={() =>
+              scrollViewRef.current?.scrollToEnd({ animated: true })
+            }
           >
-           
-            {isRecording ? <Entypo name="controller-stop" size={20} color="#fef8ea" /> : <Ionicons name="mic" size={20} color="#fef8ea" />}
-      
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.iconButton}
-            onPress={sendMessage}
-            disabled={!isConnected}
-          >
-            
-            <MaterialIcons name="send" size={20} color="#fef8ea" />
-          </TouchableOpacity>
+            {messages.map((msg) => (
+              <View
+                key={msg.id}
+                style={[
+                  styles.messageBubble,
+                  msg.type === 'user'
+                    ? styles.userBubble
+                    : msg.type === 'assistant'
+                      ? styles.assistantBubble
+                      : styles.statusBubble,
+                ]}
+              >
+                <Text>{msg.content}</Text>
+              </View>
+            ))}
+          </ScrollView>
+
+          {/* Input area */}
+          <View style={styles.inputRow}>
+            <TextInput
+              style={[
+                styles.messageInput,
+                connectionState !== 'connected' && styles.disabledInput,
+              ]}
+              value={currentMessage}
+              onChangeText={(t) => setCurrentMessage(t)}
+              placeholder="Type your message..."
+              editable={connectionState === 'connected'}
+              // in RN, use onSubmitEditing or a "Send" button
+              onSubmitEditing={sendMessage}
+            />
+            <TouchableOpacity
+              style={[
+                styles.iconButton,
+                (isRecording || connectionState !== 'connected') && styles.disabledButton,
+              ]}
+              onPress={toggleRecording}
+              // disabled={!isConnected}
+              disabled  //disabled temperory due to the issue with audio 
+            >
+
+              {isRecording ? (
+                <Entypo name="controller-stop" size={20} color="#fef8ea" />
+              ) : (
+                <Ionicons name="mic" size={20} color="#fef8ea" />
+              )}
+            </TouchableOpacity>
+
+            <TouchableOpacity
+             style={[
+        styles.iconButton,
+        connectionState !== 'connected' && styles.disabledButton, // Add disabled style
+    ]}
+              onPress={sendMessage}
+              disabled={connectionState !== 'connected'}
+            >
+
+              <MaterialIcons name="send" size={20} color="#fef8ea" />
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
       </View>
     </View>
   );
 }
 
-// ----- Basic Styles -----
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -384,11 +391,11 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     borderRadius: 4,
   },
+  connectionStatus: {
+    textAlign: 'center',
+    marginVertical: 8,
+},
 
-  connectButtonText: {
-    color: theme.colors.background.offWhite,
-    fontSize: 14,
-  },
   chatArea: {
     flex: 1,
     flexDirection: 'column',
@@ -406,13 +413,13 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     backgroundColor: theme.colors.primary.dark3, // light blue
     maxWidth: '80%',
-    color:theme.colors.background.offWhite
+    color: theme.colors.background.offWhite
   },
   assistantBubble: {
     alignSelf: 'flex-start',
     backgroundColor: theme.colors.primary.medium2, // light gray
     maxWidth: '80%',
-    color:theme.colors.background.offWhite
+    color: theme.colors.background.offWhite
   },
   statusBubble: {
     alignSelf: 'center',
@@ -447,4 +454,12 @@ const styles = StyleSheet.create({
   recordingButton: {
     backgroundColor: '#fee2e2', // light red
   },
+  disabledInput: {
+    backgroundColor: '#e0e0e0', // Light gray
+    borderColor: '#bdbdbd', // Gray border
+},
+disabledButton: {
+    backgroundColor: '#f5f5f5', // Light gray
+    borderColor: '#bdbdbd', // Gray border
+},
 });
