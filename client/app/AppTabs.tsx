@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
 import HomeScreen from './(main)';
 import LearnScreen from './(main)/LearnZone';
-import PlayScreen from './(main)/PlaySpace';
+import PlayScreen from './(main)/PlaySpace/LandingPageGames';
 import ExploreScreen from './(main)/Explore';
 import AccountScreen from './(main)/Account';
 import theme from '../src/theme';

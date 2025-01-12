@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import PlayScreen from './(main)/PlaySpace';
+import PlayScreen from './(main)/PlaySpace/LandingPageGames';
 import PopTheBalloonGame from './(main)/PlaySpace/PopBalloon';
 
 const Stack = createStackNavigator();

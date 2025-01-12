@@ -7,7 +7,7 @@ import { useSession } from '../../src/ctx';
 import theme from '../../src/theme';
 import HomeScreen from '.';
 import LearnScreen from './LearnZone';
-import PlayScreen from './PlaySpace';
+import PlayScreen from './PlaySpace/LandingPageGames';
 import ExploreScreen from './Explore';
 import AccountScreen from './Account';
 
