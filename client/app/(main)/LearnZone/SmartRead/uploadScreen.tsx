@@ -37,20 +37,22 @@ const UploadScreen = () => {
             type: ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'], // PDF & Word
         });
 
-        if ((result as DocumentPicker.DocumentPickerSuccessResult).type === 'success') {
+        if (!result.canceled && result.assets?.length > 0) {
 
-          const successResult = result as DocumentPicker.DocumentPickerSuccessResult;
+          const fileData = result.assets[0];
+          
+          const fileSize = fileData.size || 0;
 
-            if (successResult.size > 50 * 1024 * 1024) {
+            if (fileSize > 50 * 1024 * 1024) {
                 Alert.alert('File Too Large', 'Please upload a file smaller than 50MB.');
             } else {
-                setFileName(successResult.name);
+                setFileName(fileData.name);
                 setUploadState('uploading');
 
                 const file = {
-                  uri: successResult.uri,
-                  name: successResult.name,
-                  mimeType: successResult.mimeType || 'application/octet-stream', // Fallback mimeType if missing
+                  uri: fileData.uri,
+                  name: fileData.name,
+                  mimeType: fileData.mimeType || 'application/octet-stream', // Fallback mimeType if missing
               };
 
                 uploadDocument(file);
