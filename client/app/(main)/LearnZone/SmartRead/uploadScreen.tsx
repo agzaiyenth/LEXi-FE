@@ -1,17 +1,118 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, ActivityIndicator } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, ActivityIndicator, Alert,  } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import theme from '../../../../src/theme';
+import * as DocumentPicker from 'expo-document-picker';
+
+
+import axios from 'axios';
 
 const { width: screenWidth } = Dimensions.get('window');
+
+
+
+interface File{
+  uri: string;
+  name: string;
+  mimeType:string;
+}
+
 
 const UploadScreen = () => {
 
 
   const [uploadState, setUploadState] = useState('idle');
   const [fileName,setFileName] = useState('');
+  const [extractedContent, setExtractedContent] = useState('');
+  const [isProcessing, setIsProcessing] = useState(false);
 
-    return (
+
+  const API_BASE_URL = "http://<your-backend-url>/api/documents";
+
+
+  
+  const pickDocument = async () => {
+    try {
+        const result = await DocumentPicker.getDocumentAsync({
+            type: ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'], // PDF & Word
+        });
+
+        if ((result as DocumentPicker.DocumentPickerSuccessResult).type === 'success') {
+
+          const successResult = result as DocumentPicker.DocumentPickerSuccessResult;
+
+            if (successResult.size > 50 * 1024 * 1024) {
+                Alert.alert('File Too Large', 'Please upload a file smaller than 50MB.');
+            } else {
+                setFileName(successResult.name);
+                setUploadState('uploading');
+
+                const file = {
+                  uri: successResult.uri,
+                  name: successResult.name,
+                  mimeType: successResult.mimeType || 'application/octet-stream', // Fallback mimeType if missing
+              };
+
+                uploadDocument(file);
+            }
+        }
+    } catch (err) {
+        console.error('Error picking file:', err);
+        Alert.alert('Error', 'An error occurred while picking the file. Please try again.');
+    }
+  };
+
+  const uploadDocument = async (file: File) : Promise<void>  => {
+    const formData = new FormData();
+
+
+    formData.append('file', {
+        uri: file.uri,
+        name: file.name,
+        type: file.mimeType,
+    } as any);
+
+    try {
+        const response = await axios.post(`${API_BASE_URL}/upload`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+
+        Alert.alert('Success', response.data);
+        setUploadState('ready');
+        processDocument(file.name); // Proceed to process after upload
+    } catch (error) {
+        console.error('Upload error:', error);
+        Alert.alert('Upload Failed', 'Could not upload the file. Please try again.');
+        setUploadState('idle');
+    }
+  };
+
+  
+
+
+
+  const processDocument = async (uploadedFileName: string) => {
+    setIsProcessing(true);
+    try {
+        const response = await axios.get(`${API_BASE_URL}/process`, {
+            params: { fileName: uploadedFileName },
+        });
+
+        setExtractedContent(response.data);
+        setUploadState('processing');
+    } catch (error) {
+        console.error('Processing error:', error);
+        Alert.alert('Processing Failed', 'Could not process the document. Please try again.');
+    } finally {
+        setIsProcessing(false);
+    }
+  };
+
+
+
+  return (
       <SafeAreaView style={styles.container}>
         {/* Header */}
         <View style={styles.headerContainer}>
@@ -31,7 +132,12 @@ const UploadScreen = () => {
                 accessibilityLabel='Upload Icon'
               />
               <Text style={styles.fileTypesText}> PDF, and WORD formats, up to 50MB</Text>
-              <TouchableOpacity style={styles.browseButton}>
+              <TouchableOpacity 
+                style={styles.browseButton}
+                onPress={pickDocument} 
+                accessible 
+                accessibilityLabel="Browse files to upload"
+              >
                 <Text style={styles.browseButtonText}>BROWSE FILES</Text>
               </TouchableOpacity>
             </>
@@ -46,13 +152,20 @@ const UploadScreen = () => {
             </>
           )}
 
-          {uploadState === 'ready' && (
+          {uploadState === 'ready' && isProcessing && (
             <>
               <Text style={styles.successText}>
                "{fileName}" is ready for summarization!
               </Text>
             </>        
           )}
+
+          {uploadState === 'processing' && (
+                    <>
+                        <Text style={styles.successText}>File processed successfully!</Text>
+                        <Text style={styles.extractedContent}>{extractedContent}</Text>
+                    </>
+                )}
         </View>
   
         {/* Footer Section */}
@@ -65,10 +178,10 @@ const UploadScreen = () => {
           />
         </View>
       </SafeAreaView>
-    );
-  };
+  );
+};
 
-  const styles = StyleSheet.create({
+const styles = StyleSheet.create({
 
     container: {
       flex: 1,
@@ -151,8 +264,15 @@ const UploadScreen = () => {
       textAlign: 'center',
     },
 
-  });
+    extractedContent:{
+      fontSize: theme.fonts.sizes.small,
+        color: theme.colors.primary.dark2,
+        textAlign: 'center',
+        marginTop: theme.spacing.medium,
+    },
+
+});
   
-  export default UploadScreen;
+export default UploadScreen;
   
 
