@@ -1,11 +1,16 @@
-import React from 'react';
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Image, Dimensions } from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, ActivityIndicator } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import theme from '../../../../src/theme';
 
 const { width: screenWidth } = Dimensions.get('window');
 
 const UploadScreen = () => {
+
+
+  const [uploadState, setUploadState] = useState('idle');
+  const [fileName,setFileName] = useState('');
+
     return (
       <SafeAreaView style={styles.container}>
         {/* Header */}
@@ -16,15 +21,38 @@ const UploadScreen = () => {
   
         {/* Upload Section */}
         <View style={styles.uploadContainer}>
-          <Image
-            source={require('@/assets/images/uploadIcon.png')}
-            style={styles.uploadIcon}
-            resizeMode="contain"
-          />
-          <Text style={styles.fileTypesText}> PDF, and WORD formats, up to 50MB</Text>
-          <TouchableOpacity style={styles.browseButton}>
-            <Text style={styles.browseButtonText}>BROWSE FILES</Text>
-          </TouchableOpacity>
+          {uploadState ==='idle' && (
+            <>
+              <Image
+                source={require('@/assets/images/uploadIcon.png')}
+                style={styles.uploadIcon}
+                resizeMode="contain"
+                accessible 
+                accessibilityLabel='Upload Icon'
+              />
+              <Text style={styles.fileTypesText}> PDF, and WORD formats, up to 50MB</Text>
+              <TouchableOpacity style={styles.browseButton}>
+                <Text style={styles.browseButtonText}>BROWSE FILES</Text>
+              </TouchableOpacity>
+            </>
+          )}
+
+          {uploadState === 'uploading' && (
+            <>
+              <ActivityIndicator size="large" color={theme.colors.primary.medium} />
+              <Text style={styles.processingText}>
+                "{fileName}" is getting ready for summarization...
+              </Text>
+            </>
+          )}
+
+          {uploadState === 'ready' && (
+            <>
+              <Text style={styles.successText}>
+               "{fileName}" is ready for summarization!
+              </Text>
+            </>        
+          )}
         </View>
   
         {/* Footer Section */}
@@ -108,6 +136,21 @@ const UploadScreen = () => {
       height: undefined,
       aspectRatio: 1,
     },
+
+    processingText:{
+      fontSize: theme.fonts.sizes.small,
+        color: theme.colors.primary.dark2,
+        textAlign: 'center',
+        marginTop: theme.spacing.medium,
+    },
+
+    successText: {
+      fontSize: theme.fonts.sizes.medium,
+      fontWeight: 'bold',
+      color: theme.colors.primary.medium,
+      textAlign: 'center',
+    },
+
   });
   
   export default UploadScreen;
