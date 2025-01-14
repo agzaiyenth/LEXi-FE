@@ -1,7 +1,10 @@
+// app/(main)/PlaySpace/LandingPageGames.tsx
 import React from 'react';
 import { View, Text, Image, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import {useNavigation } from '@react-navigation/native';
 import theme from '../../../src/theme';
+import {GameZoneParamList} from './index';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 interface Game {
   id: string;
@@ -10,8 +13,9 @@ interface Game {
   image: any;
 }
 
+type GameMainNavigationProp = StackNavigationProp<GameZoneParamList, 'GameMain'>;
 const PlayScreen: React.FC = () => {
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<GameMainNavigationProp>();
 
   const games: Game[] = [
     {
@@ -57,7 +61,11 @@ const PlayScreen: React.FC = () => {
       style={styles.card}
       onPress={() => {
         if (item.id === '1') {
-          navigation.navigate('PopTheBalloonGame');
+          try {
+            navigation.navigate('PopTheBalloonGame');
+          } catch (error) {
+            console.error('Navigation Error:', error);
+          }
         }
       }}
     >
