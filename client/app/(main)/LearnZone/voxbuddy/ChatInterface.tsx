@@ -1,12 +1,9 @@
 // app/(main)/LearnZone/voxbuddy/ChatInterface.tsx (converted for React Native/Expo)
-
-// --- React + RN Imports
 import React, {
   useRef,
   useEffect,
   useState,
   useCallback,
-  MutableRefObject,
 } from 'react';
 import {
   View,
@@ -20,32 +17,15 @@ import {
 
 
 // --- Our custom classes
-import { WebSocketClient } from './WebSocketClient';
-import { Player, Recorder } from './Audio';
+
 import { BASE_ENDPOINT } from '@/config';
 import AudioReactiveVisualizer from './AudioReactiveVisualizer';
 import theme from '@/src/theme';
 import { Entypo, Ionicons, MaterialIcons } from "@expo/vector-icons";
-
-
-
-interface Message {
-  id: string;
-  type: 'user' | 'assistant';
-  content: string;
-}
-
-type WSControlAction = 'speech_started' | 'connected' | 'text_done' | 'status';
-
-interface WSMessage {
-  id?: string;
-  type: 'text_delta' | 'transcription' | 'user_message' | 'control';
-  delta?: string;
-  text?: string;
-  action?: WSControlAction;
-  greeting?: string;
-}
-
+import { Player } from '@/src/hooks/voxBuddy/usePlayer';
+import { Recorder } from '@/src/hooks/voxBuddy/useRecorder';
+import { WebSocketClient } from '@/src/hooks/voxBuddy/useWebSocket';
+import { Message, WSMessage } from '@/types/voxbuddy/voxBuddy';
 
 /**
  * We centralize Audio logic in a custom hook to mimic your original approach.
