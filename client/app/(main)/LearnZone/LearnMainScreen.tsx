@@ -30,7 +30,7 @@ const LearnMainScreen = () => {
       />
       <Button
         title="Go to read with me"
-        onPress={() => navigation.navigate('VoxBuddy')} // @asraameer update this navigation
+        onPress={() => navigation.navigate('ReadWithMe')} // @asraameer update this navigation
       />
 
     </View>
