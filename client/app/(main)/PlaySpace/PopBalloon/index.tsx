@@ -15,7 +15,7 @@ const PopTheBalloonGame: React.FC = () => {
       {/* Game Image */}
       <View style={styles.imageContainer}>
         <Image
-          source={require('@/assets/images/games/ballon.png')} // Replace with your actual image path
+          source={require('@/assets/images/games/ballon.png')}
           style={styles.gameImage}
         />
       </View>

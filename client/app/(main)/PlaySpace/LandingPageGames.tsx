@@ -62,7 +62,7 @@ const PlayScreen: React.FC = () => {
       onPress={() => {
         if (item.id === '1') {
           try {
-            navigation.navigate('PopTheBalloonGame');
+            navigation.navigate('BaloonGame');
           } catch (error) {
             console.error('Navigation Error:', error);
           }

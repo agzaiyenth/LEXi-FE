@@ -8,10 +8,11 @@ import React from 'react';
 import PopTheBalloonGame from './PopBalloon/index'; 
 import GameMainScreen from './LandingPageGames';
 import { createStackNavigator } from '@react-navigation/stack';
+import BaloonGame from './BaloonGame';
 
 export type GameZoneParamList = {
   GameMain: undefined; 
-  PopTheBalloonGame: undefined; 
+  BaloonGame: undefined; 
 };
 
 const Stack = createStackNavigator<GameZoneParamList>();
@@ -23,7 +24,7 @@ const GameZone = () => {
       screenOptions={{ headerShown: false }}  
     >
       <Stack.Screen name="GameMain" component={GameMainScreen} />
-      <Stack.Screen name="PopTheBalloonGame" component={PopTheBalloonGame} />
+      <Stack.Screen name="BaloonGame" component={BaloonGame} />
     </Stack.Navigator>
   );
 };
