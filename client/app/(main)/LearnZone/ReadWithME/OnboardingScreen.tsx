@@ -2,14 +2,15 @@ import React from 'react';
 import {Text, View,StyleSheet,Image,TouchableOpacity}   from 'react-native';
 import theme from '../../../../src/theme';
 import ReadWithMeNavigator from './ReadWithMeNavigator';
+import { image } from '../../../../assets/images/auth/centerImage.png';
 
 
 const OnboardingScreen = () => {
     return(
         <View style={styles.container} >
-            <View style={styles.header}>
+            <View style={styles.header}>Read With Me
                 <Text style={styles.Text} >Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi doloribus minus molestiae distinctio</Text>
-                
+                <Image source={require('./centerImage.png')} />
             </View>
         </View>
     );

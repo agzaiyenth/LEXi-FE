@@ -2,15 +2,15 @@ import theme from '../../../../src/theme';
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign'; 
-import FileDirectory from './FileDirectory';// Correct import for using AntDesign icons
-
-
+import { useNavigation} from 'expo-router';
 interface CardProps {
   title: string;
   author: string;
   imageUrl: string;
 }
-const Card = ({ title, author, imageUrl }: CardProps) => (
+
+const Card = ({ title = "Default Title", author = "Default Author", imageUrl = "default_image_url" }: CardProps) => (
+  
   <View style={styles.cardContainer}>
     <Image
       source={{ uri:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHrPn9GkU973mz_dYTRWPxJ_lXaqDSr7Z63w&s'}}
@@ -19,7 +19,9 @@ const Card = ({ title, author, imageUrl }: CardProps) => (
     <View style={styles.detailsContainer}>
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.author}>{author}</Text>
-      <TouchableOpacity style={styles.playButton}>
+      <TouchableOpacity style={styles.playButton}
+       onPress={() => navigation.navigate('OnboardingScreen')}
+       >
         <AntDesign name="playcircleo" size={24} color="black" style={styles.playButtonIcon}/>  {/* Use AntDesign instead of Icon */}
         <Text style={styles.playButtonText}>Play Now</Text>
       </TouchableOpacity>

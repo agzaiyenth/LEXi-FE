@@ -7,12 +7,14 @@ It contains the ChatInterface component.
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import FileDirectory from './ReadWithME/FileDirectory';
+import OnboardingScreen from './ReadWithME/OnboardingScreen';
 
 
 const ReadWithMe = () => {
   return (
     <View style={styles.container}>
-      <FileDirectory />
+      <OnboardingScreen />
+      
     </View>
   );
 };
