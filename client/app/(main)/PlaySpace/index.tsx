@@ -1,32 +1,26 @@
-// app/(main)/PlaySpace/index.tsx
-/*
-This is the main index stack for the LearnZone .
-It contains stack screens for the LearnZone .
-*/
-
 import React from 'react';
-import PopTheBalloonGame from './PopBalloon/index'; 
-import GameMainScreen from './LandingPageGames';
 import { createStackNavigator } from '@react-navigation/stack';
-import BaloonGame from './BaloonGame';
+import PlayMainScreen from './PlayMainScreen';
+import BalloonGame from './BalloonGame';
 
-export type GameZoneParamList = {
-  GameMain: undefined; 
-  BaloonGame: undefined; 
+export type LearnZoneParamList = {
+  PlayMain: undefined; 
+  BalloonGame: undefined; 
 };
 
-const Stack = createStackNavigator<GameZoneParamList>();
+const Stack = createStackNavigator<LearnZoneParamList>();
 
-const GameZone = () => {
+const PlaySpace = () => {
   return (
     <Stack.Navigator
-      initialRouteName="GameMain"
-      screenOptions={{ headerShown: false }}  
+      screenOptions={{
+        headerShown: false, 
+      }}
     >
-      <Stack.Screen name="GameMain" component={GameMainScreen} />
-      <Stack.Screen name="BaloonGame" component={BaloonGame} />
+      <Stack.Screen name="PlayMain" component={PlayMainScreen} />
+      <Stack.Screen name="BalloonGame" component={BalloonGame} />
     </Stack.Navigator>
   );
 };
 
-export default GameZone;
+export default PlaySpace;
