@@ -23,6 +23,7 @@ import { Recorder } from '@/src/hooks/voxBuddy/useRecorder';
 import { WebSocketClient } from '@/src/hooks/voxBuddy/WebSocketClient';
 import { Message, WSMessage } from '@/types/voxbuddy/voxBuddy';
 import { useAudioHandlers } from '@/src/hooks/voxBuddy/useAudioHandlers';
+import useHandleWSMessage from '@/src/hooks/voxBuddy/useHandleWSMessage';
 
 export default function ChatInterface() {
   const [endpoint] = useState(`ws://${BASE_ENDPOINT}/realtime`);
@@ -35,10 +36,11 @@ export default function ChatInterface() {
   const currentConnectingMessage = useRef<Message>();
   const currentUserMessage = useRef<Message>();
   const scrollViewRef = useRef<ScrollView>(null);
+  const [audioData, setAudioData] = useState<Int16Array | null>(null);
+  const { audioPlayerRef, audioRecorderRef, initAudioPlayer, handleAudioRecord } =    useAudioHandlers();
+  const handleWSMessage = useHandleWSMessage(setConnectionState, setMessages, audioPlayerRef);
 
-  const { audioPlayerRef, audioRecorderRef, initAudioPlayer, handleAudioRecord } =
-    useAudioHandlers();
-
+  
   // Scroll to bottom every time messages change
   useEffect(() => {
     setTimeout(() => {
@@ -69,46 +71,9 @@ export default function ChatInterface() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const handleWSMessage = useCallback(
-    async (message: WSMessage) => {
-        if (message.type === 'control') {
-            if (message.action === 'status') {
-                setConnectionState(message.greeting === 'connected' ? 'connected' : 'disconnected');
-            } else if (message.action === 'speech_started') {
-                audioPlayerRef.current?.clear();
-                const contrivedId = 'userMessage' + Math.random();
-                currentUserMessage.current = {
-                    id: contrivedId,
-                    type: 'user',
-                    content: '...',
-                };
-                messageMap.current.set(contrivedId, currentUserMessage.current);
-                setMessages(Array.from(messageMap.current.values()));
-            }
-        } else if (message.type === 'transcription' && message.id && currentUserMessage.current) {
-            currentUserMessage.current.content = message.text || '';
-            setMessages(Array.from(messageMap.current.values()));
-        } else if (message.type === 'text_delta' && message.id) {
-            const existingMessage = messageMap.current.get(message.id);
-            if (existingMessage) {
-                existingMessage.content += message.delta || '';
-            } else {
-                const newMessage: Message = {
-                    id: message.id,
-                    type: 'assistant',
-                    content: message.delta || '',
-                };
-                messageMap.current.set(message.id, newMessage);
-            }
-            setMessages(Array.from(messageMap.current.values()));
-        }
-    },
-    [audioPlayerRef, setMessages]
-);
+ 
+  
 
-
-  // Continuously read from WebSocket
-  const [audioData, setAudioData] = useState<Int16Array | null>(null);
 
   const receiveLoop = useCallback(async () => {
     const player = await initAudioPlayer();
@@ -120,9 +85,9 @@ export default function ChatInterface() {
         await handleWSMessage(data);
       } else if (message.type === "binary") {
         const buffer = new Int16Array(message.data);
-        setAudioData(buffer); // Pass audio data to the animation
+        setAudioData(buffer); 
         if (player) {
-          player.play(buffer); // Play the audio
+          player.play(buffer); 
         }
       }
     }
@@ -133,19 +98,14 @@ export default function ChatInterface() {
     if (connectionState !== 'disconnected') {
       await disconnect(); // Ensure proper cleanup
     }
-
     setConnectionState('connecting');
     const statusMessageId = `status-${Date.now()}`;
-    
-   
-
     messageMap.current.clear();
     setMessages(Array.from(messageMap.current.values()));
-
     try {
       webSocketClient.current = new WebSocketClient(new URL(endpoint));
       setConnectionState('connected');
-      receiveLoop(); // Start receiving messages on the new connection
+      receiveLoop();
     } catch (error) {
       console.error('Connection failed:', error);
       setConnectionState('disconnected');
@@ -155,7 +115,7 @@ export default function ChatInterface() {
   const disconnect = async () => {
     if (webSocketClient.current) {
       await webSocketClient.current.close();
-      webSocketClient.current = null; // Clear the client reference
+      webSocketClient.current = null; 
     }
     setConnectionState('disconnected');
   };
@@ -197,9 +157,6 @@ export default function ChatInterface() {
   };
 
 
-
-
-  // ----- Render -----
   return (
     <View style={styles.container}>
 
