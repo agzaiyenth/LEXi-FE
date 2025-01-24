@@ -63,21 +63,26 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#CCE5E1', // Reverted background color
     padding: 20,
-    paddingBottom: 70, // Adds space for the navbar
+    paddingBottom: 70, 
   },
   backButton: {
     position: 'absolute',
-    top: 20,
+    top: 40,
     left: 20,
+    height: 40,
+    width: 40,
     backgroundColor: '#003D35',
-    borderRadius: 50,
-    padding: 8,
+    borderRadius: 300,
+    padding:10,
     zIndex: 10,
   },
   backButtonText: {
     fontSize: 18,
     color: '#FFFFFF',
     fontWeight: 'bold',
+    position: 'absolute',
+    top: '15%',
+    left: '50%',
   },
   header: {
     fontSize: 28,
@@ -92,7 +97,7 @@ const styles = StyleSheet.create({
   },
   gameImage: {
     width: '100%', // Full width
-    height: 250, // Increased height
+    height: 250, 
     borderRadius: 10,
     resizeMode: 'contain',
   },
@@ -136,7 +141,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     alignItems: 'center',
     position: 'absolute',
-    bottom: 20, // Positioned above the navbar
+    bottom: 20,
     left: 20,
     right: 20,
   },
