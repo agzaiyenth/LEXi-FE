@@ -1,4 +1,4 @@
-// app/(main)/LearnZone/voxbuddy/ChatInterface.tsx (converted for React Native/Expo)
+// app/(main)/LearnZone/voxbuddy/ChatInterface.tsx
 import React, {
   useRef,
   useEffect,
@@ -14,58 +14,15 @@ import {
   ScrollView,
   StyleSheet,
 } from 'react-native';
-
-
-// --- Our custom classes
-
 import { BASE_ENDPOINT } from '@/config';
 import AudioReactiveVisualizer from './AudioReactiveVisualizer';
 import theme from '@/src/theme';
 import { Entypo, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Player } from '@/src/hooks/voxBuddy/usePlayer';
 import { Recorder } from '@/src/hooks/voxBuddy/useRecorder';
-import { WebSocketClient } from '@/src/hooks/voxBuddy/useWebSocket';
+import { WebSocketClient } from '@/src/hooks/voxBuddy/WebSocketClient';
 import { Message, WSMessage } from '@/types/voxbuddy/voxBuddy';
-
-/**
- * We centralize Audio logic in a custom hook to mimic your original approach.
- */
-const useAudioHandlers = () => {
-  const audioPlayerRef = useRef<Player | null>(null);
-  const audioRecorderRef = useRef<Recorder | null>(null);
-
-  const initAudioPlayer = async () => {
-    if (!audioPlayerRef.current) {
-      audioPlayerRef.current = new Player();
-      await audioPlayerRef.current.init();
-    }
-    return audioPlayerRef.current;
-  };
-
-  // We start/stop the recorder:
-  const handleAudioRecord = async (
-    webSocketClient: WebSocketClient | null,
-    isRecording: boolean
-  ) => {
-    if (!isRecording && webSocketClient) {
-      if (!audioRecorderRef.current) {
-        audioRecorderRef.current = new Recorder(async (buffer) => {
-          // Send audio buffer to server
-          await webSocketClient.send({ type: 'binary', data: buffer });
-        });
-      }
-      await audioRecorderRef.current.start();
-      return true;
-    } else if (audioRecorderRef.current) {
-      await audioRecorderRef.current.stop();
-      audioRecorderRef.current = null;
-      return false;
-    }
-    return isRecording;
-  };
-
-  return { audioPlayerRef, audioRecorderRef, initAudioPlayer, handleAudioRecord };
-};
+import { useAudioHandlers } from '@/src/hooks/voxBuddy/useAudioHandlers';
 
 export default function ChatInterface() {
   const [endpoint] = useState(`ws://${BASE_ENDPOINT}/realtime`);
