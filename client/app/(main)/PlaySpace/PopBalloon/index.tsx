@@ -21,13 +21,14 @@ const PopTheBalloonGame: React.FC = () => {
       </View>
 
       {/* Game Description */}
-      <View style={styles.descriptionContainer}>
-        <Text style={styles.description}>
-          Pop the Balloon is a fun, interactive game for dyslexic students to improve reading and cognitive skills.
-          Players pop balloons with letters, words, or numbers to complete challenges, enhancing focus and phonetic
-          awareness. Adjustable difficulty ensures an enjoyable learning experience!
-        </Text>
-      </View>
+      <Text style={styles.description}>
+        Pop the Balloon is a fun, interactive game for dyslexic students to improve reading and cognitive skills.
+        Players pop balloons with letters, words, or numbers to complete challenges, enhancing focus and phonetic
+        awareness. Adjustable difficulty ensures an enjoyable learning experience!
+      </Text>
+
+      {/* Divider Line */}
+      <View style={styles.divider} />
 
       {/* Game Details */}
       <View style={styles.detailsContainer}>
@@ -60,8 +61,9 @@ const PopTheBalloonGame: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#CCE5E1', // Match the background color
+    backgroundColor: '#CCE5E1', // Reverted background color
     padding: 20,
+    paddingBottom: 70, // Adds space for the navbar
   },
   backButton: {
     position: 'absolute',
@@ -78,10 +80,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   header: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 20,
+    marginVertical: 20,
     color: '#003D35',
   },
   imageContainer: {
@@ -89,26 +91,24 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   gameImage: {
-    width: '80%',
-    height: 200,
+    width: '100%', // Full width
+    height: 250, // Increased height
     borderRadius: 10,
     resizeMode: 'contain',
   },
-  descriptionContainer: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 10,
-    padding: 15,
-    marginBottom: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
-  },
   description: {
-    fontSize: 14,
+    fontSize: 16,
     color: '#003D35',
-    lineHeight: 20,
+    lineHeight: 24,
+    textAlign: 'justify',
+    marginBottom: 20,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: '#003D35',
+    opacity: 0.8,
+    marginVertical: 20,
+    alignSelf: 'stretch',
   },
   detailsContainer: {
     flexDirection: 'row',
@@ -117,28 +117,32 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   detailItem: {
-    width: '45%',
+    width: '48%',
     marginBottom: 15,
   },
   detailTitle: {
-    fontSize: 12,
-    color: '#6C8A81',
+    fontSize: 16, // Larger font size
+    color: '#003D35',
     fontWeight: 'bold',
+    marginBottom: 5,
   },
   detailText: {
-    fontSize: 14,
+    fontSize: 15,
     color: '#003D35',
   },
   nextButton: {
-    backgroundColor: '#003D35',
+    backgroundColor: '#003D35', // Matching color
     borderRadius: 10,
     paddingVertical: 15,
     alignItems: 'center',
-    marginTop: 'auto',
+    position: 'absolute',
+    bottom: 20, // Positioned above the navbar
+    left: 20,
+    right: 20,
   },
   nextButtonText: {
     color: '#FFFFFF',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
   },
 });
