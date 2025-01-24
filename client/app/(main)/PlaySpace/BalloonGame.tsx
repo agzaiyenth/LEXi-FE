@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import PopTheBalloonGame from './PopBalloon';
+import Game from './PopBalloon/game';
 
 const BaloonGame = () => {
   return (
     <View style={styles.container}>
-      <PopTheBalloonGame />
+      <Game />
     </View>
   );
 };
