@@ -1,13 +1,20 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import PopTheBalloonGame from './PopBalloon'
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import PopTheBalloonGame from './PopBalloon';
 
 const BaloonGame = () => {
   return (
-    <View>
-      <PopTheBalloonGame/>
+    <View style={styles.container}>
+      <PopTheBalloonGame />
     </View>
-  )
-}
+  );
+};
 
-export default BaloonGame
+const styles = StyleSheet.create({
+  container: {
+    flex: 1, // Ensures the View takes the full screen
+    backgroundColor: '#CCE5E1', // Same background as PopTheBalloonGame for consistency
+  },
+});
+
+export default BaloonGame;
