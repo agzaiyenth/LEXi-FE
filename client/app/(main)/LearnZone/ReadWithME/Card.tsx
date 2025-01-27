@@ -22,7 +22,7 @@ const Card = ({ title = "Default Title", author = "Default Author", imageUrl = "
       <TouchableOpacity style={styles.playButton}
        onPress={() => navigation.navigate('OnboardingScreen')}
        >
-        <AntDesign name="playcircleo" size={24} color="black" style={styles.playButtonIcon}/>  {/* Use AntDesign instead of Icon */}
+        <AntDesign name="playcircleo" size={24} color="black" style={styles.playButtonIcon}/>  
         <Text style={styles.playButtonText}>Play Now</Text>
       </TouchableOpacity>
     </View>
