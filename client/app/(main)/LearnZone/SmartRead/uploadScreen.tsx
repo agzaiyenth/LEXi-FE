@@ -3,9 +3,12 @@ import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Image, Dimensio
 import { AntDesign } from '@expo/vector-icons';
 import theme from '../../../../src/theme';
 import * as DocumentPicker from 'expo-document-picker';
+import { LearnZoneParamList } from './navigator';
 
 
 import axios from 'axios';
+import { useNavigation } from 'expo-router';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -18,7 +21,16 @@ interface File{
 }
 
 
+type NavigationProp = StackNavigationProp<LearnZoneParamList, 'UploadScreen'>;
+
 const UploadScreen = () => {
+  const navigation = useNavigation<NavigationProp>();
+
+  const goToSpeechScreen = () => {
+    console.log(navigation.getState());
+    navigation.navigate('SpeechScreen'); 
+    console.log('Navigating to Speech Screen');
+  };
 
 
   const [uploadState, setUploadState] = useState('idle');
@@ -27,7 +39,7 @@ const UploadScreen = () => {
   const [isProcessing, setIsProcessing] = useState(false);
 
 
-  const API_BASE_URL = "http://<your-backend-url>/api/documents";
+  const API_BASE_URL = "http://localhost:8080/api/documents";
 
 
   
@@ -179,6 +191,13 @@ const UploadScreen = () => {
             resizeMode="contain"
           />
         </View>
+
+        <TouchableOpacity 
+        style={styles.navigateButton}
+        onPress={goToSpeechScreen}
+      >
+        <Text style={styles.navigateButtonText}>Go to Speech Screen</Text>
+      </TouchableOpacity>
       </SafeAreaView>
   );
 };
@@ -271,6 +290,19 @@ const styles = StyleSheet.create({
         color: theme.colors.primary.dark2,
         textAlign: 'center',
         marginTop: theme.spacing.medium,
+    },
+    navigateButton: {
+      backgroundColor: theme.colors.primary.medium,
+      borderRadius: 10,
+      paddingVertical: theme.spacing.medium,
+      paddingHorizontal: theme.spacing.large,
+      marginTop: theme.spacing.medium,
+      alignSelf: 'center',
+    },
+    navigateButtonText: {
+      color: theme.colors.background.beige,
+      fontSize: theme.fonts.sizes.medium,
+      fontWeight: 'bold',
     },
 
 });

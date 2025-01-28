@@ -2,6 +2,8 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import UploadScreen from './SmartRead/uploadScreen';
+import SpeechScreen from './SmartRead/speechScreen';
+
 
 const SmartRead = () => {
   return (

@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from "react-nati
 import { Ionicons } from "@expo/vector-icons"; // For the back icon
 import { theme } from "../../../../src/theme";
 
-export default function SmartReadScreen() {
+export default function SpeechScreen() {
   return (
     <View style={styles.container}>
       {/* Header */}
