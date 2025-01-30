@@ -32,6 +32,7 @@ const LearnMainScreen = () => {
         title="Go to read with me"
         onPress={() => navigation.navigate('VoxBuddy')} // @asraameer update this navigation
       />
+     
 
     </View>
   );

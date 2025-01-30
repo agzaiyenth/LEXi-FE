@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     marginLeft: theme.spacing.medium,
-    fontSize: theme.fonts.sizes.large,
+    fontSize: theme.fonts.sizes.medium,
     fontFamily: theme.fonts.bold,
     color: theme.colors.primary.dark1,
   },
