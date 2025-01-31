@@ -2,7 +2,7 @@ import React from "react";
 import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import theme from "../../../../src/theme";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
-import AntDesign from "@expo/vector-icons/AntDesign";
+import Entypo from '@expo/vector-icons/Entypo';import Ionicons from '@expo/vector-icons/Ionicons';
 
 const Pronounce = () => {
   const handleBackward = () => {
@@ -43,16 +43,19 @@ const Pronounce = () => {
             accessible
             accessibilityLabel="Upload Icon"
           />
-          {/* Controls container */}
-          <View style={styles.controls}>
+          
+          <View style={[styles.controls ,{ borderColor: 'red', borderWidth: 1 }]}>
             <TouchableOpacity onPress={handleBackward} style={styles.button}>
-              <AntDesign name="banckward" size={10} color="black" />
+            <Entypo name="controller-fast-backward" size={24} color="black" />
+              
             </TouchableOpacity>
             <TouchableOpacity onPress={handlePause} style={styles.button}>
-              <AntDesign name="pausecircle" size={10} color="black" />
+            <Ionicons name="pause-circle-sharp" size={24} color="black" />
+              
             </TouchableOpacity>
             <TouchableOpacity onPress={handleForward} style={styles.button}>
-              <AntDesign name="forward" size={10} color="black" />
+            <Entypo name="controller-fast-forward" size={24} color="black" />
+              
             </TouchableOpacity>
           </View>
         </View>
@@ -103,6 +106,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   readingText: {
+    marginTop: 40,
     width: 470,
     height: 470,
   },
@@ -111,16 +115,17 @@ const styles = StyleSheet.create({
     width: 400,
   },
   controls: {
-    zIndex: 2,
+    zIndex: -1,
     position: "relative",
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    top: -50,
     
+   
+    borderWidth: 3,
   },
   button: {
     padding: 10,
-    
+    zIndex: 1000,
   },
 });

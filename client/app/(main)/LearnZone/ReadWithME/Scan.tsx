@@ -9,6 +9,13 @@ const Scan = () => {
       <View style={styles.container}>
         <Text style={styles.text}>Read With Me</Text>
         <EvilIcons name="arrow-left" style={styles.leftarrow} />
+        <Image
+          source={require("@/assets/images/Ellipse.png")}
+          style={styles.Ellipse}
+          resizeMode="contain"
+          accessible
+          accessibilityLabel="Upload Icon"
+        />
         <View style={styles.innercontainer}>
           <View style={styles.scanPicBorder}>
             <Image
@@ -53,23 +60,16 @@ export default Scan;
 
 const styles = StyleSheet.create({
   wrapper: {
-    top: 0,
-    left: 0,
     width: "100%",
     height: "100%",
-    position: "absolute",
     fontFamily: "Poppins",
-    zIndex: 0,
   },
   container: {
-    paddingTop: 15,
     flex: 1,
     backgroundColor: "#9AC3BB",
-    justifyContent: "center",
-    textAlign: "center",
   },
   text: {
-    top: 20,
+    top: 35,
     fontSize: 25,
     lineHeight: 30,
     fontWeight: "400",
@@ -83,13 +83,19 @@ const styles = StyleSheet.create({
     fontSize: 60,
     color: theme.colors.background.offWhite,
   },
+  Ellipse: {
+    width: 150,
+    height: 150,
+    alignSelf: "flex-end",
+    top: -30,
+  },
   innercontainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    top: 60,
-    flex: 2,
+    top: -70,
     backgroundColor: "#FDF4DE",
     borderRadius: 30,
+    flexDirection: "column", // Ensure a column layout for stacking
+    justifyContent: "center",
+    alignItems: "center", // Center items horizontally
     height: "100%",
   },
   scanPicBorder: {
@@ -99,7 +105,7 @@ const styles = StyleSheet.create({
     padding: 10,
     width: 350,
     height: 250,
-    top: 100,
+    top: -180,
   },
   scanPic: {
     marginLeft: 60,
@@ -109,30 +115,32 @@ const styles = StyleSheet.create({
   },
   booksBackdropPic: {
     marginLeft: 100,
-    top: 240,
+    top: 150,
+    height: 150,
   },
   lexiMoscot: {
-    left: -20,
-    top:40,
+    left: -10,
+    top: 20,
   },
   scanText: {
     textAlign: "center",
-    top: -50,
+    top: -90,
     left: 90,
     color: theme.colors.blacks.medium,
     fontSize: 20,
   },
   scanButton: {
-    width: 180,
-    height: 40,
-    left: 60,
-    backgroundColor:"#009FA5",
-    borderRadius:50,
+    width: 200,
+    height: 50,
+    left: 80,
+    top: -30,
+    backgroundColor: "#009FA5",
+    borderRadius: 50,
   },
-  scanButtonText:{
-    fontSize:23,
-    textAlign:"center",
-    padding:3,
-    color:theme.colors.background.beige,
+  scanButtonText: {
+    fontSize: 23,
+    textAlign: "center",
+    padding: 3,
+    color: theme.colors.background.beige,
   },
 });

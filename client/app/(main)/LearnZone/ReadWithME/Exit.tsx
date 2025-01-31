@@ -16,7 +16,40 @@ const Exit = () => {
           accessible
           accessibilityLabel="Upload Icon"
         />
-        <View style={styles.innercontainer}></View>
+        <View style={styles.innercontainer}>
+          <Image
+            source={require("@/assets/images/reward.png")}
+            style={styles.reward}
+            resizeMode="contain"
+            accessible
+            accessibilityLabel="Upload Icon"
+          />
+          <Image
+            source={require("@/assets/images/Group 24.png")}
+            style={styles.Group24}
+            resizeMode="contain"
+            accessible
+            accessibilityLabel="Upload Icon"
+          />
+          <Text style={styles.wellDoneText}>Well Done !</Text>
+          <Image
+            source={require("@/assets/images/Stars.png")}
+            style={styles.Stars}
+            resizeMode="contain"
+            accessible
+            accessibilityLabel="Upload Icon"
+          />
+          <Text style={styles.feedback}>
+            Total Words: 33 {"\n"} Correct Words: 25 {"\n"} Words Skipped: 8
+          </Text>
+          <Image
+            source={require("@/assets/images/books-backdrop.png")}
+            style={styles.booksBackdropPic}
+            resizeMode="contain"
+            accessible
+            accessibilityLabel="Upload Icon"
+          />
+        </View>
       </View>
     </View>
   );
@@ -25,23 +58,17 @@ const Exit = () => {
 export default Exit;
 const styles = StyleSheet.create({
   wrapper: {
-    top: 0,
-    left: 0,
     width: "100%",
     height: "100%",
-    position: "absolute",
     fontFamily: "Poppins",
-    zIndex: 0,
   },
   container: {
-    paddingTop: 15,
     flex: 1,
     backgroundColor: "#9AC3BB",
-    justifyContent: "center",
-    textAlign: "center",
+    position: "relative",
   },
   text: {
-    top: 20,
+    top: 35,
     fontSize: 25,
     lineHeight: 30,
     fontWeight: "400",
@@ -62,13 +89,56 @@ const styles = StyleSheet.create({
     top: -30,
   },
   innercontainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    top: 60,
-    flex: 2,
+    top: -70,
     backgroundColor: "#FDF4DE",
     borderRadius: 30,
+    flexDirection: "column", // Ensure a column layout for stacking
+    justifyContent: "center",
+    alignItems: "center", // Center items horizontally
     height: "100%",
   },
-
+  reward: {
+    width: 450,
+    height: 450,
+    alignSelf: "center",
+    position: "absolute",
+    top: -10,
+  },
+  Group24: {
+    width: 170,
+    height: 235,
+    alignSelf: "center",
+    position: "absolute",
+    top: 80,
+  },
+  wellDoneText: {
+    fontSize: 40,
+    fontWeight: "600",
+    textAlign: "center",
+    color: "#F19336",
+    position: "absolute",
+    top: 370,
+  },
+  Stars: {
+    width: 200,
+    height: 50,
+    alignSelf: "center",
+    position: "absolute",
+    top: 425,
+  },
+  feedback: {
+    fontSize: 20,
+    lineHeight: 35,
+    color: "#8F8877",
+    position: "absolute",
+    top: 490, 
+    zIndex: 5, 
+  },
+  booksBackdropPic:{
+    width: 150,
+    height: 150,
+    top: 220,
+    left: -10,
+    zIndex: 1,
+  },
 });
