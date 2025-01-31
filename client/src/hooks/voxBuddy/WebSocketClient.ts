@@ -1,19 +1,7 @@
-// WebSocketClient.ts
+import { WebSocketMessage } from "@/types/voxbuddy/voxBuddy";
 
 type ResolveFn<T> = (value: IteratorResult<T>) => void;
 type RejectFn<E> = (reason: E) => void;
-
-interface BinaryWebSocketMessage {
-  type: "binary";
-  data: ArrayBuffer;
-}
-
-interface TextWebSocketMessage {
-  type: "text";
-  data: string;
-}
-
-export type WebSocketMessage = BinaryWebSocketMessage | TextWebSocketMessage;
 
 export class WebSocketClient implements AsyncIterable<WebSocketMessage> {
   private socket: WebSocket | undefined;

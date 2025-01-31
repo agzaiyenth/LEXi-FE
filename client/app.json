@@ -14,14 +14,18 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+    "NSMicrophoneUsageDescription": "We need access to your microphone to record audio."
+  }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.lexilk.lexi"
+      "package": "com.lexilk.lexi",
+      "permissions": ["RECORD_AUDIO"]
     },
     "web": {
       "bundler": "metro",
