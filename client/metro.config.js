@@ -1,43 +1,23 @@
+// Learn more https://docs.expo.io/guides/customizing-metro
 const { getDefaultConfig } = require("expo/metro-config");
 const { withNativeWind } = require("nativewind/metro");
 
-module.exports = (() => {
-  const config = getDefaultConfig(__dirname);
-
-  const { transformer, resolver } = config;
-  const { getDefaultConfig } = require("expo/metro-config");
-  const { withNativeWind } = require("nativewind/metro");
-  
-  module.exports = (() => {
+module.exports = withNativeWind(
+  (() => {
     const config = getDefaultConfig(__dirname);
-  
-    const { transformer, resolver } = config;
-  
+
     config.transformer = {
-      ...transformer,
+      ...config.transformer,
       babelTransformerPath: require.resolve("react-native-svg-transformer"),
     };
-  
+
     config.resolver = {
-      ...resolver,
-      assetExts: resolver.assetExts.filter((ext) => ext !== "svg"), 
-      sourceExts: [...resolver.sourceExts, "svg"], 
+      ...config.resolver,
+      assetExts: config.resolver.assetExts.filter((ext) => ext !== "svg"), // Remove 'svg' from assetExts
+      sourceExts: [...config.resolver.sourceExts, "svg"], // Add 'svg' to sourceExts
     };
-  
-    return withNativeWind(config, { input: "./global.css" });
-  })();
-  
 
-  config.transformer = {
-    ...transformer,
-    babelTransformerPath: require.resolve("react-native-svg-transformer"),
-  };
-
-  config.resolver = {
-    ...resolver,
-    assetExts: resolver.assetExts.filter((ext) => ext !== "svg"),
-    sourceExts: [...resolver.sourceExts, "svg"],
-  };
-
-  return withNativeWind(config, { input: "./global.css" });
-})();
+    return config;
+  })(),
+  { input: "./global.css" }
+);
