@@ -45,8 +45,8 @@ const Game = () => {
 
   const generateBalloons = (balloonWords: string[]) => {
     const newBalloons = balloonWords.map((word, index) => ({
-      x: Math.random() * (width - 100), // Random horizontal position
-      y: (index * (height / balloonWords.length)) + 50, // Random vertical position
+      x: Math.random() * (width - 100), 
+      y: (index * (height / balloonWords.length)) , 
       word,
       color: randomColor(),
       shakeAnim: new Animated.Value(0),
@@ -62,12 +62,12 @@ const Game = () => {
     Animated.loop(
       Animated.sequence([
         Animated.timing(shakeAnim, {
-          toValue: 10, // Move right
+          toValue: 10, 
           duration: 1000,
           useNativeDriver: true,
         }),
         Animated.timing(shakeAnim, {
-          toValue: -10, // Move left
+          toValue: 0,
           duration: 1000,
           useNativeDriver: true,
         }),
@@ -144,7 +144,6 @@ const styles = StyleSheet.create({
     position: 'relative',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    overflow: 'hidden',
   },
   shinyEffect: {
     position: 'absolute',
@@ -156,19 +155,21 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.6)',
   },
   ribbon: {
-    width: 10,
+    width: 5,
     height: 30,
     backgroundColor: '#8B0000',
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-    marginTop: -5,
+    position: 'absolute',
+    top: 100,
   },
   balloonText: {
-    marginTop: 10,
+    marginTop: -60,
     fontSize: 16,
     fontWeight: 'bold',
     color: '#FFFFFF',
     textAlign: 'center',
+    zIndex: 10,
   },
 });
 
