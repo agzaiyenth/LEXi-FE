@@ -4,7 +4,7 @@ import { LearnZoneParamList } from './index';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Text, Image,  TouchableOpacity } from 'react-native';
-import GameB from './GameB';
+import GameB from './Game';
 
 type LearnMainNavigationProp = StackNavigationProp<LearnZoneParamList, 'PlayMain'>;
 
@@ -13,7 +13,7 @@ const BalloonGame: React.FC = () => {
   return (
     <View style={styles.container}>
       {/* Back Button */}
-      <TouchableOpacity style={styles.backButton} onPress={() => console.log('Back pressed')}>
+      <TouchableOpacity style={styles.backButton} onPress={() =>navigation.navigate('PlayMain')}>
         <Text style={styles.backButtonText}>←</Text>
       </TouchableOpacity>
 
@@ -59,7 +59,7 @@ const BalloonGame: React.FC = () => {
       </View>
 
       {/* Next Button */}
-      <TouchableOpacity style={styles.nextButton} onPress={() =>navigation.navigate('GameB')}>
+      <TouchableOpacity style={styles.nextButton} onPress={() =>navigation.navigate('Game')}>
         <Text style={styles.nextButtonText}>Next</Text>
       </TouchableOpacity>
     </View>

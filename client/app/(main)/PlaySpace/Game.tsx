@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import  { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -252,3 +253,4 @@ const styles = StyleSheet.create({
 });
 
 export default Game;
+
