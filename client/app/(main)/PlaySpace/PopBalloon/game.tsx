@@ -8,8 +8,16 @@ import {
   Dimensions,
   Alert,
 } from 'react-native';
+import BallSvg from '@/assets/images/games/ball.svg';
 
 const { width, height } = Dimensions.get('window');
+
+const TOP_PADDING = height * 0.05; 
+const BOTTOM_PADDING = height * 0.1;
+const GAME_AREA_HEIGHT = height - (TOP_PADDING + BOTTOM_PADDING);
+const BALLOON_SIZE = 250; 
+const HORIZONTAL_PADDING = 15; 
+const MIN_SPACING = BALLOON_SIZE * 0.1; 
 
 const levels = [
   {
@@ -26,13 +34,11 @@ const levels = [
   },
 ];
 
-const colors = ['#FF6F61', '#6B8E23', '#4682B4', '#DA70D6'];
-
 const Game = () => {
   const [currentLevel, setCurrentLevel] = useState(0);
   const [score, setScore] = useState(0);
   const [balloons, setBalloons] = useState<
-    { x: number; y: number; word: string; color: string; shakeAnim: Animated.Value }[]
+    { x: number; y: number; word: string; shakeAnim: Animated.Value }[]
   >([]);
 
   useEffect(() => {
@@ -44,25 +50,46 @@ const Game = () => {
   };
 
   const generateBalloons = (balloonWords: string[]) => {
-    const newBalloons = balloonWords.map((word, index) => ({
-      x: Math.random() * (width - 100), 
-      y: (index * (height / balloonWords.length)) , 
-      word,
-      color: randomColor(),
-      shakeAnim: new Animated.Value(0),
-    }));
+    const newBalloons: { x: number; y: number; word: string; shakeAnim: Animated.Value }[] = [];
+
+    balloonWords.forEach((word) => {
+      let positionValid = false;
+      let newX = 0;
+      let newY = 0;
+      let attempts = 0; // Prevent infinite loops
+
+      while (!positionValid && attempts < 100) {
+        attempts++;
+        newX = Math.random() * (width - BALLOON_SIZE - HORIZONTAL_PADDING * 2) + HORIZONTAL_PADDING;
+        newY = TOP_PADDING + Math.random() * (GAME_AREA_HEIGHT - BALLOON_SIZE);
+
+        // Check for overlapping with existing balloons
+        positionValid =
+          newBalloons.length === 0 ||
+          newBalloons.every(
+            (balloon) =>
+              Math.abs(balloon.x - newX) > MIN_SPACING &&
+              Math.abs(balloon.y - newY) > MIN_SPACING
+          );
+      }
+
+      newBalloons.push({
+        x: newX,
+        y: newY,
+        word,
+        shakeAnim: new Animated.Value(0),
+      });
+    });
 
     newBalloons.forEach((balloon) => startShaking(balloon.shakeAnim));
     return newBalloons;
   };
 
-  const randomColor = () => colors[Math.floor(Math.random() * colors.length)];
-
   const startShaking = (shakeAnim: Animated.Value) => {
     Animated.loop(
       Animated.sequence([
         Animated.timing(shakeAnim, {
-          toValue: 10, 
+          toValue: 10,
           duration: 1000,
           useNativeDriver: true,
         }),
@@ -108,18 +135,13 @@ const Game = () => {
             styles.balloonContainer,
             {
               left: balloon.x,
-              transform: [
-                { translateX: balloon.shakeAnim },
-                { translateY: balloon.y },
-              ],
+              top: balloon.y,
+              transform: [{ translateX: balloon.shakeAnim }],
             },
           ]}
         >
-          <TouchableOpacity onPress={() => handleBalloonPress(balloon.word)}>
-            <View style={[styles.balloon, { backgroundColor: balloon.color }]}>
-              <View style={styles.shinyEffect} />
-              <View style={styles.ribbon} />
-            </View>
+          <TouchableOpacity onPress={() => handleBalloonPress(balloon.word)} style={styles.balloonTouchable}>
+            <BallSvg width={BALLOON_SIZE} height={BALLOON_SIZE} style={styles.balloon} />
             <Text style={styles.balloonText}>{balloon.word}</Text>
           </TouchableOpacity>
         </Animated.View>
@@ -137,39 +159,23 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignItems: 'center',
   },
-  balloon: {
-    width: 80,
-    height: 100,
-    borderRadius: 40,
-    position: 'relative',
-    justifyContent: 'flex-end',
+  balloonTouchable: {
     alignItems: 'center',
-  },
-  shinyEffect: {
-    position: 'absolute',
-    top: 10,
-    left: 20,
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    backgroundColor: 'rgba(255, 255, 255, 0.6)',
-  },
-  ribbon: {
-    width: 5,
-    height: 30,
-    backgroundColor: '#8B0000',
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-    position: 'absolute',
-    top: 100,
+    justifyContent: 'center',
   },
   balloonText: {
-    marginTop: -60,
-    fontSize: 16,
+    position: 'absolute',
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#FFFFFF',
     textAlign: 'center',
-    zIndex: 10,
+    zIndex: 2, 
+    top: '20%', 
+    width: BALLOON_SIZE,
+  },
+  balloon: {
+    zIndex: 1,
+    padding: 50,
   },
 });
 
