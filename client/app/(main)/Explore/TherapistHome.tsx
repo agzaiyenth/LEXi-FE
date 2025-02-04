@@ -11,7 +11,7 @@ const therapists: ITherapist[] = [
     id: '1',
     name: 'Dr. Freddy',
     description: 'Physiotherapist',
-    image: 'https://ui-avatars.com/api/?background=0D8ABC&color=fff',
+    image: 'https://avatar.iran.liara.run/public/job/doctor/male',
     location: 'Clinic A',
     contact: '+1234567890',
     availability: [],
@@ -20,7 +20,7 @@ const therapists: ITherapist[] = [
     id: '2',
     name: 'Dr. Sam',
     description: 'Physician',
-    image: 'https://ui-avatars.com/api/?background=0D8ABC&color=fff',
+    image: 'https://avatar.iran.liara.run/public/job/doctor/female',
     location: 'Clinic B',
     contact: '+0987654321',
     availability: [],
@@ -51,11 +51,13 @@ const TherapistHome = () => {
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalScroll}>
         {therapists.slice(0, 4).map((therapist) => (
+           <TouchableOpacity key={therapist.id}  onPress={() => navigation.navigate('BookTherapist')}>
           <View key={therapist.id} style={styles.doctorCard}>
             <Image source={{ uri: therapist.image }} style={styles.doctorImage} />
             <Text style={styles.doctorName}>{therapist.name}</Text>
             <Text style={styles.doctorSpecialty}>{therapist.description}</Text>
           </View>
+          </TouchableOpacity>
         ))}
         <TouchableOpacity style={styles.seeAllCard} onPress={() => navigation.navigate('AllDoctorsPage')}>
           <Text style={styles.seeAllText}>See All</Text>
@@ -70,7 +72,8 @@ const TherapistHome = () => {
       </View>
 
       {appointments.map((appt) => (
-        <View key={appt.Id} style={styles.appointmentCard}>
+         <TouchableOpacity key={appt.Id} onPress={() => navigation.navigate('BookTherapist')}>
+        <View  style={styles.appointmentCard}>
           <View style={styles.appointmentDateContainer}>
             <Text style={styles.appointmentDate}>{appt.appointmentTime.getDate()}</Text>
             <Text style={styles.appointmentDay}>{appt.appointmentTime.toLocaleString('en-US', { weekday: 'short' })}</Text>
@@ -80,16 +83,19 @@ const TherapistHome = () => {
             <Text style={styles.appointmentSpecialty}>{appt.status}</Text>
           </View>
         </View>
+        </TouchableOpacity>
       ))}
 
       <Text style={styles.sectionTitle}>Nearby Doctors</Text>
 
       {therapists.map((therapist) => (
+        <TouchableOpacity key={therapist.id}  onPress={() => navigation.navigate('BookTherapist')}>
         <View key={therapist.id} style={styles.nearbyDoctorCard}>
           <Image source={{ uri: therapist.image }} style={styles.doctorImage} />
           <Text style={styles.doctorName}>{therapist.name}</Text>
           <Text style={styles.doctorSpecialty}>{therapist.description}</Text>
         </View>
+        </TouchableOpacity>
       ))}
     </ScrollView>
   );
