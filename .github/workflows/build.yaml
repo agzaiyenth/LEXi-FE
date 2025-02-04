@@ -27,9 +27,13 @@ jobs:
         run: npm install
         working-directory: ./client 
 
-      - name: Start Metro Bundler Validation Part Test
+      - name: Verify Code Compiles
+        run: npm run lint  
+        working-directory: ./client
+
+      - name: Start Metro Bundler validation Part 1
         run: |
-          nohup npm start > metro.log 2>&1 &  # Runs Metro in the background
-          sleep 10  # Waits 10 seconds to ensure it starts properly
-          cat metro.log | tail -n 20  # Shows last 20 lines of the Metro log
+          nohup npm start > metro.log 2>&1 &
+          sleep 10  # Wait for Metro to initialize
+          grep -i "error" metro.log && exit 1 || echo "Metro started successfully"
         working-directory: ./client
