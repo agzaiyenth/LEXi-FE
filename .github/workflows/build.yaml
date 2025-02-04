@@ -1,0 +1,35 @@
+name: React Native Mobile Build Pipeline
+
+on:
+  push:
+    branches:
+      - main  # Runs on push to main branch
+  pull_request:
+    branches:
+      - main  # Runs on pull requests to main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Use a Linux runner
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set Up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: client/package-lock.json  # Caches node_modules
+
+      - name: Install Dependencies (Inside client folder)
+        run: npm install
+        working-directory: ./client  # Runs inside "client" folder
+
+      - name: Start Metro Bundler (Validation Only)
+        run: |
+          nohup npm start > metro.log 2>&1 &  # Runs Metro in the background
+          sleep 10  # Waits 10 seconds to ensure it starts properly
+          cat metro.log | tail -n 20  # Shows last 20 lines of the Metro log
+        working-directory: ./client
