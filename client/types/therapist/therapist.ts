@@ -1,15 +1,15 @@
 import { IAvailability } from "./availability";
 
 export interface TherapistDto {
-    name : String ;
-    description : String ;
-    image : String ;
-    location : String ;
-    contact : String ;
+    name : string ;
+    description : string ;
+    image : string ;
+    location : string ;
+    contact : string ;
 
 }
 
 export interface ITherapist extends TherapistDto {
-id : String;
+id : string;
 availability : IAvailability[]
 }

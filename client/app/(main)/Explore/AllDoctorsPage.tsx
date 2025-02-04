@@ -1,27 +1,58 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TextInput, ScrollView, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
+import { View, Text, Image, TextInput, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { ITherapist } from '@/types/therapist/therapist';
 
-const doctors = [
-  { name: 'Andrii Mykhailovych Kovalenko', specialty: 'General practitioner', rating: 4.5, experience: '12 years', reviews: 50, image: 'https://via.placeholder.com/100' },
-  { name: 'Olena Ivanivna Shevchenko', specialty: 'Gynecologist', rating: 4.7, experience: '17 years', reviews: 22, image: 'https://via.placeholder.com/100' },
+const therapists: ITherapist[] = [
+  {
+    id: '1',
+    name: 'Andrii Mykhailovych Kovalenko',
+    description: 'General practitioner',
+    image: 'https://ui-avatars.com/api/?background=0D8ABC&color=fff',
+    location: 'Kyiv, Ukraine',
+    contact: '+1234567890',
+    availability: [
+      { id: 'a1', therapist: 'Andrii', startTime: new Date('2024-04-01T10:00:00'), endTime: new Date('2024-04-01T10:15:00'), available: true },
+      { id: 'a2', therapist: 'Andrii', startTime: new Date('2024-04-01T10:30:00'), endTime: new Date('2024-04-01T10:45:00'), available: true },
+    ],
+  },
+  {
+    id: '2',
+    name: 'Olena Ivanivna Shevchenko',
+    description: 'Gynecologist',
+    image: 'https://ui-avatars.com/api/?background=0D8ABC&color=fff',
+    location: 'Kyiv, Ukraine',
+    contact: '+0987654321',
+    availability: [
+      { id: 'b1', therapist: 'Olena', startTime: new Date('2024-04-01T12:00:00'), endTime: new Date('2024-04-01T12:30:00'), available: true },
+      { id: 'b2', therapist: 'Olena', startTime: new Date('2024-04-01T13:00:00'), endTime: new Date('2024-04-01T13:30:00'), available: true },
+    ],
+  },
 ];
 
-const filters = ['All', 'Gynecologist', 'Family doctor', 'Pediatrician'];
-
-const availableTimes = ['10:00', '10:15', '10:30', '10:45'];
+const filters = ['All', 'Most Popular', 'Nearby doctor', 'Available', 'Online'];
 
 const AllDoctorsPage = () => {
   const [selectedFilter, setSelectedFilter] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedDate, setSelectedDate] = useState('Today, 02 Jan');
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const changeDate = (direction: number) => {
+    const newDate = new Date(selectedDate);
+    newDate.setDate(selectedDate.getDate() + direction);
+    setSelectedDate(newDate);
+  };
+
+  const formatDate = (date: Date) => {
+    return date.toDateString().slice(0, 10);
+  };
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.searchContainer}>
         <Ionicons name="search" size={20} color="gray" />
         <TextInput 
-          placeholder="Enter doctor’s name or specialization" 
+          placeholder="Enter therapist’s name or location" 
           style={styles.searchInput}
           value={searchQuery}
           onChangeText={setSearchQuery}
@@ -39,21 +70,32 @@ const AllDoctorsPage = () => {
         ))}
       </ScrollView>
 
-      {doctors.map((doctor, index) => (
+      {therapists.map((therapist,index) => (
         <View key={index} style={styles.doctorCard}>
-          <Image source={{ uri: doctor.image }} style={styles.doctorImage} />
-          <Text style={styles.doctorName}>{doctor.name}</Text>
-          <Text style={styles.doctorSpecialty}>{doctor.specialty}</Text>
-          <Text style={styles.doctorDetails}>⭐ {doctor.rating} ({doctor.reviews} Reviews) | {doctor.experience} of ex.</Text>
+          <Image source={{ uri: therapist.image }} style={styles.doctorImage} />
+          <Text style={styles.doctorName}>{therapist.name}</Text>
+          <Text style={styles.doctorSpecialty}>{therapist.description}</Text>
 
           <View style={styles.availableTimeContainer}>
             <Text style={styles.availableTimeTitle}>Available time</Text>
+            <View style={styles.dateContainer}>
+              <TouchableOpacity onPress={() => changeDate(-1)} style={styles.dateButton}>
+                <Ionicons name="chevron-back" size={20} color="black" />
+              </TouchableOpacity>
+              <Text style={styles.dateText}>{formatDate(selectedDate)}</Text>
+              <TouchableOpacity onPress={() => changeDate(1)} style={styles.dateButton}>
+                <Ionicons name="chevron-forward" size={20} color="black" />
+              </TouchableOpacity>
+            </View>
+
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.timeScroll}>
-              {availableTimes.map((time, timeIndex) => (
-                <TouchableOpacity key={timeIndex} style={styles.timeSlot}>
-                  <Text>{time}</Text>
-                </TouchableOpacity>
-              ))}
+              {therapist.availability
+                .filter((slot:any) => slot.available)
+                .map((slot:any) => (
+                  <TouchableOpacity key={slot.id} style={styles.timeSlot}>
+                    <Text>{slot.startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</Text>
+                  </TouchableOpacity>
+                ))}
             </ScrollView>
           </View>
         </View>
@@ -124,12 +166,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
   },
-  doctorDetails: {
-    color: '#777',
-    fontSize: 12,
-    textAlign: 'center',
-    marginVertical: 4,
-  },
   availableTimeContainer: {
     marginTop: 10,
   },
@@ -137,6 +173,20 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 14,
     marginBottom: 4,
+  },
+  dateContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 8,
+  },
+  dateButton: {
+    padding: 8,
+  },
+  dateText: {
+    fontWeight: 'bold',
+    fontSize: 14,
+    marginHorizontal: 8,
   },
   timeScroll: {
     flexDirection: 'row',
