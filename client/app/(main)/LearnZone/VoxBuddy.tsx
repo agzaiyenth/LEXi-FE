@@ -6,7 +6,6 @@ It contains the ChatInterface component.
 */
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import ChatInterface from './voxbuddy/ChatInterface';
 
 const VoxBuddy = () => {
   return (

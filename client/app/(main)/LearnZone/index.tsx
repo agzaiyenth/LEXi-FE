@@ -7,7 +7,6 @@ It contains stack screens for the LearnZone .
 import React from 'react';
 import VoxBuddy from './VoxBuddy'; 
 import LearnMainScreen from './LearnMainScreen';
-import { createStackNavigator } from '@react-navigation/stack';
 
 export type LearnZoneParamList = {
   LearnMain: undefined; 
@@ -23,7 +22,7 @@ const LearnZone = () => {
         headerShown: false, // Disable headers for a cleaner look
       }}
     >
-      <Stack.Screen name="LearnMain" component={LearnMainScreen} />
+      
       <Stack.Screen name="VoxBuddy" component={VoxBuddy} />
     </Stack.Navigator>
   );
