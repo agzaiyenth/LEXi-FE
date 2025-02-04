@@ -1,41 +1,16 @@
-import React, { useState } from 'react';
-import { View, Text, Image, TextInput, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
+import { useGetAllTherapist } from '@/src/hooks/therapist/useGetAllTherapist';
 import { Ionicons } from '@expo/vector-icons';
-import { ITherapist } from '@/types/therapist/therapist';
-
-const therapists: ITherapist[] = [
-  {
-    id: '1',
-    name: 'Andrii Mykhailovych Kovalenko',
-    description: 'General practitioner',
-    image: 'https://ui-avatars.com/api/?background=0D8ABC&color=fff',
-    location: 'Kyiv, Ukraine',
-    contact: '+1234567890',
-    availability: [
-      { id: 'a1', therapist: 'Andrii', startTime: new Date('2024-04-01T10:00:00'), endTime: new Date('2024-04-01T10:15:00'), available: true },
-      { id: 'a2', therapist: 'Andrii', startTime: new Date('2024-04-01T10:30:00'), endTime: new Date('2024-04-01T10:45:00'), available: true },
-    ],
-  },
-  {
-    id: '2',
-    name: 'Olena Ivanivna Shevchenko',
-    description: 'Gynecologist',
-    image: 'https://ui-avatars.com/api/?background=0D8ABC&color=fff',
-    location: 'Kyiv, Ukraine',
-    contact: '+0987654321',
-    availability: [
-      { id: 'b1', therapist: 'Olena', startTime: new Date('2024-04-01T12:00:00'), endTime: new Date('2024-04-01T12:30:00'), available: true },
-      { id: 'b2', therapist: 'Olena', startTime: new Date('2024-04-01T13:00:00'), endTime: new Date('2024-04-01T13:30:00'), available: true },
-    ],
-  },
-];
+import React, { useState, useCallback } from 'react';
+import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, RefreshControl } from 'react-native';
 
 const filters = ['All', 'Most Popular', 'Nearby doctor', 'Available', 'Online'];
 
 const AllDoctorsPage = () => {
+  const { therapists, loading, error, refetch } = useGetAllTherapist();
   const [selectedFilter, setSelectedFilter] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [refreshing, setRefreshing] = useState(false);
 
   const changeDate = (direction: number) => {
     const newDate = new Date(selectedDate);
@@ -47,12 +22,30 @@ const AllDoctorsPage = () => {
     return date.toDateString().slice(0, 10);
   };
 
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    refetch().finally(() => setRefreshing(false));
+  }, [refetch]);
+
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
+
+  if (error) {
+    return <Text>Error: {error}</Text>;
+  }
+
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
       <View style={styles.searchContainer}>
         <Ionicons name="search" size={20} color="gray" />
         <TextInput 
-          placeholder="Enter therapist’s name or location" 
+          placeholder="Enter therapist's name or location" 
           style={styles.searchInput}
           value={searchQuery}
           onChangeText={setSearchQuery}
@@ -70,8 +63,8 @@ const AllDoctorsPage = () => {
         ))}
       </ScrollView>
 
-      {therapists.map((therapist,index) => (
-        <View key={index} style={styles.doctorCard}>
+      {therapists.map((therapist) => (
+        <View key={therapist.id} style={styles.doctorCard}>
           <Image source={{ uri: therapist.image }} style={styles.doctorImage} />
           <Text style={styles.doctorName}>{therapist.name}</Text>
           <Text style={styles.doctorSpecialty}>{therapist.description}</Text>
