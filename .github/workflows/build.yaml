@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Use a Linux runner
+    runs-on: ubuntu-latest  
 
     steps:
       - name: Checkout Repository
@@ -21,13 +21,13 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
-          cache-dependency-path: client/package-lock.json  # Caches node_modules
+          cache-dependency-path: client/package-lock.json 
 
       - name: Install Dependencies (Inside client folder)
         run: npm install
-        working-directory: ./client  # Runs inside "client" folder
+        working-directory: ./client 
 
-      - name: Start Metro Bundler (Validation Only)
+      - name: Start Metro Bundler Validation Part Test
         run: |
           nohup npm start > metro.log 2>&1 &  # Runs Metro in the background
           sleep 10  # Waits 10 seconds to ensure it starts properly
