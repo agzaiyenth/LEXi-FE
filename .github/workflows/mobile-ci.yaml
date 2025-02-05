@@ -35,7 +35,7 @@ jobs:
       - name: ✅ Build for Android Preview (Expo Go)
         working-directory: ./client
         env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          EXPO_TOKEN: 7WyR_997ACkptOYDFBuC_KjwWDnRo24IWVU3-ksw
         run: |
           eas login --token $EXPO_TOKEN
           eas update --branch android-preview --message "CI Build for Android"
@@ -66,7 +66,7 @@ jobs:
       - name: ✅ Build for iOS Preview (Expo Go)
         working-directory: ./client
         env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          EXPO_TOKEN: 7WyR_997ACkptOYDFBuC_KjwWDnRo24IWVU3-ksw
         run: |
           eas login --token $EXPO_TOKEN
           eas update --branch ios-preview --message "CI Build for iOS"
