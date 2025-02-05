@@ -24,6 +24,12 @@ jobs:
           cache: 'npm'
           cache-dependency-path: client/package-lock.json
 
+      - name: 🚀 Cache EAS Builds
+        uses: actions/cache@v3
+        with:
+          path: ~/.expo
+          key: ${{ runner.os }}-expo-${{ hashFiles('**/package-lock.json') }}
+
       - name: 📦 Install Dependencies
         run: npm install
         working-directory: ./client
@@ -37,7 +43,7 @@ jobs:
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: |
-          eas update --branch android-preview --message "CI Build for Android"
+          EAS_VERBOSE=1 eas update --branch android-preview --message "CI Build for Android"
 
   build-ios:
     name: 🍏 iOS Build
@@ -54,6 +60,12 @@ jobs:
           cache: 'npm'
           cache-dependency-path: client/package-lock.json
 
+      - name: 🚀 Cache EAS Builds
+        uses: actions/cache@v3
+        with:
+          path: ~/.expo
+          key: ${{ runner.os }}-expo-${{ hashFiles('**/package-lock.json') }}
+
       - name: 📦 Install Dependencies
         run: npm install
         working-directory: ./client
@@ -67,4 +79,4 @@ jobs:
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: |
-          eas update --branch ios-preview --message "CI Build for iOS"
+          EAS_VERBOSE=1 eas update --branch ios-preview --message "CI Build for iOS"
