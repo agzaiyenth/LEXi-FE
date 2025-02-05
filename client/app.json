@@ -28,6 +28,7 @@
       },
       "package": "com.lexilk.lexi",
       "permissions": [
+        "RECORD_AUDIO",
         "RECORD_AUDIO"
       ]
     },
@@ -51,6 +52,12 @@
         "projectId": "5753a34d-5815-4818-ae00-4fbefd718f93"
       }
     },
-    "owner": "lexilk"
+    "owner": "lexilk",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/5753a34d-5815-4818-ae00-4fbefd718f93"
+    }
   }
 }
