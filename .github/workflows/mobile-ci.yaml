@@ -3,37 +3,70 @@ name: 🚀 React Native Mobile Build Pipeline
 on:
   push:
     branches:
-      - main  # Runs on push to main branch
+      - main
   pull_request:
     branches:
-      - main  # Runs on pull requests to main branch
+      - main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest  
+  build-android:
+    name: 📱 Android Build
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: 🔄 Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Set Up Node.js
+      - name: ⚙️ Set Up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: client/package-lock.json 
+          cache-dependency-path: client/package-lock.json
 
-      - name: Install Dependencies (Inside client folder)
+      - name: 📦 Install Dependencies
         run: npm install
-        working-directory: ./client 
+        working-directory: ./client
 
-      - name: Install EAS CLI
+      - name: 🚀 Install EAS CLI
         run: npm install -g eas-cli
         working-directory: ./client
 
-      - name: ✅ Run EAS Build Test (No Submission)
+      - name: ✅ Build for Android Preview (Expo Go)
+        working-directory: ./client
         env:
-         EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: |
-         eas login --token $EXPO_TOKEN
-         eas build --platform all --profile preview --non-interactive
+          eas login --token $EXPO_TOKEN
+          eas update --branch android-preview --message "CI Build for Android"
+
+  build-ios:
+    name: 🍏 iOS Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🔄 Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: ⚙️ Set Up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: client/package-lock.json
+
+      - name: 📦 Install Dependencies
+        run: npm install
+        working-directory: ./client
+
+      - name: 🚀 Install EAS CLI
+        run: npm install -g eas-cli
+        working-directory: ./client
+
+      - name: ✅ Build for iOS Preview (Expo Go)
+        working-directory: ./client
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: |
+          eas login --token $EXPO_TOKEN
+          eas update --branch ios-preview --message "CI Build for iOS"
