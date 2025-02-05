@@ -14,8 +14,8 @@ import {
 import theme from '../../../src/theme';
 import { useLogin } from '@/src/hooks/auth/useLogin';
 import { Link, useRouter } from 'expo-router';
-import { showToast } from '@/utils/notifications';
 import { useSession } from '@/src/ctx';
+import Toast from 'react-native-toast-message';
 
 const SignInScreen = () => {
   const { login, loading, error } = useLogin();
@@ -36,11 +36,10 @@ const SignInScreen = () => {
       // Pass an object matching the LoginRequest interface
       const token = await login({ username, password });
   
-      showToast({
-        title: 'Login Successful!',
-        preset: 'done',
-        haptic: 'success',
-        from: 'top',
+      Toast.show({
+        type: 'success',
+        text1: 'Login Successful!',
+        text2: 'Welcome to LEXi ! 👋'
       });
   
       console.log('Login successful:', token);
@@ -48,11 +47,11 @@ const SignInScreen = () => {
       // Redirect to the main area of the app
       router.push('/(main)');
     } catch (err: any) {
-      showToast({
-        title: 'Login Failed!',
-        preset: 'error',
-        haptic: 'error',
-        from: 'top',
+      
+      Toast.show({
+        type: 'error',
+        text1: 'Login Failed!',
+        text2: 'Try login in again'
       });
   
       console.error('Login failed:', err.message);
