@@ -1,10 +1,10 @@
 export interface AvailabilityDto {
-    therapist : String;
-    startTime : Date;
-    endTime : Date;
-    available : Boolean;
+    therapistId: string;  
+    startTime: string;   
+    endTime: string;
+    available: boolean;
 }
 
-export interface IAvailability extends AvailabilityDto{
-    id : String;
+export interface IAvailability extends AvailabilityDto {
+    availabilitySlotId: string;
 }

@@ -1,47 +1,47 @@
-import { useGetAllTherapist } from '@/src/hooks/therapist/useGetAllTherapist';
+
+import { useGetAllTherapists } from '@/src/hooks/therapist/useGetAllTherapist';
+import { IAvailability } from '@/types/therapist/availability';
+import { ITherapist } from '@/types/therapist/therapist';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState, useCallback } from 'react';
-import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, RefreshControl } from 'react-native';
+import { 
+  Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, RefreshControl 
+} from 'react-native';
 
 const filters = ['All', 'Most Popular', 'Nearby doctor', 'Available', 'Online'];
 
 const AllDoctorsPage = () => {
-  const { therapists, loading, error, refetch } = useGetAllTherapist();
-  const [selectedFilter, setSelectedFilter] = useState('All');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [refreshing, setRefreshing] = useState(false);
+  const { therapists, loading, error, refetch } = useGetAllTherapists();
+  const [selectedFilter, setSelectedFilter] = useState<string>('All');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [refreshing, setRefreshing] = useState<boolean>(false);
 
+  // Change date for available slots
   const changeDate = (direction: number) => {
     const newDate = new Date(selectedDate);
     newDate.setDate(selectedDate.getDate() + direction);
     setSelectedDate(newDate);
   };
 
-  const formatDate = (date: Date) => {
-    return date.toDateString().slice(0, 10);
-  };
+  // Format date for UI
+  const formatDate = (date: Date) => date.toDateString().slice(0, 10);
 
+  // Refresh data when pulling down
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     refetch().finally(() => setRefreshing(false));
   }, [refetch]);
 
-  if (loading) {
-    return <Text>Loading...</Text>;
-  }
-
-  if (error) {
-    return <Text>Error: {error}</Text>;
-  }
+  if (loading) return <Text>Loading...</Text>;
+  if (error) return <Text>Error: {error}</Text>;
 
   return (
     <ScrollView
       style={styles.container}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
     >
+      {/*  Search Bar */}
       <View style={styles.searchContainer}>
         <Ionicons name="search" size={20} color="gray" />
         <TextInput 
@@ -52,23 +52,27 @@ const AllDoctorsPage = () => {
         />
       </View>
 
+      {/*  Filter Tabs */}
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.filterContainer}>
         {filters.map((filter, index) => (
           <TouchableOpacity 
             key={index} 
             style={[styles.filterTab, selectedFilter === filter && styles.selectedFilterTab]} 
-            onPress={() => setSelectedFilter(filter)}>
+            onPress={() => setSelectedFilter(filter)}
+          >
             <Text style={[styles.filterText, selectedFilter === filter && styles.selectedFilterText]}>{filter}</Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
 
-      {therapists.map((therapist) => (
-        <View key={therapist.id} style={styles.doctorCard}>
+      {/*  Therapist List */}
+      {therapists.map((therapist: ITherapist) => (
+        <View key={therapist.therapistId} style={styles.doctorCard}>
           <Image source={{ uri: therapist.image }} style={styles.doctorImage} />
           <Text style={styles.doctorName}>{therapist.name}</Text>
           <Text style={styles.doctorSpecialty}>{therapist.description}</Text>
 
+          {/*  Availability Section */}
           <View style={styles.availableTimeContainer}>
             <Text style={styles.availableTimeTitle}>Available time</Text>
             <View style={styles.dateContainer}>
@@ -81,14 +85,21 @@ const AllDoctorsPage = () => {
               </TouchableOpacity>
             </View>
 
+            {/*  Availability Slots */}
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.timeScroll}>
-              {therapist.availability
-                .filter((slot:any) => slot.available)
-                .map((slot:any) => (
-                  <TouchableOpacity key={slot.id} style={styles.timeSlot}>
-                    <Text>{slot.startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</Text>
-                  </TouchableOpacity>
-                ))}
+              {therapist.availabilities && therapist.availabilities.length > 0 ? (
+                therapist.availabilities
+                  .filter((slot: IAvailability) => slot.available) 
+                  .map((slot: IAvailability) => (
+                    <TouchableOpacity key={slot.availabilitySlotId} style={styles.timeSlot}>
+                      <Text>
+                        {new Date(slot.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </Text>
+                    </TouchableOpacity>
+                  ))
+              ) : (
+                <Text style={styles.noAvailabilityText}>No available slots</Text>
+              )}
             </ScrollView>
           </View>
         </View>
@@ -189,6 +200,12 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 12,
     marginRight: 8,
+  },
+  noAvailabilityText: {
+    color: 'gray',
+    fontSize: 14,
+    textAlign: 'center',
+    marginTop: 10,
   },
 });
 

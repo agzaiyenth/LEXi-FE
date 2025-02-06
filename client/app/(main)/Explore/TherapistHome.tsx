@@ -1,39 +1,28 @@
-import { IAppointmentDto } from '@/types/therapist/appointment';
+
+import { useGetAllTherapists } from '@/src/hooks/therapist/useGetAllTherapist';
+import { useGetAppointments } from '@/src/hooks/therapist/useGetAppointments';
+import { AppointmentDto, IAppointment } from '@/types/therapist/appointment';
 import { ITherapist } from '@/types/therapist/therapist';
 import { Ionicons } from '@expo/vector-icons';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from 'expo-router';
 import React from 'react';
-import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
-const therapists: ITherapist[] = [
-  {
-    id: '1',
-    name: 'Dr. Freddy',
-    description: 'Physiotherapist',
-    image: 'https://avatar.iran.liara.run/public/job/doctor/male',
-    location: 'Clinic A',
-    contact: '+1234567890',
-    availability: [],
-  },
-  {
-    id: '2',
-    name: 'Dr. Sam',
-    description: 'Physician',
-    image: 'https://avatar.iran.liara.run/public/job/doctor/female',
-    location: 'Clinic B',
-    contact: '+0987654321',
-    availability: [],
-  }
-];
-
-const appointments: IAppointmentDto[] = [
-  { Id: '1', user: 'User1', therapist: 'Dr. John Doe', appointmentTime: new Date(), status: 'Confirmed' },
-  { Id: '2', user: 'User2', therapist: 'Dr. John Smith', appointmentTime: new Date(), status: 'Pending' }
-];
 
 const TherapistHome = () => {
   const navigation = useNavigation<StackNavigationProp<any, 'AllDoctorsPage'>>();
+  const { therapists, loading:therapistsLoading, error:therapistsError} = useGetAllTherapists();
+  const { appointments, loading: appointmentsLoading, error: appointmentsError } = useGetAppointments();
+
+  // Show only the latest 5 therapists
+  const latestTherapists = therapists.slice(0, 5);
+  if (therapistsLoading || appointmentsLoading) {
+    return <ActivityIndicator size="large" color="#007BFF" />;
+  }
+
+  if (therapistsError) return <Text>Error: {therapistsError}</Text>;
+  if (appointmentsError) return <Text>Error: {appointmentsError}</Text>;
 
   return (
     <ScrollView style={styles.container}>
@@ -50,13 +39,16 @@ const TherapistHome = () => {
       </View>
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalScroll}>
-        {therapists.slice(0, 4).map((therapist) => (
-           <TouchableOpacity key={therapist.id}  onPress={() => navigation.navigate('BookTherapist')}>
-          <View key={therapist.id} style={styles.doctorCard}>
-            <Image source={{ uri: therapist.image }} style={styles.doctorImage} />
-            <Text style={styles.doctorName}>{therapist.name}</Text>
-            <Text style={styles.doctorSpecialty}>{therapist.description}</Text>
-          </View>
+      {latestTherapists.map((therapist: ITherapist) => (
+          <TouchableOpacity 
+            key={therapist.therapistId}  
+            onPress={() => navigation.navigate('BookTherapist', { therapistId: therapist.therapistId })}
+          >
+            <View style={styles.doctorCard}>
+              <Image source={{ uri: therapist.image }} style={styles.doctorImage} />
+              <Text style={styles.doctorName}>{therapist.name}</Text>
+              <Text style={styles.doctorSpecialty}>{therapist.location}</Text>
+            </View>
           </TouchableOpacity>
         ))}
         <TouchableOpacity style={styles.seeAllCard} onPress={() => navigation.navigate('AllDoctorsPage')}>
@@ -71,24 +63,36 @@ const TherapistHome = () => {
         </TouchableOpacity>
       </View>
 
-      {appointments.map((appt) => (
-         <TouchableOpacity key={appt.Id} onPress={() => navigation.navigate('BookTherapist')}>
-        <View  style={styles.appointmentCard}>
-          <View style={styles.appointmentDateContainer}>
-            <Text style={styles.appointmentDate}>{appt.appointmentTime.getDate()}</Text>
-            <Text style={styles.appointmentDay}>{appt.appointmentTime.toLocaleString('en-US', { weekday: 'short' })}</Text>
-          </View>
-          <View>
-            <Text style={styles.appointmentDoctor}>{appt.therapist}</Text>
-            <Text style={styles.appointmentSpecialty}>{appt.status}</Text>
-          </View>
-        </View>
-        </TouchableOpacity>
-      ))}
+
+      {appointments.length > 0 ? (
+        appointments.map((appt: IAppointment) => (
+          <TouchableOpacity key={appt.appointmentId} onPress={() => navigation.navigate('BookTherapist', { therapistId: appt.appointmentId })}>
+            <View style={styles.appointmentCard}>
+              <View style={styles.appointmentDateContainer}>
+                <Text style={styles.appointmentDate}>
+                  2023/12/3
+                  {/* TODO Update the appointments dto to carry therapist details and date details instead of the ids */}
+                  {/* {new Date(appt.appointmentTime).getDate()} */}
+                  </Text>
+                <Text style={styles.appointmentDay}>
+                  monday
+                  {/* {new Date(appt.appointmentTime).toLocaleString('en-US', { weekday: 'short' })} */}
+                  </Text>
+              </View>
+              <View>
+                <Text style={styles.appointmentDoctor}>Doctor Name: {appt.therapistId}</Text>
+                <Text style={styles.appointmentSpecialty}>{appt.status}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        ))
+      ) : (
+        <Text style={styles.noAppointmentsText}>No upcoming appointments</Text>
+      )}
 
       <Text style={styles.sectionTitle}>Nearby Doctors</Text>
 
-      {therapists.map((therapist) => (
+      {therapists.map((therapist:any) => (
         <TouchableOpacity key={therapist.id}  onPress={() => navigation.navigate('BookTherapist')}>
         <View key={therapist.id} style={styles.nearbyDoctorCard}>
           <Image source={{ uri: therapist.image }} style={styles.doctorImage} />
@@ -132,6 +136,11 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 14,
+  },noAppointmentsText: {
+    textAlign: 'center',
+    color: 'gray',
+    fontSize: 14,
+    marginTop: 10,
   },
   sectionTitle: {
     fontSize: 18,

@@ -1,16 +1,10 @@
-
 export interface AppointmentDto {
-    user : string 
-    therapist : string;
-    appointmentTime : Date;
-    status : string;
+    userId: string;      
+    therapistId: string; 
+    availabilityId: string; 
+    status?: string;   
 }
 
-
-export interface IAppointmentDto {
-    Id : string;
-    user : string 
-    therapist : string;
-    appointmentTime : Date;
-    status : string;
+export interface IAppointment extends AppointmentDto {
+    appointmentId: string; 
 }
