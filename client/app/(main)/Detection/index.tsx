@@ -52,6 +52,38 @@ const DetectionFlow = () => {
     }
   };
 
+  const handleAnswerSubmit = async (answer: string) => {
+    const currentQuestion = questions[currentQuestionIndex];
+    setSelectedAnswer(answer);
+  
+    try {
+      const response = await fetch(`${backendURL}/feedback?questionId=${currentQuestion.id}&answer=${answer}`, {
+        method: 'POST',
+      });
+  
+      const data = await response.json();
+      if (data.error) {
+        Alert.alert('Error', data.error);
+        return;
+      }
+  
+      setAnswers([...answers, { questionId: currentQuestion.id, answer }]);
+      setScore(data.score);
+  
+      setTimeout(() => {
+        if (currentQuestionIndex + 1 < questions.length) {
+          setCurrentQuestionIndex(currentQuestionIndex + 1);
+          setSelectedAnswer(null);
+        } else {
+          calculateFinalScore();
+        }
+      }, 1000);
+    } catch (error) {
+      console.error('Error:', error);
+      Alert.alert('Error', 'Failed to submit answer.');
+    }
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {/* Age input and submit button */}
