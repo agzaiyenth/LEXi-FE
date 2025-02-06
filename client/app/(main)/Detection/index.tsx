@@ -33,6 +33,25 @@ const DetectionFlow = () => {
 
   const backendURL = 'http://192.168.1.101:8080/api/questions';
 
+  const handleAgeSubmit = async () => {
+    if (!age || isNaN(Number(age))) {
+      Alert.alert('Invalid Age', 'Please enter a valid age.');
+      return;
+    }
+  
+    try {
+      const response = await fetch(`${backendURL}/age?age=${age}`, { method: 'POST' });
+      if (!response.ok) throw new Error('Failed to fetch questions for the given age.');
+  
+      const data: AgeResponse = await response.json();
+      setAgeGroup(data.ageGroup);
+      setQuestions(data.questions);
+    } catch (error) {
+      console.error('Error:', error);
+      Alert.alert('Error', 'Failed to fetch questions.');
+    }
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {/* Age input and submit button */}
