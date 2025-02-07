@@ -236,6 +236,36 @@ const styles = StyleSheet.create({
     marginVertical: 15,
     color: theme.colors.blacks.medium,
   },
+  input: {
+    borderWidth: 1,
+    borderColor: theme.colors.background.offWhite,
+    padding: 10,
+    marginBottom: 20,
+    width: 200,
+    textAlign: 'center',
+    borderRadius: 4,
+    fontSize: 18,
+  },
+  image: {
+    width: 300,
+    height: 200,
+    marginVertical: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#ddd',
+  },
+  optionContainer: {
+    padding: 15,
+    backgroundColor: theme.colors.secondary.light2,
+    marginVertical: 5,
+    borderRadius: 5,
+    width: 200,
+    alignItems: 'center',
+    marginHorizontal: 20,
+  },
+  selectedOption: {
+    backgroundColor: theme.colors.primary.medium2,
+  },
 });
 
 
