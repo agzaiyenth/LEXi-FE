@@ -127,5 +127,24 @@ const DetectionFlow = () => {
     }
   }, [currentQuestionIndex, questions]);
 
+  const currentQuestion = questions[currentQuestionIndex];
+
+  return (
+    <ScrollView contentContainerStyle={styles.container}>
+      {!ageGroup ? (
+        <View style={styles.ageInputContainer}>
+          <Text style={styles.title}>Enter your Age:</Text>
+          <TextInput
+            style={styles.input}
+            keyboardType="numeric"
+            value={age}
+            onChangeText={setAge}
+            placeholder="e.g., 16"
+            placeholderTextColor={theme.colors.blacks.medium}
+          />
+          <Button title="Submit Age" onPress={handleAgeSubmit} color={theme.colors.primary.medium2} />
+        </View>
+      )   
+
 export default DetectionFlow;
 
