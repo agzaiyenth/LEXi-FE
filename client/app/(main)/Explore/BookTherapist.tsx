@@ -284,21 +284,21 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   timeSlot: {
-    backgroundColor: theme.colors.primary.medium2,
+    backgroundColor: theme.colors.primary.light2,
     padding: 10,
     borderRadius: 20,
     margin: 5,
   },
   selectedTimeSlot: {
-    borderColor: '#3B8C84',
+    borderColor: theme.colors.primary.dark1,
     borderWidth: 2,
-    backgroundColor: theme.colors.primary.medium2,
+    backgroundColor: theme.colors.primary.dark2,
   },
   timeText: {
-    color: theme.colors.primary.medium,
+    color: theme.colors.primary.dark1,
   },
   selectedTimeText: {
-    color: '#3B8C84',
+    color: 'white',
     fontWeight: 'bold',
   },
   actionContainer: {
