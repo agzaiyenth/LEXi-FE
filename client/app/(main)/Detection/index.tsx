@@ -183,7 +183,29 @@ const DetectionFlow = () => {
     </ScrollView>
   );
 };
-  
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    backgroundColor: theme.colors.primary.light2,
+  },
+  ageInputContainer: {
+    width: '80%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  questionContainer: {
+    alignItems: 'center',
+  },
+  resultContainer: {
+    alignItems: 'center',
+    marginVertical: 20,
+  },
+});
+
 
 export default DetectionFlow;
 
