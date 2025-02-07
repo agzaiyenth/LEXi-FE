@@ -1,6 +1,7 @@
 
 import { useGetAllTherapists } from '@/src/hooks/therapist/useGetAllTherapist';
 import { useGetAppointments } from '@/src/hooks/therapist/useGetAppointments';
+import theme from '@/src/theme';
 import { AppointmentDto, IAppointment } from '@/types/therapist/appointment';
 import { ITherapist } from '@/types/therapist/therapist';
 import { Ionicons } from '@expo/vector-icons';
@@ -108,12 +109,12 @@ const TherapistHome = () => {
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.background.offWhite,
   },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f0f0f0',
+    backgroundColor: theme.colors.background.beige,
     borderRadius: 12,
     padding: 10,
     marginBottom: 16,
@@ -124,7 +125,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   seeAllCard: {
-    backgroundColor: '#007BFF',
+    backgroundColor: theme.colors.primary.medium2,
     padding: 12,
     borderRadius: 16,
     alignItems: 'center',
@@ -151,7 +152,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   doctorCard: {
-    backgroundColor: '#e0e0e0',
+    backgroundColor: theme.colors.primary.light2,
     padding: 12,
     borderRadius: 16,
     alignItems: 'center',
@@ -175,13 +176,13 @@ const styles = StyleSheet.create({
   appointmentCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#cce7ff',
+    backgroundColor: theme.colors.primary.light2,
     padding: 12,
     borderRadius: 16,
     marginBottom: 8,
   },
   appointmentDateContainer: {
-    backgroundColor: '#007BFF',
+    backgroundColor: theme.colors.primary.medium2,
     borderRadius: 8,
     padding: 8,
     alignItems: 'center',
@@ -205,7 +206,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   nearbyDoctorCard: {
-    backgroundColor: '#e0e0e0',
+    backgroundColor: theme.colors.primary.light2,
     padding: 16,
     margin: 10,
     borderRadius: 16,

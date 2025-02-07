@@ -1,5 +1,6 @@
 
 import { useGetAllTherapists } from '@/src/hooks/therapist/useGetAllTherapist';
+import theme from '@/src/theme';
 import { IAvailability } from '@/types/therapist/availability';
 import { ITherapist } from '@/types/therapist/therapist';
 import { Ionicons } from '@expo/vector-icons';
@@ -111,7 +112,7 @@ const AllDoctorsPage = () => {
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.background.beige,
   },
   searchContainer: {
     flexDirection: 'row',
