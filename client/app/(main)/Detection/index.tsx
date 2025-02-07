@@ -204,6 +204,38 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 20,
   },
+  title: {
+    fontSize: 26,
+    fontWeight: '600',
+    marginBottom: 20,
+    color: theme.colors.blacks.medium,
+  },
+  questionText: {
+    fontSize: 20,
+    marginBottom: 10,
+    textAlign: 'center',
+    color: theme.colors.blacks.medium,
+  },
+  displayText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+    backgroundColor: '#f0f0f0',
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 5,
+    textAlign: 'center',
+  },
+  optionText: {
+    fontSize: 18,
+    color: theme.colors.blacks.medium,
+  },
+  result: {
+    fontSize: 22,
+    fontWeight: '600',
+    marginVertical: 15,
+    color: theme.colors.blacks.medium,
+  },
 });
 
 
