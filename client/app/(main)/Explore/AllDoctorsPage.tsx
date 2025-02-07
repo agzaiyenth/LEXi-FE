@@ -93,7 +93,7 @@ const AllDoctorsPage = () => {
                   .filter((slot: IAvailability) => slot.available) 
                   .map((slot: IAvailability) => (
                     <TouchableOpacity key={slot.availabilitySlotId} style={styles.timeSlot}>
-                      <Text>
+                      <Text style={styles.slottext}>
                         {new Date(slot.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </Text>
                     </TouchableOpacity>
@@ -112,7 +112,7 @@ const AllDoctorsPage = () => {
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-    backgroundColor: theme.colors.background.beige,
+    backgroundColor: theme.colors.background.offWhite,
   },
   searchContainer: {
     flexDirection: 'row',
@@ -134,12 +134,12 @@ const styles = StyleSheet.create({
   filterTab: {
     paddingHorizontal: 16,
     paddingVertical: 8,
-    backgroundColor: '#e0e0e0',
+    backgroundColor: theme.colors.primary.light3,
     borderRadius: 20,
     marginRight: 8,
   },
   selectedFilterTab: {
-    backgroundColor: '#007BFF',
+    backgroundColor: theme.colors.primary.dark2,
   },
   filterText: {
     fontSize: 14,
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   doctorCard: {
-    backgroundColor: '#f9f9f9',
+    backgroundColor: theme.colors.primary.light2,
     padding: 16,
     borderRadius: 16,
     marginBottom: 16,
@@ -167,12 +167,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   doctorSpecialty: {
-    color: '#007BFF',
+    color: theme.colors.primary.dark3,
     fontSize: 14,
     textAlign: 'center',
   },
   availableTimeContainer: {
     marginTop: 10,
+   
   },
   availableTimeTitle: {
     fontWeight: 'bold',
@@ -197,10 +198,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   timeSlot: {
-    backgroundColor: '#e0e0e0',
+    backgroundColor: theme.colors.primary.dark2,
+    color:'white',
     padding: 8,
     borderRadius: 12,
     marginRight: 8,
+  },
+  slottext:{
+color:'white',
   },
   noAvailabilityText: {
     color: 'gray',
