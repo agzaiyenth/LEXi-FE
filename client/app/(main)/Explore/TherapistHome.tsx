@@ -19,7 +19,7 @@ const TherapistHome = () => {
   // Show only the latest 5 therapists
   const latestTherapists = therapists.slice(0, 5);
   if (therapistsLoading || appointmentsLoading) {
-    return <ActivityIndicator size="large" color="#007BFF" />;
+    return <ActivityIndicator size="large" color={theme.colors.primary.medium} />;
   }
 
   if (therapistsError) return <Text>Error: {therapistsError}</Text>;
@@ -67,7 +67,7 @@ const TherapistHome = () => {
 
       {appointments.length > 0 ? (
         appointments.map((appt: IAppointment) => (
-          <TouchableOpacity key={appt.appointmentId} onPress={() => navigation.navigate('BookTherapist', { therapistId: appt.appointmentId })}>
+          <TouchableOpacity key={appt.appointmentId} >
             <View style={styles.appointmentCard}>
               <View style={styles.appointmentDateContainer}>
                 <Text style={styles.appointmentDate}>

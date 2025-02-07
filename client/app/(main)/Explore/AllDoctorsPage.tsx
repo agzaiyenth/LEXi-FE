@@ -130,7 +130,7 @@ const AllDoctorsPage = () => {
               <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.timeScroll}>
                 {filteredSlots.length > 0 ? (
                   filteredSlots.map((slot: IAvailability) => (
-                    <TouchableOpacity key={slot.availabilitySlotId} style={styles.timeSlot} onPress={() => navigation.navigate('BookTherapist')}>
+                    <TouchableOpacity key={slot.availabilitySlotId} style={styles.timeSlot} onPress={() => navigation.navigate('BookTherapist', { therapistId: therapist.therapistId })}>
                       <Text style={styles.slotText}>
                         {new Date(slot.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </Text>
