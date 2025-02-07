@@ -107,5 +107,25 @@ const DetectionFlow = () => {
     }
   };
 
+  useEffect(() => {
+    const currentQuestion = questions[currentQuestionIndex];
+
+    // Apply logic only for Question 3
+    if (currentQuestion?.id === 3 && currentQuestion.display) {
+      setDisplaySentence(currentQuestion.display);
+
+      // Hide the display sentence after 5 seconds
+      const timer = setTimeout(() => {
+        setDisplaySentence(null);
+      }, 4000);
+
+      // Clear timer when the question changes
+      return () => clearTimeout(timer);
+    } else {
+      // Clear the display when it's not Question 3
+      setDisplaySentence(null);
+    }
+  }, [currentQuestionIndex, questions]);
+
 export default DetectionFlow;
 
