@@ -141,8 +141,8 @@ const DetectionFlow = () => {
             keyboardType="numeric"
             value={age}
             onChangeText={setAge}
-            placeholder="e.g., 16"
-            placeholderTextColor={theme.colors.blacks.medium}
+            placeholder="e.g., 10"
+            placeholderTextColor={theme.colors.primary.medium2}
           />
           <Button title="Submit Age" onPress={handleAgeSubmit} color={theme.colors.primary.medium2} />
         </View>
