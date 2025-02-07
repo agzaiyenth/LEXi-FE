@@ -100,7 +100,7 @@ const DetectionFlow = () => {
 
       setScore(data.score);
       setIsFinished(true);
-      setDyslexiaLikelihood(`Dyslexia Likelihood: ${data.dyslexia_level}`);
+      setDyslexiaLikelihood(data.dyslexia_level);
     } catch (error) {
       console.error('Error:', error);
       Alert.alert('Error', 'Failed to calculate final score.');
@@ -146,8 +146,9 @@ const DetectionFlow = () => {
         </View>
       ) : isFinished ? (
         <View style={styles.resultContainer}>
-          <Text style={styles.result}>{dyslexiaLikelihood}</Text>
-        </View>
+        <Text style={styles.dyslexiaText}>Dyslexia Likelihood</Text>
+        <Text style={styles.dyslexiaLevel}>{dyslexiaLikelihood}</Text>
+      </View>
       ) : (
         <View style={styles.questionContainer}>
           <Text style={styles.questionText}>{currentQuestion?.text}</Text>
@@ -190,7 +191,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: theme.colors.primary.light2,
+    backgroundColor: theme.colors.primary.light2, // Update with your theme color
+  },
+  title: {
+    fontSize: 26,
+    fontWeight: '600',
+    marginBottom: 20,
+    color: theme.colors.blacks.medium,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: theme.colors.background.offWhite,
+    padding: 10,
+    marginBottom: 20,
+    width: 200,
+    textAlign: 'center',
+    borderRadius: 4,
+    fontSize: 18,
   },
   ageInputContainer: {
     width: '80%',
@@ -199,16 +216,6 @@ const styles = StyleSheet.create({
   },
   questionContainer: {
     alignItems: 'center',
-  },
-  resultContainer: {
-    alignItems: 'center',
-    marginVertical: 20,
-  },
-  title: {
-    fontSize: 26,
-    fontWeight: '600',
-    marginBottom: 20,
-    color: theme.colors.blacks.medium,
   },
   questionText: {
     fontSize: 20,
@@ -225,26 +232,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 5,
     textAlign: 'center',
-  },
-  optionText: {
-    fontSize: 18,
-    color: theme.colors.blacks.medium,
-  },
-  result: {
-    fontSize: 22,
-    fontWeight: '600',
-    marginVertical: 15,
-    color: theme.colors.blacks.medium,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: theme.colors.background.offWhite,
-    padding: 10,
-    marginBottom: 20,
-    width: 200,
-    textAlign: 'center',
-    borderRadius: 4,
-    fontSize: 18,
   },
   image: {
     width: 300,
@@ -263,11 +250,35 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: 20,
   },
+  optionText: {
+    fontSize: 18,
+    color: theme.colors.blacks.medium,
+  },
   selectedOption: {
     backgroundColor: theme.colors.primary.medium2,
   },
+  resultContainer: {
+    alignItems: 'center',
+    marginVertical: 20,
+  },
+  result: {
+    fontSize: 22,
+    fontWeight: '600',
+    marginVertical: 15,
+    color: theme.colors.blacks.medium,
+  },
+  dyslexiaText: {
+    fontSize: 28,
+    padding: 20,
+    fontWeight: '600',
+    color: theme.colors.primary.medium2,
+  },
+  dyslexiaLevel: {
+    fontSize: 26,
+    fontWeight: '600',
+    color: theme.colors.primary.medium,
+  },
 });
-
 
 export default DetectionFlow;
 
