@@ -31,6 +31,7 @@ const DetectionFlow = () => {
   const [score, setScore] = useState<number>(0);
   const [isFinished, setIsFinished] = useState<boolean>(false);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const [feedbackColor, setFeedbackColor] = useState<string | null>(null);
   const [dyslexiaLikelihood, setDyslexiaLikelihood] = useState<string | null>(null);
   const [displaySentence, setDisplaySentence] = useState<string | null>(null);
 
@@ -60,6 +61,10 @@ const DetectionFlow = () => {
     const currentQuestion = questions[currentQuestionIndex];
     setSelectedAnswer(answer);
 
+    if (currentQuestion.correctAnswer !== null) {
+      setFeedbackColor(answer === currentQuestion.correctAnswer ? 'green' : 'red');
+    }
+
     try {
       const response = await fetch(`${backendURL}/feedback?questionId=${currentQuestion.id}&answer=${answer}`, {
         method: 'POST',
@@ -78,6 +83,7 @@ const DetectionFlow = () => {
         if (currentQuestionIndex + 1 < questions.length) {
           setCurrentQuestionIndex(currentQuestionIndex + 1);
           setSelectedAnswer(null);
+          setFeedbackColor(null);
         } else {
           calculateFinalScore();
         }
@@ -110,19 +116,15 @@ const DetectionFlow = () => {
   useEffect(() => {
     const currentQuestion = questions[currentQuestionIndex];
 
-    // Apply logic only for Question 3
     if (currentQuestion?.id === 3 && currentQuestion.display) {
       setDisplaySentence(currentQuestion.display);
 
-      // Hide the display sentence after 5 seconds
       const timer = setTimeout(() => {
         setDisplaySentence(null);
       }, 4000);
 
-      // Clear timer when the question changes
       return () => clearTimeout(timer);
     } else {
-      // Clear the display when it's not Question 3
       setDisplaySentence(null);
     }
   }, [currentQuestionIndex, questions]);
@@ -146,21 +148,19 @@ const DetectionFlow = () => {
         </View>
       ) : isFinished ? (
         <View style={styles.resultContainer}>
-        <Text style={styles.dyslexiaText}>Dyslexia Likelihood</Text>
-        <Text style={styles.dyslexiaLevel}>{dyslexiaLikelihood}</Text>
-      </View>
+          <Text style={styles.dyslexiaText}>Dyslexia Likelihood</Text>
+          <Text style={styles.dyslexiaLevel}>{dyslexiaLikelihood}</Text>
+        </View>
       ) : (
         <View style={styles.questionContainer}>
           <Text style={styles.questionText}>{currentQuestion?.text}</Text>
 
-          {/* ✅ Display the "display" sentence if it exists */}
           {currentQuestion?.id === 3 ? (
             displaySentence && <Text style={styles.displayText}>{displaySentence}</Text>
           ) : (
             currentQuestion?.display && <Text style={styles.displayText}>{currentQuestion.display}</Text>
           )}
 
-          {/* ✅ Display Image for "image_mcq" type questions */}
           {currentQuestion?.type === 'image_mcq' && currentQuestion.imagePath && (
             <Image
               source={{ uri: `${backendURL}/images/${currentQuestion.imagePath}` }}
@@ -172,7 +172,10 @@ const DetectionFlow = () => {
           {currentQuestion?.options.map((option) => (
             <TouchableOpacity
               key={option.id}
-              style={[styles.optionContainer, selectedAnswer === option.text && styles.selectedOption]}
+              style={[
+                styles.optionContainer,
+                selectedAnswer === option.text && (feedbackColor ? { backgroundColor: feedbackColor } : styles.selectedOption),
+              ]}
               onPress={() => handleAnswerSubmit(option.text)}
               disabled={!!selectedAnswer}
             >
@@ -191,7 +194,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: theme.colors.primary.light2, // Update with your theme color
+    backgroundColor: theme.colors.primary.light2,
   },
   title: {
     fontSize: 26,
@@ -260,12 +263,6 @@ const styles = StyleSheet.create({
   resultContainer: {
     alignItems: 'center',
     marginVertical: 20,
-  },
-  result: {
-    fontSize: 22,
-    fontWeight: '600',
-    marginVertical: 15,
-    color: theme.colors.blacks.medium,
   },
   dyslexiaText: {
     fontSize: 28,
