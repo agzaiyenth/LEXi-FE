@@ -148,7 +148,41 @@ const DetectionFlow = () => {
         <View style={styles.resultContainer}>
           <Text style={styles.result}>{dyslexiaLikelihood}</Text>
         </View>
-      ) 
+      ) : (
+        <View style={styles.questionContainer}>
+          <Text style={styles.questionText}>{currentQuestion?.text}</Text>
+
+          {/* ✅ Display the "display" sentence if it exists */}
+          {currentQuestion?.id === 3 ? (
+            displaySentence && <Text style={styles.displayText}>{displaySentence}</Text>
+          ) : (
+            currentQuestion?.display && <Text style={styles.displayText}>{currentQuestion.display}</Text>
+          )}
+
+          {/* ✅ Display Image for "image_mcq" type questions */}
+          {currentQuestion?.type === 'image_mcq' && currentQuestion.imagePath && (
+            <Image
+              source={{ uri: `${backendURL}/images/${currentQuestion.imagePath}` }}
+              style={styles.image}
+              resizeMode="contain"
+            />
+          )}
+
+          {currentQuestion?.options.map((option) => (
+            <TouchableOpacity
+              key={option.id}
+              style={[styles.optionContainer, selectedAnswer === option.text && styles.selectedOption]}
+              onPress={() => handleAnswerSubmit(option.text)}
+              disabled={!!selectedAnswer}
+            >
+              <Text style={styles.optionText}>{option.text}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      )}
+    </ScrollView>
+  );
+};
   
 
 export default DetectionFlow;
