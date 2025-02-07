@@ -95,7 +95,7 @@ const BookTherapist = () => {
   const [bookingSuccess, setBookingSuccess] = useState<boolean>(false);
   const [bookingError, setBookingError] = useState<boolean>(false);
 
-  // Define three time periods (as tabs)
+ 
   const timePeriods = ['Morning', 'Afternoon', 'Evening'];
 
     // Fetch therapist details from API
@@ -114,7 +114,7 @@ const BookTherapist = () => {
       fetchTherapist();
     }, [therapistId]);
 
-    // Add this to calculate slot counts per period
+    //  calculate slot counts per period
   const periodSlotCounts = useMemo(() => {
     const counts: { [key: string]: number } = { Morning: 0, Afternoon: 0, Evening: 0 };
     
@@ -147,7 +147,7 @@ const BookTherapist = () => {
 
   
 
-  // When availableDays update, set the default selectedDay (if not already set or invalid)
+  // When availableDays update, set the default selectedDay 
   useEffect(() => {
     if (availableDays.length > 0) {
       if (!selectedDay || !availableDays.includes(selectedDay)) {
