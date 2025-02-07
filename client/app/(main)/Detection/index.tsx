@@ -144,7 +144,12 @@ const DetectionFlow = () => {
           />
           <Button title="Submit Age" onPress={handleAgeSubmit} color={theme.colors.primary.medium2} />
         </View>
-      )   
+      ) : isFinished ? (
+        <View style={styles.resultContainer}>
+          <Text style={styles.result}>{dyslexiaLikelihood}</Text>
+        </View>
+      ) 
+  
 
 export default DetectionFlow;
 
