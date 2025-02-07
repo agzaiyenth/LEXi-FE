@@ -1,10 +1,11 @@
-
 import { useGetAllTherapists } from '@/src/hooks/therapist/useGetAllTherapist';
 import theme from '@/src/theme';
 import { IAvailability } from '@/types/therapist/availability';
 import { ITherapist } from '@/types/therapist/therapist';
 import { Ionicons } from '@expo/vector-icons';
-import React, { useState, useCallback } from 'react';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { useNavigation } from 'expo-router';
+import React, { useState, useCallback, useEffect } from 'react';
 import { 
   Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, RefreshControl 
 } from 'react-native';
@@ -15,24 +16,33 @@ const AllDoctorsPage = () => {
   const { therapists, loading, error, refetch } = useGetAllTherapists();
   const [selectedFilter, setSelectedFilter] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [refreshing, setRefreshing] = useState<boolean>(false);
-
-  // Change date for available slots
-  const changeDate = (direction: number) => {
-    const newDate = new Date(selectedDate);
-    newDate.setDate(selectedDate.getDate() + direction);
-    setSelectedDate(newDate);
-  };
-
-  // Format date for UI
-  const formatDate = (date: Date) => date.toDateString().slice(0, 10);
+  const navigation = useNavigation<StackNavigationProp<any, 'AllDoctorsPage'>>();
 
   // Refresh data when pulling down
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     refetch().finally(() => setRefreshing(false));
   }, [refetch]);
+
+  // Extract unique dates from therapist availability slots
+  const getAvailableDates = (availabilities: IAvailability[]): Date[] => {
+    const uniqueDates = new Set<string>();
+    availabilities.forEach((slot) => {
+      const dateStr = new Date(slot.startTime).toDateString();
+      uniqueDates.add(dateStr);
+    });
+    return Array.from(uniqueDates).map(dateStr => new Date(dateStr));
+  };
+
+  // Select the first available date automatically
+  useEffect(() => {
+    const allAvailableDates = therapists.flatMap(therapist => getAvailableDates(therapist.availabilities || []));
+    if (allAvailableDates.length > 0) {
+      setSelectedDate(allAvailableDates[0]); // Set first available date
+    }
+  }, [therapists]);
 
   if (loading) return <Text>Loading...</Text>;
   if (error) return <Text>Error: {error}</Text>;
@@ -42,7 +52,7 @@ const AllDoctorsPage = () => {
       style={styles.container}
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
     >
-      {/*  Search Bar */}
+      {/* 🔍 Search Bar */}
       <View style={styles.searchContainer}>
         <Ionicons name="search" size={20} color="gray" />
         <TextInput 
@@ -53,7 +63,7 @@ const AllDoctorsPage = () => {
         />
       </View>
 
-      {/*  Filter Tabs */}
+      {/* 🔵 Filter Tabs */}
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.filterContainer}>
         {filters.map((filter, index) => (
           <TouchableOpacity 
@@ -66,48 +76,78 @@ const AllDoctorsPage = () => {
         ))}
       </ScrollView>
 
-      {/*  Therapist List */}
-      {therapists.map((therapist: ITherapist) => (
-        <View key={therapist.therapistId} style={styles.doctorCard}>
-          <Image source={{ uri: therapist.image }} style={styles.doctorImage} />
-          <Text style={styles.doctorName}>{therapist.name}</Text>
-          <Text style={styles.doctorSpecialty}>{therapist.description}</Text>
+      {/* 🏥 Therapist List */}
+      {therapists.map((therapist: ITherapist) => {
+        const availableDates = getAvailableDates(therapist.availabilities || []);
+        const filteredSlots = therapist.availabilities?.filter((slot: IAvailability) =>
+          selectedDate && new Date(slot.startTime).toDateString() === selectedDate.toDateString()
+        ) || [];
 
-          {/*  Availability Section */}
-          <View style={styles.availableTimeContainer}>
-            <Text style={styles.availableTimeTitle}>Available time</Text>
-            <View style={styles.dateContainer}>
-              <TouchableOpacity onPress={() => changeDate(-1)} style={styles.dateButton}>
-                <Ionicons name="chevron-back" size={20} color="black" />
-              </TouchableOpacity>
-              <Text style={styles.dateText}>{formatDate(selectedDate)}</Text>
-              <TouchableOpacity onPress={() => changeDate(1)} style={styles.dateButton}>
-                <Ionicons name="chevron-forward" size={20} color="black" />
-              </TouchableOpacity>
-            </View>
+        return (
+          <View key={therapist.therapistId} style={styles.doctorCard}>
+            <Image source={{ uri: therapist.image }} style={styles.doctorImage} />
+            <Text style={styles.doctorName}>{therapist.name}</Text>
+            <Text style={styles.doctorSpecialty}>{therapist.description}</Text>
 
-            {/*  Availability Slots */}
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.timeScroll}>
-              {therapist.availabilities && therapist.availabilities.length > 0 ? (
-                therapist.availabilities
-                  .filter((slot: IAvailability) => slot.available) 
-                  .map((slot: IAvailability) => (
-                    <TouchableOpacity key={slot.availabilitySlotId} style={styles.timeSlot}>
-                      <Text style={styles.slottext}>
+            {/* 🕒 Availability Section */}
+            <View style={styles.availableTimeContainer}>
+              <Text style={styles.availableTimeTitle}>Available time</Text>
+
+              {/* 📅 Date Navigation */}
+              {availableDates.length > 0 && (
+                <View style={styles.dateContainer}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      const currentIndex = availableDates.findIndex(date => date.toDateString() === selectedDate?.toDateString());
+                      if (currentIndex > 0) {
+                        setSelectedDate(availableDates[currentIndex - 1]);
+                      }
+                    }}
+                    style={styles.dateButton}
+                    disabled={availableDates[0].toDateString() === selectedDate?.toDateString()}
+                  >
+                    <Ionicons name="chevron-back" size={20} color="black" />
+                  </TouchableOpacity>
+
+                  <Text style={styles.dateText}>{selectedDate ? selectedDate.toDateString() : 'No slots'}</Text>
+
+                  <TouchableOpacity
+                    onPress={() => {
+                      const currentIndex = availableDates.findIndex(date => date.toDateString() === selectedDate?.toDateString());
+                      if (currentIndex < availableDates.length - 1) {
+                        setSelectedDate(availableDates[currentIndex + 1]);
+                      }
+                    }}
+                    style={styles.dateButton}
+                    disabled={availableDates[availableDates.length - 1].toDateString() === selectedDate?.toDateString()}
+                  >
+                    <Ionicons name="chevron-forward" size={20} color="black" />
+                  </TouchableOpacity>
+                </View>
+              )}
+
+              {/* 🕒 Time Slots */}
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.timeScroll}>
+                {filteredSlots.length > 0 ? (
+                  filteredSlots.map((slot: IAvailability) => (
+                    <TouchableOpacity key={slot.availabilitySlotId} style={styles.timeSlot} onPress={() => navigation.navigate('BookTherapist')}>
+                      <Text style={styles.slotText}>
                         {new Date(slot.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </Text>
                     </TouchableOpacity>
                   ))
-              ) : (
-                <Text style={styles.noAvailabilityText}>No available slots</Text>
-              )}
-            </ScrollView>
+                ) : (
+                  <Text style={styles.noAvailabilityText}>No available slots</Text>
+                )}
+              </ScrollView>
+            </View>
           </View>
-        </View>
-      ))}
+        );
+      })}
     </ScrollView>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
@@ -204,7 +244,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginRight: 8,
   },
-  slottext:{
+  slotText:{
 color:'white',
   },
   noAvailabilityText: {
