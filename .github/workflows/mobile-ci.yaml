@@ -38,12 +38,12 @@ jobs:
         run: npm install -g eas-cli
         working-directory: ./client
 
-      - name: ✅ Build for Android Preview (Expo Go)
-        working-directory: ./client
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-        run: |
-          EAS_VERBOSE=1 eas update --branch android-preview --message "CI Build for Android"
+      # - name: ✅ Build for Android Preview (Expo Go)
+      #   working-directory: ./client
+      #   env:
+      #     EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+      #   run: |
+      #     EAS_VERBOSE=1 eas update --branch android-preview --message "CI Build for Android"
 
   build-ios:
     name: 🍏 iOS Build
@@ -74,9 +74,9 @@ jobs:
         run: npm install -g eas-cli
         working-directory: ./client
 
-      - name: ✅ Build for iOS Preview (Expo Go)
-        working-directory: ./client
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-        run: |
-          EAS_VERBOSE=1 eas update --branch ios-preview --message "CI Build for iOS"
+      # - name: ✅ Build for iOS Preview (Expo Go)
+      #   working-directory: ./client
+      #   env:
+      #     EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+      #   run: |
+      #     EAS_VERBOSE=1 eas update --branch ios-preview --message "CI Build for iOS"
