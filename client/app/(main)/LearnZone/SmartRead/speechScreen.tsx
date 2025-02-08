@@ -1,84 +1,151 @@
-import React from "react";
+import React ,{useState , useEffect}  from "react";
 import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { Ionicons } from "@expo/vector-icons"; // For the back icon
 import { theme } from "../../../../src/theme";
+import EvilIcons from "@expo/vector-icons/EvilIcons";
+
 
 export default function SpeechScreen() {
+
+
   return (
-    <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity>
-          <Ionicons name="arrow-back" size={30} color={theme.colors.primary.dark1} />
-        </TouchableOpacity>
-        <Text style={styles.headerText}>SmartRead</Text>
-      </View>
+    
+    <View style={styles.wrapper}>
+      <View style={styles.container}>
+        <Text style={styles.text}>Smart Read</Text>
+        <EvilIcons name="arrow-left" style={styles.leftarrow} />
+        
+        <View style={styles.innercontainer}>
+          
 
+          <View style={styles.textContainer}>
+           <Text>The below paragraph is about how Science helps us to improve
+            our daily tasks by following certain steps.
+           </Text>
+          </View>
 
-      {/* Audio Controls */}
-      <View style={styles.audioContainer}>
-        <View style={styles.audioWaveform}>
-          {/* Simulated waveform */}
-          {Array.from({ length: 10 }).map((_, index) => (
-            <View
-              key={index}
-              style={[
-                styles.wave,
-                { height: Math.random() * 40 + 20 }, // Random height for visual effect
-              ]}
-            />
-          ))}
+          {/* Audio Controls */}
+          <View style={styles.audioContainer}>
+            <View style={styles.audioWaveform}>
+              
+              
+            </View>
+            <View style={styles.audioWaveformContainer}>
+              {/* Lower half (Original) */}
+              <View style={[styles.audioWaveform, styles.mirroredWaveform]}>
+                {Array.from({ length: 30 }).map((_, index) => {
+                  const height = Math.random() * 40 + 20; // Same height as upper half
+                  return <View key={`lower-${index}`} style={[styles.wave, { height }]} />;
+                })}
+              </View>
+              
+              {/* Upper half (Mirrored) */}
+              <View style={styles.audioWaveform}>
+                {Array.from({ length: 30 }).map((_, index) => {
+                  const height = Math.random() * 40 + 20; // Same height for both halves
+                  return <View key={`upper-${index}`} style={[styles.wave, { height }]} />;
+                })}
+              </View>
+
+              
+            </View>
+
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity style={styles.listenButton}>
+                <Text style={styles.listenButtonText}>LISTEN</Text>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Ionicons name="pause-circle" size={50} color={theme.colors.primary.medium} />
+              </TouchableOpacity>
+            </View>
+          </View>
+          
+          
+          
         </View>
-        <TouchableOpacity style={styles.listenButton}>
-          <Text style={styles.listenButtonText}>LISTEN</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Ionicons name="pause-circle" size={50} color={theme.colors.primary.medium} />
-        </TouchableOpacity>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  wrapper: {
+    width: "100%",
+    height: "100%",
+    fontFamily: "Poppins",
+  },
   container: {
     flex: 1,
-    backgroundColor: theme.colors.background.offWhite,
-    padding: theme.spacing.medium,
+    //backgroundColor: theme.colors.background.offWhite,
+    backgroundColor: "#9AC3BB",
+    position: "relative"
   },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: theme.spacing.large,
+
+  leftarrow: {
+    position: "absolute",
+    top: 20,
+    left: 20,
+    fontSize: 60,
+    color: theme.colors.background.offWhite,
+    padding: 2,
   },
-  headerText: {
-    marginLeft: theme.spacing.medium,
-    fontSize: theme.fonts.sizes.medium,
-    fontFamily: theme.fonts.bold,
-    color: theme.colors.primary.dark1,
+
+  text: {
+    top: 35,
+    fontSize: theme.fonts.sizes.small,
+    lineHeight: 30,
+    fontWeight: "400",
+    textAlign: "center",
+    color: theme.colors.background.offWhite,
   },
-  paragraphContainer: {
-    backgroundColor: theme.colors.background.beige,
-    borderRadius: theme.spacing.small,
-    padding: theme.spacing.medium,
-    marginBottom: theme.spacing.large,
+
+  innercontainer: {
+    top: 80,
+    backgroundColor: "#FDF4DE",
+    borderRadius: 25,
+    flexDirection: "column", // Ensure a column layout for stacking
+    justifyContent: "center",
+    alignItems: "center", // Center items horizontally
+    height: "90%",
+    
+    color: theme.colors.blacks.medium,
+
   },
-  paragraph: {
+
+  textContainer:{
+    
+    borderRadius: 25,
+    backgroundColor: theme.colors.secondary.light,
+    height: "73%",
+    width: "100%",
+    justifyContent: "flex-start",
+    paddingHorizontal: 30, // Add horizontal padding
+    paddingVertical: 50,
+    alignSelf: "center",
     fontSize: theme.fonts.sizes.medium,
     fontFamily: theme.fonts.regular,
     color: theme.colors.blacks.medium,
     lineHeight: 30,
+    
+    
   },
-  highlight: {
-    backgroundColor: theme.colors.primary.light2,
-    borderRadius: 4,
-    paddingHorizontal: 4,
-    color: theme.colors.primary.dark1,
-    fontFamily: theme.fonts.bold,
-  },
-  audioContainer: {
+  audioWaveformContainer: {
     alignItems: "center",
-    marginTop: theme.spacing.large,
+    justifyContent: "center",
+    position: "relative", 
+  },
+
+  mirroredWaveform: {
+    transform: [{ scaleY: -1 }], // Flips the waveform upside down
+    marginTop: -2, // Overlap slightly to blend
+  },
+
+  audioContainer: {
+    
+    alignItems: "center",
+    marginTop: theme.spacing.medium,
+    bottom:60,
+    position: "fixed",
   },
   audioWaveform: {
     flexDirection: "row",
@@ -90,6 +157,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 2,
     backgroundColor: theme.colors.primary.medium,
     borderRadius: 3,
+  },
+
+  buttonContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "60%",
+    paddingHorizontal: theme.spacing.extraLarge,
   },
   listenButton: {
     backgroundColor: theme.colors.primary.medium,
