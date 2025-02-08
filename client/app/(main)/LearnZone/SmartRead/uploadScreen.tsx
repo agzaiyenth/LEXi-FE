@@ -6,7 +6,7 @@ import * as DocumentPicker from 'expo-document-picker';
 import { LearnZoneParamList } from './navigator';
 
 
-
+import apiClient from '@/src/apiClient';
 import axios from 'axios';
 import { useNavigation } from 'expo-router';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -77,53 +77,46 @@ const UploadScreen = () => {
     }
   };
 
-  const uploadDocument = async (file: File) : Promise<void>  => {
-    const formData = new FormData();
+const uploadDocument = async (file: File): Promise<void> => {
+  const formData = new FormData();
+  formData.append('file', {
+    uri: file.uri,
+    name: file.name,
+    type: file.mimeType,
+  } as any);
+
+  try {
+    const response = await apiClient.post('/smartRead/file/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    Alert.alert('Success', response.data.message);
+    setUploadState('ready');
+    processDocument(response.data.fileId); // Send fileId for processing
+  } catch (error) {
+    console.error('Upload error:', error);
+    Alert.alert('Upload Failed', 'Could not upload the file. Please try again.');
+    setUploadState('idle');
+  }
+};
 
 
-    formData.append('file', {
-        uri: file.uri,
-        name: file.name,
-        type: file.mimeType,
-    } as any);
+const processDocument = async (fileId: string) => {
+  setIsProcessing(true);
+  try {
+    const response = await apiClient.get(`/smartRead/file/process/${fileId}`);
+    setExtractedContent(response.data.extractedText);
+    setUploadState('processing');
+  } catch (error) {
+    console.error('Processing error:', error);
+    Alert.alert('Processing Failed', 'Could not process the document. Please try again.');
+  } finally {
+    setIsProcessing(false);
+  }
+};
 
-    try {
-        const response = await axios.post(`${API_BASE_URL}/upload`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        });
-
-        Alert.alert('Success', response.data);
-        setUploadState('ready');
-        processDocument(file.name); // Proceed to process after upload
-    } catch (error) {
-        console.error('Upload error:', error);
-        Alert.alert('Upload Failed', 'Could not upload the file. Please try again.');
-        setUploadState('idle');
-    }
-  };
-
-  
-
-
-
-  const processDocument = async (uploadedFileName: string) => {
-    setIsProcessing(true);
-    try {
-        const response = await axios.get(`${API_BASE_URL}/process`, {
-            params: { fileName: uploadedFileName },
-        });
-
-        setExtractedContent(response.data);
-        setUploadState('processing');
-    } catch (error) {
-        console.error('Processing error:', error);
-        Alert.alert('Processing Failed', 'Could not process the document. Please try again.');
-    } finally {
-        setIsProcessing(false);
-    }
-  };
 
 
 
