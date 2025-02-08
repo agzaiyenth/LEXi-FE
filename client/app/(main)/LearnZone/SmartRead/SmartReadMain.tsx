@@ -5,11 +5,14 @@ import { Ionicons } from "@expo/vector-icons"; // Back icon
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { theme } from "../../../../src/theme";
+import { useGetAllDocuments } from "@/src/hooks/SmartRead/getAllDocuments";
+import { FetchAllDocsDto } from "@/types/SmartRead/Documents";
 
 export default function SmartReadMain() {
   const title = "Basics of Programming"; 
 
   const [isProcessed, setIsProcessed] = useState(false);
+  const { documents, loading, error, refetch } = useGetAllDocuments();
 
   const handleSummarise = () => {
      //api call??
@@ -26,44 +29,47 @@ export default function SmartReadMain() {
         <Text style={styles.text}>Smart Read</Text>
         <EvilIcons name="arrow-left" style={styles.backArrow} />
 
-        {/* Main Content */}
+        Main Content
         <View style={styles.innercontainer}>
-          <View style={styles.cardContainer}>
-            {/* Document Image */}
-            <Image
-              source={require("@/assets/images/auth/icon.png")}
-              style={styles.image}
-            />
+          {documents?.map((document: FetchAllDocsDto, index: number) => (
+            <View style={styles.cardContainer}>
+              {/* Document Image */}
+              <Image
+                source={require("@/assets/images/auth/icon.png")}
+                style={styles.image}
+              />
 
-            {/* Document Details */}
-            <View style={styles.detailsContainer}>
-              <Text style={styles.title}>{title}</Text>             
+              {/* Document Details */}
 
-           {/* Conditional Buttons */}
-                {isProcessed ? (
-                  
-                  <TouchableOpacity style={styles.playButton}>
-                    <AntDesign
-                      name="playcircleo"
-                      size={24}
-                      color="white"
-                      style={styles.playButtonIcon}
-                    />
-                    <Text style={styles.playButtonText}>View</Text>
-                  </TouchableOpacity>
-                ) : (
-                  
-                  <TouchableOpacity style={styles.summariseButton} onPress={handleSummarise}>
-                    <Text style={styles.playButtonText}>Process</Text>
-                  </TouchableOpacity>
-                )}
+              <View style={styles.detailsContainer}>
+                 
+                <Text style={styles.title}>{document.fileName}</Text>            
+
+            {/* Conditional Buttons */}
+                  {isProcessed ? (
+                    
+                    <TouchableOpacity style={styles.playButton}>
+                      <AntDesign
+                        name="playcircleo"
+                        size={24}
+                        color="white"
+                        style={styles.playButtonIcon}
+                      />
+                      <Text style={styles.playButtonText}>View</Text>
+                    </TouchableOpacity>
+                  ) : (
+                    
+                    <TouchableOpacity style={styles.summariseButton} onPress={handleSummarise}>
+                      <Text style={styles.playButtonText}>Process</Text>
+                    </TouchableOpacity>
+                  )}
+                </View>
               </View>
+             ))}  
             </View>
-            
-          </View>
-          <TouchableOpacity style={styles.floatingButton}>
-                <AntDesign name="filetext1" size={24} color="#FFFF" />
-            </TouchableOpacity>
+            <TouchableOpacity style={styles.floatingButton}>
+                  <AntDesign name="filetext1" size={24} color="#FFFF" />
+              </TouchableOpacity>
         </View>
       </View>
     
