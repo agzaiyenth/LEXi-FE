@@ -77,7 +77,8 @@ const AllDoctorsPage = () => {
       </ScrollView>
 
       {/* 🏥 Therapist List */}
-      {therapists.map((therapist: ITherapist) => {
+      {filteredSlots.length > 0 ? (
+      therapists.map((therapist: ITherapist) => {
         const availableDates = getAvailableDates(therapist.availabilities || []);
         const filteredSlots = therapist.availabilities?.filter((slot: IAvailability) =>
           selectedDate && new Date(slot.startTime).toDateString() === selectedDate.toDateString()
@@ -143,7 +144,9 @@ const AllDoctorsPage = () => {
             </View>
           </View>
         );
-      })}
+      })) : (
+        <Text style={styles.noAvailabilityText}>No Therapists Found</Text>
+      )}
     </ScrollView>
   );
 };
