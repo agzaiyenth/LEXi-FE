@@ -16,8 +16,10 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-    "NSMicrophoneUsageDescription": "We need access to your microphone to record audio."
-  }
+        "NSMicrophoneUsageDescription": "We need access to your microphone to record audio.",
+        "ITSAppUsesNonExemptEncryption": false
+      },
+      "bundleIdentifier": "com.lexilk.lexi"
     },
     "android": {
       "adaptiveIcon": {
@@ -25,7 +27,10 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.lexilk.lexi",
-      "permissions": ["RECORD_AUDIO"]
+      "permissions": [
+        "RECORD_AUDIO",
+        "RECORD_AUDIO"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -47,6 +52,12 @@
         "projectId": "5753a34d-5815-4818-ae00-4fbefd718f93"
       }
     },
-    "owner": "lexilk"
+    "owner": "lexilk",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/5753a34d-5815-4818-ae00-4fbefd718f93"
+    }
   }
 }
