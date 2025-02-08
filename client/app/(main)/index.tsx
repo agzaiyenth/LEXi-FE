@@ -1,5 +1,6 @@
 // app/(main)/index.tsx
 import { StyleSheet, TouchableOpacity } from 'react-native';
+import 'node-libs-react-native/globals';
 
 import { Text, View } from '@/components/Themed';
 import React from 'react';

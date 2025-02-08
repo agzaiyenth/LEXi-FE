@@ -1,0 +1,106 @@
+### Cursor Rules for Expo Application Development
+
+You are an expert in TypeScript, React Native, Expo, and Mobile App Development. Follow these rules to ensure high-quality, maintainable, and performant code for this codebase.
+
+
+
+### Code Style and Structure
+- Write concise, type-safe TypeScript code.
+- Use functional components and React hooks (`useState`, `useEffect`, `useContext`, etc.) instead of class components.
+- Ensure components are modular, reusable, and maintainable.
+- Organize files by feature, grouping related components, hooks, and styles together.
+  - Example: For a feature like "LearnZone," group files like `LearnMainScreen.tsx`, `VoxBuddy.tsx`, and `ChatInterface.tsx` under a single directory.
+- Avoid deeply nested directories; keep the structure flat and intuitive.
+
+
+
+### Naming Conventions
+- Use camelCase for variable and function names (e.g., `isFetchingData`, `handleUserInput`).
+- Use PascalCase for component names (e.g., `LearnMainScreen`, `ChatInterface`).
+- Use lowercase and hyphenated names for directories (e.g., `learn-zone`, `auth-stack`).
+- Prefix files with a `+` for special routes (e.g., `+not-found.tsx` for 404 pages).
+
+
+
+### TypeScript Usage
+- Use TypeScript for all components, hooks, and utilities.
+- Favor interfaces for defining props and state.
+- Enable strict typing in `tsconfig.json` (already enabled in this codebase).
+- Avoid using `any`; strive for precise types.
+- Use `React.FC` for defining functional components with props.
+- Use type aliases for reusable types (e.g., `LearnZoneParamList` for navigation types).
+
+
+
+### Performance Optimization
+- Minimize the use of `useEffect` and `useState` for heavy computations or frequent updates.
+- Use `React.memo()` for components with static props to prevent unnecessary re-renders.
+- Optimize FlatLists:
+  - Use props like `removeClippedSubviews`, `maxToRenderPerBatch`, and `windowSize`.
+  - Use `getItemLayout` for FlatLists when items have a consistent size.
+- Avoid anonymous functions in `renderItem` or event handlers to prevent re-renders.
+- Use debouncing or throttling for expensive operations like API calls or animations.
+
+
+
+### UI and Styling
+- Use consistent styling with `StyleSheet.create()` or libraries like Nativewind (already configured in this codebase).
+- Ensure responsive design by considering different screen sizes and orientations.
+  - Use `Dimensions` or libraries like `react-native-responsive-screen` for dynamic layouts.
+- Optimize image handling using libraries like `react-native-fast-image` for better performance.
+- Follow accessibility best practices:
+  - Use `accessible` and `accessibilityLabel` props for interactive elements.
+  - Ensure proper color contrast for text and backgrounds.
+- Use `/src/themes.ts` file to get the common styling variables
+
+
+
+### Navigation
+- Use React Navigation for handling navigation and deep linking.
+- Define navigation types using TypeScript (e.g., `AppTabParamList`, `LearnZoneParamList`).
+- Use custom tab bars and headers for a consistent look and feel.
+- Avoid hardcoding navigation paths; use `useNavigation` or `Link` from `expo-router`.
+
+
+
+### Best Practices
+- Follow React Native's threading model to ensure smooth UI performance.
+- Use Expo's EAS Build and OTA Updates for continuous deployment and Over-The-Air updates.
+- Use environment variables for sensitive data (e.g., API keys) and avoid hardcoding them in the codebase.
+- Write unit tests for critical components and hooks using Jest (already configured in the codebase).
+- Document API changes and features in tools like Postman or Swagger.
+
+
+
+### Error Handling
+- Use try-catch blocks for async operations like API calls.
+- Show user-friendly error messages using utilities like `showToast` (already implemented in the codebase).
+- Log errors to the console for debugging but avoid exposing sensitive information.
+
+
+
+### File Structure Example
+For a feature like LearnZone, the file structure should look like this:
+
+```
+client/app/(main)/LearnZone/
+  ├── index.tsx                // Stack navigator for LearnZone
+  ├── LearnMainScreen.tsx      // Main screen for LearnZone
+  ├── VoxBuddy.tsx             // VoxBuddy feature screen
+  ├── voxbuddy/
+  │   ├── ChatInterface.tsx    // Chat interface for VoxBuddy
+  │   ├── AudioReactiveVisualizer.tsx // Audio visualizer component
+  └── styles.ts                // Shared styles for LearnZone
+```
+
+
+
+### Code Review Checklist
+Before submitting code, ensure the following:
+1. Type Safety: All components and hooks are strongly typed.
+2. Modularity: Components are reusable and follow the single-responsibility principle.
+3. Performance: Avoid unnecessary re-renders and optimize lists.
+4. Styling: Consistent and responsive styling is applied.
+5. Error Handling: All async operations handle errors gracefully.
+6. Navigation: Navigation types are defined, and paths are not hardcoded.
+7. Testing: Critical components and hooks have unit tests.
