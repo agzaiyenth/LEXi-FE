@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, TextInput, ScrollView, StyleSheet, TouchableOpacity, Alert, Image } from 'react-native';
 import theme from '@/src/theme';
+import { BASE_URL } from '@/config';
 
 interface Option {
   id: number;
@@ -35,7 +36,7 @@ const DetectionFlow = () => {
   const [dyslexiaLikelihood, setDyslexiaLikelihood] = useState<string | null>(null);
   const [displaySentence, setDisplaySentence] = useState<string | null>(null);
 
-  const backendURL = 'http://192.168.1.101:8080/api/questions';
+  const backendURL = BASE_URL+'/api/questions';
 
   const handleAgeSubmit = async () => {
     const numericAge = Number(age.trim());
