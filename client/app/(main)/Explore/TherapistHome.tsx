@@ -40,7 +40,8 @@ const TherapistHome = () => {
       </View>
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalScroll}>
-      {latestTherapists.map((therapist: ITherapist) => (
+      {latestTherapists.length > 0 ? (
+      latestTherapists.map((therapist: ITherapist) => (
           <TouchableOpacity 
             key={therapist.therapistId}  
             onPress={() => navigation.navigate('BookTherapist', { therapistId: therapist.therapistId })}
@@ -51,7 +52,10 @@ const TherapistHome = () => {
               <Text style={styles.doctorSpecialty}>{therapist.location}</Text>
             </View>
           </TouchableOpacity>
-        ))}
+        ))
+      ) : (
+        <Text style={styles.noAppointmentsText}>No Therapists </Text>
+      )}
         <TouchableOpacity style={styles.seeAllCard} onPress={() => navigation.navigate('AllDoctorsPage')}>
           <Text style={styles.seeAllText}>See All</Text>
         </TouchableOpacity>
@@ -93,7 +97,8 @@ const TherapistHome = () => {
 
       <Text style={styles.sectionTitle}>Nearby Doctors</Text>
 
-      {therapists.map((therapist:any) => (
+      {therapists.length > 0 ? (
+      therapists.map((therapist:any) => (
         <TouchableOpacity key={therapist.id}  onPress={() => navigation.navigate('BookTherapist')}>
         <View key={therapist.id} style={styles.nearbyDoctorCard}>
           <Image source={{ uri: therapist.image }} style={styles.doctorImage} />
@@ -101,7 +106,10 @@ const TherapistHome = () => {
           <Text style={styles.doctorSpecialty}>{therapist.description}</Text>
         </View>
         </TouchableOpacity>
-      ))}
+      ))
+    ) : (
+      <Text style={styles.noAppointmentsText}>No Nearby Doctors</Text>
+    )}
     </ScrollView>
   );
 };
