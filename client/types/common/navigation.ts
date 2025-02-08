@@ -6,5 +6,6 @@ export type AppTabParamList = {
   Play: undefined;
   Explore: undefined;
   Account: undefined;
+  Detection: undefined;
 };
 

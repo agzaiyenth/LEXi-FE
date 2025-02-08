@@ -7,6 +7,7 @@ import LearnScreen from './(main)/LearnZone';
 import PlayScreen from './(main)/PlaySpace';
 import ExploreScreen from './(main)/Explore';
 import AccountScreen from './(main)/Account';
+import DetectionFlow from './(main)/Detection';
 import theme from '../src/theme';
 import { AppTabParamList } from '@/types/common/navigation';
 
@@ -27,6 +28,7 @@ export default function AppTabs() {
       <Tab.Screen name="Play" component={PlayScreen} />
       <Tab.Screen name="Explore" component={ExploreScreen} />
       <Tab.Screen name="Account" component={AccountScreen} />
+      <Tab.Screen name="Detection" component={DetectionFlow} />
     </Tab.Navigator>
   );
 }
@@ -62,6 +64,8 @@ const CustomTabBar = ({ state, descriptors, navigation }:any) => {
               return 'public';
             case 'Account':
               return 'account-circle';
+            case 'Detection':
+              return 'pages';
             default:
               return 'home';
           }
