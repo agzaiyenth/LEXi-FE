@@ -1,5 +1,3 @@
-
-
 export interface FetchAllDocsDto {
     fileName: string;
     blobUrl: string;
@@ -7,6 +5,3 @@ export interface FetchAllDocsDto {
     isProcessed: boolean;
    
 }
-
-
-

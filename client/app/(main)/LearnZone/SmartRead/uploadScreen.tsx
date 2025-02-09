@@ -7,13 +7,10 @@ import { LearnZoneParamList } from './navigator';
 
 
 import apiClient from '@/src/apiClient';
-import axios from 'axios';
 import { useNavigation } from 'expo-router';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 const { width: screenWidth } = Dimensions.get('window');
-
-
 
 interface File{
   uri: string;
@@ -39,11 +36,6 @@ const UploadScreen = () => {
   const [extractedContent, setExtractedContent] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
 
-
-  const API_BASE_URL = "http://localhost:8080/api/documents";
-
-
-  
   const pickDocument = async () => {
     try {
         const result = await DocumentPicker.getDocumentAsync({
@@ -56,8 +48,8 @@ const UploadScreen = () => {
           
           const fileSize = fileData.size || 0;
 
-            if (fileSize > 50 * 1024 * 1024) {
-                Alert.alert('File Too Large', 'Please upload a file smaller than 50MB.');
+            if (fileSize > 4 * 1024 * 1024) {
+                Alert.alert('File Too Large', 'Please upload a file smaller than 4MB.');
             } else {
                 setFileName(fileData.name);
                 setUploadState('uploading');
@@ -85,33 +77,66 @@ const uploadDocument = async (file: File): Promise<void> => {
     type: file.mimeType,
   } as any);
 
-  try {
-    const response = await apiClient.post('/smartRead/file/upload', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+  setUploadState('uploading');
+    try {
+        const response = await apiClient.post('/smartRead/file/upload', formData, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+        });
 
-    Alert.alert('Success', response.data.message);
-    setUploadState('ready');
-    processDocument(response.data.fileId); // Send fileId for processing
-  } catch (error) {
-    console.error('Upload error:', error);
-    Alert.alert('Upload Failed', 'Could not upload the file. Please try again.');
-    setUploadState('idle');
-  }
+        console.log('Upload Response:', response.data);
+        
+
+        Alert.alert('Success', response.data.message);
+        setUploadState('ready');
+
+        // Pass both fileId and blobUrl when processing the document
+        processDocument(response.data.fileId, response.data.blobUrl);
+    } catch (error) {
+        console.error('Upload error:', error);
+        Alert.alert('Upload Failed', 'Could not upload the file. Please try again.');
+        setUploadState('idle');
+    }
 };
 
 
-const processDocument = async (fileId: string) => {
+const processDocument = async (fileId: string, blobUrl: string) => {
   setIsProcessing(true);
+
+  console.log('fileId:', fileId);
+  console.log('blobUrl:', blobUrl);
+
+
+  if (!fileId || !blobUrl) {
+    Alert.alert('Processing Failed', 'File ID or Blob URL is missing.');
+    setIsProcessing(false);
+    return;
+  }
+
   try {
-    const response = await apiClient.get(`/smartRead/file/process/${fileId}`);
-    setExtractedContent(response.data.extractedText);
-    setUploadState('processing');
-  } catch (error) {
+    // Send POST request with fileId and blobUrl in the body
+    const response = await apiClient.post('/smartRead/file/process', {
+      fileId: fileId,    
+      blobUrl: blobUrl,
+    });
+
+    if (response.data && response.data.extractedText) {
+      setExtractedContent(response.data.extractedText);
+      setUploadState('processing');
+    } else {
+      Alert.alert('Processing Failed', 'No extracted text received from the backend.');
+    }
+  } catch (error: any) {
     console.error('Processing error:', error);
-    Alert.alert('Processing Failed', 'Could not process the document. Please try again.');
+
+    if (error.response) {
+      const backendError = error.response.data.error || 'Unknown error';
+      const errorDetails = error.response.data.details || '';
+      Alert.alert('Processing Failed', `${backendError}: ${errorDetails}`);
+    } else if (error.request) {
+      Alert.alert('Processing Failed', 'No response from the server. Please try again later.');
+    } else {
+      Alert.alert('Processing Failed', `Error: ${error.message}`);
+    }
   } finally {
     setIsProcessing(false);
   }
@@ -139,7 +164,7 @@ const processDocument = async (fileId: string) => {
                 accessible 
                 accessibilityLabel='Upload Icon'
               />
-              <Text style={styles.fileTypesText}> PDF, and WORD formats, up to 50MB</Text>
+              <Text style={styles.fileTypesText}> PDF, and WORD formats, up to 4MB</Text>
               <TouchableOpacity 
                 style={styles.browseButton}
                 onPress={pickDocument} 
