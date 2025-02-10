@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, ActivityIndicator, Alert,  } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import theme from '../../../../src/theme';
 import * as DocumentPicker from 'expo-document-picker';
 import { LearnZoneParamList } from './navigator';
+import Toast from 'react-native-toast-message';
+
 
 
 import apiClient from '@/src/apiClient';
@@ -48,7 +50,7 @@ const UploadScreen = () => {
           const fileSize = fileData.size || 0;
 
             if (fileSize > 4 * 1024 * 1024) {
-                Alert.alert('File Too Large', 'Please upload a file smaller than 4MB.');
+              Toast.show({ type: 'error', text1: 'File Too Large', text2: 'Please upload a file smaller than 4MB.' });
             } else {
                 setFileName(fileData.name);
                 setUploadState('uploading');
@@ -64,7 +66,7 @@ const UploadScreen = () => {
         }
     } catch (err) {
         console.error('Error picking file:', err);
-        Alert.alert('Error', 'An error occurred while picking the file. Please try again.');
+        Toast.show({ type: 'error', text1: 'Error', text2: 'An error occurred while picking the file. Please try again.' });
     }
   };
 
@@ -85,13 +87,13 @@ const uploadDocument = async (file: File): Promise<void> => {
         console.log('Upload Response:', response.data);
         
 
-        Alert.alert('Success', response.data.message);
+        Toast.show({ type: 'success', text1: 'Success', text2: response.data.message });
         setUploadState('ready');
         router.navigate("/(main)/LearnZone/SmartRead/SmartReadMain")
 
     } catch (error) {
         console.error('Upload error:', error);
-        Alert.alert('Upload Failed', 'Could not upload the file. Please try again.');
+        Toast.show({ type: 'error', text1: 'Upload Failed.', text2: 'Could not upload the file. Please try again.' });
         setUploadState('idle');
     }
 };
@@ -140,13 +142,17 @@ const uploadDocument = async (file: File): Promise<void> => {
             </>
           )}
 
-          {uploadState === 'ready' && isProcessing && (
-            <>
-              <Text style={styles.successText}>
-               "{fileName}" is ready for summarization!
-              </Text>
-            </>        
-          )}
+{/* TO DO add navigation to main screen */}
+{uploadState === 'ready' && (
+          <>
+            <FontAwesome name="check-circle" size={50} color="green" />
+            <Text style={styles.successText}>
+              "{fileName}" is ready for summarization!
+            </Text>
+          </>
+        )}
+
+    
 
           
         </View>
@@ -167,6 +173,7 @@ const uploadDocument = async (file: File): Promise<void> => {
       >
         <Text style={styles.navigateButtonText}>Go to Speech Screen</Text>
       </TouchableOpacity>
+      <Toast/>
       </SafeAreaView>
   );
 };
