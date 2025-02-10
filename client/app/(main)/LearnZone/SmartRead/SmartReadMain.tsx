@@ -1,6 +1,6 @@
 
 import React , {useState, useCallback} from "react" ;
-import {Alert,  StyleSheet, View, Text, TouchableOpacity, ScrollView, Image ,RefreshControl } from "react-native";
+import {StyleSheet, View, Text, TouchableOpacity, ScrollView, Image ,RefreshControl } from "react-native";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { theme } from "../../../../src/theme";
@@ -9,6 +9,7 @@ import {FetchAllResponseDTO} from "@/types/SmartRead/Documents";
 import { useProcessDocument } from "@/src/hooks/SmartRead/useProcessDocument";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "expo-router";
+import Toast from 'react-native-toast-message';
 
 export default function SmartReadMain() {
  
@@ -39,11 +40,11 @@ export default function SmartReadMain() {
       console.log('Document processing request sent.');
   
       setTimeout(() => {
-        Alert.alert('Processing Complete', 'The document has been successfully processed!');
+        Toast.show({type:'success', text1:'Processing Complete', text2:'The document has been successfully processed!' });
       }, 2000);
     } catch (error) {
       console.error('Processing error:', error);
-      Alert.alert('Error', 'Failed to process the document.');
+      Toast.show({type:'error', text1:'Failed to process the document'});
     }
   };
   
@@ -114,7 +115,7 @@ export default function SmartReadMain() {
             </ScrollView>
             <TouchableOpacity style={styles.floatingButton} onPress={ () =>
                     navigation.navigate('UploadScreen')}>
-                  <AntDesign name="filetext1" size={24} color="#FFFF" />   {/* add navigation here for the uploading screen */}
+                  <AntDesign name="filetext1" size={24} color="#FFFF" />
               </TouchableOpacity> 
       </View>
     </View> 

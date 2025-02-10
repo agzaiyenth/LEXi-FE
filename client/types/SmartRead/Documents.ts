@@ -1,12 +1,3 @@
-export interface FetchAllDocsDto {
-    id:number;
-    fileName: string;
-    blobUrl: string;
-    uploadedAt: Date;
-    isProcessed: boolean;
-   
-}
-
 export interface IDocument{
     
     id: number;
@@ -25,20 +16,6 @@ export interface FetchAllResponseDTO{
     blobUrl:string; 
     uploadedAt: Date;
     processed:boolean;
-}
-
-
-
-export interface FetchDocResponseDTO{
-    
-
-}
-
-
-    
-export interface FetchDocRequestDTO{
-
-
 }
 
 
