@@ -1,16 +1,22 @@
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import * as DocumentPicker from 'expo-document-picker';
-import React, { useState } from 'react';
-import { ActivityIndicator, Dimensions, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Toast from 'react-native-toast-message';
+import React, { useState, useEffect } from 'react';
+import {
+  ActivityIndicator,
+  Dimensions,
+  Image,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Modal,
+} from 'react-native';
 import theme from '../../../../src/theme';
 import { LearnZoneParamList } from './navigator';
-
-
-
 import apiClient from '@/src/apiClient';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { useNavigation, useRouter } from 'expo-router';
+import { useNavigation } from 'expo-router';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -20,56 +26,65 @@ interface File {
   mimeType: string;
 }
 
-
 type NavigationProp = StackNavigationProp<LearnZoneParamList, 'UploadScreen', 'SmartReadMain'>;
 
 const UploadScreen = () => {
   const navigation = useNavigation<NavigationProp>();
-
-  const goToSpeechScreen = () => {
-    console.log(navigation.getState());
-    navigation.navigate('SpeechScreen');
-    console.log('Navigating to Speech Screen');
-  };
-
-  const router = useRouter();
-  const [uploadState, setUploadState] = useState('idle');
+  // State for file name, and modal controls.
   const [fileName, setFileName] = useState('');
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  // modalStatus can be 'loading', 'success', or 'error'
+  const [modalStatus, setModalStatus] = useState<'loading' | 'success' | 'error'>('loading');
 
+  // Automatically navigate to SmartReadMain after a short delay if success or failure
+  useEffect(() => {
+    if (modalVisible && (modalStatus === 'success' || modalStatus === 'error')) {
+      const timer = setTimeout(() => {
+        setModalVisible(false);
+        navigation.navigate('SmartReadMain');
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [modalVisible, modalStatus]);
+
+  // File picking
   const pickDocument = async () => {
     try {
       const result = await DocumentPicker.getDocumentAsync({
-        type: ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'], // PDF & Word
+        type: [
+          'application/pdf',
+          'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        ], // PDF & Word documents
       });
 
       if (!result.canceled && result.assets?.length > 0) {
-
         const fileData = result.assets[0];
-
+        setFileName(fileData.name);
         const fileSize = fileData.size || 0;
 
+        // Check file size (4MB max)
         if (fileSize > 4 * 1024 * 1024) {
-          Toast.show({ type: 'error', text1: 'File Too Large', text2: 'Please upload a file smaller than 4MB.' });
+          setModalStatus('error');
+          setModalVisible(true);
         } else {
-          setFileName(fileData.name);
-          setUploadState('uploading');
-
-          const file = {
+          setModalStatus('loading');
+          setModalVisible(true);
+          const file: File = {
             uri: fileData.uri,
             name: fileData.name,
-            mimeType: fileData.mimeType || 'application/octet-stream', // Fallback mimeType if missing
+            mimeType: fileData.mimeType || 'application/octet-stream',
           };
-
           uploadDocument(file);
         }
       }
     } catch (err) {
       console.error('Error picking file:', err);
-      Toast.show({ type: 'error', text1: 'Error', text2: 'An error occurred while picking the file. Please try again.' });
+      setModalStatus('error');
+      setModalVisible(true);
     }
   };
 
+  // File upload function
   const uploadDocument = async (file: File): Promise<void> => {
     const formData = new FormData();
     formData.append('file', {
@@ -78,91 +93,46 @@ const UploadScreen = () => {
       type: file.mimeType,
     } as any);
 
-    setUploadState('uploading');
     try {
       const response = await apiClient.post('/smartRead/file/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
-
       console.log('Upload Response:', response.data);
-
-
-      Toast.show({ type: 'success', text1: 'Success', text2: response.data.message });
-      setUploadState('ready');
-      router.navigate("/(main)/LearnZone/SmartRead/SmartReadMain")
-
+      setModalStatus('success');
     } catch (error) {
       console.error('Upload error:', error);
-      Toast.show({ type: 'error', text1: 'Upload Failed.', text2: 'Could not upload the file. Please try again.' });
-      setUploadState('idle');
+      setModalStatus('error');
     }
   };
-
-
-
-
 
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.headerContainer}>
+        <TouchableOpacity  onPress={() => navigation.navigate('SmartReadMain')}>
         <AntDesign name="arrowleft" size={24} color={theme.colors.blacks.medium} />
-        <Text style={styles.headerText}>SmartRead</Text>
+        </TouchableOpacity>
+        <Text style={styles.headerText}>SmartRead</Text> 
       </View>
 
       {/* Upload Section */}
       <View style={styles.uploadContainer}>
-        {uploadState === 'idle' && (
-          <>
-            <Image
-              source={require('@/assets/images/uploadIcon.png')}
-              style={styles.uploadIcon}
-              resizeMode="contain"
-              accessible
-              accessibilityLabel='Upload Icon'
-            />
-            <Text style={styles.fileTypesText}> PDF, and WORD formats, up to 4MB</Text>
-            <TouchableOpacity
-              style={styles.browseButton}
-              onPress={pickDocument}
-              accessible
-              accessibilityLabel="Browse files to upload"
-            >
-              <Text style={styles.browseButtonText}>BROWSE FILES</Text>
-            </TouchableOpacity>
-          </>
-        )}
-
-        {uploadState === 'uploading' && (
-          <>
-            <ActivityIndicator size="large" color={theme.colors.primary.medium} />
-            <Text style={styles.processingText}>
-              "{fileName}" is getting ready for summarization...
-            </Text>
-
-          </>
-        )}
-
-        {/* TO DO add navigation to main screen */}
-        {uploadState === 'ready' && (
-          <>
-            <FontAwesome name="check-circle" size={50} color="green" />
-            <Text style={styles.successText}>
-              "{fileName}" is ready for summarization!
-            </Text>
-            <TouchableOpacity
-              style={styles.browseButton}
-              onPress={() =>
-                navigation.navigate('SmartReadMain')}
-              accessible
-              accessibilityLabel="Browse files to upload"
-            >
-              <Text style={styles.browseButtonText}>Go back to main screen</Text>
-            </TouchableOpacity>
-          </>
-        )}
-
-
+        <Image
+          source={require('@/assets/images/uploadIcon.png')}
+          style={styles.uploadIcon}
+          resizeMode="contain"
+          accessible
+          accessibilityLabel="Upload Icon"
+        />
+        <Text style={styles.fileTypesText}>PDF and WORD formats, up to 4MB</Text>
+        <TouchableOpacity
+          style={styles.browseButton}
+          onPress={pickDocument}
+          accessible
+          accessibilityLabel="Browse files to upload"
+        >
+          <Text style={styles.browseButtonText}>BROWSE FILES</Text>
+        </TouchableOpacity>
       </View>
 
       {/* Footer Section */}
@@ -175,19 +145,36 @@ const UploadScreen = () => {
         />
       </View>
 
-      <TouchableOpacity
-        style={styles.navigateButton}
-        onPress={goToSpeechScreen}
-      >
-        <Text style={styles.navigateButtonText}>Go to Speech Screen</Text>
-      </TouchableOpacity>
-      <Toast />
+      {/* Custom Modal Popup */}
+      <Modal visible={modalVisible} transparent animationType="fade">
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContainer}>
+            {modalStatus === 'loading' && (
+              <>
+                <ActivityIndicator size="large" color={theme.colors.primary.medium} />
+                <Text style={styles.modalText}>Uploading &quote;{fileName}&quote;...</Text>
+              </>
+            )}
+            {modalStatus === 'success' && (
+              <>
+                <FontAwesome name="check-circle" size={70} color="green" />
+                <Text style={styles.modalText}>Upload Successful!</Text>
+              </>
+            )}
+            {modalStatus === 'error' && (
+              <>
+                <FontAwesome name="times-circle" size={70} color="red" />
+                <Text style={styles.modalText}>Upload Failed!</Text>
+              </>
+            )}
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
     backgroundColor: theme.colors.primary.medium2,
@@ -254,43 +241,25 @@ const styles = StyleSheet.create({
     height: undefined,
     aspectRatio: 1,
   },
-
-  processingText: {
-    fontSize: theme.fonts.sizes.small,
-    color: theme.colors.primary.dark2,
-    textAlign: 'center',
-    marginTop: theme.spacing.medium,
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-
-  successText: {
+  modalContainer: {
+    width: '80%',
+    backgroundColor: theme.colors.background.offWhite,
+    borderRadius: 20,
+    padding: theme.spacing.large,
+    alignItems: 'center',
+  },
+  modalText: {
+    marginTop: theme.spacing.medium,
     fontSize: theme.fonts.sizes.medium,
-    fontWeight: 'bold',
     color: theme.colors.primary.medium,
     textAlign: 'center',
   },
-
-  extractedContent: {
-    fontSize: theme.fonts.sizes.small,
-    color: theme.colors.primary.dark2,
-    textAlign: 'center',
-    marginTop: theme.spacing.medium,
-  },
-  navigateButton: {
-    backgroundColor: theme.colors.primary.medium,
-    borderRadius: 10,
-    paddingVertical: theme.spacing.medium,
-    paddingHorizontal: theme.spacing.large,
-    marginTop: theme.spacing.medium,
-    alignSelf: 'center',
-  },
-  navigateButtonText: {
-    color: theme.colors.background.beige,
-    fontSize: theme.fonts.sizes.medium,
-    fontWeight: 'bold',
-  },
-
 });
 
 export default UploadScreen;
-
-
