@@ -1,38 +1,70 @@
 
-import React , {useState} from "react" ;
-import { StyleSheet, View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
+import React , {useState, useCallback} from "react" ;
+import {Alert,  StyleSheet, View, Text, TouchableOpacity, ScrollView, Image ,RefreshControl } from "react-native";
 import { Ionicons } from "@expo/vector-icons"; // Back icon
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { theme } from "../../../../src/theme";
-import { useGetAllDocuments } from "@/src/hooks/SmartRead/getAllDocuments";
-import { FetchAllDocsDto } from "@/types/SmartRead/Documents";
+import { useGetAllDocuments } from "@/src/hooks/SmartRead/useGetAllDocuments";
+import {FetchAllDocsDto, FetchAllResponseDTO, ProcessDocRequestDTO } from "@/types/SmartRead/Documents";
+import { useProcessDocument } from "@/src/hooks/SmartRead/useProcessDocument";
 
 export default function SmartReadMain() {
-  const title = "Basics of Programming"; 
+ 
 
-  const [isProcessed, setIsProcessed] = useState(false);
+ 
   const { documents, loading, error, refetch } = useGetAllDocuments();
+  const [refreshing, setRefreshing] = useState<boolean>(false);
+  const { processDocument, isProcessing } = useProcessDocument();
+  
+  
 
-  const handleSummarise = () => {
-     //api call??
-    setTimeout(() => {
-      setIsProcessed(true);
-    }, 2000); 
+  console.log(documents)
+
+   
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    refetch().finally(() => setRefreshing(false));
+  }, [refetch]);
+  
+
+  
+  const handleProcessing = async (process: FetchAllResponseDTO) => {
+    const fileId = process.id 
+    const blobUrl = process.blobUrl
+    try {
+      await processDocument({fileId,blobUrl}); 
+      console.log('Document processing request sent.');
+  
+      setTimeout(() => {
+        Alert.alert('Processing Complete', 'The document has been successfully processed!');
+      }, 2000);
+    } catch (error) {
+      console.error('Processing error:', error);
+      Alert.alert('Error', 'Failed to process the document.');
+    }
   };
+  
+
+
+  
   
 
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
+        
         {/* Header */}
         <Text style={styles.text}>Smart Read</Text>
         <EvilIcons name="arrow-left" style={styles.backArrow} />
 
-        Main Content
-        <View style={styles.innercontainer}>
-          {documents?.map((document: FetchAllDocsDto, index: number) => (
-            <View style={styles.cardContainer}>
+        {/*Main Content*/}
+        <ScrollView refreshControl={<RefreshControl refreshing ={refreshing} onRefresh ={onRefresh} />}>
+        <View style={styles.innercontainer} >
+
+          { documents.length > 0 ? (
+             documents?.map((document: FetchAllResponseDTO, index:number) => (
+            <View style={styles.cardContainer}  key={document.id}>
               {/* Document Image */}
               <Image
                 source={require("@/assets/images/auth/icon.png")}
@@ -46,32 +78,40 @@ export default function SmartReadMain() {
                 <Text style={styles.title}>{document.fileName}</Text>            
 
             {/* Conditional Buttons */}
-                  {isProcessed ? (
+                  {document.processed == true ? (
                     
                     <TouchableOpacity style={styles.playButton}>
                       <AntDesign
                         name="playcircleo"
                         size={24}
-                        color="white"
+                        
                         style={styles.playButtonIcon}
                       />
                       <Text style={styles.playButtonText}>View</Text>
                     </TouchableOpacity>
                   ) : (
                     
-                    <TouchableOpacity style={styles.summariseButton} onPress={handleSummarise}>
-                      <Text style={styles.playButtonText}>Process</Text>
+                    <TouchableOpacity style={styles.processButton} onPress={ () =>handleProcessing (document)}>
+                      <AntDesign
+                        name="playcircleo"
+                        size={24}
+                       
+                        style={styles.playButtonIcon}
+                      />
+                      <Text style={styles.playButtonText}>Process This </Text> 
                     </TouchableOpacity>
                   )}
                 </View>
               </View>
-             ))}  
+             ))): (<Text>no documents found</Text>)}  
             </View>
+            </ScrollView>
             <TouchableOpacity style={styles.floatingButton}>
-                  <AntDesign name="filetext1" size={24} color="#FFFF" />
-              </TouchableOpacity>
-        </View>
+                  <AntDesign name="filetext1" size={24} color="#FFFF" />   {/* add navigation here for the uploading screen */}
+              </TouchableOpacity> 
       </View>
+    </View> 
+      
     
   );
 }
@@ -114,15 +154,14 @@ const styles = StyleSheet.create({
     color: theme.colors.blacks.medium,
   },
   cardContainer: {
-    
+    top:-80,
     flexDirection: "row",
     padding: 10,
     backgroundColor: theme.colors.background.beige,
     borderRadius: 25,
-    marginBottom: 10,
     alignItems: "center",
-    
-    margin:20,
+    marginBottom:-2,
+    margin:25,
 
   },
   image: {
@@ -139,10 +178,10 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: theme.fonts.sizes.medium,
-    color: theme.colors.blacks.medium},
-  author: {
-    fontSize: 17,
-    color: theme.colors.secondary.medium,
+    
+    color: theme.colors.blacks.dark,
+    marginRight:30,
+    
   },
 
   /*buttons:{
@@ -150,15 +189,13 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   }
   ,*/
-   summariseButton: {
-    
-    alignItems: "center",
-    marginTop: 10,
-    backgroundColor: "#009EA5",
+   processButton: {
+    flexDirection: "row",
+    alignItems: "center", 
     paddingVertical: 10,
     paddingHorizontal: 10,
     borderRadius: 5,
-    marginRight: 10,
+    marginRight: 8,
     
   },
 
@@ -175,9 +212,10 @@ const styles = StyleSheet.create({
   },
   playButtonIcon: {
     marginRight: 8,
+    color: theme.colors.secondary.medium,
   },
   playButtonText: {
-    color: "white",
+    color: theme.colors.secondary.medium,
     fontSize: 16,
     fontWeight: "bold",
   },

@@ -33,7 +33,6 @@ const UploadScreen = () => {
 
   const [uploadState, setUploadState] = useState('idle');
   const [fileName,setFileName] = useState('');
-  const [extractedContent, setExtractedContent] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
 
   const pickDocument = async () => {
@@ -89,8 +88,6 @@ const uploadDocument = async (file: File): Promise<void> => {
         Alert.alert('Success', response.data.message);
         setUploadState('ready');
 
-        // Pass both fileId and blobUrl when processing the document
-        processDocument(response.data.fileId, response.data.blobUrl);
     } catch (error) {
         console.error('Upload error:', error);
         Alert.alert('Upload Failed', 'Could not upload the file. Please try again.');
@@ -98,49 +95,6 @@ const uploadDocument = async (file: File): Promise<void> => {
     }
 };
 
-
-const processDocument = async (fileId: string, blobUrl: string) => {
-  setIsProcessing(true);
-
-  console.log('fileId:', fileId);
-  console.log('blobUrl:', blobUrl);
-
-
-  if (!fileId || !blobUrl) {
-    Alert.alert('Processing Failed', 'File ID or Blob URL is missing.');
-    setIsProcessing(false);
-    return;
-  }
-
-  try {
-    // Send POST request with fileId and blobUrl in the body
-    const response = await apiClient.post('/smartRead/file/process', {
-      fileId: fileId,    
-      blobUrl: blobUrl,
-    });
-
-    if (response.data && response.data.extractedText) {
-      setExtractedContent(response.data.extractedText);
-      setUploadState('processing');
-    } else {
-      Alert.alert('Processing Failed', 'No extracted text received from the backend.');
-    }
-  } catch (error: any) {
-    console.error('Processing error:', error);
-
-    if (error.response) {
-      const backendError = error.response.data.error || 'Unknown error';
-      const errorDetails = error.response.data.details || '';
-      Alert.alert('Processing Failed', `${backendError}: ${errorDetails}`);
-    } else if (error.request) {
-      Alert.alert('Processing Failed', 'No response from the server. Please try again later.');
-    } else {
-      Alert.alert('Processing Failed', `Error: ${error.message}`);
-    }
-  } finally {
-    setIsProcessing(false);
-  }
-};
 
 
 
@@ -193,12 +147,7 @@ const processDocument = async (fileId: string, blobUrl: string) => {
             </>        
           )}
 
-          {uploadState === 'processing' && (
-                    <>
-                        <Text style={styles.successText}>File processed successfully!</Text>
-                        <Text style={styles.extractedContent}>{extractedContent}</Text>
-                    </>
-                )}
+          
         </View>
   
         {/* Footer Section */}
