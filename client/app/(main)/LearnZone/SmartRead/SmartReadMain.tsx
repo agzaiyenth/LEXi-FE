@@ -1,128 +1,145 @@
 
-import React , {useState, useCallback} from "react" ;
-import {StyleSheet, View, Text, TouchableOpacity, ScrollView, Image ,RefreshControl } from "react-native";
-import EvilIcons from "@expo/vector-icons/EvilIcons";
-import AntDesign from "@expo/vector-icons/AntDesign";
-import { theme } from "../../../../src/theme";
 import { useGetAllDocuments } from "@/src/hooks/SmartRead/useGetAllDocuments";
-import {FetchAllResponseDTO} from "@/types/SmartRead/Documents";
 import { useProcessDocument } from "@/src/hooks/SmartRead/useProcessDocument";
+import { FetchAllResponseDTO, ProcessDocRequestDTO } from "@/types/SmartRead/Documents";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import EvilIcons from "@expo/vector-icons/EvilIcons";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "expo-router";
+import React, { useCallback, useState } from "react";
+import { ActivityIndicator, Image, RefreshControl, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Toast from 'react-native-toast-message';
+import { theme } from "../../../../src/theme";
+import LoadingScreen from "@/components/loading";
+import ErrorScreen from "@/components/ErrorScreen";
 
 export default function SmartReadMain() {
- 
 
- 
+  const navigation = useNavigation<StackNavigationProp<any, "SmartReadMain">>();
   const { documents, loading, error, refetch } = useGetAllDocuments();
   const [refreshing, setRefreshing] = useState<boolean>(false);
-  const { processDocument, isProcessing } = useProcessDocument();
-  const navigation = useNavigation<StackNavigationProp<any, "SmartReadMain">>();
-  
-  
+  const { processDocument } = useProcessDocument();
+  const [processingDocs, setProcessingDocs] = useState<number[]>([]);
 
-  console.log(documents)
 
-   
+
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     refetch().finally(() => setRefreshing(false));
   }, [refetch]);
-  
 
-  
-  const handleProcessing = async (process: FetchAllResponseDTO) => {
-    const fileId = process.id 
-    const blobUrl = process.blobUrl
+
+
+  const handleProcessing = async ({ fileId, blobUrl }: ProcessDocRequestDTO) => {
+    setProcessingDocs((prev) => [...prev, fileId]);
     try {
-      await processDocument({fileId,blobUrl}); 
+      await processDocument({ fileId, blobUrl });
       console.log('Document processing request sent.');
-  
+
       setTimeout(() => {
-        Toast.show({type:'success', text1:'Processing Complete', text2:'The document has been successfully processed!' });
+        Toast.show({ type: 'success', text1: 'Processing Complete', text2: 'The document has been successfully processed!' });
       }, 2000);
     } catch (error) {
       console.error('Processing error:', error);
-      Toast.show({type:'error', text1:'Failed to process the document'});
+      Toast.show({ type: 'error', text1: 'Failed to process the document' });
+    } finally {
+      setProcessingDocs((prev) => prev.filter((id) => id !== fileId));
     }
   };
-  
 
 
-  
-  
+
+
+  if (loading) {
+    return (
+      <LoadingScreen/>
+    );
+  }
+  else if(error){
+    return (
+      <ErrorScreen/>
+    )
+  }else{
 
   return (
+ 
     <View style={styles.wrapper}>
       <View style={styles.container}>
-        
+
         {/* Header */}
         <Text style={styles.text}>Smart Read</Text>
         <EvilIcons name="arrow-left" style={styles.backArrow} />
 
         {/*Main Content*/}
-        <ScrollView refreshControl={<RefreshControl refreshing ={refreshing} onRefresh ={onRefresh} />}>
-        <View style={styles.innercontainer} >
+        <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+          <View style={styles.innercontainer} >
 
-          { documents.length > 0 ? (
-             documents?.map((document: FetchAllResponseDTO, index:number) => (
-            <View style={styles.cardContainer}  key={document.id}>
-              {/* Document Image */}
-              <Image
-                source={require("@/assets/images/auth/icon.png")}
-                style={styles.image}
-              />
+            {documents.length > 0 ? (
+              documents?.map((document: FetchAllResponseDTO) => (
+                <View style={styles.cardContainer} key={document.id}>
+                  {/* Document Image */}
+                  <Image
+                    source={require("@/assets/images/auth/icon.png")}
+                    style={styles.image}
+                  />
 
-              {/* Document Details */}
+                  {/* Document Details */}
 
-              <View style={styles.detailsContainer}>
-                 
-                <Text style={styles.title}>{document.fileName}</Text>            
+                  <View style={styles.detailsContainer}>
 
-            {/* Conditional Buttons */}
-                  {document.processed == true ? (
-                    
-                  
-                    <TouchableOpacity style={styles.playButton} onPress={ () =>
-                    navigation.navigate('SpeechScreen', {fileId: document?.id})}>
-                      
+                    <Text style={styles.title}>{document.fileName}</Text>
 
-                      <AntDesign
-                        name="playcircleo"
-                        size={24}
-                        
-                        style={styles.playButtonIcon}
-                      />
-                      <Text style={styles.playButtonText}>View</Text>
-                    </TouchableOpacity>
-                  ) : (
-                    
-                    <TouchableOpacity style={styles.processButton} onPress={ () =>handleProcessing (document)}>
-                      <AntDesign
-                        name="playcircleo"
-                        size={24}
-                       
-                        style={styles.playButtonIcon}
-                      />
-                      <Text style={styles.playButtonText}>Process</Text> 
-                    </TouchableOpacity>
-                  )}
+                    {/* Conditional Buttons */}
+                    {document.processed === true ? (
+                      <TouchableOpacity
+                        style={styles.playButton}
+                        onPress={() => navigation.navigate("SpeechScreen", { fileId: document.id })}
+                      >
+                        <AntDesign
+                          name="playcircleo"
+                          size={24}
+                          style={styles.playButtonIcon}
+                        />
+                        <Text style={styles.playButtonText}>View</Text>
+                      </TouchableOpacity>
+                    ) : (
+                      <TouchableOpacity
+                        style={styles.processButton}
+                        onPress={() => handleProcessing({ fileId: document.id, blobUrl: document.blobUrl })}
+                        disabled={processingDocs.includes(document.id)} 
+                      >
+                        {processingDocs.includes(document.id) ? (<>
+                          <ActivityIndicator size="small" color={theme.colors.secondary.medium} /> 
+                          <Text style={styles.playButtonText}>Processing Hold Up!</Text>
+                          </>
+                        ) : (
+                          <>
+                            <AntDesign
+                              name="playcircleo"
+                              size={24}
+                              style={styles.playButtonIcon}
+                            />
+                            <Text style={styles.playButtonText}>Process</Text>
+                          </>
+                        )}
+                      </TouchableOpacity>
+                    )}
+
+                  </View>
                 </View>
-              </View>
-             ))): (<Text>no documents found</Text>)}  
-            </View>
-            </ScrollView>
-            <TouchableOpacity style={styles.floatingButton} onPress={ () =>
-                    navigation.navigate('UploadScreen')}>
-                  <AntDesign name="filetext1" size={24} color="#FFFF" />
-              </TouchableOpacity> 
+              ))) : (<Text>no documents found</Text>)}
+          </View>
+        </ScrollView>
+        <TouchableOpacity style={styles.floatingButton} onPress={() =>
+          navigation.navigate('UploadScreen')}>
+          <AntDesign name="filetext1" size={24} color="#FFFF" />
+        </TouchableOpacity>
       </View>
-    </View> 
-      
-    
+    </View>
+
+
   );
-}
+}}
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -168,8 +185,8 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.background.beige,
     borderRadius: 25,
     alignItems: "center",
-    marginBottom:-2,
-    margin:25,
+    marginBottom: -2,
+    margin: 25,
 
   },
   image: {
@@ -181,25 +198,25 @@ const styles = StyleSheet.create({
   detailsContainer: {
     flex: 1,
     justifyContent: "center",
-    width:80,
-   
+    width: 80,
+
   },
   title: {
     fontSize: theme.fonts.sizes.medium,
-    
+
     color: theme.colors.blacks.dark,
-    marginRight:30,
-    
+    marginRight: 30,
+
   },
 
-   processButton: {
+  processButton: {
     flexDirection: "row",
-    alignItems: "center", 
+    alignItems: "center",
     paddingVertical: 10,
     paddingHorizontal: 10,
     borderRadius: 5,
     marginRight: 8,
-    
+
   },
 
   playButton: {
@@ -208,9 +225,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingVertical: 10,
     paddingHorizontal: 10,
-    borderRadius:25,
+    borderRadius: 25,
     marginRight: 10,
-    
+
   },
   playButtonIcon: {
     marginRight: 8,
