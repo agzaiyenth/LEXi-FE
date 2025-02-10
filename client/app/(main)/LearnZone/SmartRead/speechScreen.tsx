@@ -1,26 +1,37 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text, TouchableOpacity, ScrollView, ActivityIndicator, Animated } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  ActivityIndicator,
+  Animated,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import { Audio } from "expo-av";
 import { theme } from "../../../../src/theme";
-import Markdown from 'react-native-markdown-display';
+import Markdown from "react-native-markdown-display";
 import { useFetchDocument } from "../../../../src/hooks/SmartRead/useFetchDocument";
 import { useRoute } from "@react-navigation/native";
-
+import LoadingScreen from "@/components/loading";
+import ErrorScreen from "@/components/ErrorScreen";
 
 export default function SpeechScreen() {
   const route = useRoute();
-  const {fileId}= route.params as {fileId:number};
+  const { fileId } = route.params as { fileId: number };
 
-  
   console.log("Route Params:", route.params);
 
   const { document, loading, error } = useFetchDocument(fileId);
   const [isPlaying, setIsPlaying] = useState(false);
   const [sound, setSound] = useState<Audio.Sound | null>(null);
-  const [waveAnim] = useState(() => Array.from({ length: 30 }, () => new Animated.Value(1)));
+  const [waveAnim] = useState(() =>
+    Array.from({ length: 30 }, () => new Animated.Value(1))
+  );
 
+  // Unload the sound when the component unmounts or the sound changes
   useEffect(() => {
     return sound
       ? () => {
@@ -29,6 +40,7 @@ export default function SpeechScreen() {
       : undefined;
   }, [sound]);
 
+  // Animate the waveform when playing
   const animateWaves = () => {
     if (isPlaying) {
       Animated.loop(
@@ -36,14 +48,31 @@ export default function SpeechScreen() {
           100,
           waveAnim.map((anim, index) =>
             Animated.sequence([
-              Animated.timing(anim, { toValue: index % 5 === 0 ? 1.2 : index % 5 === 1 ? 1 : index % 5 === 2 ? 0.8 : index % 5 === 3 ? 0.6 : 0.4, duration: 300, useNativeDriver: true }),
-              Animated.timing(anim, { toValue: 1, duration: 300, useNativeDriver: true })
+              Animated.timing(anim, {
+                toValue:
+                  index % 5 === 0
+                    ? 1.2
+                    : index % 5 === 1
+                    ? 1
+                    : index % 5 === 2
+                    ? 0.8
+                    : index % 5 === 3
+                    ? 0.6
+                    : 0.4,
+                duration: 300,
+                useNativeDriver: true,
+              }),
+              Animated.timing(anim, {
+                toValue: 1,
+                duration: 300,
+                useNativeDriver: true,
+              }),
             ])
           )
         )
       ).start();
     } else {
-      waveAnim.forEach(anim => anim.setValue(1));
+      waveAnim.forEach((anim) => anim.setValue(1));
     }
   };
 
@@ -51,18 +80,70 @@ export default function SpeechScreen() {
     animateWaves();
   }, [isPlaying]);
 
-  const handleAudioPlay = async () => {
-    if (isPlaying) {
-      sound?.stopAsync();
-      setIsPlaying(false);
-    } else if (document?.ttsAudioUrl) {
-      const { sound } = await Audio.Sound.createAsync({ uri: document.ttsAudioUrl });
-      setSound(sound);
-      setIsPlaying(true);
-      sound.setOnPlaybackStatusUpdate((status) => {
-        if (status.isLoaded && !status.isPlaying) setIsPlaying(false);
-      });
-      await sound.playAsync();
+  // Function to handle play/pause toggle
+  const handlePlayPause = async () => {
+    try {
+      // If no sound has been loaded yet, create and play one
+      if (!sound) {
+        if (document?.ttsAudioUrl) {
+          const { sound: newSound } = await Audio.Sound.createAsync({
+            uri: document.ttsAudioUrl,
+          });
+          setSound(newSound);
+          newSound.setOnPlaybackStatusUpdate((status) => {
+            if (status.isLoaded) {
+              // When playback finishes, update state
+              if (!status.isPlaying && status.positionMillis >= status.durationMillis) {
+                setIsPlaying(false);
+              }
+            }
+          });
+          await newSound.playAsync();
+          setIsPlaying(true);
+        }
+      } else {
+        // If the sound exists, check its status and toggle play/pause
+        const status = await sound.getStatusAsync();
+        if (status.isLoaded) {
+          if (status.isPlaying) {
+            await sound.pauseAsync();
+            setIsPlaying(false);
+          } else {
+            await sound.playAsync();
+            setIsPlaying(true);
+          }
+        }
+      }
+    } catch (err) {
+      console.error("Play/Pause error:", err);
+    }
+  };
+
+  // Skip forward 5 seconds
+  const handleForward = async () => {
+    if (sound) {
+      const status = await sound.getStatusAsync();
+      if (status.isLoaded) {
+        let newPosition = status.positionMillis + 5000;
+        if (newPosition > status.durationMillis) {
+          newPosition = status.durationMillis;
+        }
+        await sound.setPositionAsync(newPosition);
+      }
+    }
+  };
+
+  // Skip backward 5 seconds
+  const handleBackward = async () => {
+    if (sound) {
+      const status = await sound.getStatusAsync();
+      if (status.isLoaded) {
+        let newPosition = status.positionMillis - 5000;
+        if (newPosition < 0) {
+          newPosition = 0;
+        }
+        await sound.setPositionAsync(newPosition);
+      }
     }
   };
 
@@ -75,13 +156,16 @@ export default function SpeechScreen() {
         <View style={styles.innercontainer}>
           <View style={styles.textContainer}>
             {loading ? (
-              <ActivityIndicator size="large" color={theme.colors.primary.medium} />
+              <LoadingScreen />
             ) : error ? (
-              <Text style={styles.errorText}>{error}</Text>
+              <ErrorScreen />
             ) : (
               <ScrollView>
-                <Markdown style={StyleSheet.create({ summaryText: styles.summaryText })}>{document?.summary}</Markdown>
-      
+                {document && (
+                  <Markdown style={StyleSheet.create({ summaryText: styles.summaryText })}>
+                    {document.summary}
+                  </Markdown>
+                )}
               </ScrollView>
             )}
           </View>
@@ -89,16 +173,47 @@ export default function SpeechScreen() {
           <View style={styles.audioContainer}>
             <View style={styles.audioWaveformContainer}>
               {waveAnim.map((anim, index) => (
-                <Animated.View key={`wave-${index}`} style={[styles.wave, { transform: [{ scaleY: anim }] }]} />
+                <Animated.View
+                  key={`wave-${index}`}
+                  style={[styles.wave, { transform: [{ scaleY: anim }] }]}
+                />
               ))}
             </View>
 
             <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.listenButton} onPress={handleAudioPlay}>
-                <Text style={styles.listenButtonText}>{isPlaying ? "STOP" : "LISTEN"}</Text>
+              {/* Backward Button */}
+              <TouchableOpacity
+                onPress={handleBackward}
+                disabled={!sound}
+                style={!sound ? styles.disabledButton : undefined}
+              >
+                <Ionicons
+                  name="play-skip-back"
+                  size={50}
+                  color={sound ? theme.colors.primary.medium : "gray"}
+                />
               </TouchableOpacity>
-              <TouchableOpacity onPress={handleAudioPlay}>
-                <Ionicons name={isPlaying ? "stop-circle" : "play-circle"} size={50} color={theme.colors.primary.medium} />
+
+              {/* Play / Pause Button */}
+              <TouchableOpacity onPress={handlePlayPause}>
+                <Ionicons
+                  name={isPlaying ? "pause-circle" : "play-circle"}
+                  size={50}
+                  color={theme.colors.primary.medium}
+                />
+              </TouchableOpacity>
+
+              {/* Forward Button */}
+              <TouchableOpacity
+                onPress={handleForward}
+                disabled={!sound}
+                style={!sound ? styles.disabledButton : undefined}
+              >
+                <Ionicons
+                  name="play-skip-forward"
+                  size={50}
+                  color={sound ? theme.colors.primary.medium : "gray"}
+                />
               </TouchableOpacity>
             </View>
           </View>
@@ -111,19 +226,67 @@ export default function SpeechScreen() {
 const styles = StyleSheet.create({
   wrapper: { width: "100%", height: "100%" },
   container: { flex: 1, backgroundColor: "#9AC3BB", position: "relative" },
-  leftarrow: { position: "absolute", top: 20, left: 20, fontSize: 60, color: theme.colors.background.offWhite, padding: 2 },
-  text: { top: 35, fontSize: theme.fonts.sizes.small, lineHeight: 30, fontWeight: "400", textAlign: "center", color: theme.colors.background.offWhite },
-  innercontainer: { top: 80, backgroundColor: "#FDF4DE", borderRadius: 25, height: "90%", padding: 20 },
-  textContainer: { borderRadius: 25, backgroundColor: theme.colors.secondary.light, height: "73%", padding: 30 },
-  summaryText: { fontSize: theme.fonts.sizes.medium, fontFamily: theme.fonts.regular, color: theme.colors.blacks.medium, lineHeight: 30 },
-  errorText: { color: "red", textAlign: "center" },
+  leftarrow: {
+    position: "absolute",
+    top: 20,
+    left: 20,
+    fontSize: 60,
+    color: theme.colors.background.offWhite,
+    padding: 2,
+  },
+  text: {
+    top: 35,
+    fontSize: theme.fonts.sizes.small,
+    lineHeight: 30,
+    fontWeight: "400",
+    textAlign: "center",
+    color: theme.colors.background.offWhite,
+  },
+  innercontainer: {
+    top: 80,
+    backgroundColor: "#FDF4DE",
+    borderRadius: 25,
+    height: "90%",
+    padding: 20,
+  },
+  textContainer: {
+    borderRadius: 25,
+    backgroundColor: theme.colors.secondary.light,
+    height: "73%",
+    padding: 30,
+  },
+  summaryText: {
+    fontSize: theme.fonts.sizes.medium,
+    fontFamily: theme.fonts.regular,
+    color: theme.colors.blacks.medium,
+    lineHeight: 30,
+  },
   audioContainer: { marginTop: 20, alignItems: "center" },
-  audioWaveformContainer: { flexDirection: "row", justifyContent: "center", alignItems: "center", height: 64 },
-  wave: { width: 6, marginHorizontal: 2, backgroundColor: theme.colors.primary.medium, borderRadius: 8, height: "50%" },
-  buttonContainer: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", width: "60%" },
-  listenButton: { backgroundColor: theme.colors.primary.medium, borderRadius: 25, paddingVertical: 10, paddingHorizontal: 20 },
-  listenButtonText: { fontSize: theme.fonts.sizes.medium, color: theme.colors.background.offWhite, fontFamily: theme.fonts.bold },
+  audioWaveformContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    height: 64,
+  },
+  wave: {
+    width: 6,
+    marginHorizontal: 2,
+    backgroundColor: theme.colors.primary.medium,
+    borderRadius: 8,
+    height: "50%",
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "70%",
+    marginTop: 20,
+  },
+  disabledButton: {
+    opacity: 0.5,
+  },
 });
+
 
 // import React, { useState, useEffect } from "react";
 // import { StyleSheet, View, Text, TouchableOpacity, ScrollView, ActivityIndicator, Animated } from "react-native";
