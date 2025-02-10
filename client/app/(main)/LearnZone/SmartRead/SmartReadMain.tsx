@@ -1,4 +1,6 @@
 
+import ErrorScreen from "@/components/ErrorScreen";
+import LoadingScreen from "@/components/loading";
 import { useGetAllDocuments } from "@/src/hooks/SmartRead/useGetAllDocuments";
 import { useProcessDocument } from "@/src/hooks/SmartRead/useProcessDocument";
 import { FetchAllResponseDTO, ProcessDocRequestDTO } from "@/types/SmartRead/Documents";
@@ -10,8 +12,6 @@ import React, { useCallback, useState } from "react";
 import { ActivityIndicator, Image, RefreshControl, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Toast from 'react-native-toast-message';
 import { theme } from "../../../../src/theme";
-import LoadingScreen from "@/components/loading";
-import ErrorScreen from "@/components/ErrorScreen";
 
 export default function SmartReadMain() {
 
@@ -53,94 +53,95 @@ export default function SmartReadMain() {
 
   if (loading) {
     return (
-      <LoadingScreen/>
+      <LoadingScreen />
     );
   }
-  else if(error){
+  else if (error) {
     return (
-      <ErrorScreen/>
+      <ErrorScreen />
     )
-  }else{
+  } else {
 
-  return (
- 
-    <View style={styles.wrapper}>
-      <View style={styles.container}>
+    return (
 
-        {/* Header */}
-        <Text style={styles.text}>Smart Read</Text>
-        <EvilIcons name="arrow-left" style={styles.backArrow} />
+      <View style={styles.wrapper}>
+        <View style={styles.container}>
 
-        {/*Main Content*/}
-        <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-          <View style={styles.innercontainer} >
+          {/* Header */}
+          <Text style={styles.text}>Smart Read</Text>
+          <EvilIcons name="arrow-left" style={styles.backArrow} />
 
-            {documents.length > 0 ? (
-              documents?.map((document: FetchAllResponseDTO) => (
-                <View style={styles.cardContainer} key={document.id}>
-                  {/* Document Image */}
-                  <Image
-                    source={require("@/assets/images/auth/icon.png")}
-                    style={styles.image}
-                  />
+          {/*Main Content*/}
+          <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+            <View style={styles.innercontainer} >
 
-                  {/* Document Details */}
+              {documents.length > 0 ? (
+                documents?.map((document: FetchAllResponseDTO) => (
+                  <View style={styles.cardContainer} key={document.id}>
+                    {/* Document Image */}
+                    <Image
+                      source={require("@/assets/images/auth/icon.png")}
+                      style={styles.image}
+                    />
 
-                  <View style={styles.detailsContainer}>
+                    {/* Document Details */}
 
-                    <Text style={styles.title}>{document.fileName}</Text>
+                    <View style={styles.detailsContainer}>
 
-                    {/* Conditional Buttons */}
-                    {document.processed === true ? (
-                      <TouchableOpacity
-                        style={styles.playButton}
-                        onPress={() => navigation.navigate("SpeechScreen", { fileId: document.id })}
-                      >
-                        <AntDesign
-                          name="playcircleo"
-                          size={24}
-                          style={styles.playButtonIcon}
-                        />
-                        <Text style={styles.playButtonText}>View</Text>
-                      </TouchableOpacity>
-                    ) : (
-                      <TouchableOpacity
-                        style={styles.processButton}
-                        onPress={() => handleProcessing({ fileId: document.id, blobUrl: document.blobUrl })}
-                        disabled={processingDocs.includes(document.id)} 
-                      >
-                        {processingDocs.includes(document.id) ? (<>
-                          <ActivityIndicator size="small" color={theme.colors.secondary.medium} /> 
-                          <Text style={styles.playButtonText}>Processing Hold Up!</Text>
+                      <Text style={styles.title}>{document.fileName}</Text>
+
+                      {/* Conditional Buttons */}
+                      {document.processed === true ? (
+                        <TouchableOpacity
+                          style={styles.playButton}
+                          onPress={() => navigation.navigate("SpeechScreen", { fileId: document.id })}
+                        >
+                          <AntDesign
+                            name="playcircleo"
+                            size={24}
+                            style={styles.playButtonIcon}
+                          />
+                          <Text style={styles.playButtonText}>View</Text>
+                        </TouchableOpacity>
+                      ) : (
+                        <TouchableOpacity
+                          style={styles.processButton}
+                          onPress={() => handleProcessing({ fileId: document.id, blobUrl: document.blobUrl })}
+                          disabled={processingDocs.includes(document.id)}
+                        >
+                          {processingDocs.includes(document.id) ? (<>
+                            <ActivityIndicator size="small" color={theme.colors.secondary.medium} />
+                            <Text style={styles.playButtonText}>Processing Hold Up!</Text>
                           </>
-                        ) : (
-                          <>
-                            <AntDesign
-                              name="playcircleo"
-                              size={24}
-                              style={styles.playButtonIcon}
-                            />
-                            <Text style={styles.playButtonText}>Process</Text>
-                          </>
-                        )}
-                      </TouchableOpacity>
-                    )}
+                          ) : (
+                            <>
+                              <AntDesign
+                                name="playcircleo"
+                                size={24}
+                                style={styles.playButtonIcon}
+                              />
+                              <Text style={styles.playButtonText}>Process</Text>
+                            </>
+                          )}
+                        </TouchableOpacity>
+                      )}
 
+                    </View>
                   </View>
-                </View>
-              ))) : (<Text>no documents found</Text>)}
-          </View>
-        </ScrollView>
-        <TouchableOpacity style={styles.floatingButton} onPress={() =>
-          navigation.navigate('UploadScreen')}>
-          <AntDesign name="filetext1" size={24} color="#FFFF" />
-        </TouchableOpacity>
+                ))) : (<Text>no documents found</Text>)}
+            </View>
+          </ScrollView>
+          <TouchableOpacity style={styles.floatingButton} onPress={() =>
+            navigation.navigate('UploadScreen')}>
+            <AntDesign name="filetext1" size={24} color="#FFFF" />
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
 
 
-  );
-}}
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   wrapper: {
