@@ -1,22 +1,21 @@
-import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  ActivityIndicator,
-  Animated,
-} from "react-native";
+import ErrorScreen from "@/components/ErrorScreen";
+import LoadingScreen from "@/components/loading";
 import { Ionicons } from "@expo/vector-icons";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
+import { useRoute } from "@react-navigation/native";
 import { Audio } from "expo-av";
-import { theme } from "../../../../src/theme";
+import React, { useEffect, useState } from "react";
+import {
+  Animated,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native";
 import Markdown from "react-native-markdown-display";
 import { useFetchDocument } from "../../../../src/hooks/SmartRead/useFetchDocument";
-import { useRoute } from "@react-navigation/native";
-import LoadingScreen from "@/components/loading";
-import ErrorScreen from "@/components/ErrorScreen";
+import { theme } from "../../../../src/theme";
 
 export default function SpeechScreen() {
   const route = useRoute();
