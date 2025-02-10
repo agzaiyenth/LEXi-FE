@@ -38,3 +38,15 @@ yarn-error.*
 
 /android
 /ios
+
+# EAS Build
+dist/
+build/
+*.apk
+*.aab
+*.ipa
+*.tar.gz
+
+# EAS Credentials
+.eas/
+credentials.json

@@ -11,6 +11,7 @@ import LearnScreen from './LearnZone';
 import PlayScreen from './PlaySpace';
 import ExploreScreen from './Explore';
 import AccountScreen from './Account';
+import DetectionFlow from './Detection';
 
 // Create a Bottom Tab Navigator
 const Tab = createBottomTabNavigator();
@@ -38,6 +39,7 @@ export default function AppLayout() {
       <Tab.Screen name="PlaySpace" component={PlayScreen} options={{ title: 'Play' }} />
       <Tab.Screen name="Explore+" component={ExploreScreen} options={{ title: 'Explore' }} />
       <Tab.Screen name="Account" component={AccountScreen} options={{ title: 'Account' }} />
+      <Tab.Screen name="Detection" component={DetectionFlow} options={{ title: 'Detection' }} />
     </Tab.Navigator>
   );
 }
@@ -75,6 +77,8 @@ const CustomTabBar = ({ state, descriptors, navigation }: any) => {
               return 'public';
             case 'Account':
               return 'account-circle';
+            case 'Detection':
+              return 'pages';
             default:
               return 'home';
           }
