@@ -84,7 +84,7 @@ export default function SmartReadMain() {
                     
                   
                     <TouchableOpacity style={styles.playButton} onPress={ () =>
-                    navigation.navigate('SpeechScreen', {fileId: document.id})}>
+                    navigation.navigate('SpeechScreen', {fileId: document?.id})}>
                       
 
                       <AntDesign
