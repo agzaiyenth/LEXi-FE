@@ -44,6 +44,7 @@ export default function SmartReadMain() {
       Toast.show({ type: 'error', text1: 'Failed to process the document' });
     } finally {
       setProcessingDocs((prev) => prev.filter((id) => id !== fileId));
+      refetch();
     }
   };
 
