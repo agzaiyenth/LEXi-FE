@@ -1,12 +1,11 @@
 
 import React , {useState, useCallback} from "react" ;
 import {Alert,  StyleSheet, View, Text, TouchableOpacity, ScrollView, Image ,RefreshControl } from "react-native";
-import { Ionicons } from "@expo/vector-icons"; // Back icon
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { theme } from "../../../../src/theme";
 import { useGetAllDocuments } from "@/src/hooks/SmartRead/useGetAllDocuments";
-import {FetchAllDocsDto, FetchAllResponseDTO, ProcessDocRequestDTO } from "@/types/SmartRead/Documents";
+import {FetchAllResponseDTO} from "@/types/SmartRead/Documents";
 import { useProcessDocument } from "@/src/hooks/SmartRead/useProcessDocument";
 
 export default function SmartReadMain() {
@@ -98,7 +97,7 @@ export default function SmartReadMain() {
                        
                         style={styles.playButtonIcon}
                       />
-                      <Text style={styles.playButtonText}>Process This </Text> 
+                      <Text style={styles.playButtonText}>Process</Text> 
                     </TouchableOpacity>
                   )}
                 </View>
@@ -150,11 +149,11 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    height: "90%",
+    height: "140%",
     color: theme.colors.blacks.medium,
   },
   cardContainer: {
-    top:-80,
+    top: -80,
     flexDirection: "row",
     padding: 10,
     backgroundColor: theme.colors.background.beige,
@@ -184,11 +183,6 @@ const styles = StyleSheet.create({
     
   },
 
-  /*buttons:{
-    flexDirection: "row",
-    justifyContent: "flex-start",
-  }
-  ,*/
    processButton: {
     flexDirection: "row",
     alignItems: "center", 
@@ -203,7 +197,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginTop: 10,
-    backgroundColor: "#009EA5",
     paddingVertical: 10,
     paddingHorizontal: 10,
     borderRadius:25,
