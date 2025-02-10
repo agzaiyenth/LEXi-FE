@@ -19,10 +19,6 @@ const Stack = createStackNavigator<LearnZoneParamList>();
 
 const SmartRead = () => {
   return (
-    /*<View style={styles.container}>
-     <UploadScreen/>
-     
-    </View>*/
     
       <Stack.Navigator
       screenOptions={{
