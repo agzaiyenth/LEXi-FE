@@ -21,7 +21,7 @@ interface File{
 }
 
 
-type NavigationProp = StackNavigationProp<LearnZoneParamList, 'UploadScreen'>;
+type NavigationProp = StackNavigationProp<LearnZoneParamList, 'UploadScreen', 'SmartReadMain'>;
 
 const UploadScreen = () => {
   const navigation = useNavigation<NavigationProp>();
@@ -139,6 +139,7 @@ const uploadDocument = async (file: File): Promise<void> => {
               <Text style={styles.processingText}>
                 "{fileName}" is getting ready for summarization...
               </Text>
+            
             </>
           )}
 
@@ -149,12 +150,19 @@ const uploadDocument = async (file: File): Promise<void> => {
             <Text style={styles.successText}>
               "{fileName}" is ready for summarization!
             </Text>
+            <TouchableOpacity 
+                style={styles.browseButton}
+                onPress={ () =>
+                  navigation.navigate('SmartReadMain')} 
+                accessible 
+                accessibilityLabel="Browse files to upload"
+              >
+                <Text style={styles.browseButtonText}>Go back to main screen</Text>
+              </TouchableOpacity>
           </>
         )}
 
-    
-
-          
+  
         </View>
   
         {/* Footer Section */}

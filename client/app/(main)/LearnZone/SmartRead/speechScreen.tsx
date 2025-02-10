@@ -7,11 +7,15 @@ import { theme } from "../../../../src/theme";
 import Markdown from 'react-native-markdown-display';
 import { useFetchDocument } from "../../../../src/hooks/SmartRead/useFetchDocument";
 import { useRoute } from "@react-navigation/native";
-import { FetchAllResponseDTO } from "@/types/SmartRead/Documents";
+
 
 export default function SpeechScreen() {
   const route = useRoute();
   const {fileId}= route.params as {fileId:number};
+
+  
+  console.log("Route Params:", route.params);
+
   const { document, loading, error } = useFetchDocument(fileId);
   const [isPlaying, setIsPlaying] = useState(false);
   const [sound, setSound] = useState<Audio.Sound | null>(null);

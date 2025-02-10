@@ -81,8 +81,12 @@ export default function SmartReadMain() {
 
             {/* Conditional Buttons */}
                   {document.processed == true ? (
+                    
                   
-                    <TouchableOpacity style={styles.playButton} onPress={ () =>navigation.navigate('SpeechScreen', {fileId: document.id})}>
+                    <TouchableOpacity style={styles.playButton} onPress={ () =>
+                    navigation.navigate('SpeechScreen', {fileId: document.id})}>
+                      
+
                       <AntDesign
                         name="playcircleo"
                         size={24}
@@ -108,7 +112,8 @@ export default function SmartReadMain() {
              ))): (<Text>no documents found</Text>)}  
             </View>
             </ScrollView>
-            <TouchableOpacity style={styles.floatingButton}>
+            <TouchableOpacity style={styles.floatingButton} onPress={ () =>
+                    navigation.navigate('UploadScreen')}>
                   <AntDesign name="filetext1" size={24} color="#FFFF" />   {/* add navigation here for the uploading screen */}
               </TouchableOpacity> 
       </View>
