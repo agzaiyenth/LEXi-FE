@@ -7,6 +7,8 @@ import { theme } from "../../../../src/theme";
 import { useGetAllDocuments } from "@/src/hooks/SmartRead/useGetAllDocuments";
 import {FetchAllResponseDTO} from "@/types/SmartRead/Documents";
 import { useProcessDocument } from "@/src/hooks/SmartRead/useProcessDocument";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { useNavigation } from "expo-router";
 
 export default function SmartReadMain() {
  
@@ -15,6 +17,7 @@ export default function SmartReadMain() {
   const { documents, loading, error, refetch } = useGetAllDocuments();
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const { processDocument, isProcessing } = useProcessDocument();
+  const navigation = useNavigation<StackNavigationProp<any, "SmartReadMain">>();
   
   
 
@@ -78,8 +81,8 @@ export default function SmartReadMain() {
 
             {/* Conditional Buttons */}
                   {document.processed == true ? (
-                    
-                    <TouchableOpacity style={styles.playButton}>
+                  
+                    <TouchableOpacity style={styles.playButton} onPress={ () =>navigation.navigate('SpeechScreen', {fileId: document.id})}>
                       <AntDesign
                         name="playcircleo"
                         size={24}

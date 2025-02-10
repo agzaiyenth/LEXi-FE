@@ -7,7 +7,7 @@ import { LearnZoneParamList } from './navigator';
 
 
 import apiClient from '@/src/apiClient';
-import { useNavigation } from 'expo-router';
+import { useNavigation, useRouter } from 'expo-router';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 const { width: screenWidth } = Dimensions.get('window');
@@ -30,7 +30,7 @@ const UploadScreen = () => {
     console.log('Navigating to Speech Screen');
   };
 
-
+  const router = useRouter();
   const [uploadState, setUploadState] = useState('idle');
   const [fileName,setFileName] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
@@ -87,6 +87,7 @@ const uploadDocument = async (file: File): Promise<void> => {
 
         Alert.alert('Success', response.data.message);
         setUploadState('ready');
+        router.navigate("/(main)/LearnZone/SmartRead/SmartReadMain")
 
     } catch (error) {
         console.error('Upload error:', error);

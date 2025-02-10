@@ -29,7 +29,7 @@ const SmartRead = () => {
           headerShown: false, // Disable headers for a cleaner look
       }}
       >
-      <Stack.Screen name="SmartReadMain" component={SmartReadMain}/>
+      {/* <Stack.Screen name="SmartReadMain" component={SmartReadMain}/> */}
       <Stack.Screen name="UploadScreen" component={UploadScreen} />
       <Stack.Screen name="SpeechScreen" component={SpeechScreen} />
 
