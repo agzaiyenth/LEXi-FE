@@ -66,12 +66,12 @@ const LearnMainScreen = () => {
           </TouchableOpacity>
 
           <TouchableOpacity style={[styles.smallCard, styles.smartReadCard]}
-          onPress={() => navigation.navigate('VoxBuddy')}  //TODO REPLACE
+          onPress={() => navigation.navigate('SmartRead')}  //TODO REPLACE
           >
             <Text style={styles.smallCardTitle}>SmartRead</Text>
             <Text style={styles.smallCardSubtitle}>Simplifies and reads content aloud for easier comprehension.</Text>
             <TouchableOpacity style={styles.smallarrow}
-            onPress={() => navigation.navigate('VoxBuddy')} //TODO REPLACE
+            onPress={() => navigation.navigate('SmartRead')} //TODO REPLACE
             >
               <Ionicons name="arrow-forward-circle-outline" size={40} color="white" />
             </TouchableOpacity>
