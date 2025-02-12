@@ -1,20 +1,26 @@
 
 import { useNavigation } from "expo-router";
+import { Link } from "expo-router";
 import React from "react";
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Image } from "react-native";
 import { AntDesign, EvilIcons } from "@expo/vector-icons";
 import { useSession } from '../../src/ctx';
 import { theme } from '../../src/theme'; 
+import { useRouter } from "expo-router";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
-  const { signOut } = useSession(); 
-
+  const { signOut } = useSession();
+  const router =useRouter();
+  
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
         {/* Header */}
-        <Text style={styles.headerText}>LEXI</Text>
+        <View style={styles.headerContainer}>
+          <Image source={require('../../assets/images/icon.png')} style={styles.welcomeImage} />
+          <Text style={styles.headerText}>LEXi</Text>
+        </View>
        
 
         {/* Welcome Section */}
@@ -34,32 +40,30 @@ export default function HomeScreen() {
         </View>
 
         {/* Category List */}
-        <ScrollView style={styles.categoryList}>
-          {[
-            { name: "Activity", age: "0 - 10 year", icon: "✏️" },
-            { name: "Courses", age: "0 - 12 years", icon: "📖" },
-            { name: "Camps", age: "0 - 14 years", icon: "🔢" },
-            { name: "Activity", age: "0 - 10 year", icon: "✏️" },
-          ].map((item, index) => (
-            <View key={index} style={styles.categoryCard}>
-              <Text style={styles.categoryIcon}>{item.icon}</Text>
-              <View style={styles.categoryDetails}>
-                <Text style={styles.categoryTitle}>{item.name}</Text>
-                <Text style={styles.categoryAge}>{item.age}</Text>
-              </View>
-              <Text style={styles.arrow}>➤</Text>
+        <View style={styles.wrapper}>
+      <ScrollView style={styles.categoryList}>
+        {[
+          { name: "Profile", description: "Edit your profile", icon: "👤", path: "/profile" },
+          { name: "LearnZone", description: "Improve Reading Skills with LEXi-AI", icon: "📚", path: "/learnzone" },
+          { name: "Booked Sessions", description: "Booked Therapists Sessions", icon: "✅", path: "/profile" },
+          { name: "Detection", description: "Assess your Dyslexia Level", icon: "📊", path: "/detection" },
+        ].map((item, index) => (
+          <TouchableOpacity
+            key={index}
+            style={styles.categoryCard}
+            onPress={() => router.push(item.path as any)} // Using router.push() for navigation??
+          >
+            <Text style={styles.categoryIcon}>{item.icon}</Text>
+            <View style={styles.categoryDetails}>
+              <Text style={styles.categoryTitle}>{item.name}</Text>
+              <Text style={styles.categoryDescription}>{item.description}</Text>
             </View>
-          ))}
-        </ScrollView>
+            <Text style={styles.arrow}>➤</Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+    </View>
 
-        {/* Bottom Navigation
-        <View style={styles.bottomNavigation}>
-          <AntDesign name="home" style={styles.navIconActive} />
-          <AntDesign name="star" style={styles.navIcon} />
-          <AntDesign name="appstore-o" style={styles.navIcon} />
-          <AntDesign name="globe" style={styles.navIcon} />
-          <AntDesign name="user" style={styles.navIcon} />
-        </View> */}
 
         {/* Sign Out Button */}
         <TouchableOpacity onPress={signOut} style={styles.signOutButton}>
@@ -127,6 +131,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  headerContainer: {
+    flexDirection: "row",  
+    alignItems: "center", 
+    marginBottom: 10,      
+  },
+  welcomeImage: {
+    width: 40,
+    height: 40,
+    marginRight: 10,       
+  },
+  
   mascotImage: {
     width: 120,
     height: 150,
@@ -164,6 +179,10 @@ const styles = StyleSheet.create({
     fontSize: theme.fonts.sizes.medium,
     fontWeight: "600",
     color: theme.colors.blacks.dark,
+  },
+  categoryDescription: {
+    fontSize: theme.fonts.sizes.small,
+    color: theme.colors.blacks.medium,
   },
   categoryAge: {
     fontSize: theme.fonts.sizes.small,
