@@ -36,6 +36,7 @@ export  const theme = {
   },
   fonts: {
     regular: 'System',
+    regular2: 'OpenDyslexic',
     bold: 'System',
     sizes: {
       small: 16,
