@@ -96,8 +96,8 @@ export default function MessagesPage() {
   )
 
   return (
-    <div className="min-h-screen bg-background">
-      <MainNav />
+    <div className="min-h-screen bg-background ">
+      
       <DashboardShell>
         <DashboardHeader
           heading="Messages"
