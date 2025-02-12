@@ -7,8 +7,12 @@ import { AntDesign, EvilIcons } from "@expo/vector-icons";
 import { useSession } from '../../src/ctx';
 import { theme } from '../../src/theme'; 
 import { useRouter } from "expo-router";
+import { useFonts } from "expo-font";
 
 export default function HomeScreen() {
+  const [fontsLoaded] = useFonts({
+    OpenDyslexic: require("../../assets/fonts/open-dyslexic.ttf"), // Adjust the path to the font file
+  });
   const navigation = useNavigation();
   const { signOut } = useSession();
   const router =useRouter();
@@ -121,7 +125,9 @@ const styles = StyleSheet.create({
   greetingText: {
     color: theme.colors.background.offWhite,
     fontSize: theme.fonts.sizes.medium,
-    fontWeight: "bold",
+    //fontWeight: "bold",
+    fontFamily:theme.fonts.regular2,
+    lineHeight: theme.fonts.sizes.medium * 1.2,
   },
   greetingIcon: {
     width: 50,
@@ -177,6 +183,8 @@ const styles = StyleSheet.create({
   },
   categoryTitle: {
     fontSize: theme.fonts.sizes.medium,
+    fontFamily:theme.fonts.regular2,
+    lineHeight: theme.fonts.sizes.medium * 1.2,
     fontWeight: "600",
     color: theme.colors.blacks.dark,
   },
