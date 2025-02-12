@@ -10,14 +10,14 @@ import { SessionDistribution } from "@/components/dashboard/session-distribution
 
 export default function DashboardPage() {
   return (
-    <div className="min-h-screen bg-background">
-      <MainNav />
+    <div className="min-h-screen w-full bg-background">
+
       <DashboardShell>
         <DashboardHeader
           heading="Dashboard"
           text="Manage your practice and monitor key metrics."
         />
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7 w-full">
           <Overview />
           <QuickActions />
           <RevenueChart />

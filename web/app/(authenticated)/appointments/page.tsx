@@ -47,7 +47,7 @@ export default function AppointmentsPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <MainNav />
+
       <DashboardShell>
         <DashboardHeader
           heading="Appointments"
