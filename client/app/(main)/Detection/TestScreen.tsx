@@ -1,31 +1,46 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, ActivityIndicator, Button } from "react-native";
+import { View, Text, ActivityIndicator, Button, Alert } from "react-native";
 import MultipleChoiceView from "./questions/MultipleChoiceView";
 import ImageIdentificationView from "./questions/ImageIdentificationView";
 import TextInputView from "./questions/TextInputView";
 import SequenceOrderView from "./questions/SequenceOrderView";
 import { QuestionType } from "@/types/Detection/Question";
+import { useFetchQuestion } from "@/src/hooks/detection/useFetchQuestion";
+import { useSubmitAnswer } from "@/src/hooks/detection/useSubmitAnswer";
 
-export default function TestScreen({ route }) {
-  const { sessionId } = route.params; // Get test session ID
-  const { question, loading, fetchNextQuestion } = useFetchQuestion(sessionId);
-  const { submitAnswer, submitting } = useSubmitAnswer();
+interface TestScreenProps {
+  route: {
+    params: {
+      sessionId: number;
+    };
+  };
+}
+
+export default function TestScreen({ route }: TestScreenProps) {
+  const { sessionId } = route.params;
+  const { question, loading, fetchQuestion } = useFetchQuestion(sessionId);
+  const { submitAnswer, loading: submitting } = useSubmitAnswer();
 
   const [userAnswer, setUserAnswer] = useState<string>("");
 
   useEffect(() => {
-    fetchNextQuestion();
+    fetchQuestion();
   }, []);
 
   const handleSubmit = async () => {
     if (!question) return;
-    await submitAnswer({
+
+    const answerData = {
       testSessionId: sessionId,
       questionId: question.questionId,
       userAnswer,
-      responseTime: 2000, // Replace with actual response time
-    });
-    fetchNextQuestion(); // Load next question
+      responseTime: 2000, // Example response time in milliseconds
+    };
+
+    const result = await submitAnswer(answerData);
+    
+    setUserAnswer(""); // Clear input
+    fetchQuestion(); // Fetch next question
   };
 
   if (loading || !question) return <ActivityIndicator size="large" />;
@@ -33,6 +48,7 @@ export default function TestScreen({ route }) {
   return (
     <View>
       <Text>Difficulty: {question.difficulty}</Text>
+      <Text>Session Id: {sessionId}</Text>
       <Text>{question.questionText}</Text>
 
       {question.questionType === QuestionType.MULTIPLE_CHOICE && (
@@ -51,11 +67,7 @@ export default function TestScreen({ route }) {
         <SequenceOrderView options={question.options || []} onReorder={setUserAnswer} />
       )}
 
-      {question.questionType === QuestionType.AUDIO_INPUT && (
-        <AudioInputView expectedWord={question.questionText} onSubmit={setUserAnswer} />
-      )}
-
-      <Button title="Submit Answer" onPress={handleSubmit} disabled={submitting} />
+      <Button title="Submit Answer" onPress={handleSubmit} disabled={submitting || !userAnswer.trim()} />
     </View>
   );
 }
