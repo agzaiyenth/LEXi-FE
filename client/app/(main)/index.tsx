@@ -16,6 +16,13 @@ const swipeData = [
   { title: "Play Space", description: "Engaging dyslexia-friendly games", image: require("../../assets/images/icon.png") },
 ];
 
+const blogCards = [
+  { title: "How to Use SmartRead", description: "Learn how SmartRead can help you.", image: "📚", link: "/blog/smartread" },
+  { title: "VoxBuddy: Your New AI Assistant", description: "Discover how VoxBuddy can assist you.", image: "📚", link: "/blog/voxbuddy" },
+  { title: "Understanding Dyslexia Detection", description: "Assess your dyslexia level with our tool.", image: "📚", link: "/blog/detection" },
+  { title: "Dyslexia-Friendly Tools", description: "Explore tools to assist dyslexia users.", image: "📚", link: "/blog/tools" },
+];
+
 export default function HomeScreen() {
   const [fontsLoaded] = useFonts({
     OpenDyslexic: require("../../assets/fonts/open-dyslexic.ttf"), 
@@ -36,7 +43,7 @@ export default function HomeScreen() {
   }, [currentIndex]);
 
   return (
-    <View style={styles.wrapper}>
+    <ScrollView style={styles.wrapper}>
       <View style={styles.container}>
         <View style={styles.headerContainer}>
           <Image source={require('../../assets/images/icon.png')} style={styles.welcomeImage} />
@@ -74,12 +81,33 @@ export default function HomeScreen() {
             </View>
           )}
         />
-        
+
+        {/* Blog Cards Section */}
+        <View style={styles.blogCardsContainer}>
+          <Text style={styles.blogCardsTitle}>Latest Blogs</Text>
+          <FlatList
+            data={blogCards}
+            numColumns={2} // Set number of columns to 2
+            keyExtractor={(item, index) => index.toString()}
+            style={{ marginTop: 20 }}
+            renderItem={({ item }) => (
+              <TouchableOpacity style={styles.blogCard} onPress={() => router.push(item.link as any)}>
+                <Text style={styles.blogCardImage}>{item.image}</Text>
+                <Text style={styles.blogCardTitle}>{item.title}</Text>
+                <Text style={styles.blogCardDescription}>{item.description}</Text>
+                <TouchableOpacity style={styles.readMoreButton} onPress={() => router.push(item.link as any)}>
+                  <Text style={styles.readMoreText}>Read More</Text>
+                </TouchableOpacity>
+              </TouchableOpacity>
+            )}
+          />
+        </View>
+
         <TouchableOpacity onPress={signOut} style={styles.signOutButton}>
           <Text style={styles.signOutText}>Sign Out</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -177,6 +205,40 @@ const styles = StyleSheet.create({
     color: theme.colors.blacks.medium,
     textAlign: "center",
   },
+  blogCardsContainer: {
+    marginTop: 40,
+  },
+  blogCardsTitle: {
+    fontSize: theme.fonts.sizes.large,
+    fontWeight: "bold",
+    color: theme.colors.blacks.medium,
+  },
+  blogCard: {
+    width: (screenWidth - 48) / 2, 
+    height: 180,
+    backgroundColor: theme.colors.primary.light2,
+    borderRadius: 16,
+    padding: 20,
+    marginBottom: 30, 
+    marginRight:20,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  blogCardImage: { 
+    fontSize: 40,
+     marginTop:10,
+    },
+  blogCardTitle: {
+    fontSize: theme.fonts.sizes.large/2,
+    fontWeight: "600",
+    color: theme.colors.blacks.dark,
+    marginTop: 10,
+  },
+  blogCardDescription: {
+    fontSize: theme.fonts.sizes.small,
+    color: theme.colors.blacks.medium,
+    textAlign: "center",
+  },
   signOutButton: {
     marginTop: 16,
     padding: 12,
@@ -187,6 +249,18 @@ const styles = StyleSheet.create({
   signOutText: {
     color: theme.colors.background.offWhite,
     fontSize: theme.fonts.sizes.medium,
+    fontWeight: "bold",
+  },
+  readMoreButton: {
+    marginTop: 10,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    backgroundColor: theme.colors.primary.dark1,
+    borderRadius: 8,
+  },
+  readMoreText: {
+    color: theme.colors.background.offWhite,
+    fontSize: theme.fonts.sizes.small,
     fontWeight: "bold",
   },
 });
