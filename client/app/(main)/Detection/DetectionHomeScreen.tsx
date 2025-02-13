@@ -1,25 +1,32 @@
-import { StyleSheet, Text, View, Image, Alert } from 'react-native'
-import React from 'react'
-import { SwipeButton } from 'react-native-expo-swipe-button';
-import { MaterialIcons } from '@expo/vector-icons';
+import { useStartTest } from '@/src/hooks/detection/useStartTest';
 import theme from '@/src/theme';
+import { MaterialIcons } from '@expo/vector-icons';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from 'expo-router';
-import { StackNavigationProp } from '@react-navigation/stack';
+import React from 'react';
+import { Alert, Image, StyleSheet, Text } from 'react-native';
+import { SwipeButton } from 'react-native-expo-swipe-button';
 
 
 export default function DetectionHomeScreen() {
   const navigation = useNavigation<StackNavigationProp<any, "DetectionHomeScreen">>();
   // TODO Wirte getuser hook and use it here to get current user name
   const currentUser = "User"; 
+  const { startTest, loading} = useStartTest();
 
-  const handleSwipeComplete = () => {
-    navigation.navigate("TestScreen")
+  const handleSwipeComplete = async () => {
+    const sessionId = await startTest();
+    if (sessionId) {
+      navigation.navigate("TestScreen", { sessionId });
+    } else {
+      Alert.alert("Error", "Failed to start test. Please try again.");
+    }
   };
 
   return (
     <LinearGradient
-    colors={[theme.colors.primary.light2, theme.colors.primary.light3]} // Define gradient colors
+    colors={[theme.colors.primary.light2, theme.colors.primary.light3]} 
     style={styles.container}
   >
       <Image
