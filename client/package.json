@@ -32,6 +32,7 @@
     "expo-build-properties": "~0.13.1",
     "expo-document-picker": "^13.0.2",
     "expo-font": "~13.0.1",
+    "expo-linear-gradient": "~14.0.2",
     "expo-linking": "~7.0.3",
     "expo-permissions": "^14.4.0",
     "expo-router": "~4.0.9",
@@ -43,6 +44,7 @@
     "expo-updates": "~0.26.16",
     "expo-web-browser": "~14.0.1",
     "i": "^0.3.7",
+    "native-base": "^3.4.28",
     "nativewind": "^4.1.23",
     "node-libs-react-native": "^1.2.1",
     "npm": "^10.9.1",
@@ -74,8 +76,7 @@
     "react-native-web": "~0.19.13",
     "rt-client": "^0.5.1",
     "stream-browserify": "^3.0.0",
-    "tailwindcss": "^3.4.15",
-    "expo-linear-gradient": "~14.0.2"
+    "tailwindcss": "^3.4.15"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",

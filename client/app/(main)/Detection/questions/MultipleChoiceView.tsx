@@ -1,8 +1,7 @@
 import theme from "@/src/theme";
 import { QuestionResponseDTO } from "@/types/Detection/Question";
 import React, { useState } from "react";
-import { Button, Text, TouchableOpacity, View } from "react-native";
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 interface Props {
   question: QuestionResponseDTO;

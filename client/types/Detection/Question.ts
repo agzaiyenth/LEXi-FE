@@ -36,6 +36,7 @@ export interface Question {
 export interface AudioComparisonQuestion extends Question {
   audioUrl: string; // URL to the audio file
   correctAnswer: string;
+  options: string[];
 
   isAnswerCorrect(userAnswer: string): boolean;
 }

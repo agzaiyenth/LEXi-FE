@@ -9,6 +9,9 @@
       <change beforePath="$PROJECT_DIR$/client/app/(main)/Detection/TestScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/app/(main)/Detection/TestScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/app/(main)/Detection/questions/MultipleChoiceView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/app/(main)/Detection/questions/MultipleChoiceView.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/types/Detection/Question.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/types/Detection/Question.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

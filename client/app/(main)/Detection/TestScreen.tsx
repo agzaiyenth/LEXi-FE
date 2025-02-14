@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, ActivityIndicator, Button, StyleSheet, Image, TouchableOpacity } from "react-native";
-import MultipleChoiceView from "./questions/MultipleChoiceView";
-import ImageIdentificationView from "./questions/ImageIdentificationView";
-import TextInputView from "./questions/TextInputView";
-import SequenceOrderView from "./questions/SequenceOrderView";
-import { QuestionType } from "@/types/Detection/Question";
 import { useFetchQuestion } from "@/src/hooks/detection/useFetchQuestion";
 import { useSubmitAnswer } from "@/src/hooks/detection/useSubmitAnswer";
 import theme from "@/src/theme";
+import { QuestionType } from "@/types/Detection/Question";
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import AudioComparison from "./questions/AudioComparison";
+import ImageIdentificationView from "./questions/ImageIdentificationView";
+import MultipleChoiceView from "./questions/MultipleChoiceView";
+import SequenceOrderView from "./questions/SequenceOrderView";
+import TextInputView from "./questions/TextInputView";
 
 interface TestScreenProps {
   route: {
@@ -26,6 +27,7 @@ export default function TestScreen({ route }: TestScreenProps) {
 
   useEffect(() => {
     fetchQuestion();
+    console.log(question,"question")
   }, []);
 
   const handleSubmit = async () => {
@@ -58,14 +60,19 @@ export default function TestScreen({ route }: TestScreenProps) {
       </View>
 
       <View style={styles.mainContentCard}>
-      
+
         <View>
           <Text style={styles.difficultyText}>Difficulty: {question.difficulty}</Text>
-      
+          <Text style={styles.difficultyText}>Question: {question.questionId}</Text>
 
           {question.questionType === QuestionType.MULTIPLE_CHOICE && (
             <MultipleChoiceView question={question} onSelect={setUserAnswer} />
           )}
+
+          {question.questionType === QuestionType.AUDIO_COMPARISON && (
+            <AudioComparison question={question} onSelect={setUserAnswer} />
+          )}
+
 
           {question.questionType === QuestionType.IMAGE_IDENTIFICATION && (
             <ImageIdentificationView imageUrl={question.mediaUrl || ""} onSelect={setUserAnswer} />
@@ -79,21 +86,21 @@ export default function TestScreen({ route }: TestScreenProps) {
             <SequenceOrderView options={question.options || []} onReorder={setUserAnswer} />
           )}
 
-          
+
         </View>
-        <TouchableOpacity 
-        style={[
-          styles.submitButtonContainer, 
-          { backgroundColor: submitting || !userAnswer.trim() ? theme.colors.primary.light2 : theme.colors.primary.dark2 }
-        ]}
-        onPress={() => handleSubmit()}
-        disabled={submitting || !userAnswer.trim()}
+        <TouchableOpacity
+          style={[
+            styles.submitButtonContainer,
+            { backgroundColor: submitting || !userAnswer.trim() ? theme.colors.primary.light2 : theme.colors.primary.dark2 }
+          ]}
+          onPress={() => handleSubmit()}
+          disabled={submitting || !userAnswer.trim()}
         >
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
-          </View>
       </View>
-   
+    </View>
+
 
   );
 }
@@ -143,27 +150,27 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     padding: 16,
     flexDirection: 'column',
-   justifyContent:'space-between',
+    justifyContent: 'space-between',
     margin: 0,
     height: '90%',
   },
-  submitButtonContainer:{
-    padding:15,
-    marginHorizontal:40,
-    borderRadius:20,
-    display:'flex',
-    justifyContent:'center',
-    alignItems:'center',
-    backgroundColor:theme.colors.primary.dark2,
-    color:'white'
+  submitButtonContainer: {
+    padding: 15,
+    marginHorizontal: 40,
+    borderRadius: 20,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: theme.colors.primary.dark2,
+    color: 'white'
   },
-  buttonText:{
-    color:'white'
+  buttonText: {
+    color: 'white'
   }
   ,
   card: {
- display:'flex',
- justifyContent:'space-between',
+    display: 'flex',
+    justifyContent: 'space-between',
     borderRadius: 20,
     padding: 20,
     width: "90%",
