@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, ActivityIndicator, Button, StyleSheet } from "react-native";
+import { View, Text, ActivityIndicator, Button, StyleSheet, Image, TouchableOpacity } from "react-native";
 import MultipleChoiceView from "./questions/MultipleChoiceView";
 import ImageIdentificationView from "./questions/ImageIdentificationView";
 import TextInputView from "./questions/TextInputView";
@@ -7,6 +7,7 @@ import SequenceOrderView from "./questions/SequenceOrderView";
 import { QuestionType } from "@/types/Detection/Question";
 import { useFetchQuestion } from "@/src/hooks/detection/useFetchQuestion";
 import { useSubmitAnswer } from "@/src/hooks/detection/useSubmitAnswer";
+import theme from "@/src/theme";
 
 interface TestScreenProps {
   route: {
@@ -45,48 +46,124 @@ export default function TestScreen({ route }: TestScreenProps) {
   if (loading || !question) return <ActivityIndicator size="large" />;
 
   return (
-    <View style={styles.screen}>
-      <View style={styles.card}>
-        <Text style={styles.difficultyText}>Difficulty: {question.difficulty}</Text>
-        <Text style={styles.sessionText}>Session Id: {sessionId}</Text>
-        <Text style={styles.questionText}>{question.questionText}</Text>
+    <View style={styles.container}>
+      {/* Header Card */}
+      <Image
+        source={require('@/assets/images/learnZone/circle.png')}
+        style={styles.headercircle}
+      />
+      <View style={styles.headerContent}>
 
-        {question.questionType === QuestionType.MULTIPLE_CHOICE && (
-          <MultipleChoiceView options={question.options || []} onSelect={setUserAnswer} />
-        )}
-
-        {question.questionType === QuestionType.IMAGE_IDENTIFICATION && (
-          <ImageIdentificationView imageUrl={question.mediaUrl || ""} onSelect={setUserAnswer} />
-        )}
-
-        {question.questionType === QuestionType.TEXT_INPUT && (
-          <TextInputView onChangeText={setUserAnswer} />
-        )}
-
-        {question.questionType === QuestionType.SEQUENCE_ORDER && (
-          <SequenceOrderView options={question.options || []} onReorder={setUserAnswer} />
-        )}
-
-        <Button
-          title="Submit"
-          onPress={handleSubmit}
-          disabled={submitting || !userAnswer.trim()}
-          color="#1D3557"
-        />
+        <Text style={styles.headerTitle}>Lets Answer!</Text>
       </View>
-    </View>
+
+      <View style={styles.mainContentCard}>
+      
+        <View>
+          <Text style={styles.difficultyText}>Difficulty: {question.difficulty}</Text>
+      
+
+          {question.questionType === QuestionType.MULTIPLE_CHOICE && (
+            <MultipleChoiceView question={question} onSelect={setUserAnswer} />
+          )}
+
+          {question.questionType === QuestionType.IMAGE_IDENTIFICATION && (
+            <ImageIdentificationView imageUrl={question.mediaUrl || ""} onSelect={setUserAnswer} />
+          )}
+
+          {question.questionType === QuestionType.TEXT_INPUT && (
+            <TextInputView onChangeText={setUserAnswer} />
+          )}
+
+          {question.questionType === QuestionType.SEQUENCE_ORDER && (
+            <SequenceOrderView options={question.options || []} onReorder={setUserAnswer} />
+          )}
+
+          
+        </View>
+        <TouchableOpacity 
+        style={[
+          styles.submitButtonContainer, 
+          { backgroundColor: submitting || !userAnswer.trim() ? theme.colors.primary.light2 : theme.colors.primary.dark2 }
+        ]}
+        onPress={() => handleSubmit()}
+        disabled={submitting || !userAnswer.trim()}
+        >
+          <Text style={styles.buttonText}>Submit</Text>
+        </TouchableOpacity>
+          </View>
+      </View>
+   
+
   );
 }
 
 const styles = StyleSheet.create({
-  screen: {
+  container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#1D3557",
+    backgroundColor: theme.colors.primary.light3,
+    padding: 0,
   },
+  headerContent: {
+    padding: 16,
+    marginEnd: 4,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+    justifyContent: 'center',
+  },
+  headercircle: {
+    width: 120,
+    height: 120,
+    position: 'absolute',
+    right: 0,
+    top: 0,
+  },
+  backButton: {
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 10,
+  },
+  backButtonText: {
+    fontSize: 18,
+    color: '#B4DCD6',
+  },
+  headerTitle: {
+    fontSize: 28,
+    color: '#fff',
+    textAlign: 'center',
+    fontWeight: '500',
+  },
+  mainContentCard: {
+    backgroundColor: '#FFF9EB',
+    borderRadius: 30,
+    padding: 16,
+    flexDirection: 'column',
+   justifyContent:'space-between',
+    margin: 0,
+    height: '90%',
+  },
+  submitButtonContainer:{
+    padding:15,
+    marginHorizontal:40,
+    borderRadius:20,
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center',
+    backgroundColor:theme.colors.primary.dark2,
+    color:'white'
+  },
+  buttonText:{
+    color:'white'
+  }
+  ,
   card: {
-    backgroundColor: "#F1FAEE",
+ display:'flex',
+ justifyContent:'space-between',
     borderRadius: 20,
     padding: 20,
     width: "90%",
