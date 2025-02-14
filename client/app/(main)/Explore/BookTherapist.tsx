@@ -7,15 +7,20 @@ import {
   ScrollView,
   ActivityIndicator,
   Modal,
-  Animated
+  Animated,
+  RefreshControl
 } from 'react-native';
-import React, { useEffect, useState, useMemo, useRef } from 'react';
+import React, { useEffect, useState, useMemo, useRef, useCallback } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { ITherapist } from '@/types/therapist/therapist';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import theme from '@/src/theme';
 import apiClient from '@/src/apiClient';
+import EmptyState from './Emptystate';
+
+
+
 
 // Helper function to determine time period from start time
 const getTimePeriod = (startTime: string): string => {
@@ -95,6 +100,9 @@ const BookTherapist = () => {
   const [bookingSuccess, setBookingSuccess] = useState<boolean>(false);
   const [bookingError, setBookingError] = useState<boolean>(false);
 
+  // State for refreshing
+  const [refreshing, setRefreshing] = useState<boolean>(false);
+
  
   const timePeriods = ['Morning', 'Afternoon', 'Evening'];
 
@@ -113,6 +121,12 @@ const BookTherapist = () => {
     useEffect(() => {
       fetchTherapist();
     }, [therapistId]);
+
+    // Handle refresh action
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    fetchTherapist().finally(() => setRefreshing(false));
+  }, []);
 
     //  calculate slot counts per period
   const periodSlotCounts = useMemo(() => {
@@ -253,7 +267,8 @@ const BookTherapist = () => {
           <Text style={styles.tab}>Reviews</Text>
         </View>
 
-        <ScrollView style={styles.scheduleContainer}>
+        <ScrollView style={styles.scheduleContainer}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
 
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {/* Day Tabs  */}
@@ -332,7 +347,8 @@ const BookTherapist = () => {
                 </TouchableOpacity>
               ))
             ) : (
-              <Text style={styles.noAvailabilityText}>No available slots</Text>
+             
+              <EmptyState param="available slots" />
             )}
           </ScrollView>
         </ScrollView>
@@ -623,3 +639,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
   },
 });
+function setRefreshing(arg0: boolean): void {
+  throw new Error('Function not implemented.');
+}
+
