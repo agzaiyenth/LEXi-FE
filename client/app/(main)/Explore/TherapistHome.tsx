@@ -46,7 +46,8 @@ const TherapistHome = () => {
       <View style={styles.titleContainer}> 
         <Text style={styles.sectionTitle}>Therapists</Text>
         <TouchableOpacity onPress={() => navigation.navigate('AllDoctorsPage')}>
-          <Text>See All</Text>
+          {therapists && (
+          <Text>See All</Text>)}
         </TouchableOpacity>
       </View>
 
@@ -83,7 +84,8 @@ const TherapistHome = () => {
       <View style={styles.titleContainer}> 
         <Text style={styles.sectionTitle}>Upcoming Appointments</Text>
         <TouchableOpacity onPress={() => navigation.navigate('AllDoctorsPage')}>
-          <Text>See All</Text>
+          {appointments && (
+          <Text>See All</Text>)}
         </TouchableOpacity>
       </View>
 

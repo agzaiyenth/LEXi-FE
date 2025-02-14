@@ -39,7 +39,9 @@ const AllDoctorsPage = () => {
 
   // Select the first available date automatically
   useEffect(() => {
-    const allAvailableDates = therapists.flatMap(therapist => getAvailableDates(therapist.availabilities || []));
+    const allAvailableDates = therapists.reduce((acc: Date[], therapist) => {
+      return acc.concat(getAvailableDates(therapist.availabilities || []));
+    }, []);
     if (allAvailableDates.length > 0) {
       setSelectedDate(allAvailableDates[0]); // Set first available date
     }
@@ -79,7 +81,7 @@ const AllDoctorsPage = () => {
 
       
       {/* 🏥 Therapist List */}
-      {filteredSlots.length > 0 ? (
+      {therapists.length > 0 ? (
       therapists.map((therapist: ITherapist) => {
         const availableDates = getAvailableDates(therapist.availabilities || []);
         const filteredSlots = therapist.availabilities?.filter((slot: IAvailability) =>
