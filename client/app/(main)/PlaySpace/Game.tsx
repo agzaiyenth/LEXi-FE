@@ -7,7 +7,6 @@ import {
   Animated,
   Dimensions,
   Alert,
-  Image,
 } from 'react-native';
 import BallSvg from '@/assets/images/games/ball.svg';
 import Ballr from '@/assets/images/games/ballr.svg';  
@@ -29,31 +28,26 @@ const balloonSvgs = [BallSvg, Ballr, Ballb, Ballg];
 const levels = [
   {
     question: 'Which word matches "Tree"?',
-    image: 'https://via.placeholder.com/300', 
     word: 'Tree',
     balloons: ['Free', 'Tree', 'Three', 'Bee'],
   },
   {
     question: 'Which word matches "Cat"?',
-    image: 'https://via.placeholder.com/300',
     word: 'Cat',
     balloons: ['Kat', 'Bat', 'Cat', 'Rat'],
   },
   {
     question: 'Which word matches "Dog"?',
-    image: 'https://via.placeholder.com/300',
     word: 'Dog',
     balloons: ['Bog', 'Dog', 'Fog', 'Log'],
   },
   {
     question: 'Which word matches "Log"?',
-    image: 'https://via.placeholder.com/300',
     word: 'Log',
     balloons: ['Bog', 'Dog', 'Fog', 'Log'],
   },
   {
     question: 'Which word matches "Bog"?',
-    image: 'https://via.placeholder.com/300',
     word: 'Bog',
     balloons: ['Bog', 'Dog', 'Fog', 'Log'],
   },
@@ -154,7 +148,6 @@ const Game = () => {
         // **Question Screen**
         <View style={styles.questionContainer}>
           <Text style={styles.questionText}>{levels[currentLevel].question}</Text>
-          <Image source={{ uri: levels[currentLevel].image }} style={styles.questionImage} />
           <TouchableOpacity style={styles.startButton} onPress={() => setShowQuestion(false)}>
             <Text style={styles.startButtonText}>Start</Text>
           </TouchableOpacity>
