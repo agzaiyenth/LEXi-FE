@@ -7,14 +7,24 @@ import { ITherapist } from '@/types/therapist/therapist';
 import { Ionicons } from '@expo/vector-icons';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from 'expo-router';
-import React from 'react';
-import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { ActivityIndicator, Image, RefreshControl, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import EmptyState from './Emptystate';
+ 
+
 
 
 const TherapistHome = () => {
   const navigation = useNavigation<StackNavigationProp<any, 'AllDoctorsPage'>>();
-  const { therapists, loading:therapistsLoading, error:therapistsError} = useGetAllTherapists();
+  const { therapists, loading:therapistsLoading, error:therapistsError, refetch} = useGetAllTherapists();
   const { appointments, loading: appointmentsLoading, error: appointmentsError } = useGetAppointments();
+  const [refreshing, setRefreshing] = useState<boolean>(false);
+
+  // Refresh data when pulling down
+    const onRefresh = useCallback(() => {
+      setRefreshing(true);
+      refetch().finally(() => setRefreshing(false));
+    }, [refetch]);
 
   // Show only the latest 5 therapists
   const latestTherapists = therapists.slice(0, 5);
@@ -26,7 +36,8 @@ const TherapistHome = () => {
   if (appointmentsError) return <Text>Error: {appointmentsError}</Text>;
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container}
+     refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
       <View style={styles.searchContainer}>
         <Ionicons name="search" size={20} color="gray" />
         <TextInput placeholder="Search available doctor..." style={styles.searchInput} />
@@ -54,11 +65,19 @@ const TherapistHome = () => {
           </TouchableOpacity>
         ))
       ) : (
-        <Text style={styles.noAppointmentsText}>No Therapists </Text>
+       
+        <View style={[styles.emptyStateContainer, { marginLeft: 35 }]}>
+            <EmptyState param="therapist" />
+        </View>
+        
+
       )}
-        <TouchableOpacity style={styles.seeAllCard} onPress={() => navigation.navigate('AllDoctorsPage')}>
-          <Text style={styles.seeAllText}>See All</Text>
-        </TouchableOpacity>
+
+        {latestTherapists.length > 0 && (
+          <TouchableOpacity style={styles.seeAllCard} onPress={() => navigation.navigate('AllDoctorsPage')}>
+            <Text style={styles.seeAllText}>See All</Text>
+          </TouchableOpacity>
+        )}
       </ScrollView>
 
       <View style={styles.titleContainer}> 
@@ -92,7 +111,10 @@ const TherapistHome = () => {
           </TouchableOpacity>
         ))
       ) : (
-        <Text style={styles.noAppointmentsText}>No upcoming appointments</Text>
+        
+        <View style={styles.emptyStateContainer}>
+        <EmptyState param="upcoming appointments" />
+        </View>
       )}
 
       <Text style={styles.sectionTitle}>Nearby Doctors</Text>
@@ -108,7 +130,11 @@ const TherapistHome = () => {
         </TouchableOpacity>
       ))
     ) : (
-      <Text style={styles.noAppointmentsText}>No Nearby Doctors</Text>
+      
+      <View style={styles.emptyStateContainer}>
+      <EmptyState param="Nearby Doctors" />
+      </View>
+      
     )}
     </ScrollView>
   );
@@ -118,6 +144,7 @@ const styles = StyleSheet.create({
   container: {
     padding: 16,
     backgroundColor: theme.colors.background.offWhite,
+    height: '100%',
   },
   searchContainer: {
     flexDirection: 'row',
@@ -226,6 +253,12 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     justifyContent: 'space-between',
     padding: 6,
+  },
+  emptyStateContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
   },
 });
 
