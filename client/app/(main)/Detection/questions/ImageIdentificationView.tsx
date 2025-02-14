@@ -11,14 +11,13 @@ const ImageIdentificationView: React.FC<Props> = ({ imageUrl, onSelect }) => {
 
   const handleAnswerChange = (text: string) => {
     setUserAnswer(text);
-    onSelect(text); // Send the answer up to the parent
+    onSelect(text);
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.questionText}>Identify the image below:</Text>
       <Image source={{ uri: imageUrl }} style={styles.image} />
-
+      <Text style={styles.questionText}>Identify the image below:</Text>
       <TextInput
         style={styles.input}
         placeholder="Type your answer..."
@@ -34,26 +33,30 @@ export default ImageIdentificationView;
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    padding: 16,
+    backgroundColor: "#A8DADC",
+    borderRadius: 20,
+    padding: 20,
+    margin: 20,
   },
   questionText: {
     fontSize: 18,
-    marginBottom: 10,
+    marginVertical: 10,
     textAlign: "center",
+    color: "#1D3557",
   },
   image: {
-    width: 200,
+    width: 300,
     height: 200,
-    marginBottom: 16,
     borderRadius: 10,
+    marginBottom: 10,
   },
   input: {
-    width: "80%",
+    width: "90%",
     padding: 10,
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "#457B9D",
     borderRadius: 5,
-    marginBottom: 10,
     textAlign: "center",
+    backgroundColor: "#F1FAEE",
   },
 });
