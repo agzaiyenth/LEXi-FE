@@ -5,10 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7121ad1c-a6f4-42db-8469-9b688af5971a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/client/app/(main)/PlaySpace/GameB.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/app/(main)/PlaySpace/LandingPageGames.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/app/(main)/PlaySpace/PopBalloon/index.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/app/(main)/PlaySpace/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/app/(main)/PlaySpace/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/app/(main)/Detection/ResultScreen.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/app/(main)/Detection/TestScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/app/(main)/Detection/TestScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/app/(main)/Detection/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/app/(main)/Detection/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/types/Detection/Question.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/types/Detection/Question.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
