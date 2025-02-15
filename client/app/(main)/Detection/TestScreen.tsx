@@ -9,6 +9,7 @@ import ImageIdentificationView from "./questions/ImageIdentificationView";
 import MultipleChoiceView from "./questions/MultipleChoiceView";
 import SequenceOrderView from "./questions/SequenceOrderView";
 import TextInputView from "./questions/TextInputView";
+import AudioInputView from "./questions/AudioInputView";
 
 interface TestScreenProps {
   route: {
@@ -27,7 +28,7 @@ export default function TestScreen({ route }: TestScreenProps) {
 
   useEffect(() => {
     fetchQuestion();
-    console.log(question,"question")
+    console.log(question, "question")
   }, []);
 
   const handleSubmit = async () => {
@@ -71,6 +72,10 @@ export default function TestScreen({ route }: TestScreenProps) {
 
           {question.questionType === QuestionType.AUDIO_COMPARISON && (
             <AudioComparison question={question} onSelect={setUserAnswer} />
+          )}
+
+          {question.questionType === QuestionType.AUDIO_INPUT && (
+            <AudioInputView question={question} onSelect={setUserAnswer} />
           )}
 
 
