@@ -10,8 +10,13 @@ import {
   ScrollView,
 } from 'react-native';
 import theme from '../../../src/theme';
+import { useSession } from '@/src/ctx';
+
 
 const AccountScreen = () => {
+
+  const { session,username } = useSession();
+
   return (
 
     <SafeAreaView style={styles.container}>
@@ -33,7 +38,7 @@ const AccountScreen = () => {
         source={require('@/assets/images/auth/icon.png')} 
         style={styles.profileImage} 
         />
-        <Text style={styles.profileName}>vinodi amarasinghe</Text>
+        <Text style={styles.profileName}>{username || 'Guest'}</Text>
         <Text style={styles.profileEmail}>vinodi@gmail.com</Text>
       </View>
 
