@@ -227,11 +227,13 @@ const BookTherapist = () => {
         source={require('@/assets/images/learnZone/circle.png')}
         style={styles.headercircle}
       />
+      {/*Go Back*/}
       <View style={styles.headerContent}>
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={24} color="#1F2937" />
         </TouchableOpacity>
       </View>
+      
       <View style={styles.mainContentCard}>
         {/* Therapist Profile Section */}
         <View style={styles.profileContainer}>

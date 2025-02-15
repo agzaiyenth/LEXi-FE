@@ -22,9 +22,15 @@ import { Player } from '@/src/hooks/voxBuddy/usePlayer';
 import { Recorder } from '@/src/hooks/voxBuddy/useRecorder';
 import { WebSocketClient } from '@/src/hooks/voxBuddy/WebSocketClient';
 import { Message, WSMessage } from '@/types/voxbuddy/voxBuddy';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { LearnZoneParamList } from '../index';
 import { useAudioHandlers } from '@/src/hooks/voxBuddy/useAudioHandlers';
 
 export default function ChatInterface() {
+  type LearnMainNavigationProp = StackNavigationProp<LearnZoneParamList, 'LearnMain'>;
+  
+  const navigation = useNavigation<LearnMainNavigationProp>();
   const [endpoint] = useState(`ws://${BASE_ENDPOINT}/realtime`);
   const [messages, setMessages] = useState<Message[]>([]);
   const [currentMessage, setCurrentMessage] = useState('');
@@ -202,7 +208,11 @@ export default function ChatInterface() {
   // ----- Render -----
   return (
     <View style={styles.container}>
-
+        <View style={styles.headerContent}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+          <Ionicons name="arrow-back" size={24} color="#1F2937" />
+        </TouchableOpacity>
+      </View>
 
       <View style={styles.topHalf}>
         <View >
@@ -398,5 +408,15 @@ const styles = StyleSheet.create({
 disabledButton: {
     backgroundColor: '#f5f5f5', // Light gray
     borderColor: '#bdbdbd', // Gray border
+},
+headerContent: {
+  padding: 8,
+  marginEnd: 0,
+  flexDirection: 'row',
+  alignItems: 'center',
+  marginBottom: 0,
+},
+backButton: {
+  marginBottom: 10,
 },
 });
