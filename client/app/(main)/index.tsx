@@ -6,6 +6,7 @@ import { useSession } from '../../src/ctx';
 import { theme } from '../../src/theme'; 
 import { useRouter } from "expo-router";
 import { useFonts } from "expo-font";
+import { Ionicons } from '@expo/vector-icons';
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -63,7 +64,30 @@ export default function HomeScreen() {
             <Image source={require('../../assets/images/welcome.png')} style={styles.mascotImage} />
           </View>
         </View>
-
+  <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Achievements</Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <View style={styles.achievementCard}>
+           
+            <View style={[styles.achievementIcon, { backgroundColor: theme.colors.primary.dark3 }]}>
+              <Ionicons name="flame" size={24} color={theme.colors.background.offWhite} />
+            </View>
+            <Text style={styles.achievementTitle}>30 Day Streak</Text>
+          </View>
+          <View style={styles.achievementCard}>
+            <View style={[styles.achievementIcon, { backgroundColor: theme.colors.primary.dark3 }]}>
+              <Ionicons name="document-outline" size={24} color={theme.colors.background.offWhite} />
+            </View>
+            <Text style={styles.achievementTitle}>100 Files</Text>
+          </View>
+          <View style={styles.achievementCard}>
+          <View style={[styles.achievementIcon, { backgroundColor: theme.colors.primary.dark3 }]}>
+              <Ionicons name="trophy" size={24} color={theme.colors.background.offWhite} />
+            </View>
+            <Text style={styles.achievementTitle}>10K ReadTime</Text>
+          </View>
+        </ScrollView>
+      </View>
         {/* Swipeable Feature Section */}
         <FlatList
           ref={flatListRef}
@@ -102,10 +126,6 @@ export default function HomeScreen() {
             )}
           />
         </View>
-
-        <TouchableOpacity onPress={signOut} style={styles.signOutButton}>
-          <Text style={styles.signOutText}>Sign Out</Text>
-        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -144,6 +164,57 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: theme.fonts.sizes.medium,
     fontWeight: "600",
+  },statsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+    marginTop: 20,
+  },
+  stat: {
+    alignItems: 'center',
+  },
+  statValue: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  statLabel: {
+    fontSize: 14,
+    color: '#666666',
+    marginTop: 5,
+  },
+  section: {
+    padding: 20,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 15,
+  },
+  achievementCard: {
+    backgroundColor: theme.colors.primary.light2,
+    padding: 15,
+    borderRadius: 12,
+    marginRight: 15,
+    alignItems: 'center',
+    width: 120,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  achievementIcon: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10,
+  },
+  achievementTitle: {
+    fontSize: 14,
+    fontWeight: '500',
+    textAlign: 'center',
   },
   greetingCard: {
     marginTop: 16,
