@@ -83,15 +83,12 @@ export default function HomeScreen() {
         />
 
         {/* Blog Cards Section */}
-        <View style={styles.blogCardsContainer}>
+
+        <ScrollView style={styles.blogCardsContainer}>
           <Text style={styles.blogCardsTitle}>Latest Blogs</Text>
-          <FlatList
-            data={blogCards}
-            numColumns={2} // Set number of columns to 2
-            keyExtractor={(item, index) => index.toString()}
-            style={{ marginTop: 20 }}
-            renderItem={({ item }) => (
-              <TouchableOpacity style={styles.blogCard} onPress={() => router.push(item.link as any)}>
+          <View style={styles.blogGrid}>
+            {blogCards.map((item, index) => (
+              <TouchableOpacity key={index} style={styles.blogCard} onPress={() => router.push(item.link as any)}>
                 <Text style={styles.blogCardImage}>{item.image}</Text>
                 <Text style={styles.blogCardTitle}>{item.title}</Text>
                 <Text style={styles.blogCardDescription}>{item.description}</Text>
@@ -99,9 +96,10 @@ export default function HomeScreen() {
                   <Text style={styles.readMoreText}>Read More</Text>
                 </TouchableOpacity>
               </TouchableOpacity>
-            )}
-          />
-        </View>
+            ))}
+          </View>
+        </ScrollView>
+
 
         <TouchableOpacity onPress={signOut} style={styles.signOutButton}>
           <Text style={styles.signOutText}>Sign Out</Text>
@@ -214,13 +212,14 @@ const styles = StyleSheet.create({
     color: theme.colors.blacks.medium,
   },
   blogCard: {
-    width: (screenWidth - 48) / 2, 
+    
+    width: "45%",
     height: 180,
     backgroundColor: theme.colors.primary.light2,
     borderRadius: 16,
     padding: 20,
     marginBottom: 30, 
-    marginRight:20,
+    marginRight:2,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -262,5 +261,11 @@ const styles = StyleSheet.create({
     color: theme.colors.background.offWhite,
     fontSize: theme.fonts.sizes.small,
     fontWeight: "bold",
+  },
+
+  blogGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
   },
 });
