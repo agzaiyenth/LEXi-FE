@@ -9,6 +9,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { 
   Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, RefreshControl 
 } from 'react-native';
+import EmptyState from './Emptystate';
 
 const filters = ['All', 'Most Popular', 'Nearby doctor', 'Available', 'Online'];
 
@@ -78,8 +79,9 @@ const AllDoctorsPage = () => {
         ))}
       </ScrollView>
 
+      
       {/* 🏥 Therapist List */}
-      {filteredSlots.length > 0 ? (
+      {therapists.length > 0 ? (
       therapists.map((therapist: ITherapist) => {
         const availableDates = getAvailableDates(therapist.availabilities || []);
         const filteredSlots = therapist.availabilities?.filter((slot: IAvailability) =>
@@ -140,14 +142,16 @@ const AllDoctorsPage = () => {
                     </TouchableOpacity>
                   ))
                 ) : (
-                  <Text style={styles.noAvailabilityText}>No available slots</Text>
+                  
+                  <EmptyState param="available slots" />
                 )}
               </ScrollView>
             </View>
           </View>
         );
       })) : (
-        <Text style={styles.noAvailabilityText}>No Therapists Found</Text>
+        
+        <EmptyState param="Therapists" />
       )}
     </ScrollView>
   );

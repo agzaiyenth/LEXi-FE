@@ -33,35 +33,35 @@ const PlayMainScreen = () => {
     },
     {
       id: '2',
-      title: 'Game Name',
+      title: 'Coming Soon',
       theory: 'Therapy Theory',
       image: 'https://via.placeholder.com/150',
       route:'pop'
     },
     {
       id: '3',
-      title: 'Game Name',
+      title: 'Coming Soon',
       theory: 'Therapy Theory',
       image: 'https://via.placeholder.com/150',
       route:'pop'
     },
     {
       id: '4',
-      title: 'Game Name',
+      title: 'Coming Soon',
       theory: 'Therapy Theory',
       image: 'https://via.placeholder.com/150',
       route:'pop'
     },
     {
       id: '5',
-      title: 'Game Name',
+      title: 'Coming Soon',
       theory: 'Therapy Theory',
       image: 'https://via.placeholder.com/150',
       route:'pop'
     },
     {
       id: '6',
-      title: 'Game Name',
+      title: 'Coming Soon',
       theory: 'Therapy Theory',
       image: 'https://via.placeholder.com/150',
       route:'pop'
