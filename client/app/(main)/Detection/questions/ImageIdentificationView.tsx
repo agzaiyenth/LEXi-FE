@@ -1,12 +1,14 @@
+import theme from "@/src/theme";
+import { QuestionResponseDTO } from "@/types/Detection/Question";
 import React, { useState } from "react";
 import { View, Image, TextInput, StyleSheet, Text } from "react-native";
 
 interface Props {
-  imageUrl: string;
+  question: QuestionResponseDTO;
   onSelect: (answer: string) => void;
 }
 
-const ImageIdentificationView: React.FC<Props> = ({ imageUrl, onSelect }) => {
+const ImageIdentificationView: React.FC<Props> = ({ question, onSelect }) => {
   const [userAnswer, setUserAnswer] = useState("");
 
   const handleAnswerChange = (text: string) => {
@@ -16,13 +18,16 @@ const ImageIdentificationView: React.FC<Props> = ({ imageUrl, onSelect }) => {
 
   return (
     <View style={styles.container}>
-      <Image source={{ uri: imageUrl }} style={styles.image} />
-      <Text style={styles.questionText}>Identify the image below:</Text>
+      <Text style={styles.questionText}>{question.questionText}</Text>
+      <Image source={{ uri: question.mediaUrl }}
+       style={styles.image} />
+      
       <TextInput
-        style={styles.input}
-        placeholder="Type your answer..."
-        value={userAnswer}
-        onChangeText={handleAnswerChange}
+      style={styles.input}
+      placeholder="Type your answer..."
+      placeholderTextColor="black"
+      value={userAnswer}
+      onChangeText={handleAnswerChange}
       />
     </View>
   );
@@ -33,13 +38,13 @@ export default ImageIdentificationView;
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    backgroundColor: "#A8DADC",
     borderRadius: 20,
     padding: 20,
     margin: 20,
   },
   questionText: {
-    fontSize: 18,
+    fontSize: 25,
+    marginBottom:30,
     marginVertical: 10,
     textAlign: "center",
     color: "#1D3557",
@@ -48,15 +53,15 @@ const styles = StyleSheet.create({
     width: 300,
     height: 200,
     borderRadius: 10,
-    marginBottom: 10,
+    marginBottom: 30,
   },
   input: {
     width: "90%",
     padding: 10,
     borderWidth: 1,
-    borderColor: "#457B9D",
-    borderRadius: 5,
+    borderColor: theme.colors.primary.light3,
+    borderRadius: 20,
     textAlign: "center",
-    backgroundColor: "#F1FAEE",
+    color:'black',
   },
 });

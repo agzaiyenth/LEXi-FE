@@ -82,11 +82,11 @@ export default function TestScreen({ route }: TestScreenProps) {
 
 
           {question.questionType === QuestionType.IMAGE_IDENTIFICATION && (
-            <ImageIdentificationView imageUrl={question.mediaUrl || ""} onSelect={setUserAnswer} />
+            <ImageIdentificationView question={question} onSelect={setUserAnswer} />
           )}
 
           {question.questionType === QuestionType.TEXT_INPUT && (
-            <TextInputView onChangeText={setUserAnswer} />
+            <TextInputView question={question} onSelect={setUserAnswer} />
           )}
 
           {question.questionType === QuestionType.SEQUENCE_ORDER && (
