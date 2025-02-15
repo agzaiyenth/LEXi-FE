@@ -2,15 +2,17 @@ import { useFetchQuestion } from "@/src/hooks/detection/useFetchQuestion";
 import { useSubmitAnswer } from "@/src/hooks/detection/useSubmitAnswer";
 import theme from "@/src/theme";
 import { QuestionType } from "@/types/Detection/Question";
+import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import AudioComparison from "./questions/AudioComparison";
+import AudioInputView from "./questions/AudioInputView";
 import ImageIdentificationView from "./questions/ImageIdentificationView";
+import MemoryRecall from "./questions/MemoryRecall";
 import MultipleChoiceView from "./questions/MultipleChoiceView";
 import SequenceOrderView from "./questions/SequenceOrderView";
 import TextInputView from "./questions/TextInputView";
-import AudioInputView from "./questions/AudioInputView";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 interface TestScreenProps {
   route: {
@@ -19,14 +21,18 @@ interface TestScreenProps {
     };
   };
 }
-
 export default function TestScreen({ route }: TestScreenProps) {
+  const navigation = useNavigation();
   const { sessionId } = route.params;
   const { question, loading, fetchQuestion } = useFetchQuestion(sessionId);
   const { submitAnswer, loading: submitting } = useSubmitAnswer();
 
   const [userAnswer, setUserAnswer] = useState<string>("");
-
+  useEffect(() => {
+    if (question && question.questionType === QuestionType.COMPLETED) {
+      navigation.navigate("CompletedScreen");
+    }
+  }, [question, navigation]);
   useEffect(() => {
     fetchQuestion();
     console.log(question, "question")
@@ -51,62 +57,62 @@ export default function TestScreen({ route }: TestScreenProps) {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-    <View style={styles.container}>
-      {/* Header Card */}
-      <Image
-        source={require('@/assets/images/learnZone/circle.png')}
-        style={styles.headercircle}
-      />
-      <View style={styles.headerContent}>
+      <View style={styles.container}>
+        {/* Header Card */}
+        <Image
+          source={require('@/assets/images/learnZone/circle.png')}
+          style={styles.headercircle}
+        />
+        <View style={styles.headerContent}>
 
-        <Text style={styles.headerTitle}>Lets Answer!</Text>
-      </View>
-
-      <View style={styles.mainContentCard}>
-
-        <View>
-          <Text style={styles.difficultyText}>Difficulty: {question.difficulty}</Text>
-          <Text style={styles.difficultyText}>Question: {question.questionId}</Text>
-
-          {question.questionType === QuestionType.MULTIPLE_CHOICE && (
-            <MultipleChoiceView question={question} onSelect={setUserAnswer} />
-          )}
-
-          {question.questionType === QuestionType.AUDIO_COMPARISON && (
-            <AudioComparison question={question} onSelect={setUserAnswer} />
-          )}
-
-          {question.questionType === QuestionType.AUDIO_INPUT && (
-            <AudioInputView question={question} onSelect={setUserAnswer} />
-          )}
-
-
-          {question.questionType === QuestionType.IMAGE_IDENTIFICATION && (
-            <ImageIdentificationView question={question} onSelect={setUserAnswer} />
-          )}
-
-          {question.questionType === QuestionType.TEXT_INPUT && (
-            <TextInputView question={question} onSelect={setUserAnswer} />
-          )}
-
-          {question.questionType === QuestionType.SEQUENCE_ORDER && (
-            <SequenceOrderView question={question} onReorder={setUserAnswer} />
-          )}
-
-
+          <Text style={styles.headerTitle}>Lets Answer!</Text>
         </View>
-        <TouchableOpacity
-          style={[
-            styles.submitButtonContainer,
-            { backgroundColor: submitting || !userAnswer.trim() ? theme.colors.primary.light2 : theme.colors.primary.dark2 }
-          ]}
-          onPress={() => handleSubmit()}
-          disabled={submitting || !userAnswer.trim()}
-        >
-          <Text style={styles.buttonText}>Submit</Text>
-        </TouchableOpacity>
+
+        <View style={styles.mainContentCard}>
+
+          <View>
+            {question.questionType === QuestionType.MULTIPLE_CHOICE && (
+              <MultipleChoiceView question={question} onSelect={setUserAnswer} />
+            )}
+
+            {question.questionType === QuestionType.AUDIO_COMPARISON && (
+              <AudioComparison question={question} onSelect={setUserAnswer} />
+            )}
+
+            {question.questionType === QuestionType.AUDIO_INPUT && (
+              <AudioInputView question={question} onSelect={setUserAnswer} />
+            )}
+
+
+            {question.questionType === QuestionType.IMAGE_IDENTIFICATION && (
+              <ImageIdentificationView question={question} onSelect={setUserAnswer} />
+            )}
+
+            {question.questionType === QuestionType.TEXT_INPUT && (
+              <TextInputView question={question} onSelect={setUserAnswer} />
+            )}
+
+            {question.questionType === QuestionType.SEQUENCE_ORDER && (
+              <SequenceOrderView question={question} onReorder={setUserAnswer} />
+            )}
+
+            {question.questionType === QuestionType.MEMORY_RECALL && (
+              <MemoryRecall question={question} onSelect={setUserAnswer} />
+            )}
+
+          </View>
+          <TouchableOpacity
+            style={[
+              styles.submitButtonContainer,
+              { backgroundColor: submitting || !userAnswer.trim() ? theme.colors.primary.light2 : theme.colors.primary.dark2 }
+            ]}
+            onPress={() => handleSubmit()}
+            disabled={submitting || !userAnswer.trim()}
+          >
+            <Text style={styles.buttonText}>Submit</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
     </GestureHandlerRootView>
 
 

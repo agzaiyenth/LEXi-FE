@@ -21,7 +21,8 @@ export enum QuestionType {
   TEXT_INPUT = 'TEXT_INPUT',
   SEQUENCE_ORDER = 'SEQUENCE_ORDER',
   AUDIO_INPUT = 'AUDIO_INPUT',
-  OTHER = 'OTHER'
+  MEMORY_RECALL = 'MEMORY_RECALL',
+  COMPLETED = 'COMPLETED'
 }
 
 export interface Question {

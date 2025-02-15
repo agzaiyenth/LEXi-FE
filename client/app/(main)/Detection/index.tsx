@@ -1,14 +1,14 @@
 import React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
+import CompletedScreen from './CompletedScreen';
 import DetectionHomeScreen from './DetectionHomeScreen';
 import TestScreen from './TestScreen';
-import ResultScreen from './ResultScreen';
 
 export type DetectionSystemParamList = {
   DetectionHomeScreen: undefined; 
   TestScreen: undefined; 
-  ResultScreen: undefined;
+  CompletedScreen: undefined;
 };
 
 const Stack = createStackNavigator<DetectionSystemParamList>();
@@ -22,7 +22,7 @@ const DetectionFlow = () => {
     >
       <Stack.Screen name="DetectionHomeScreen" component={DetectionHomeScreen} />
       <Stack.Screen name="TestScreen" component={TestScreen} />
-      <Stack.Screen name="ResultScreen" component={ResultScreen} />
+      <Stack.Screen name="CompletedScreen" component={CompletedScreen} />
 
 
     </Stack.Navigator>
