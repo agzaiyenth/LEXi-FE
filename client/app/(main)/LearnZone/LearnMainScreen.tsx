@@ -54,24 +54,24 @@ const LearnMainScreen = () => {
         {/* Bottom Row Cards */}
         <View style={styles.bottomRow}>
           <TouchableOpacity style={[styles.smallCard, styles.readWithMeCard]}
-          onPress={() => navigation.navigate('VoxBuddy')}  //TODO @AmandaHanz replace this
+          onPress={() => navigation.navigate('ReadWithMe')}
           >
             <Text style={styles.smallCardTitle}>ReadWithMe</Text>
             <Text style={styles.smallCardSubtitle}> Interactive tool to improve reading fluency with real-time feedback.</Text>
             <TouchableOpacity style={styles.smallarrow}
-            onPress={() => navigation.navigate('VoxBuddy')} //TODO @AmandaHanz replace
+            onPress={() => navigation.navigate('ReadWithMe')}
             >
               <Ionicons name="arrow-forward-circle-outline" size={40} color="white" />
             </TouchableOpacity>
           </TouchableOpacity>
 
           <TouchableOpacity style={[styles.smallCard, styles.smartReadCard]}
-          onPress={() => navigation.navigate('SmartRead')}  //TODO REPLACE
+          onPress={() => navigation.navigate('SmartRead')} 
           >
             <Text style={styles.smallCardTitle}>SmartRead</Text>
             <Text style={styles.smallCardSubtitle}>Simplifies and reads content aloud for easier comprehension.</Text>
             <TouchableOpacity style={styles.smallarrow}
-            onPress={() => navigation.navigate('SmartRead')} //TODO REPLACE
+            onPress={() => navigation.navigate('SmartRead')}
             >
               <Ionicons name="arrow-forward-circle-outline" size={40} color="white" />
             </TouchableOpacity>
