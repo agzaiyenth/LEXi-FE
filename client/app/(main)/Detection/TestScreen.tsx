@@ -57,6 +57,7 @@ export default function TestScreen({ route }: TestScreenProps) {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
+      {/* TODO:ADD SKIP BUTTON WITH API */}
       <View style={styles.container}>
         {/* Header Card */}
         <Image
