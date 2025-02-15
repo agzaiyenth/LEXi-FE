@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="7121ad1c-a6f4-42db-8469-9b688af5971a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/apiClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/apiClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/utils/fetchWithAuth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/utils/fetchWithAuth.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/app/(main)/Account/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/app/(main)/Account/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/app/(main)/Detection/TestScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/app/(main)/Detection/TestScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/app/(main)/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/app/(main)/index.tsx" afterDir="false" />
@@ -37,7 +39,11 @@
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
+
+    "git-widget-placeholder": "Improvement/autosignout",
+
     "git-widget-placeholder": "improvement/navigation",
+
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true"
   }
