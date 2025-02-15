@@ -8,11 +8,13 @@ import React from 'react';
 import VoxBuddy from './VoxBuddy'; 
 import LearnMainScreen from './LearnMainScreen';
 import { createStackNavigator } from '@react-navigation/stack';
+import SmartRead from './SmartRead';
 import ReadWithMe from './ReadWithME';
 
 export type LearnZoneParamList = {
   LearnMain: undefined; 
   VoxBuddy: undefined; // No parameters for VoxBuddy
+  SmartRead: undefined; // No parameters for SmartRead
   ReadWithMe:undefined;
 };
 
@@ -27,6 +29,9 @@ const LearnZone = () => {
     >
       <Stack.Screen name="LearnMain" component={LearnMainScreen} />
       <Stack.Screen name="VoxBuddy" component={VoxBuddy} />
+      <Stack.Screen name="SmartRead" component={SmartRead} />
+
+
       <Stack.Screen name="ReadWithMe" component={ReadWithMe} />
     </Stack.Navigator>
   );

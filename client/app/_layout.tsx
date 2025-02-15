@@ -5,6 +5,7 @@ import React from 'react'
 import { Slot } from 'expo-router'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { SessionProvider } from '../src/ctx'
+import Toast from 'react-native-toast-message';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -42,7 +43,7 @@ const Stack = createStackNavigator();
     <SafeAreaProvider>
      
         <Slot />
-      
+        <Toast />
     </SafeAreaProvider>
     </SessionProvider>
   )

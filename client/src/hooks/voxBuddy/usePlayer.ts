@@ -3,17 +3,14 @@ import * as FileSystem from 'expo-file-system';
 
 export class Player {
   private soundObject: Audio.Sound | null = null;
+  private isPlaying = false; // Prevent simultaneous playback
+  private playbackQueue: Int16Array[] = []; // Queue for audio buffers
+  private isProcessingQueue = false; // Prevent overlapping processing
 
   async init() {
-    // No explicit initialization required for expo-av
     console.log('Player initialized');
   }
 
-  /**
-   * Plays audio from a PCM buffer.
-   * Converts the PCM buffer to a WAV file and plays it.
-   * @param buffer - PCM data in Int16Array format
-   */
   async play(buffer: Int16Array) {
     try {
       console.log('Received buffer length:', buffer.length);
@@ -23,8 +20,44 @@ export class Player {
         return;
       }
 
+      // Enqueue the buffer for playback
+      this.playbackQueue.push(buffer);
+      if (!this.isProcessingQueue) {
+        await this.processQueue();
+      }
+    } catch (error) {
+      console.error('Playback error:', error);
+    }
+  }
+
+  private async processQueue() {
+    this.isProcessingQueue = true;
+
+    while (this.playbackQueue.length > 0) {
+      const buffer = this.playbackQueue.shift();
+      if (!buffer) continue;
+
+      try {
+        await this.playBuffer(buffer);
+      } catch (error) {
+        console.error('Error processing buffer:', error);
+      }
+    }
+
+    this.isProcessingQueue = false;
+  }
+
+  private async playBuffer(buffer: Int16Array) {
+    if (this.isPlaying) {
+      console.warn('Already playing audio. Skipping buffer.');
+      return;
+    }
+
+    this.isPlaying = true;
+
+    try {
+      // Unload the previous sound object if it exists
       if (this.soundObject) {
-        await this.soundObject.stopAsync();
         await this.soundObject.unloadAsync();
         this.soundObject = null;
       }
@@ -35,8 +68,6 @@ export class Player {
 
       // Verify WAV file exists
       const fileInfo = await FileSystem.getInfoAsync(wavUri);
-      console.log('WAV file info:', fileInfo);
-
       if (!fileInfo.exists) {
         throw new Error(`WAV file not found at ${wavUri}`);
       }
@@ -46,8 +77,19 @@ export class Player {
       this.soundObject = sound;
       await this.soundObject.playAsync();
       console.log('Playback started');
+
+      // Wait for playback to finish
+      await new Promise((resolve) => {
+        this.soundObject?.setOnPlaybackStatusUpdate((status) => {
+          if (status.isLoaded && !status.isPlaying) {
+            resolve(null);
+          }
+        });
+      });
     } catch (error) {
       console.error('Playback error:', error);
+    } finally {
+      this.isPlaying = false;
     }
   }
 
@@ -58,10 +100,11 @@ export class Player {
       this.soundObject = null;
       console.log('Playback cleared');
     }
+    this.playbackQueue = []; // Clear the queue
   }
 
   private async convertPCMToWav(buffer: Int16Array): Promise<string> {
-    const sampleRate = 44100; // Set your desired sample rate
+    const sampleRate = 24000; // Set your desired sample rate
     const numChannels = 1; // Mono audio
     const bitsPerSample = 16; // 16-bit PCM
 
@@ -74,15 +117,10 @@ export class Player {
 
     // Write WAV file to cache directory
     const fileUri = `${FileSystem.cacheDirectory}temp.wav`;
-    try {
-      await FileSystem.writeAsStringAsync(fileUri, this.uint8ArrayToBase64(wavData), {
-        encoding: FileSystem.EncodingType.Base64,
-      });
-      return fileUri;
-    } catch (error) {
-      console.error('Error writing WAV file:', error);
-      throw error;
-    }
+    await FileSystem.writeAsStringAsync(fileUri, this.uint8ArrayToBase64(wavData), {
+      encoding: FileSystem.EncodingType.Base64,
+    });
+    return fileUri;
   }
 
   private createWavHeader(dataSize: number, sampleRate: number, numChannels: number, bitsPerSample: number): Uint8Array {
@@ -121,57 +159,5 @@ export class Player {
 
   private uint8ArrayToBase64(array: Uint8Array): string {
     return btoa(String.fromCharCode(...array));
-  }
-}
-
-export class Recorder {
-  private recording: Audio.Recording | null = null;
-  private onDataAvailable: (buffer: ArrayBuffer) => void;
-
-  constructor(onDataAvailable: (buffer: ArrayBuffer) => void) {
-    this.onDataAvailable = onDataAvailable;
-  }
-
-  async start() {
-    try {
-      const { granted } = await Audio.requestPermissionsAsync();
-      if (!granted) {
-        throw new Error('Microphone permission not granted');
-      }
-
-      await Audio.setAudioModeAsync({
-        allowsRecordingIOS: true,
-        playsInSilentModeIOS: true,
-      });
-
-      this.recording = new Audio.Recording();
-      await this.recording.prepareToRecordAsync(Audio.RecordingOptionsPresets.HIGH_QUALITY);
-      await this.recording.startAsync();
-
-      console.log('Recording started');
-    } catch (error) {
-      console.error('Error starting recording:', error);
-      this.stop();
-    }
-  }
-
-  async stop() {
-    try {
-      if (this.recording) {
-        await this.recording.stopAndUnloadAsync();
-        const uri = this.recording.getURI();
-        console.log('Recording stopped. File URI:', uri);
-
-        if (uri) {
-          const response = await fetch(uri);
-          const buffer = await response.arrayBuffer();
-          this.onDataAvailable(buffer);
-        }
-      }
-    } catch (error) {
-      console.error('Error stopping recording:', error);
-    } finally {
-      this.recording = null;
-    }
   }
 }
