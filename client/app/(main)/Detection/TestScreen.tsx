@@ -10,6 +10,7 @@ import MultipleChoiceView from "./questions/MultipleChoiceView";
 import SequenceOrderView from "./questions/SequenceOrderView";
 import TextInputView from "./questions/TextInputView";
 import AudioInputView from "./questions/AudioInputView";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 interface TestScreenProps {
   route: {
@@ -49,6 +50,7 @@ export default function TestScreen({ route }: TestScreenProps) {
   if (loading || !question) return <ActivityIndicator size="large" />;
 
   return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
     <View style={styles.container}>
       {/* Header Card */}
       <Image
@@ -88,7 +90,7 @@ export default function TestScreen({ route }: TestScreenProps) {
           )}
 
           {question.questionType === QuestionType.SEQUENCE_ORDER && (
-            <SequenceOrderView options={question.options || []} onReorder={setUserAnswer} />
+            <SequenceOrderView question={question} onReorder={setUserAnswer} />
           )}
 
 
@@ -105,6 +107,7 @@ export default function TestScreen({ route }: TestScreenProps) {
         </TouchableOpacity>
       </View>
     </View>
+    </GestureHandlerRootView>
 
 
   );
