@@ -2,11 +2,14 @@ import { useState } from 'react';
 import apiClient, { setAccessToken } from '@/src/apiClient';
 import { useSession } from '@/src/ctx';
 import { LoginRequest, LoginResponse } from '@/types/auth/LoginResponse ';
+import { useUsername } from '@/src/useStorageState';
 
 export const useLogin = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { signIn } = useSession();
+
+  const [, setStoredUsername] = useUsername();
 
   const login = async ({ username, password }: LoginRequest): Promise<LoginResponse> => {
     setLoading(true);
@@ -18,10 +21,13 @@ export const useLogin = () => {
       const { accessToken, refreshToken, username: user, fullName, roles } = response.data;
 
       // Store tokens securely in context
-      signIn(accessToken);
+      signIn(accessToken, user);
+      console.log('Sign-in called with:', user);
 
       // Set token in apiClient
       setAccessToken(accessToken);
+      setStoredUsername(user);
+
 
       // Return the parsed response
       return { accessToken, refreshToken, username: user, fullName, roles };

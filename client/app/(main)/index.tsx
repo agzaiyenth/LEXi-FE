@@ -28,10 +28,14 @@ export default function HomeScreen() {
     OpenDyslexic: require("../../assets/fonts/open-dyslexic.ttf"), 
   });
   const navigation = useNavigation();
-  const { signOut } = useSession();
+  const { signOut, user } = useSession() as { signOut: () => void, user?: { name: string } };
+  //const username = user?.name;
   const router = useRouter();
   const flatListRef = useRef<FlatList>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { session,username } = useSession();
+
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -52,7 +56,7 @@ export default function HomeScreen() {
         
         <View style={styles.welcomeSection}>
           <Text style={styles.welcomeText}>Welcome,</Text>
-          <Text style={styles.userName}>Vinodi Amarasinghe</Text>
+          <Text style={styles.userName}>{username || 'Guest'}</Text>
         </View>
 
         <View style={styles.greetingCard}>
@@ -142,7 +146,7 @@ const styles = StyleSheet.create({
     color: theme.colors.blacks.medium,
   },
   userName: {
-    fontSize: theme.fonts.sizes.medium,
+    fontSize: theme.fonts.sizes.large,
     fontWeight: "600",
   },
   greetingCard: {
