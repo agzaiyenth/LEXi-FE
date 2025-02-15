@@ -264,6 +264,7 @@ const styles = StyleSheet.create({
   },
 
   blogGrid: {
+    marginTop:15,
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
