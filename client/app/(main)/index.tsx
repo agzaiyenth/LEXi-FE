@@ -11,10 +11,10 @@ import { Ionicons } from '@expo/vector-icons';
 const screenWidth = Dimensions.get("window").width;
 
 const swipeData = [
-  { title: "SmartRead", description: "Read and summarize text easily", image: require("../../assets/images/icon.png") },
-  { title: "VoxBuddy", description: "Your AI voice companion", image: require("../../assets/images/icon.png") },
-  { title: "Detection", description: "Assess your dyslexia level", image: require("../../assets/images/icon.png") },
-  { title: "Play Space", description: "Engaging dyslexia-friendly games", image: require("../../assets/images/icon.png") },
+  { title: "SmartRead", description: "Read and summarize text easily", image: require("@/assets/images/icon.png") },
+  { title: "VoxBuddy", description: "Your AI voice companion", image: require("@/assets/images/icon.png") },
+  { title: "Detection", description: "Assess your dyslexia level", image: require("@/assets/images/icon.png") },
+  { title: "Play Space", description: "Engaging dyslexia-friendly games", image: require("@/assets/images/icon.png") },
 ];
 
 const blogCards = [
@@ -26,7 +26,7 @@ const blogCards = [
 
 export default function HomeScreen() {
   const [fontsLoaded] = useFonts({
-    OpenDyslexic: require("../../assets/fonts/open-dyslexic.ttf"), 
+    OpenDyslexic: require("@/assets/fonts/open-dyslexic.ttf"), 
   });
   const navigation = useNavigation();
   const { signOut } = useSession();
@@ -47,7 +47,7 @@ export default function HomeScreen() {
     <ScrollView style={styles.wrapper}>
       <View style={styles.container}>
         <View style={styles.headerContainer}>
-          <Image source={require('../../assets/images/icon.png')} style={styles.welcomeImage} />
+          <Image source={require('@/assets/images/icon.png')} style={styles.welcomeImage} />
           <Text style={styles.headerText}>LEXi</Text>
         </View>
         
@@ -61,7 +61,7 @@ export default function HomeScreen() {
             <Text style={styles.greetingText}>Hey There!{"\n"}How Are You?</Text>
           </View>
           <View style={styles.greetingIcon}>
-            <Image source={require('../../assets/images/welcome.png')} style={styles.mascotImage} />
+            <Image source={require('@/assets/images/welcome.png')} style={styles.mascotImage} />
           </View>
         </View>
   <View style={styles.section}>
