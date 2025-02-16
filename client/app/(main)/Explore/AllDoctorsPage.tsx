@@ -1,7 +1,7 @@
 import { useGetAllTherapists } from '@/src/hooks/therapist/useGetAllTherapist';
 import theme from '@/src/theme';
-import { IAvailability } from '@/types/therapist/availability';
-import { ITherapist } from '@/types/therapist/therapist';
+import { IAvailability } from '@/src/types/therapist/availability';
+import { ITherapist } from '@/src/types/therapist/therapist';
 import { Ionicons } from '@expo/vector-icons';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from 'expo-router';

@@ -2,8 +2,8 @@
 import { useGetAllTherapists } from '@/src/hooks/therapist/useGetAllTherapist';
 import { useGetAppointments } from '@/src/hooks/therapist/useGetAppointments';
 import theme from '@/src/theme';
-import { AppointmentDto, IAppointment } from '@/types/therapist/appointment';
-import { ITherapist } from '@/types/therapist/therapist';
+import { AppointmentDto, IAppointment } from '@/src/types/therapist/appointment';
+import { ITherapist } from '@/src/types/therapist/therapist';
 import { Ionicons } from '@expo/vector-icons';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from 'expo-router';

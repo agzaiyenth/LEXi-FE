@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import apiClient, { setAccessToken } from '@/src/apiClient';
 import { useSession } from '@/src/ctx';
-import { LoginRequest, LoginResponse } from '@/types/auth/LoginResponse ';
+import { LoginRequest, LoginResponse } from '@/src/types/auth/LoginResponse ';
 
 export const useLogin = () => {
   const [loading, setLoading] = useState(false);

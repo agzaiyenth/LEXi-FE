@@ -9,7 +9,7 @@ import ExploreScreen from './(main)/Explore';
 import AccountScreen from './(main)/Account';
 import DetectionFlow from './(main)/Detection';
 import theme from '../src/theme';
-import { AppTabParamList } from '@/types/common/navigation';
+import { AppTabParamList } from '@/src/types/common/navigation';
 
 
 const Tab = createBottomTabNavigator<AppTabParamList>();

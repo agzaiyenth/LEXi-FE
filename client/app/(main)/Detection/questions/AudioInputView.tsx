@@ -4,7 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 import * as FileSystem from 'expo-file-system';
 import theme from '@/src/theme';
-import { QuestionResponseDTO } from '@/types/Detection/Question';
+import { QuestionResponseDTO } from '@/src/types/Detection/Question';
 
 interface Props {
   question: QuestionResponseDTO;

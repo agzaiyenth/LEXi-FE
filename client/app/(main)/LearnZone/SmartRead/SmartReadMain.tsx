@@ -3,7 +3,7 @@ import ErrorScreen from "@/components/ErrorScreen";
 import LoadingScreen from "@/components/loading";
 import { useGetAllDocuments } from "@/src/hooks/SmartRead/useGetAllDocuments";
 import { useProcessDocument } from "@/src/hooks/SmartRead/useProcessDocument";
-import { FetchAllResponseDTO, ProcessDocRequestDTO } from "@/types/SmartRead/Documents";
+import { FetchAllResponseDTO, ProcessDocRequestDTO } from "@/src/types/SmartRead/Documents";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import { StackNavigationProp } from "@react-navigation/stack";

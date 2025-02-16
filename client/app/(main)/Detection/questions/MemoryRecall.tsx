@@ -9,7 +9,7 @@ import {
   Animated 
 } from "react-native";
 import theme from "@/src/theme";
-import { QuestionResponseDTO } from "@/types/Detection/Question";
+import { QuestionResponseDTO } from "@/src/types/Detection/Question";
 
 interface Props {
   question: QuestionResponseDTO;

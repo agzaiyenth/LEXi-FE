@@ -4,7 +4,7 @@ import DraggableFlatList, {
   RenderItemParams,
 } from "react-native-draggable-flatlist";
 import theme from "@/src/theme";
-import { QuestionResponseDTO } from "@/types/Detection/Question";
+import { QuestionResponseDTO } from "@/src/types/Detection/Question";
 
 interface OptionItem {
   key: string;

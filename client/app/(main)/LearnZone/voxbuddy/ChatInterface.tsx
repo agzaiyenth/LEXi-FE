@@ -21,7 +21,7 @@ import { Entypo, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Player } from '@/src/hooks/voxBuddy/usePlayer';
 import { Recorder } from '@/src/hooks/voxBuddy/useRecorder';
 import { WebSocketClient } from '@/src/hooks/voxBuddy/WebSocketClient';
-import { Message, WSMessage } from '@/types/voxbuddy/voxBuddy';
+import { Message, WSMessage } from '@/src/types/voxbuddy/voxBuddy';
 import { useAudioHandlers } from '@/src/hooks/voxBuddy/useAudioHandlers';
 
 export default function ChatInterface() {

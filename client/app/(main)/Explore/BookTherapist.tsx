@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import React, { useEffect, useState, useMemo, useRef, useCallback } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { ITherapist } from '@/types/therapist/therapist';
+import { ITherapist } from '@/src/types/therapist/therapist';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import theme from '@/src/theme';

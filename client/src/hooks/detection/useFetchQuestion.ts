@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import apiClient from "@/src/apiClient";
-import { QuestionResponseDTO } from "@/types/Detection/Question";
+import { QuestionResponseDTO } from "@/src/types/Detection/Question";
 
 
 export const useFetchQuestion = (sessionId: number | null) => {

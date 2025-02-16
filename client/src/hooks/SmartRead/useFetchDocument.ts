@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import apiClient from "@/src/apiClient";
-import { DocumentResponse } from "@/types/SmartRead/documentResponse";
+import { DocumentResponse } from "@/src/types/SmartRead/documentResponse";
 
 export const useFetchDocument = (fileId: number) => {
     const [document, setDocument] = useState<DocumentResponse | null>(null);
