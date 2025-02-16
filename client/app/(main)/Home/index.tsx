@@ -1,10 +1,12 @@
+import { useNavigation } from "expo-router";
+import { Link } from "expo-router";
+import React, { useRef, useState, useEffect } from "react";
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Image, FlatList, Dimensions } from "react-native";
 import { useSession } from '@/src/ctx';
-import { theme } from '@/src/theme';
-import { Ionicons } from '@expo/vector-icons';
+import { theme } from '@/src/theme'; 
+import { useRouter } from "expo-router";
 import { useFonts } from "expo-font";
-import { useNavigation, useRouter } from "expo-router";
-import React, { useEffect, useRef, useState } from "react";
-import { Dimensions, FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Ionicons } from '@expo/vector-icons';
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -24,13 +26,17 @@ const blogCards = [
 
 export default function HomeScreen() {
   const [fontsLoaded] = useFonts({
-    OpenDyslexic: require("@/assets/fonts/open-dyslexic.ttf"),
+    OpenDyslexic: require("@/assets/fonts/open-dyslexic.ttf"), 
   });
   const navigation = useNavigation();
-  const { signOut } = useSession();
+  const { signOut, user } = useSession() as { signOut: () => void, user?: { name: string } };
+  //const username = user?.name;
   const router = useRouter();
   const flatListRef = useRef<FlatList>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { session,username } = useSession();
+
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -48,10 +54,10 @@ export default function HomeScreen() {
           <Image source={require('@/assets/images/icon.png')} style={styles.welcomeImage} />
           <Text style={styles.headerText}>LEXi</Text>
         </View>
-
+        
         <View style={styles.welcomeSection}>
           <Text style={styles.welcomeText}>Welcome,</Text>
-          <Text style={styles.userName}>Vinodi Amarasinghe</Text>
+          <Text style={styles.userName}>{username || 'Guest'}</Text>
         </View>
 
         <View style={styles.greetingCard}>
@@ -62,30 +68,30 @@ export default function HomeScreen() {
             <Image source={require('@/assets/images/welcome.png')} style={styles.mascotImage} />
           </View>
         </View>
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Achievements</Text>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <View style={styles.achievementCard}>
-
-              <View style={[styles.achievementIcon, { backgroundColor: theme.colors.primary.dark3 }]}>
-                <Ionicons name="flame" size={24} color={theme.colors.background.offWhite} />
-              </View>
-              <Text style={styles.achievementTitle}>30 Day Streak</Text>
+  <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Achievements</Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <View style={styles.achievementCard}>
+           
+            <View style={[styles.achievementIcon, { backgroundColor: theme.colors.primary.dark3 }]}>
+              <Ionicons name="flame" size={24} color={theme.colors.background.offWhite} />
             </View>
-            <View style={styles.achievementCard}>
-              <View style={[styles.achievementIcon, { backgroundColor: theme.colors.primary.dark3 }]}>
-                <Ionicons name="document-outline" size={24} color={theme.colors.background.offWhite} />
-              </View>
-              <Text style={styles.achievementTitle}>100 Files</Text>
+            <Text style={styles.achievementTitle}>30 Day Streak</Text>
+          </View>
+          <View style={styles.achievementCard}>
+            <View style={[styles.achievementIcon, { backgroundColor: theme.colors.primary.dark3 }]}>
+              <Ionicons name="document-outline" size={24} color={theme.colors.background.offWhite} />
             </View>
-            <View style={styles.achievementCard}>
-              <View style={[styles.achievementIcon, { backgroundColor: theme.colors.primary.dark3 }]}>
-                <Ionicons name="trophy" size={24} color={theme.colors.background.offWhite} />
-              </View>
-              <Text style={styles.achievementTitle}>10K ReadTime</Text>
+            <Text style={styles.achievementTitle}>100 Files</Text>
+          </View>
+          <View style={styles.achievementCard}>
+          <View style={[styles.achievementIcon, { backgroundColor: theme.colors.primary.dark3 }]}>
+              <Ionicons name="trophy" size={24} color={theme.colors.background.offWhite} />
             </View>
-          </ScrollView>
-        </View>
+            <Text style={styles.achievementTitle}>10K ReadTime</Text>
+          </View>
+        </ScrollView>
+      </View>
         {/* Swipeable Feature Section */}
         <FlatList
           ref={flatListRef}
@@ -105,15 +111,12 @@ export default function HomeScreen() {
         />
 
         {/* Blog Cards Section */}
-        <View style={styles.blogCardsContainer}>
+
+        <ScrollView style={styles.blogCardsContainer}>
           <Text style={styles.blogCardsTitle}>Latest Blogs</Text>
-          <FlatList
-            data={blogCards}
-            numColumns={2} // Set number of columns to 2
-            keyExtractor={(item, index) => index.toString()}
-            style={{ marginTop: 20 }}
-            renderItem={({ item }) => (
-              <TouchableOpacity style={styles.blogCard} onPress={() => router.push(item.link as any)}>
+          <View style={styles.blogGrid}>
+            {blogCards.map((item, index) => (
+              <TouchableOpacity key={index} style={styles.blogCard} onPress={() => router.push(item.link as any)}>
                 <Text style={styles.blogCardImage}>{item.image}</Text>
                 <Text style={styles.blogCardTitle}>{item.title}</Text>
                 <Text style={styles.blogCardDescription}>{item.description}</Text>
@@ -121,9 +124,9 @@ export default function HomeScreen() {
                   <Text style={styles.readMoreText}>Read More</Text>
                 </TouchableOpacity>
               </TouchableOpacity>
-            )}
-          />
-        </View>
+            ))}
+          </View>
+        </ScrollView>
       </View>
     </ScrollView>
   );
@@ -160,9 +163,9 @@ const styles = StyleSheet.create({
     color: theme.colors.blacks.medium,
   },
   userName: {
-    fontSize: theme.fonts.sizes.medium,
+    fontSize: theme.fonts.sizes.large,
     fontWeight: "600",
-  }, statsRow: {
+  },statsRow: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '100%',
@@ -283,22 +286,23 @@ const styles = StyleSheet.create({
     color: theme.colors.blacks.medium,
   },
   blogCard: {
-    width: (screenWidth - 48) / 2,
+    
+    width: "45%",
     height: 180,
     backgroundColor: theme.colors.primary.light2,
     borderRadius: 16,
     padding: 20,
-    marginBottom: 30,
-    marginRight: 20,
+    marginBottom: 30, 
+    marginRight:2,
     justifyContent: "center",
     alignItems: "center",
   },
-  blogCardImage: {
+  blogCardImage: { 
     fontSize: 40,
-    marginTop: 10,
-  },
+     marginTop:10,
+    },
   blogCardTitle: {
-    fontSize: theme.fonts.sizes.large / 2,
+    fontSize: theme.fonts.sizes.large/2,
     fontWeight: "600",
     color: theme.colors.blacks.dark,
     marginTop: 10,
@@ -331,5 +335,12 @@ const styles = StyleSheet.create({
     color: theme.colors.background.offWhite,
     fontSize: theme.fonts.sizes.small,
     fontWeight: "bold",
+  },
+
+  blogGrid: {
+    marginTop:15,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
   },
 });
