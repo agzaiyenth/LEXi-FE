@@ -76,7 +76,7 @@ export default function HomeScreen() {
         </View>
   <View style={styles.section}>
         <Text style={styles.sectionTitle}>Achievements</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} >
           <View style={styles.achievementCard}>
            
             <View style={[styles.achievementIcon, { backgroundColor: theme.colors.primary.dark3 }]}>
@@ -194,8 +194,11 @@ const styles = StyleSheet.create({
   },
   section: {
     padding: 20,
+    paddingLeft:8,
+    paddingRight:0,
   },
   sectionTitle: {
+    paddingLeft:8,
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 15,
