@@ -20,5 +20,36 @@ const AccessibilityScreen: React.FC = () => {
     toggleScreenReader 
   } = useAccessibility();
 
+  const navigation = useNavigation();
+
+  const [fontScale, setFontScale] = useState(1);  // Default scale factor is 1 (normal size)
+
+  const textStyle = {
+    fontSize: 16 * fontScale, // Dynamically scale font size
+    color: highContrastMode ? 'yellow' : 'black',
+  };
+
+  const speakText = (text: string) => {
+    if (screenReader) {
+      Speech.speak(text);  // Speak only when the screen reader is enabled
+    }
+  };
+
+  const speakText1 = (text: string) => {
+    // if (screenReader) {
+      Speech.speak(text);  // Speak only when the screen reader is enabled
+    // }
+  };
+
+  const increaseFontSize = () => {
+    setFontScale((prevScale) => Math.min(prevScale + 0.1, 2)); // Max font size limit at 2x
+    speakText('Font size increased');
+  };
+
+  const decreaseFontSize = () => {
+    setFontScale((prevScale) => Math.max(prevScale - 0.1, 1)); // Min font size limit at original size
+    speakText('Font size decreased');
+  };
+
 
 export default AccessibilityScreen;
