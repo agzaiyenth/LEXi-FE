@@ -18,7 +18,7 @@ import AudioReactiveVisualizer from './AudioReactiveVisualizer';
 import theme from '@/src/theme';
 import { Entypo, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { WebSocketClient } from '@/src/hooks/voxBuddy/WebSocketClient';
-import { Message, WSMessage } from '@/types/voxbuddy/voxBuddy';
+import { Message, WSMessage } from '@/src/types/voxbuddy/voxBuddy';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { LearnZoneParamList } from '../index';
@@ -70,7 +70,7 @@ export default function ChatInterface() {
     return () => {
       disconnect();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   }, []);
   const handleWSMessage = useCallback(
     async (message: WSMessage) => {
