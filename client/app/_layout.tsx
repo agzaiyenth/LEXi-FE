@@ -6,6 +6,7 @@ import { Slot } from 'expo-router'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { SessionProvider } from '../src/ctx'
 import Toast from 'react-native-toast-message';
+import { useFonts } from 'expo-font'
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -20,7 +21,9 @@ export default function RootLayout() {
   //   SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   //   ...FontAwesome.font,
   // })
-
+ const [fontsLoaded] = useFonts({
+    OpenDyslexic: require("@/assets/fonts/open-dyslexic.ttf"), 
+  });
   // // Handle font loading errors.
   // useEffect(() => {
   //   if (error) throw error
