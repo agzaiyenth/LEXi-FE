@@ -1,10 +1,11 @@
+import LoadingScreen from "@/src/components/loading";
 import { useFetchQuestion } from "@/src/hooks/detection/useFetchQuestion";
 import { useSubmitAnswer } from "@/src/hooks/detection/useSubmitAnswer";
 import theme from "@/src/theme";
 import { QuestionType } from "@/src/types/Detection/Question";
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import AudioComparison from "./questions/AudioComparison";
 import AudioInputView from "./questions/AudioInputView";
@@ -13,7 +14,6 @@ import MemoryRecall from "./questions/MemoryRecall";
 import MultipleChoiceView from "./questions/MultipleChoiceView";
 import SequenceOrderView from "./questions/SequenceOrderView";
 import TextInputView from "./questions/TextInputView";
-import LoadingScreen from "@/src/components/loading";
 
 interface TestScreenProps {
   route: {

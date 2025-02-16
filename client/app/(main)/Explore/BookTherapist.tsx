@@ -1,4 +1,5 @@
 import apiClient from '@/src/apiClient';
+import LoadingScreen from '@/src/components/loading';
 import theme from '@/src/theme';
 import { ITherapist } from '@/src/types/therapist/therapist';
 import { Ionicons } from '@expo/vector-icons';
@@ -6,7 +7,6 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
-  ActivityIndicator,
   Animated,
   Image,
   Modal,
@@ -18,7 +18,6 @@ import {
   View
 } from 'react-native';
 import EmptyState from './Emptystate';
-import LoadingScreen from '@/src/components/loading';
 
 
 
@@ -359,7 +358,7 @@ const BookTherapist = () => {
           </TouchableOpacity>
           <TouchableOpacity style={styles.bookNowButton} onPress={handleBookNow} disabled={bookingLoading}>
             {bookingLoading ? (
-              <ActivityIndicator size="small" color="#FFFFFF" />
+              <LoadingScreen />
             ) : (
               <Text style={styles.bookNowText}>Book Now</Text>
             )}
