@@ -207,7 +207,7 @@ export default function ChatInterface() {
     <View style={styles.container}>
         <View style={styles.headerContent}>
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={24} color="#1F2937" />
+        <Ionicons name="arrow-back-circle-outline" size={40} color="white" />
         </TouchableOpacity>
       </View>
 
@@ -407,11 +407,12 @@ const styles = StyleSheet.create({
     borderColor: '#bdbdbd', // Gray border
 },
 headerContent: {
-  padding: 8,
+  padding: 10,
   marginEnd: 0,
   flexDirection: 'row',
   alignItems: 'center',
-  marginBottom: 0,
+  marginTop:10,
+
 },
 backButton: {
   marginBottom: 10,

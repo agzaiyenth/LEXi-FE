@@ -1,6 +1,6 @@
 import apiClient from '@/src/apiClient';
 import theme from '@/src/theme';
-import { AntDesign, FontAwesome } from '@expo/vector-icons';
+import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as DocumentPicker from 'expo-document-picker';
 import { useNavigation } from 'expo-router';
@@ -110,7 +110,7 @@ const UploadScreen = () => {
       {/* Header */}
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={() => navigation.navigate('SmartReadMain')}>
-          <AntDesign name="arrowleft" size={24} color={theme.colors.blacks.medium} />
+        <Ionicons name="arrow-back-circle-outline" size={40} color="white" />
         </TouchableOpacity>
         <Text style={styles.headerText}>SmartRead</Text>
       </View>
