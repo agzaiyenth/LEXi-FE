@@ -1,5 +1,4 @@
-import React from 'react';
-import  { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -8,53 +7,50 @@ import {
   Animated,
   Dimensions,
   Alert,
-  Image,
 } from 'react-native';
 import BallSvg from '@/assets/images/games/ball.svg';
+import Ballr from '@/assets/images/games/ballr.svg';  
+import Ballb from '@/assets/images/games/ballb.svg';
+import Ballg from '@/assets/images/games/ballg.svg';
 
 const { width, height } = Dimensions.get('window');
 
 const BALLOON_SIZE = 250;
-const MIN_SPACING = BALLOON_SIZE * 1.3; 
 const balloonPositions = [
-  { x: width * 0.001, y: height * 0.15 }, 
-  { x: width * 0.5, y: height * 0.15 }, 
-  { x: width * 0.001, y: height * 0.55 }, 
-  { x: width * 0.5, y: height * 0.55 },
+  { x: width * 0.0 - 30, y: height * 0.15 }, 
+  { x: width * 0.5 - 30, y: height * 0.15 }, 
+  { x: width * 0.001 - 30, y: height * 0.55 }, 
+  { x: width * 0.5 - 30, y: height * 0.55 },
 ];
+
+const balloonSvgs = [BallSvg, Ballr, Ballb, Ballg];
 
 const levels = [
   {
     question: 'Which word matches "Tree"?',
-    image: 'https://via.placeholder.com/300', 
     word: 'Tree',
     balloons: ['Free', 'Tree', 'Three', 'Bee'],
   },
   {
     question: 'Which word matches "Cat"?',
-    image: 'https://via.placeholder.com/300',
     word: 'Cat',
     balloons: ['Kat', 'Bat', 'Cat', 'Rat'],
   },
   {
     question: 'Which word matches "Dog"?',
-    image: 'https://via.placeholder.com/300',
     word: 'Dog',
     balloons: ['Bog', 'Dog', 'Fog', 'Log'],
   },
   {
     question: 'Which word matches "Log"?',
-    image: 'https://via.placeholder.com/300',
     word: 'Log',
     balloons: ['Bog', 'Dog', 'Fog', 'Log'],
   },
   {
     question: 'Which word matches "Bog"?',
-    image: 'https://via.placeholder.com/300',
     word: 'Bog',
     balloons: ['Bog', 'Dog', 'Fog', 'Log'],
   },
-  
 ];
 
 const Game = () => {
@@ -62,7 +58,7 @@ const Game = () => {
   const [score, setScore] = useState(0);
   const [showQuestion, setShowQuestion] = useState(true);
   const [balloons, setBalloons] = useState<
-    { x: number; y: number; word: string; shakeAnim: Animated.Value }[]
+    { x: number; y: number; word: string; shakeAnim: Animated.Value; Svg: any }[]
   >([]);
 
   useEffect(() => {
@@ -74,10 +70,12 @@ const Game = () => {
   };
 
   const generateBalloons = (balloonWords: string[]) => {
+    const shuffledSvgs = [...balloonSvgs].sort(() => Math.random() - 0.5);
     return balloonWords.map((word, index) => ({
       x: balloonPositions[index].x,
       y: balloonPositions[index].y,
       word,
+      Svg: shuffledSvgs[index], // Assign random balloon color
       shakeAnim: new Animated.Value(0),
     }));
   };
@@ -105,10 +103,10 @@ const Game = () => {
 
   const handleBalloonPress = (word: string) => {
     const isCorrect = word === levels[currentLevel].word;
-  
+
     setScore((prevScore) => {
       const newScore = isCorrect ? prevScore + 10 : prevScore - 5;
-  
+
       if (currentLevel + 1 < levels.length) {
         setShowQuestion(true);
         setCurrentLevel((prevLevel) => prevLevel + 1);
@@ -118,11 +116,10 @@ const Game = () => {
           resetGame();
         }, 100);
       }
-  
+
       return newScore;
     });
   };
-  
 
   const goToNextLevel = () => {
     if (currentLevel + 1 < levels.length) {
@@ -151,7 +148,6 @@ const Game = () => {
         // **Question Screen**
         <View style={styles.questionContainer}>
           <Text style={styles.questionText}>{levels[currentLevel].question}</Text>
-          <Image source={{ uri: levels[currentLevel].image }} style={styles.questionImage} />
           <TouchableOpacity style={styles.startButton} onPress={() => setShowQuestion(false)}>
             <Text style={styles.startButtonText}>Start</Text>
           </TouchableOpacity>
@@ -171,7 +167,7 @@ const Game = () => {
             ]}
           >
             <TouchableOpacity onPress={() => handleBalloonPress(balloon.word)} style={styles.balloonTouchable}>
-              <BallSvg width={BALLOON_SIZE} height={BALLOON_SIZE} style={styles.balloon} />
+              <balloon.Svg width={BALLOON_SIZE} height={BALLOON_SIZE} style={styles.balloon} />
               <Text style={styles.balloonText}>{balloon.word}</Text>
             </TouchableOpacity>
           </Animated.View>
@@ -249,8 +245,8 @@ const styles = StyleSheet.create({
   },
   balloon: {
     zIndex: 1,
+    
   },
 });
 
 export default Game;
-
