@@ -1,10 +1,5 @@
 // app/(main)/LearnZone/voxbuddy/ChatInterface.tsx
 import { BASE_ENDPOINT } from '@/config';
-import { useAudioHandlers } from '@/src/hooks/voxBuddy/useAudioHandlers';
-import { WebSocketClient } from '@/src/hooks/voxBuddy/WebSocketClient';
-import theme from '@/src/theme';
-import { Message, WSMessage } from '@/src/types/voxbuddy/voxBuddy';
-import { Entypo, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import React, {
   useCallback,
   useEffect,
@@ -22,8 +17,6 @@ import {
 import AudioReactiveVisualizer from './AudioReactiveVisualizer';
 import theme from '@/src/theme';
 import { Entypo, Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { Player } from '@/src/hooks/voxBuddy/usePlayer';
-import { Recorder } from '@/src/hooks/voxBuddy/useRecorder';
 import { WebSocketClient } from '@/src/hooks/voxBuddy/WebSocketClient';
 import { Message, WSMessage } from '@/types/voxbuddy/voxBuddy';
 import { useNavigation } from '@react-navigation/native';
