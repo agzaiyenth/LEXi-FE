@@ -2,12 +2,14 @@
 export  const theme = {
   colors: {
     primary: {
+      light: '#E8F0FF',
+      dark: '#003366',
       dark1: '#264653',  // Darkest shade
       dark2: '#254d4e',
       dark3:'#03767a',  // Darker shade
       medium: '#2A9D8F', // Medium shade
       medium2:'#98c1b9', // Medium shade
-      light: '#A8DADC',  // Lighter shade
+      light1: '#A8DADC',  // Lighter shade
       light2: '#D3E0DE',
       light3:'#9ac3bb',
     },
@@ -27,6 +29,8 @@ export  const theme = {
       offWhite: '#FFF9EB', // Off-white
       beige: '#F8ECD1', // Beige
       dark: '#D9CAB3',   // Darker beige
+      black: '#000000',
+      white: '#FFFFFF',
     },
     blacks:{
       medium:'#151717',
