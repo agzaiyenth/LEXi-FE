@@ -5,18 +5,13 @@ This is the main screen for the ReadWithMe feature.
 It contains the ChatInterface component.
 */
 import React from "react";
-import { View, StyleSheet } from "react-native";
-import FileDirectory from "./ReadWithME/FileDirectory";
-import OnboardingScreen from "./ReadWithME/OnboardingScreen";
-import Scan from "./ReadWithME/Scan";
-import Processing from "./ReadWithME/Processing";
-import Pronounce from "./ReadWithME/Pronounce";
+import { StyleSheet, View } from "react-native";
 import Exit from "./ReadWithME/Exit";
 
 const ReadWithMe = () => {
   return (
     <View style={styles.container}>
-      <Exit/>
+      <Exit />
     </View>
   );
 };

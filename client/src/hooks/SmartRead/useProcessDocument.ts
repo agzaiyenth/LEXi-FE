@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Alert } from 'react-native';
 import apiClient from "@/src/apiClient";
-import { ProcessDocRequestDTO } from "@/types/SmartRead/Documents";
+import { ProcessDocRequestDTO } from "@/src/types/SmartRead/Documents";
 import Toast from 'react-native-toast-message';
 
 export const useProcessDocument = () => {

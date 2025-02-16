@@ -1,28 +1,25 @@
 // app/(main)/LearnZone/voxbuddy/ChatInterface.tsx
+import { BASE_ENDPOINT } from '@/config';
+import { useAudioHandlers } from '@/src/hooks/voxBuddy/useAudioHandlers';
+import { WebSocketClient } from '@/src/hooks/voxBuddy/WebSocketClient';
+import theme from '@/src/theme';
+import { Message, WSMessage } from '@/src/types/voxbuddy/voxBuddy';
+import { Entypo, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import React, {
-  useRef,
-  useEffect,
-  useState,
   useCallback,
+  useEffect,
+  useRef,
+  useState,
 } from 'react';
 import {
-  View,
-  Text,
-  TextInput,
-  Button,
-  TouchableOpacity,
   ScrollView,
   StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
 } from 'react-native';
-import { BASE_ENDPOINT } from '@/config';
 import AudioReactiveVisualizer from './AudioReactiveVisualizer';
-import theme from '@/src/theme';
-import { Entypo, Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { Player } from '@/src/hooks/voxBuddy/usePlayer';
-import { Recorder } from '@/src/hooks/voxBuddy/useRecorder';
-import { WebSocketClient } from '@/src/hooks/voxBuddy/WebSocketClient';
-import { Message, WSMessage } from '@/types/voxbuddy/voxBuddy';
-import { useAudioHandlers } from '@/src/hooks/voxBuddy/useAudioHandlers';
 
 export default function ChatInterface() {
   const [endpoint] = useState(`ws://${BASE_ENDPOINT}/realtime`);
@@ -55,12 +52,12 @@ export default function ChatInterface() {
 
   useEffect(() => {
     if (connectionState === 'disconnected') {
-        const reconnectTimeout = setTimeout(() => {
-            handleConnect();
-        }, 5000); 
-        return () => clearTimeout(reconnectTimeout); 
+      const reconnectTimeout = setTimeout(() => {
+        handleConnect();
+      }, 5000);
+      return () => clearTimeout(reconnectTimeout);
     }
-}, [connectionState]);
+  }, [connectionState]);
 
   // Clean up on unmount
   useEffect(() => {
@@ -71,40 +68,40 @@ export default function ChatInterface() {
   }, []);
   const handleWSMessage = useCallback(
     async (message: WSMessage) => {
-        if (message.type === 'control') {
-            if (message.action === 'status') {
-                setConnectionState(message.greeting === 'connected' ? 'connected' : 'disconnected');
-            } else if (message.action === 'speech_started') {
-                audioPlayerRef.current?.clear();
-                const contrivedId = 'userMessage' + Math.random();
-                currentUserMessage.current = {
-                    id: contrivedId,
-                    type: 'user',
-                    content: '...',
-                };
-                messageMap.current.set(contrivedId, currentUserMessage.current);
-                setMessages(Array.from(messageMap.current.values()));
-            }
-        } else if (message.type === 'transcription' && message.id && currentUserMessage.current) {
-            currentUserMessage.current.content = message.text || '';
-            setMessages(Array.from(messageMap.current.values()));
-        } else if (message.type === 'text_delta' && message.id) {
-            const existingMessage = messageMap.current.get(message.id);
-            if (existingMessage) {
-                existingMessage.content += message.delta || '';
-            } else {
-                const newMessage: Message = {
-                    id: message.id,
-                    type: 'assistant',
-                    content: message.delta || '',
-                };
-                messageMap.current.set(message.id, newMessage);
-            }
-            setMessages(Array.from(messageMap.current.values()));
+      if (message.type === 'control') {
+        if (message.action === 'status') {
+          setConnectionState(message.greeting === 'connected' ? 'connected' : 'disconnected');
+        } else if (message.action === 'speech_started') {
+          audioPlayerRef.current?.clear();
+          const contrivedId = 'userMessage' + Math.random();
+          currentUserMessage.current = {
+            id: contrivedId,
+            type: 'user',
+            content: '...',
+          };
+          messageMap.current.set(contrivedId, currentUserMessage.current);
+          setMessages(Array.from(messageMap.current.values()));
         }
+      } else if (message.type === 'transcription' && message.id && currentUserMessage.current) {
+        currentUserMessage.current.content = message.text || '';
+        setMessages(Array.from(messageMap.current.values()));
+      } else if (message.type === 'text_delta' && message.id) {
+        const existingMessage = messageMap.current.get(message.id);
+        if (existingMessage) {
+          existingMessage.content += message.delta || '';
+        } else {
+          const newMessage: Message = {
+            id: message.id,
+            type: 'assistant',
+            content: message.delta || '',
+          };
+          messageMap.current.set(message.id, newMessage);
+        }
+        setMessages(Array.from(messageMap.current.values()));
+      }
     },
     [audioPlayerRef, setMessages]
-);
+  );
 
 
   // Continuously read from WebSocket
@@ -136,8 +133,8 @@ export default function ChatInterface() {
 
     setConnectionState('connecting');
     const statusMessageId = `status-${Date.now()}`;
-    
-   
+
+
 
     messageMap.current.clear();
     setMessages(Array.from(messageMap.current.values()));
@@ -215,11 +212,11 @@ export default function ChatInterface() {
       <View style={styles.bottomHalf}>
         {/* Main chat area */}
         <View style={styles.chatArea}>
-        <Text style={styles.connectionStatus}>
-    {connectionState === 'connecting' && 'Connecting to VoxBuddy...'}
-    {connectionState === 'connected' && 'Connected to VoxBuddy'}
-    {connectionState === 'disconnected' && 'Disconnected. Retrying...'}
-</Text>
+          <Text style={styles.connectionStatus}>
+            {connectionState === 'connecting' && 'Connecting to VoxBuddy...'}
+            {connectionState === 'connected' && 'Connected to VoxBuddy'}
+            {connectionState === 'disconnected' && 'Disconnected. Retrying...'}
+          </Text>
 
 
           {/* Messages list */}
@@ -279,10 +276,10 @@ export default function ChatInterface() {
             </TouchableOpacity>
 
             <TouchableOpacity
-             style={[
-        styles.iconButton,
-        connectionState !== 'connected' && styles.disabledButton, // Add disabled style
-    ]}
+              style={[
+                styles.iconButton,
+                connectionState !== 'connected' && styles.disabledButton, // Add disabled style
+              ]}
               onPress={sendMessage}
               disabled={connectionState !== 'connected'}
             >
@@ -331,7 +328,7 @@ const styles = StyleSheet.create({
   connectionStatus: {
     textAlign: 'center',
     marginVertical: 8,
-},
+  },
 
   chatArea: {
     flex: 1,
@@ -394,9 +391,9 @@ const styles = StyleSheet.create({
   disabledInput: {
     backgroundColor: '#e0e0e0', // Light gray
     borderColor: '#bdbdbd', // Gray border
-},
-disabledButton: {
+  },
+  disabledButton: {
     backgroundColor: '#f5f5f5', // Light gray
     borderColor: '#bdbdbd', // Gray border
-},
+  },
 });

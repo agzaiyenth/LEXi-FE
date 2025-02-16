@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import apiClient from "@/src/apiClient";
-import { ITherapist } from "@/types/therapist/therapist";
+import { ITherapist } from "@/src/types/therapist/therapist";
 
 export const useGetAllTherapists = () => {
     const [therapists, setTherapists] = useState<ITherapist[]>([]);

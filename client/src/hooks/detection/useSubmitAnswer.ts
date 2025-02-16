@@ -1,6 +1,6 @@
 import { useState } from "react";
 import apiClient from "@/src/apiClient";
-import { AnswerSubmissionDTO } from "@/types/Detection/Question";
+import { AnswerSubmissionDTO } from "@/src/types/Detection/Question";
 
 
 export const useSubmitAnswer = () => {

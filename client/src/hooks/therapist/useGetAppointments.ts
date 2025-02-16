@@ -1,7 +1,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import apiClient from "@/src/apiClient";
-import { IAppointment } from "@/types/therapist/appointment";
+import { IAppointment } from "@/src/types/therapist/appointment";
 
 export const useGetAppointments = () => {
    

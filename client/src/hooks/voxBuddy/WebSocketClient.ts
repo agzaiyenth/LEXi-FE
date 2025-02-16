@@ -1,4 +1,4 @@
-import { WebSocketMessage } from "@/types/voxbuddy/voxBuddy";
+import { WebSocketMessage } from "@/src/types/voxbuddy/voxBuddy";
 
 type ResolveFn<T> = (value: IteratorResult<T>) => void;
 type RejectFn<E> = (reason: E) => void;

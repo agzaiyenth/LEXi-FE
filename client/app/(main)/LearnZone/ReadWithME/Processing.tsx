@@ -1,7 +1,7 @@
-import React from "react";
-import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
-import theme from "../../../../src/theme";
+import theme from "@/src/theme";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
+import React from "react";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 const Processing = () => {
   return (
     <View style={styles.wrapper}>
@@ -37,16 +37,16 @@ const Processing = () => {
             resizeMode="contain"
             accessible
             accessibilityLabel="Upload Icon"
-            
+
           />
           <TouchableOpacity
-              style={styles.scanButton}
-              onPress={() => {
-                console.log("Button pressed");
-              }}
-            >
-              <Text style={styles.scanButtonText}>Continue</Text>
-            </TouchableOpacity>
+            style={styles.scanButton}
+            onPress={() => {
+              console.log("Button pressed");
+            }}
+          >
+            <Text style={styles.scanButtonText}>Continue</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -108,25 +108,25 @@ const styles = StyleSheet.create({
     left: 160,
     transform: [{ translateX: -50 }, { translateY: -50 }], // Center the image
   },
-  booksBackdropPic:{
+  booksBackdropPic: {
     width: 150,
     height: 150,
-    top:150,
-    left:55,
+    top: 150,
+    left: 55,
     transform: [{ translateX: -50 }, { translateY: -50 }], // Center the image
   },
   scanButton: {
     width: 350,
     height: 50,
     left: 10,
-    backgroundColor:"#009FA5",
-    borderRadius:50,
-    top:30,
+    backgroundColor: "#009FA5",
+    borderRadius: 50,
+    top: 30,
   },
-  scanButtonText:{
-    fontSize:23,
-    textAlign:"center",
-    padding:6,
-    color:theme.colors.background.beige,
+  scanButtonText: {
+    fontSize: 23,
+    textAlign: "center",
+    padding: 6,
+    color: theme.colors.background.beige,
   },
 });

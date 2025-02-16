@@ -1,3 +1,5 @@
+import LoadingScreen from '@/src/components/loading';
+import { useSession } from '@/src/ctx';
 import { useStartTest } from '@/src/hooks/detection/useStartTest';
 import theme from '@/src/theme';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -11,9 +13,8 @@ import { SwipeButton } from 'react-native-expo-swipe-button';
 
 export default function DetectionHomeScreen() {
   const navigation = useNavigation<StackNavigationProp<any, "DetectionHomeScreen">>();
-  // TODO Wirte getuser hook and use it here to get current user name
-  const currentUser = "User"; 
-  const { startTest, loading} = useStartTest();
+ const { username } = useSession();
+  const { startTest, loading } = useStartTest();
 
   const handleSwipeComplete = async () => {
     const sessionId = await startTest();
@@ -23,17 +24,19 @@ export default function DetectionHomeScreen() {
       Alert.alert("Error", "Failed to start test. Please try again.");
     }
   };
-
+if(loading){
+  return <LoadingScreen/>
+}
   return (
     <LinearGradient
-    colors={[theme.colors.primary.light2, theme.colors.primary.light3]} 
-    style={styles.container}
-  >
+      colors={[theme.colors.primary.light2, theme.colors.primary.light3]}
+      style={styles.container}
+    >
       <Image
         source={require('@/assets/images/auth/icon.png')}
         style={styles.logo}
       />
-      <Text style={styles.title}>Hey There {currentUser} !</Text>
+      <Text style={styles.title}>Hey There {username || 'Guest'}!</Text>
       <Text style={styles.subtitle}>
         Your personalized experience starts here. Let&apos;s get to know each other more!
       </Text>
@@ -51,7 +54,7 @@ export default function DetectionHomeScreen() {
         underlayTitle="Release to start"
         underlayTitleStyle={styles.underlayTitle}
       />
-     </LinearGradient>
+    </LinearGradient>
   )
 }
 
@@ -86,10 +89,10 @@ const styles = StyleSheet.create({
   },
   swipeButtonContainer: {
     backgroundColor: theme.colors.primary.dark2,
-    color:'white',
+    color: 'white',
   },
-  swipeButtonTitle:{
-    color:'white',
+  swipeButtonTitle: {
+    color: 'white',
   },
   underlayTitle: {
     color: 'white',

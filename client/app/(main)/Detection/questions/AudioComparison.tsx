@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { Audio } from 'expo-av';
-import { QuestionResponseDTO } from '@/types/Detection/Question';
+import { QuestionResponseDTO } from '@/src/types/Detection/Question';
 import theme from '@/src/theme';
 
 interface Props {

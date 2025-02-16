@@ -6,18 +6,18 @@ import DetectionHomeScreen from './DetectionHomeScreen';
 import TestScreen from './TestScreen';
 
 export type DetectionSystemParamList = {
-  DetectionHomeScreen: undefined; 
-  TestScreen: undefined; 
+  DetectionHomeScreen: undefined;
+  TestScreen: undefined;
   CompletedScreen: undefined;
 };
 
 const Stack = createStackNavigator<DetectionSystemParamList>();
 const DetectionFlow = () => {
- 
+
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: false, 
+        headerShown: false,
       }}
     >
       <Stack.Screen name="DetectionHomeScreen" component={DetectionHomeScreen} />

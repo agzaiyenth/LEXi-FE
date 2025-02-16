@@ -4,18 +4,18 @@ This is the main index stack for the LearnZone .
 It contains stack screens for the LearnZone .
 */
 
-import React from 'react';
-import VoxBuddy from './VoxBuddy'; 
-import LearnMainScreen from './LearnMainScreen';
 import { createStackNavigator } from '@react-navigation/stack';
-import SmartRead from './SmartRead';
+import React from 'react';
+import LearnMainScreen from './LearnMainScreen';
 import ReadWithMe from './ReadWithME';
+import SmartRead from './SmartRead';
+import VoxBuddy from './VoxBuddy';
 
 export type LearnZoneParamList = {
-  LearnMain: undefined; 
+  LearnMain: undefined;
   VoxBuddy: undefined; // No parameters for VoxBuddy
   SmartRead: undefined; // No parameters for SmartRead
-  ReadWithMe:undefined;
+  ReadWithMe: undefined;
 };
 
 const Stack = createStackNavigator<LearnZoneParamList>();

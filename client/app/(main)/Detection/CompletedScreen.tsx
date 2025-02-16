@@ -1,23 +1,21 @@
+import { useSession } from '@/src/ctx';
 import theme from '@/src/theme';
-import { useRouter } from 'expo-router';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { useNavigation } from 'expo-router';
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 
 export default function CompletedScreen() {
-  const router = useRouter();
-  // TODO Wirte getuser hook and use it here to get current user name
-  const currentUser = "User";
-
-
-
+ const navigation = useNavigation<StackNavigationProp<any, "Home">>();
+ const { username } = useSession();
 
   return (
     <View
 
       style={styles.container}
     >
-      <Text style={styles.title}>Thank You {currentUser} !</Text>
+      <Text style={styles.title}>Thank You {username || 'Guest'} !</Text>
       <Text style={styles.subtitle}>
         We are ready to use the app , Enjoy!
       </Text>
@@ -27,7 +25,7 @@ export default function CompletedScreen() {
       />
       <TouchableOpacity
         style={styles.submitButtonContainer}
-        onPress={() => router.push("/")}
+        onPress={() => navigation.navigate("Home")}
       >
         <Text style={styles.buttonText}>Go To Home</Text>
       </TouchableOpacity>

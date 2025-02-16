@@ -1,11 +1,12 @@
 // app/_layout.tsx
-import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 // import { SplashScreen } from 'expo-router'
+import LoadingScreen from '@/src/components/loading'
+import { SessionProvider } from '@/src/ctx'
+import { useFonts } from 'expo-font'
 import { Slot } from 'expo-router'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
-import { SessionProvider } from '../src/ctx'
-import Toast from 'react-native-toast-message';
+import Toast from 'react-native-toast-message'
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -16,28 +17,15 @@ export {
 // SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
-  // const [loaded, error] = useFonts({
-  //   SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  //   ...FontAwesome.font,
-  // })
 
-  // // Handle font loading errors.
-  // useEffect(() => {
-  //   if (error) throw error
-  // }, [error])
+ const [fontsLoaded] = useFonts({
+    OpenDyslexic: require("@/assets/fonts/open-dyslexic.ttf"), 
+  });
 
-  // // Hide the splash screen when fonts are loaded.
-  // useEffect(() => {
-  //   if (loaded) {
-  //     SplashScreen.hideAsync()
-  //   }
-  // }, [loaded])
+  if (!fontsLoaded) {
+    return <LoadingScreen />;
+  }
 
-  // if (!loaded) {
-  //   return null
-  // }
-
-const Stack = createStackNavigator();
   return (
     <SessionProvider>
     <SafeAreaProvider>

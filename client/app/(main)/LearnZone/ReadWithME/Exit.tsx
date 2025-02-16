@@ -1,7 +1,7 @@
-import React from "react";
-import { Text, View, StyleSheet, Image } from "react-native";
-import theme from "../../../../src/theme";
+import theme from "@/src/theme";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
+import React from "react";
+import { Image, StyleSheet, Text, View } from "react-native";
 
 const Exit = () => {
   return (
@@ -131,10 +131,10 @@ const styles = StyleSheet.create({
     lineHeight: 35,
     color: "#8F8877",
     position: "absolute",
-    top: 490, 
-    zIndex: 5, 
+    top: 490,
+    zIndex: 5,
   },
-  booksBackdropPic:{
+  booksBackdropPic: {
     width: 150,
     height: 150,
     top: 220,

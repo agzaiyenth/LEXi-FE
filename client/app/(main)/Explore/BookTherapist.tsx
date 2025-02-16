@@ -1,22 +1,22 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  ActivityIndicator,
-  Modal,
-  Animated,
-  RefreshControl
-} from 'react-native';
-import React, { useEffect, useState, useMemo, useRef, useCallback } from 'react';
+import apiClient from '@/src/apiClient';
+import LoadingScreen from '@/src/components/loading';
+import theme from '@/src/theme';
+import { ITherapist } from '@/src/types/therapist/therapist';
 import { Ionicons } from '@expo/vector-icons';
-import { ITherapist } from '@/types/therapist/therapist';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import theme from '@/src/theme';
-import apiClient from '@/src/apiClient';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  Animated,
+  Image,
+  Modal,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
 import EmptyState from './Emptystate';
 
 
@@ -103,35 +103,35 @@ const BookTherapist = () => {
   // State for refreshing
   const [refreshing, setRefreshing] = useState<boolean>(false);
 
- 
+
   const timePeriods = ['Morning', 'Afternoon', 'Evening'];
 
-    // Fetch therapist details from API
-    const fetchTherapist = async () => {
-      try {
-        const response = await apiClient.get(`/therapist/${therapistId}`);
-        setTherapistData(response.data);
-      } catch (err: any) {
-        setError(err.response?.data?.message || 'Error fetching therapist details');
-      } finally {
-        setLoading(false);
-      }
-    };
-  
-    useEffect(() => {
-      fetchTherapist();
-    }, [therapistId]);
+  // Fetch therapist details from API
+  const fetchTherapist = async () => {
+    try {
+      const response = await apiClient.get(`/therapist/${therapistId}`);
+      setTherapistData(response.data);
+    } catch (err: any) {
+      setError(err.response?.data?.message || 'Error fetching therapist details');
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    // Handle refresh action
+  useEffect(() => {
+    fetchTherapist();
+  }, [therapistId]);
+
+  // Handle refresh action
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     fetchTherapist().finally(() => setRefreshing(false));
   }, []);
 
-    //  calculate slot counts per period
+  //  calculate slot counts per period
   const periodSlotCounts = useMemo(() => {
     const counts: { [key: string]: number } = { Morning: 0, Afternoon: 0, Evening: 0 };
-    
+
     therapistData?.availabilities?.forEach((slot) => {
       const slotDateStr = new Date(slot.startTime).toDateString();
       if (slotDateStr === selectedDay && slot.available) {
@@ -139,7 +139,7 @@ const BookTherapist = () => {
         counts[period]++;
       }
     });
-    
+
     return counts;
   }, [therapistData, selectedDay]);
 
@@ -159,7 +159,7 @@ const BookTherapist = () => {
     return Array.from(unique).sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
   }, [therapistData]);
 
-  
+
 
   // When availableDays update, set the default selectedDay 
   useEffect(() => {
@@ -172,9 +172,7 @@ const BookTherapist = () => {
 
   if (loading) {
     return (
-      <View style={styles.loaderContainer}>
-        <ActivityIndicator size="large" color={theme.colors.primary.dark2} />
-      </View>
+     <LoadingScreen />
     );
   }
 
@@ -186,7 +184,7 @@ const BookTherapist = () => {
   const filteredSlots = therapistData.availabilities?.filter((slot) => {
     const slotDateStr = new Date(slot.startTime).toDateString();
     return getTimePeriod(slot.startTime) === selectedPeriod &&
-           (selectedDay ? slotDateStr === selectedDay : true);
+      (selectedDay ? slotDateStr === selectedDay : true);
   }) || [];
 
   // Handle booking when the "Book Now" button is pressed
@@ -268,57 +266,57 @@ const BookTherapist = () => {
         </View>
 
         <ScrollView style={styles.scheduleContainer}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
 
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {/* Day Tabs  */}
-          {availableDays.length > 0 && (
-            <View style={styles.dateContainer}>
-              {availableDays.map((day, index) => (
-                <TouchableOpacity
-                  key={index}
-                  onPress={() => setSelectedDay(day)}
-                  style={[styles.day, selectedDay === day && styles.selectedDay]}
-                >
-                  <Text style={[styles.dayText, selectedDay === day && styles.selectedDayText]}>
-                    {new Date(day).toLocaleString('en-US', { weekday: 'short' })}
-                  </Text>
-                  <Text style={[styles.dateText, selectedDay === day && styles.selectedDayText]}>
-                    {new Date(day).getDate()}
-                  </Text>
-                  <Text style={[styles.dayText, selectedDay === day && styles.selectedDayText]}>
-                    {new Date(day).toLocaleString('en-US', { month: 'short' })}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          )}
+            {/* Day Tabs  */}
+            {availableDays.length > 0 && (
+              <View style={styles.dateContainer}>
+                {availableDays.map((day, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    onPress={() => setSelectedDay(day)}
+                    style={[styles.day, selectedDay === day && styles.selectedDay]}
+                  >
+                    <Text style={[styles.dayText, selectedDay === day && styles.selectedDayText]}>
+                      {new Date(day).toLocaleString('en-US', { weekday: 'short' })}
+                    </Text>
+                    <Text style={[styles.dateText, selectedDay === day && styles.selectedDayText]}>
+                      {new Date(day).getDate()}
+                    </Text>
+                    <Text style={[styles.dayText, selectedDay === day && styles.selectedDayText]}>
+                      {new Date(day).toLocaleString('en-US', { month: 'short' })}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            )}
           </ScrollView>
 
           {/* Time Period Tabs */}
           <View style={styles.periodContainer}>
             {timePeriods.map((period) => (
-             <TouchableOpacity
-             key={period}
-             style={[styles.periodButton, selectedPeriod === period && styles.selectedPeriod]}
-             onPress={() => setSelectedPeriod(period)}
-           >
-             <View style={{ position: 'relative' }}>
-               <Text style={[styles.periodText, selectedPeriod === period && styles.selectedPeriodText]}>
-                 {period}
-               </Text>
-               {periodSlotCounts[period] > 0 && (
-                 <View style={[styles.badge,selectedPeriod === period && styles.selectedBadge]}>
-                   <Text style={styles.badgeText}>{periodSlotCounts[period]}</Text>
-                 </View>
-               )}
-             </View>
-           </TouchableOpacity>
+              <TouchableOpacity
+                key={period}
+                style={[styles.periodButton, selectedPeriod === period && styles.selectedPeriod]}
+                onPress={() => setSelectedPeriod(period)}
+              >
+                <View style={{ position: 'relative' }}>
+                  <Text style={[styles.periodText, selectedPeriod === period && styles.selectedPeriodText]}>
+                    {period}
+                  </Text>
+                  {periodSlotCounts[period] > 0 && (
+                    <View style={[styles.badge, selectedPeriod === period && styles.selectedBadge]}>
+                      <Text style={styles.badgeText}>{periodSlotCounts[period]}</Text>
+                    </View>
+                  )}
+                </View>
+              </TouchableOpacity>
             ))}
           </View>
 
           {/* Horizontal Scroll for Time Slots */}
-          <ScrollView  contentContainerStyle={styles.timeSlotsContainer}>
+          <ScrollView contentContainerStyle={styles.timeSlotsContainer}>
             {filteredSlots.length > 0 ? (
               filteredSlots.map((slot) => (
                 <TouchableOpacity
@@ -347,7 +345,7 @@ const BookTherapist = () => {
                 </TouchableOpacity>
               ))
             ) : (
-             
+
               <EmptyState param="available slots" />
             )}
           </ScrollView>
@@ -360,7 +358,7 @@ const BookTherapist = () => {
           </TouchableOpacity>
           <TouchableOpacity style={styles.bookNowButton} onPress={handleBookNow} disabled={bookingLoading}>
             {bookingLoading ? (
-              <ActivityIndicator size="small" color="#FFFFFF" />
+              <LoadingScreen />
             ) : (
               <Text style={styles.bookNowText}>Book Now</Text>
             )}
@@ -472,7 +470,7 @@ const styles = StyleSheet.create({
   day: {
     alignItems: 'center',
     padding: 10,
-    paddingHorizontal:23,
+    paddingHorizontal: 23,
   },
   selectedDay: {
     backgroundColor: theme.colors.primary.medium2,
