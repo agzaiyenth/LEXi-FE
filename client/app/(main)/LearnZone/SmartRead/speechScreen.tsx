@@ -1,5 +1,5 @@
-import ErrorScreen from "@/components/ErrorScreen";
-import LoadingScreen from "@/components/loading";
+import ErrorScreen from "@/src/components/ErrorScreen";
+import LoadingScreen from "@/src/components/loading";
 import { Ionicons } from "@expo/vector-icons";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import { useRoute } from "@react-navigation/native";

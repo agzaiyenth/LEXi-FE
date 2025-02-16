@@ -1,6 +1,6 @@
 
-import ErrorScreen from "@/components/ErrorScreen";
-import LoadingScreen from "@/components/loading";
+import ErrorScreen from "@/src/components/ErrorScreen";
+import LoadingScreen from "@/src/components/loading";
 import { useGetAllDocuments } from "@/src/hooks/SmartRead/useGetAllDocuments";
 import { useProcessDocument } from "@/src/hooks/SmartRead/useProcessDocument";
 import { FetchAllResponseDTO, ProcessDocRequestDTO } from "@/src/types/SmartRead/Documents";
