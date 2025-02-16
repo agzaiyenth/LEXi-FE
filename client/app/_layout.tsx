@@ -17,10 +17,7 @@ export {
 // SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
-  // const [loaded, error] = useFonts({
-  //   SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  //   ...FontAwesome.font,
-  // })
+
  const [fontsLoaded] = useFonts({
     OpenDyslexic: require("@/assets/fonts/open-dyslexic.ttf"), 
   });
@@ -29,7 +26,6 @@ export default function RootLayout() {
   //   if (error) throw error
   // }, [error])
 
-  // // Hide the splash screen when fonts are loaded.
   // useEffect(() => {
   //   if (loaded) {
   //     SplashScreen.hideAsync()
