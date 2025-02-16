@@ -5,7 +5,7 @@ import React from "react";
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function AccountScreen() {
-  const { signOut } = useSession();
+  const { username,signOut } = useSession();
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -19,7 +19,7 @@ export default function AccountScreen() {
           source={{ uri: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200' }}
           style={styles.avatar}
         />
-        <Text style={styles.name}>Alex Mitchell</Text>
+        <Text style={styles.name}>{username || 'Guest'}</Text>
         <View style={styles.statsRow}>
           <View style={styles.stat}>
             <Text style={styles.statValue}>248</Text>
