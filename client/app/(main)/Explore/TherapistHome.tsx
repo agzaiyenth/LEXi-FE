@@ -23,6 +23,7 @@ const TherapistHome = () => {
   // Refresh data when pulling down
   const onRefresh = useCallback(() => {
     setRefreshing(true);
+
     refetch().finally(() => setRefreshing(false));
   }, [refetch]);
 
@@ -122,9 +123,9 @@ const TherapistHome = () => {
       <Text style={styles.sectionTitle}>Nearby Doctors</Text>
 
       {therapists.length > 0 ? (
-        therapists.map((therapist: any) => (
-          <TouchableOpacity key={therapist.id} onPress={() => navigation.navigate('BookTherapist')}>
-            <View key={therapist.id} style={styles.nearbyDoctorCard}>
+        therapists.map((therapist: ITherapist) => (
+          <TouchableOpacity key={therapist.therapistId} onPress={() => navigation.navigate('BookTherapist')}>
+            <View key={therapist.therapistId} style={styles.nearbyDoctorCard}>
               <Image source={{ uri: therapist.image }} style={styles.doctorImage} />
               <Text style={styles.doctorName}>{therapist.name}</Text>
               <Text style={styles.doctorSpecialty}>{therapist.description}</Text>
