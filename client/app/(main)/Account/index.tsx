@@ -3,8 +3,11 @@ import theme from "@/src/theme";
 import { Ionicons } from '@expo/vector-icons';
 import React from "react";
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from "@react-navigation/stack";
 
 export default function AccountScreen() {
+  const navigation = useNavigation<StackNavigationProp<any, "Detection">>();
   const { username,signOut } = useSession();
   return (
     <ScrollView style={styles.container}>
@@ -55,7 +58,10 @@ export default function AccountScreen() {
           <Text style={styles.settingText}>Reports</Text>
           <Ionicons name="chevron-forward" size={24} color="#666666" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.settingItem}>
+        <TouchableOpacity
+          style={styles.settingItem}
+          onPress={() => navigation.navigate("Detection")}
+        >
           <Ionicons name="shield-outline" size={24} color="#666666" />
           <Text style={styles.settingText}>Detection Test</Text>
           <Ionicons name="chevron-forward" size={24} color="#666666" />

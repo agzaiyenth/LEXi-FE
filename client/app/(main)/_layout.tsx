@@ -34,7 +34,7 @@ export default function AppLayout() {
       }}
       tabBar={(props) => <CustomTabBar {...props} />} // Use custom tab bar
     >
-       <Tab.Screen name="Home" component={HomeScreen} options={{ title: 'Home' }} />
+      <Tab.Screen name="Home" component={HomeScreen} options={{ title: 'Home' }} />
       <Tab.Screen name="LearnZone" component={LearnScreen} options={{ title: 'Learn' }} />
       <Tab.Screen name="PlaySpace" component={PlayScreen} options={{ title: 'Play' }} />
       <Tab.Screen name="Explore+" component={ExploreScreen} options={{ title: 'Explore' }} />
@@ -44,12 +44,15 @@ export default function AppLayout() {
   );
 }
 
-
 // Custom Bottom Navigation Bar
 const CustomTabBar = ({ state, descriptors, navigation }: any) => {
   return (
     <View style={styles.tabBar}>
       {state.routes.map((route: any, index: number) => {
+        if (route.name === 'Detection') {
+          return null; // Exclude the Detection tab from being rendered
+        }
+
         const { options } = descriptors[route.key];
         const isFocused = state.index === index;
 
@@ -77,8 +80,6 @@ const CustomTabBar = ({ state, descriptors, navigation }: any) => {
               return 'public';
             case 'Account':
               return 'account-circle';
-            case 'Detection':
-              return 'pages';
             default:
               return 'home';
           }
@@ -113,51 +114,50 @@ const CustomTabBar = ({ state, descriptors, navigation }: any) => {
     </View>
   );
 };
-  
-  const styles = StyleSheet.create({
-    container:{
-  
-    },
-    tabBar: {
-      flexDirection: 'row',
-      padding: theme.spacing.medium,
-      paddingVertical: theme.spacing.small,
-                    backgroundColor: theme.colors.primary.light2,
-                    borderTopLeftRadius: theme.spacing.large,
-                    borderTopRightRadius: theme.spacing.large,
-                    width: '100%',
-      elevation: 5,
-    },
-    tabButton: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      paddingVertical: theme.spacing.small,
-      backgroundColor: 'transparent',
-    },
-    focusedTabButton: {
-      backgroundColor: theme.colors.primary.medium2 ,
-      borderRadius: theme.spacing.medium,
-    },
-    iconContainer: {
-      position: 'relative',
-      alignItems: 'center',
-    },
-    underline: {
-      width: 30,
-      height: 4,
-      backgroundColor: theme.colors.background.offWhite,
-      
-      borderRadius: 2,
-      position: 'absolute',
-      bottom: 0,
-    },
-    label: {
-      fontSize: 10,
-      color: theme.colors.primary.dark1,
-      marginTop: 5,
-    },
-    focusedLabel: {
-      color: theme.colors.background.offWhite,
-    },
-  });
+
+const styles = StyleSheet.create({
+  container: {
+
+  },
+  tabBar: {
+    flexDirection: 'row',
+    padding: theme.spacing.medium,
+    paddingVertical: theme.spacing.small,
+    backgroundColor: theme.colors.primary.light2,
+    borderTopLeftRadius: theme.spacing.large,
+    borderTopRightRadius: theme.spacing.large,
+    width: '100%',
+    elevation: 5,
+  },
+  tabButton: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: theme.spacing.small,
+    backgroundColor: 'transparent',
+  },
+  focusedTabButton: {
+    backgroundColor: theme.colors.primary.medium2,
+    borderRadius: theme.spacing.medium,
+  },
+  iconContainer: {
+    position: 'relative',
+    alignItems: 'center',
+  },
+  underline: {
+    width: 30,
+    height: 4,
+    backgroundColor: theme.colors.background.offWhite,
+    borderRadius: 2,
+    position: 'absolute',
+    bottom: 0,
+  },
+  label: {
+    fontSize: 10,
+    color: theme.colors.primary.dark1,
+    marginTop: 5,
+  },
+  focusedLabel: {
+    color: theme.colors.background.offWhite,
+  },
+});
