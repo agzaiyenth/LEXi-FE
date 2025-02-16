@@ -18,6 +18,7 @@ import {
   View
 } from 'react-native';
 import EmptyState from './Emptystate';
+import LoadingScreen from '@/src/components/loading';
 
 
 
@@ -172,9 +173,7 @@ const BookTherapist = () => {
 
   if (loading) {
     return (
-      <View style={styles.loaderContainer}>
-        <ActivityIndicator size="large" color={theme.colors.primary.dark2} />
-      </View>
+     <LoadingScreen />
     );
   }
 

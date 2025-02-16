@@ -1,4 +1,5 @@
 
+import LoadingScreen from '@/src/components/loading';
 import { useGetAllTherapists } from '@/src/hooks/therapist/useGetAllTherapist';
 import { useGetAppointments } from '@/src/hooks/therapist/useGetAppointments';
 import theme from '@/src/theme';
@@ -8,7 +9,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from 'expo-router';
 import React, { useCallback, useState } from 'react';
-import { ActivityIndicator, Image, RefreshControl, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, RefreshControl, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import EmptyState from './Emptystate';
 
 
@@ -30,7 +31,7 @@ const TherapistHome = () => {
   // Show only the latest 5 therapists
   const latestTherapists = therapists.slice(0, 5);
   if (therapistsLoading || appointmentsLoading) {
-    return <ActivityIndicator size="large" color={theme.colors.primary.medium} />;
+    return <LoadingScreen />;
   }
 
   if (therapistsError) return <Text>Error: {therapistsError}</Text>;

@@ -1,3 +1,4 @@
+import LoadingScreen from '@/src/components/loading';
 import { useSession } from '@/src/ctx';
 import { useStartTest } from '@/src/hooks/detection/useStartTest';
 import theme from '@/src/theme';
@@ -23,7 +24,9 @@ export default function DetectionHomeScreen() {
       Alert.alert("Error", "Failed to start test. Please try again.");
     }
   };
-
+if(loading){
+  return <LoadingScreen/>
+}
   return (
     <LinearGradient
       colors={[theme.colors.primary.light2, theme.colors.primary.light3]}

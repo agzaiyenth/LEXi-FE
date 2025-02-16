@@ -1,4 +1,5 @@
 // app/(auth)/SignIn/index.tsx
+import LoadingScreen from '@/src/components/loading';
 import { useSession } from '@/src/ctx';
 import { useLogin } from '@/src/hooks/auth/useLogin';
 import theme from '@/src/theme';
@@ -6,14 +7,13 @@ import { AntDesign, Feather } from '@expo/vector-icons';
 import { Link, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import {
-  ActivityIndicator,
   Image,
   SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import Toast from 'react-native-toast-message';
 
@@ -126,7 +126,7 @@ const SignInScreen = () => {
           disabled={loading}
         >
           {loading ? (
-            <ActivityIndicator color="#fff" />
+            <LoadingScreen />
           ) : (
             <Text style={styles.submitButtonText}>Sign In</Text>
           )}

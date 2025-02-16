@@ -1,16 +1,16 @@
+import LoadingScreen from '@/src/components/loading';
 import theme from '@/src/theme';
 import { Feather } from '@expo/vector-icons';
 import { Link, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-  ActivityIndicator,
   Image,
   SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import Toast from 'react-native-toast-message';
 
@@ -161,7 +161,7 @@ const SignUpScreen = () => {
           disabled={loading}
         >
           {loading ? (
-            <ActivityIndicator color="#fff" />
+            <LoadingScreen />
           ) : (
             <Text style={styles.submitButtonText}>Sign Up</Text>
           )}

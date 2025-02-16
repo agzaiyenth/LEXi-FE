@@ -12,6 +12,7 @@ import {
   ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View
 } from 'react-native';
 import EmptyState from './Emptystate';
+import LoadingScreen from '@/src/components/loading';
 
 const filters = ['All', 'Most Popular', 'Nearby doctor', 'Available', 'Online'];
 
@@ -49,7 +50,7 @@ const AllDoctorsPage = () => {
     }
   }, [therapists]);
 
-  if (loading) return <Text>Loading...</Text>;
+  if (loading) return <LoadingScreen />;
   if (error) return <Text>Error: {error}</Text>;
 
   return (

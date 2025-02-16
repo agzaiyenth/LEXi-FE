@@ -12,6 +12,7 @@ import PlayScreen from './PlaySpace';
 import ExploreScreen from './Explore';
 import AccountScreen from './Account';
 import DetectionFlow from './Detection';
+import LoadingScreen from '@/src/components/loading';
 
 // Create a Bottom Tab Navigator
 const Tab = createBottomTabNavigator();
@@ -20,11 +21,11 @@ export default function AppLayout() {
   const { session, isLoading } = useSession();
 
   if (isLoading) {
-    return <Text>Loading...</Text>; // Show a loading state
+    return <LoadingScreen />; // Show loading screen
   }
 
   if (!session) {
-    return <Redirect href="/LandingScreen" />; // Redirect if not authenticated
+    return <Redirect href="/LandingScreen" />; 
   }
 
   return (

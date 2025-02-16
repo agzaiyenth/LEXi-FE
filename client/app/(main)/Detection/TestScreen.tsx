@@ -13,6 +13,7 @@ import MemoryRecall from "./questions/MemoryRecall";
 import MultipleChoiceView from "./questions/MultipleChoiceView";
 import SequenceOrderView from "./questions/SequenceOrderView";
 import TextInputView from "./questions/TextInputView";
+import LoadingScreen from "@/src/components/loading";
 
 interface TestScreenProps {
   route: {
@@ -53,7 +54,7 @@ export default function TestScreen({ route }: TestScreenProps) {
     fetchQuestion();
   };
 
-  if (loading || !question) return <ActivityIndicator size="large" />;
+  if (loading || !question) return <LoadingScreen />;
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
