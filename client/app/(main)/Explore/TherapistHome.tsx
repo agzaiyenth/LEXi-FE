@@ -2,7 +2,7 @@
 import { useGetAllTherapists } from '@/src/hooks/therapist/useGetAllTherapist';
 import { useGetAppointments } from '@/src/hooks/therapist/useGetAppointments';
 import theme from '@/src/theme';
-import { AppointmentDto, IAppointment } from '@/src/types/therapist/appointment';
+import { IAppointment } from '@/src/types/therapist/appointment';
 import { ITherapist } from '@/src/types/therapist/therapist';
 import { Ionicons } from '@expo/vector-icons';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -10,21 +10,21 @@ import { useNavigation } from 'expo-router';
 import React, { useCallback, useState } from 'react';
 import { ActivityIndicator, Image, RefreshControl, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import EmptyState from './Emptystate';
- 
+
 
 
 
 const TherapistHome = () => {
   const navigation = useNavigation<StackNavigationProp<any, 'AllDoctorsPage'>>();
-  const { therapists, loading:therapistsLoading, error:therapistsError, refetch} = useGetAllTherapists();
+  const { therapists, loading: therapistsLoading, error: therapistsError, refetch } = useGetAllTherapists();
   const { appointments, loading: appointmentsLoading, error: appointmentsError } = useGetAppointments();
   const [refreshing, setRefreshing] = useState<boolean>(false);
 
   // Refresh data when pulling down
-    const onRefresh = useCallback(() => {
-      setRefreshing(true);
-      refetch().finally(() => setRefreshing(false));
-    }, [refetch]);
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    refetch().finally(() => setRefreshing(false));
+  }, [refetch]);
 
   // Show only the latest 5 therapists
   const latestTherapists = therapists.slice(0, 5);
@@ -37,42 +37,42 @@ const TherapistHome = () => {
 
   return (
     <ScrollView style={styles.container}
-     refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
       <View style={styles.searchContainer}>
         <Ionicons name="search" size={20} color="gray" />
         <TextInput placeholder="Search available doctor..." style={styles.searchInput} />
       </View>
 
-      <View style={styles.titleContainer}> 
+      <View style={styles.titleContainer}>
         <Text style={styles.sectionTitle}>Therapists</Text>
         <TouchableOpacity onPress={() => navigation.navigate('AllDoctorsPage')}>
           {therapists && (
-          <Text>See All</Text>)}
+            <Text>See All</Text>)}
         </TouchableOpacity>
       </View>
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalScroll}>
-      {latestTherapists.length > 0 ? (
-      latestTherapists.map((therapist: ITherapist) => (
-          <TouchableOpacity 
-            key={therapist.therapistId}  
-            onPress={() => navigation.navigate('BookTherapist', { therapistId: therapist.therapistId })}
-          >
-            <View style={styles.doctorCard}>
-              <Image source={{ uri: therapist.image }} style={styles.doctorImage} />
-              <Text style={styles.doctorName}>{therapist.name}</Text>
-              <Text style={styles.doctorSpecialty}>{therapist.location}</Text>
-            </View>
-          </TouchableOpacity>
-        ))
-      ) : (
-       
-        <View style={[styles.emptyStateContainer, { marginLeft: 35 }]}>
-            <EmptyState param="therapist" />
-        </View>
-        
+        {latestTherapists.length > 0 ? (
+          latestTherapists.map((therapist: ITherapist) => (
+            <TouchableOpacity
+              key={therapist.therapistId}
+              onPress={() => navigation.navigate('BookTherapist', { therapistId: therapist.therapistId })}
+            >
+              <View style={styles.doctorCard}>
+                <Image source={{ uri: therapist.image }} style={styles.doctorImage} />
+                <Text style={styles.doctorName}>{therapist.name}</Text>
+                <Text style={styles.doctorSpecialty}>{therapist.location}</Text>
+              </View>
+            </TouchableOpacity>
+          ))
+        ) : (
 
-      )}
+          <View style={[styles.emptyStateContainer, { marginLeft: 35 }]}>
+            <EmptyState param="therapist" />
+          </View>
+
+
+        )}
 
         {latestTherapists.length > 0 && (
           <TouchableOpacity style={styles.seeAllCard} onPress={() => navigation.navigate('AllDoctorsPage')}>
@@ -81,11 +81,11 @@ const TherapistHome = () => {
         )}
       </ScrollView>
 
-      <View style={styles.titleContainer}> 
+      <View style={styles.titleContainer}>
         <Text style={styles.sectionTitle}>Upcoming Appointments</Text>
         <TouchableOpacity onPress={() => navigation.navigate('AllDoctorsPage')}>
           {appointments && (
-          <Text>See All</Text>)}
+            <Text>See All</Text>)}
         </TouchableOpacity>
       </View>
 
@@ -99,11 +99,11 @@ const TherapistHome = () => {
                   2023/12/3
                   {/* TODO Update the appointments dto to carry therapist details and date details instead of the ids */}
                   {/* {new Date(appt.appointmentTime).getDate()} */}
-                  </Text>
+                </Text>
                 <Text style={styles.appointmentDay}>
                   monday
                   {/* {new Date(appt.appointmentTime).toLocaleString('en-US', { weekday: 'short' })} */}
-                  </Text>
+                </Text>
               </View>
               <View>
                 <Text style={styles.appointmentDoctor}>Doctor Name: {appt.therapistId}</Text>
@@ -113,31 +113,31 @@ const TherapistHome = () => {
           </TouchableOpacity>
         ))
       ) : (
-        
+
         <View style={styles.emptyStateContainer}>
-        <EmptyState param="upcoming appointments" />
+          <EmptyState param="upcoming appointments" />
         </View>
       )}
 
       <Text style={styles.sectionTitle}>Nearby Doctors</Text>
 
       {therapists.length > 0 ? (
-      therapists.map((therapist:any) => (
-        <TouchableOpacity key={therapist.id}  onPress={() => navigation.navigate('BookTherapist')}>
-        <View key={therapist.id} style={styles.nearbyDoctorCard}>
-          <Image source={{ uri: therapist.image }} style={styles.doctorImage} />
-          <Text style={styles.doctorName}>{therapist.name}</Text>
-          <Text style={styles.doctorSpecialty}>{therapist.description}</Text>
+        therapists.map((therapist: any) => (
+          <TouchableOpacity key={therapist.id} onPress={() => navigation.navigate('BookTherapist')}>
+            <View key={therapist.id} style={styles.nearbyDoctorCard}>
+              <Image source={{ uri: therapist.image }} style={styles.doctorImage} />
+              <Text style={styles.doctorName}>{therapist.name}</Text>
+              <Text style={styles.doctorSpecialty}>{therapist.description}</Text>
+            </View>
+          </TouchableOpacity>
+        ))
+      ) : (
+
+        <View style={styles.emptyStateContainer}>
+          <EmptyState param="Nearby Doctors" />
         </View>
-        </TouchableOpacity>
-      ))
-    ) : (
-      
-      <View style={styles.emptyStateContainer}>
-      <EmptyState param="Nearby Doctors" />
-      </View>
-      
-    )}
+
+      )}
     </ScrollView>
   );
 };
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 14,
-  },noAppointmentsText: {
+  }, noAppointmentsText: {
     textAlign: 'center',
     color: 'gray',
     fontSize: 14,

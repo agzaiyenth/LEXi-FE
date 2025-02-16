@@ -5,9 +5,11 @@ import { ITherapist } from '@/src/types/therapist/therapist';
 import { Ionicons } from '@expo/vector-icons';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from 'expo-router';
-import React, { useState, useCallback, useEffect } from 'react';
-import { 
-  Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, RefreshControl 
+import React, { useCallback, useEffect, useState } from 'react';
+import {
+  Image,
+  RefreshControl,
+  ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View
 } from 'react-native';
 import EmptyState from './Emptystate';
 
@@ -58,8 +60,8 @@ const AllDoctorsPage = () => {
       {/* 🔍 Search Bar */}
       <View style={styles.searchContainer}>
         <Ionicons name="search" size={20} color="gray" />
-        <TextInput 
-          placeholder="Enter therapist's name or location" 
+        <TextInput
+          placeholder="Enter therapist's name or location"
           style={styles.searchInput}
           value={searchQuery}
           onChangeText={setSearchQuery}
@@ -69,9 +71,9 @@ const AllDoctorsPage = () => {
       {/* 🔵 Filter Tabs */}
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.filterContainer}>
         {filters.map((filter, index) => (
-          <TouchableOpacity 
-            key={index} 
-            style={[styles.filterTab, selectedFilter === filter && styles.selectedFilterTab]} 
+          <TouchableOpacity
+            key={index}
+            style={[styles.filterTab, selectedFilter === filter && styles.selectedFilterTab]}
             onPress={() => setSelectedFilter(filter)}
           >
             <Text style={[styles.filterText, selectedFilter === filter && styles.selectedFilterText]}>{filter}</Text>
@@ -79,78 +81,78 @@ const AllDoctorsPage = () => {
         ))}
       </ScrollView>
 
-      
+
       {/* 🏥 Therapist List */}
       {therapists.length > 0 ? (
-      therapists.map((therapist: ITherapist) => {
-        const availableDates = getAvailableDates(therapist.availabilities || []);
-        const filteredSlots = therapist.availabilities?.filter((slot: IAvailability) =>
-          selectedDate && new Date(slot.startTime).toDateString() === selectedDate.toDateString()
-        ) || [];
+        therapists.map((therapist: ITherapist) => {
+          const availableDates = getAvailableDates(therapist.availabilities || []);
+          const filteredSlots = therapist.availabilities?.filter((slot: IAvailability) =>
+            selectedDate && new Date(slot.startTime).toDateString() === selectedDate.toDateString()
+          ) || [];
 
-        return (
-          <View key={therapist.therapistId} style={styles.doctorCard}>
-            <Image source={{ uri: therapist.image }} style={styles.doctorImage} />
-            <Text style={styles.doctorName}>{therapist.name}</Text>
-            <Text style={styles.doctorSpecialty}>{therapist.description}</Text>
+          return (
+            <View key={therapist.therapistId} style={styles.doctorCard}>
+              <Image source={{ uri: therapist.image }} style={styles.doctorImage} />
+              <Text style={styles.doctorName}>{therapist.name}</Text>
+              <Text style={styles.doctorSpecialty}>{therapist.description}</Text>
 
-            {/* 🕒 Availability Section */}
-            <View style={styles.availableTimeContainer}>
-              <Text style={styles.availableTimeTitle}>Available time</Text>
+              {/* 🕒 Availability Section */}
+              <View style={styles.availableTimeContainer}>
+                <Text style={styles.availableTimeTitle}>Available time</Text>
 
-              {/* 📅 Date Navigation */}
-              {availableDates.length > 0 && (
-                <View style={styles.dateContainer}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      const currentIndex = availableDates.findIndex(date => date.toDateString() === selectedDate?.toDateString());
-                      if (currentIndex > 0) {
-                        setSelectedDate(availableDates[currentIndex - 1]);
-                      }
-                    }}
-                    style={styles.dateButton}
-                    disabled={availableDates[0].toDateString() === selectedDate?.toDateString()}
-                  >
-                    <Ionicons name="chevron-back" size={20} color="black" />
-                  </TouchableOpacity>
-
-                  <Text style={styles.dateText}>{selectedDate ? selectedDate.toDateString() : 'No slots'}</Text>
-
-                  <TouchableOpacity
-                    onPress={() => {
-                      const currentIndex = availableDates.findIndex(date => date.toDateString() === selectedDate?.toDateString());
-                      if (currentIndex < availableDates.length - 1) {
-                        setSelectedDate(availableDates[currentIndex + 1]);
-                      }
-                    }}
-                    style={styles.dateButton}
-                    disabled={availableDates[availableDates.length - 1].toDateString() === selectedDate?.toDateString()}
-                  >
-                    <Ionicons name="chevron-forward" size={20} color="black" />
-                  </TouchableOpacity>
-                </View>
-              )}
-
-              {/* 🕒 Time Slots */}
-              <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.timeScroll}>
-                {filteredSlots.length > 0 ? (
-                  filteredSlots.map((slot: IAvailability) => (
-                    <TouchableOpacity key={slot.availabilitySlotId} style={styles.timeSlot} onPress={() => navigation.navigate('BookTherapist', { therapistId: therapist.therapistId })}>
-                      <Text style={styles.slotText}>
-                        {new Date(slot.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                      </Text>
+                {/* 📅 Date Navigation */}
+                {availableDates.length > 0 && (
+                  <View style={styles.dateContainer}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        const currentIndex = availableDates.findIndex(date => date.toDateString() === selectedDate?.toDateString());
+                        if (currentIndex > 0) {
+                          setSelectedDate(availableDates[currentIndex - 1]);
+                        }
+                      }}
+                      style={styles.dateButton}
+                      disabled={availableDates[0].toDateString() === selectedDate?.toDateString()}
+                    >
+                      <Ionicons name="chevron-back" size={20} color="black" />
                     </TouchableOpacity>
-                  ))
-                ) : (
-                  
-                  <EmptyState param="available slots" />
+
+                    <Text style={styles.dateText}>{selectedDate ? selectedDate.toDateString() : 'No slots'}</Text>
+
+                    <TouchableOpacity
+                      onPress={() => {
+                        const currentIndex = availableDates.findIndex(date => date.toDateString() === selectedDate?.toDateString());
+                        if (currentIndex < availableDates.length - 1) {
+                          setSelectedDate(availableDates[currentIndex + 1]);
+                        }
+                      }}
+                      style={styles.dateButton}
+                      disabled={availableDates[availableDates.length - 1].toDateString() === selectedDate?.toDateString()}
+                    >
+                      <Ionicons name="chevron-forward" size={20} color="black" />
+                    </TouchableOpacity>
+                  </View>
                 )}
-              </ScrollView>
+
+                {/* 🕒 Time Slots */}
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.timeScroll}>
+                  {filteredSlots.length > 0 ? (
+                    filteredSlots.map((slot: IAvailability) => (
+                      <TouchableOpacity key={slot.availabilitySlotId} style={styles.timeSlot} onPress={() => navigation.navigate('BookTherapist', { therapistId: therapist.therapistId })}>
+                        <Text style={styles.slotText}>
+                          {new Date(slot.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        </Text>
+                      </TouchableOpacity>
+                    ))
+                  ) : (
+
+                    <EmptyState param="available slots" />
+                  )}
+                </ScrollView>
+              </View>
             </View>
-          </View>
-        );
-      })) : (
-        
+          );
+        })) : (
+
         <EmptyState param="Therapists" />
       )}
     </ScrollView>
@@ -222,7 +224,7 @@ const styles = StyleSheet.create({
   },
   availableTimeContainer: {
     marginTop: 10,
-   
+
   },
   availableTimeTitle: {
     fontWeight: 'bold',
@@ -248,13 +250,13 @@ const styles = StyleSheet.create({
   },
   timeSlot: {
     backgroundColor: theme.colors.primary.dark2,
-    color:'white',
+    color: 'white',
     padding: 8,
     borderRadius: 12,
     marginRight: 8,
   },
-  slotText:{
-color:'white',
+  slotText: {
+    color: 'white',
   },
   noAvailabilityText: {
     color: 'gray',

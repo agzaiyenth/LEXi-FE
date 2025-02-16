@@ -1,7 +1,7 @@
 // app/ctx.tsx
-import React, { createContext, useContext, PropsWithChildren, useEffect } from 'react';
+import React, { createContext, PropsWithChildren, useContext, useEffect } from 'react';
+import { setAccessToken } from './apiClient';
 import { useStorageState } from './useStorageState';
-import { setAccessToken } from './apiClient'; 
 type AuthContextType = {
   signIn: (sessionToken: string) => void;
   signOut: () => void;
@@ -19,7 +19,7 @@ export const useSession = () => {
   return context;
 };
 
-export  const SessionProvider = ({ children }: PropsWithChildren) => {
+export const SessionProvider = ({ children }: PropsWithChildren) => {
   const [[isLoading, session], setSession] = useStorageState('session');
 
   useEffect(() => {

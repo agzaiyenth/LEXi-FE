@@ -5,12 +5,12 @@ This is the main screen for the LearnZone .
 It contains buttons that navigate to other screens in the LearnZone feature. 
 */
 
-import React from 'react';
-import { View, Text, Button, StyleSheet, TouchableOpacity, Image, FlatList } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { LearnZoneParamList } from './index'; 
-import { StackNavigationProp } from '@react-navigation/stack';
 import theme from '@/src/theme';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import React from 'react';
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { LearnZoneParamList } from './index';
 
 type LearnMainNavigationProp = StackNavigationProp<LearnZoneParamList, 'PlayMain'>;
 interface Game {
@@ -18,7 +18,7 @@ interface Game {
   title: string;
   theory: string;
   image: any;
-  route:string;
+  route: string;
 }
 
 const PlayMainScreen = () => {
@@ -29,42 +29,42 @@ const PlayMainScreen = () => {
       title: 'Pop The Balloon',
       theory: 'Phonological Deficit',
       image: require('@/assets/images/games/ballon.png'),
-      route:'BalloonGame'
+      route: 'BalloonGame'
     },
     {
       id: '2',
       title: 'Coming Soon',
       theory: 'Therapy Theory',
       image: 'https://via.placeholder.com/150',
-      route:'pop'
+      route: 'pop'
     },
     {
       id: '3',
       title: 'Coming Soon',
       theory: 'Therapy Theory',
       image: 'https://via.placeholder.com/150',
-      route:'pop'
+      route: 'pop'
     },
     {
       id: '4',
       title: 'Coming Soon',
       theory: 'Therapy Theory',
       image: 'https://via.placeholder.com/150',
-      route:'pop'
+      route: 'pop'
     },
     {
       id: '5',
       title: 'Coming Soon',
       theory: 'Therapy Theory',
       image: 'https://via.placeholder.com/150',
-      route:'pop'
+      route: 'pop'
     },
     {
       id: '6',
       title: 'Coming Soon',
       theory: 'Therapy Theory',
       image: 'https://via.placeholder.com/150',
-      route:'pop'
+      route: 'pop'
     },
   ];
   const renderGameCard = ({ item }: { item: Game }) => (
@@ -73,7 +73,7 @@ const PlayMainScreen = () => {
       onPress={() => {
         try {
           if (item.route) {
-            navigation.navigate(item.route  as keyof LearnZoneParamList);
+            navigation.navigate(item.route as keyof LearnZoneParamList);
           } else {
             console.warn('No route defined for this game');
           }
@@ -132,8 +132,8 @@ const styles = StyleSheet.create({
     shadowColor: theme.colors.blacks.dark,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-    height: 200, 
-    width: 150, 
+    height: 200,
+    width: 150,
     shadowRadius: theme.spacing.small / 2,
     elevation: 2,
   },

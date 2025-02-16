@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { BASE_URL } from '@/config';
-import { signOutUser } from './utils/authUtils'; 
+import axios from 'axios';
+import { signOutUser } from './utils/authUtils';
 
 let accessToken: string | null = null;
 

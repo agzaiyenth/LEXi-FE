@@ -1,10 +1,10 @@
 // Create a new file for your navigation stack, and set up the stack navigator:
 
-import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Card from './Card';  
-import OnboardingScreen  from './OnboardingScreen'; 
+import React from 'react';
+import Card from './Card';
+import OnboardingScreen from './OnboardingScreen';
 
 const Stack = createNativeStackNavigator();
 

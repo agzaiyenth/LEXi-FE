@@ -1,10 +1,10 @@
 import theme from '@/src/theme';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { LearnZoneParamList } from './index';
-import Ionicons from '@expo/vector-icons/Ionicons';
 
 type LearnMainNavigationProp = StackNavigationProp<LearnZoneParamList, 'LearnMain'>;
 
@@ -46,7 +46,7 @@ const LearnMainScreen = () => {
             <Text style={styles.featureSubtitle}>AI-powered voice assistant for personalized learning support</Text>
           </View>
           <TouchableOpacity style={styles.arrow}
-          onPress={() => navigation.navigate('VoxBuddy')}>
+            onPress={() => navigation.navigate('VoxBuddy')}>
             <Ionicons name="arrow-forward-circle-outline" size={40} color="white" />
           </TouchableOpacity>
         </TouchableOpacity>
@@ -54,24 +54,24 @@ const LearnMainScreen = () => {
         {/* Bottom Row Cards */}
         <View style={styles.bottomRow}>
           <TouchableOpacity style={[styles.smallCard, styles.readWithMeCard]}
-          onPress={() => navigation.navigate('ReadWithMe')}
+            onPress={() => navigation.navigate('ReadWithMe')}
           >
             <Text style={styles.smallCardTitle}>ReadWithMe</Text>
             <Text style={styles.smallCardSubtitle}> Interactive tool to improve reading fluency with real-time feedback.</Text>
             <TouchableOpacity style={styles.smallarrow}
-            onPress={() => navigation.navigate('ReadWithMe')}
+              onPress={() => navigation.navigate('ReadWithMe')}
             >
               <Ionicons name="arrow-forward-circle-outline" size={40} color="white" />
             </TouchableOpacity>
           </TouchableOpacity>
 
           <TouchableOpacity style={[styles.smallCard, styles.smartReadCard]}
-          onPress={() => navigation.navigate('SmartRead')} 
+            onPress={() => navigation.navigate('SmartRead')}
           >
             <Text style={styles.smallCardTitle}>SmartRead</Text>
             <Text style={styles.smallCardSubtitle}>Simplifies and reads content aloud for easier comprehension.</Text>
             <TouchableOpacity style={styles.smallarrow}
-            onPress={() => navigation.navigate('SmartRead')}
+              onPress={() => navigation.navigate('SmartRead')}
             >
               <Ionicons name="arrow-forward-circle-outline" size={40} color="white" />
             </TouchableOpacity>

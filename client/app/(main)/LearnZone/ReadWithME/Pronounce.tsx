@@ -1,8 +1,9 @@
-import React from "react";
-import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import theme from "@/src/theme";
+import Entypo from '@expo/vector-icons/Entypo';
 import EvilIcons from "@expo/vector-icons/EvilIcons";
-import Entypo from '@expo/vector-icons/Entypo';import Ionicons from '@expo/vector-icons/Ionicons';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import React from "react";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const Pronounce = () => {
   const handleBackward = () => {
@@ -43,19 +44,19 @@ const Pronounce = () => {
             accessible
             accessibilityLabel="Upload Icon"
           />
-          
-          <View style={[styles.controls ,{ borderColor: 'red', borderWidth: 1 }]}>
+
+          <View style={[styles.controls, { borderColor: 'red', borderWidth: 1 }]}>
             <TouchableOpacity onPress={handleBackward} style={styles.button}>
-            <Entypo name="controller-fast-backward" size={24} color="black" />
-              
+              <Entypo name="controller-fast-backward" size={24} color="black" />
+
             </TouchableOpacity>
             <TouchableOpacity onPress={handlePause} style={styles.button}>
-            <Ionicons name="pause-circle-sharp" size={24} color="black" />
-              
+              <Ionicons name="pause-circle-sharp" size={24} color="black" />
+
             </TouchableOpacity>
             <TouchableOpacity onPress={handleForward} style={styles.button}>
-            <Entypo name="controller-fast-forward" size={24} color="black" />
-              
+              <Entypo name="controller-fast-forward" size={24} color="black" />
+
             </TouchableOpacity>
           </View>
         </View>
@@ -120,8 +121,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    
-   
+
+
     borderWidth: 3,
   },
   button: {

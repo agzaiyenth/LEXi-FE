@@ -3,6 +3,7 @@ import ErrorScreen from "@/src/components/ErrorScreen";
 import LoadingScreen from "@/src/components/loading";
 import { useGetAllDocuments } from "@/src/hooks/SmartRead/useGetAllDocuments";
 import { useProcessDocument } from "@/src/hooks/SmartRead/useProcessDocument";
+import { theme } from "@/src/theme";
 import { FetchAllResponseDTO, ProcessDocRequestDTO } from "@/src/types/SmartRead/Documents";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
@@ -11,7 +12,6 @@ import { useNavigation } from "expo-router";
 import React, { useCallback, useState } from "react";
 import { ActivityIndicator, Image, RefreshControl, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Toast from 'react-native-toast-message';
-import { theme } from "@/src/theme";
 
 export default function SmartReadMain() {
 

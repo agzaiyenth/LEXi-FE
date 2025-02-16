@@ -1,16 +1,16 @@
-import React, { useRef, useState, useEffect } from "react";
-import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import { useSession } from "@/src/ctx";
 import theme from "@/src/theme";
+import { Ionicons } from '@expo/vector-icons';
+import React from "react";
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function AccountScreen() {
   const { signOut } = useSession();
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity 
-          style={styles.signoutIcon} 
+        <TouchableOpacity
+          style={styles.signoutIcon}
           onPress={signOut}
         >
           <Ionicons name="log-out-outline" size={24} color="white" />
@@ -36,7 +36,7 @@ export default function AccountScreen() {
         </View>
       </View>
 
-    
+
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Settings</Text>
@@ -60,7 +60,7 @@ export default function AccountScreen() {
           <Text style={styles.settingText}>Detection Test</Text>
           <Ionicons name="chevron-forward" size={24} color="#666666" />
         </TouchableOpacity>
-        
+
       </View>
     </ScrollView>
   );
@@ -84,8 +84,8 @@ const styles = StyleSheet.create({
     top: 20,
     right: 20,
     padding: 10,
-    backgroundColor:theme.colors.primary.dark2,
-    borderRadius:50,
+    backgroundColor: theme.colors.primary.dark2,
+    borderRadius: 50,
   },
   avatar: {
     width: 100,

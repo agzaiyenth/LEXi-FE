@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from "react";
-import { StyleSheet, View, Animated } from "react-native";
 import { BlurView } from "expo-blur";
-import Svg, { Defs, RadialGradient, Stop, Circle } from "react-native-svg";
+import React, { useEffect, useRef } from "react";
+import { Animated, StyleSheet, View } from "react-native";
+import Svg, { Circle, Defs, RadialGradient, Stop } from "react-native-svg";
 
 interface AudioReactiveVisualizerProps {
   audioData: Int16Array | null;
@@ -79,20 +79,20 @@ export default function AudioReactiveVisualizer({
         <BlurView intensity={50} style={[styles.circle, styles.glassCircle]}>
           <Svg height="100%" width="100%">
             <Defs>
-            <RadialGradient
-  id="grad"
-  cx="40%" // Move the center slightly left
-  cy="40%" // Move the center slightly upward
-  rx="50%"
-  ry="50%"
-  fx="50%"
-  fy="50%"
-  gradientUnits="userSpaceOnUse"
->
-  <Stop offset="0%" stopColor="#fff" stopOpacity="0.5" />
-  <Stop offset="70%" stopColor="#ccc" stopOpacity="0.2" />
-  <Stop offset="100%" stopColor="#000" stopOpacity="0.1" />
-</RadialGradient>
+              <RadialGradient
+                id="grad"
+                cx="40%" // Move the center slightly left
+                cy="40%" // Move the center slightly upward
+                rx="50%"
+                ry="50%"
+                fx="50%"
+                fy="50%"
+                gradientUnits="userSpaceOnUse"
+              >
+                <Stop offset="0%" stopColor="#fff" stopOpacity="0.5" />
+                <Stop offset="70%" stopColor="#ccc" stopOpacity="0.2" />
+                <Stop offset="100%" stopColor="#000" stopOpacity="0.1" />
+              </RadialGradient>
 
             </Defs>
             <Circle cx="50%" cy="50%" r="50%" fill="url(#grad)" />

@@ -1,6 +1,6 @@
 // app/(auth)/_layout.tsx
-import React from 'react';
 import { Slot } from 'expo-router';
+import React from 'react';
 
 export default function AuthLayout() {
   return <Slot />;

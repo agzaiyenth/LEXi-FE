@@ -1,5 +1,7 @@
 import ErrorScreen from "@/src/components/ErrorScreen";
 import LoadingScreen from "@/src/components/loading";
+import { useFetchDocument } from "@/src/hooks/SmartRead/useFetchDocument";
+import { theme } from "@/src/theme";
 import { Ionicons } from "@expo/vector-icons";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import { useRoute } from "@react-navigation/native";
@@ -14,8 +16,6 @@ import {
   View
 } from "react-native";
 import Markdown from "react-native-markdown-display";
-import { useFetchDocument } from "@/src/hooks/SmartRead/useFetchDocument";
-import { theme } from "@/src/theme";
 
 export default function SpeechScreen() {
   const route = useRoute();

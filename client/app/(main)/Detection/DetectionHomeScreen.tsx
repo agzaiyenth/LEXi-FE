@@ -12,8 +12,8 @@ import { SwipeButton } from 'react-native-expo-swipe-button';
 export default function DetectionHomeScreen() {
   const navigation = useNavigation<StackNavigationProp<any, "DetectionHomeScreen">>();
   // TODO Wirte getuser hook and use it here to get current user name
-  const currentUser = "User"; 
-  const { startTest, loading} = useStartTest();
+  const currentUser = "User";
+  const { startTest, loading } = useStartTest();
 
   const handleSwipeComplete = async () => {
     const sessionId = await startTest();
@@ -26,9 +26,9 @@ export default function DetectionHomeScreen() {
 
   return (
     <LinearGradient
-    colors={[theme.colors.primary.light2, theme.colors.primary.light3]} 
-    style={styles.container}
-  >
+      colors={[theme.colors.primary.light2, theme.colors.primary.light3]}
+      style={styles.container}
+    >
       <Image
         source={require('@/assets/images/auth/icon.png')}
         style={styles.logo}
@@ -51,7 +51,7 @@ export default function DetectionHomeScreen() {
         underlayTitle="Release to start"
         underlayTitleStyle={styles.underlayTitle}
       />
-     </LinearGradient>
+    </LinearGradient>
   )
 }
 
@@ -86,10 +86,10 @@ const styles = StyleSheet.create({
   },
   swipeButtonContainer: {
     backgroundColor: theme.colors.primary.dark2,
-    color:'white',
+    color: 'white',
   },
-  swipeButtonTitle:{
-    color:'white',
+  swipeButtonTitle: {
+    color: 'white',
   },
   underlayTitle: {
     color: 'white',

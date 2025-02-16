@@ -1,22 +1,22 @@
+import apiClient from '@/src/apiClient';
+import theme from '@/src/theme';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
+import { StackNavigationProp } from '@react-navigation/stack';
 import * as DocumentPicker from 'expo-document-picker';
-import React, { useState, useEffect } from 'react';
+import { useNavigation } from 'expo-router';
+import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Dimensions,
   Image,
+  Modal,
   SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  Modal,
 } from 'react-native';
-import theme from '@/src/theme';
 import { LearnZoneParamList } from './navigator';
-import apiClient from '@/src/apiClient';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { useNavigation } from 'expo-router';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -109,10 +109,10 @@ const UploadScreen = () => {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.headerContainer}>
-        <TouchableOpacity  onPress={() => navigation.navigate('SmartReadMain')}>
-        <AntDesign name="arrowleft" size={24} color={theme.colors.blacks.medium} />
+        <TouchableOpacity onPress={() => navigation.navigate('SmartReadMain')}>
+          <AntDesign name="arrowleft" size={24} color={theme.colors.blacks.medium} />
         </TouchableOpacity>
-        <Text style={styles.headerText}>SmartRead</Text> 
+        <Text style={styles.headerText}>SmartRead</Text>
       </View>
 
       {/* Upload Section */}
