@@ -7,6 +7,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { SessionProvider } from '@/src/ctx'
 import Toast from 'react-native-toast-message';
 import { useFonts } from 'expo-font'
+import LoadingScreen from '@/src/components/loading'
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -21,22 +22,11 @@ export default function RootLayout() {
  const [fontsLoaded] = useFonts({
     OpenDyslexic: require("@/assets/fonts/open-dyslexic.ttf"), 
   });
-  // // Handle font loading errors.
-  // useEffect(() => {
-  //   if (error) throw error
-  // }, [error])
 
-  // useEffect(() => {
-  //   if (loaded) {
-  //     SplashScreen.hideAsync()
-  //   }
-  // }, [loaded])
+  if (!fontsLoaded) {
+    return <LoadingScreen />;
+  }
 
-  // if (!loaded) {
-  //   return null
-  // }
-
-const Stack = createStackNavigator();
   return (
     <SessionProvider>
     <SafeAreaProvider>

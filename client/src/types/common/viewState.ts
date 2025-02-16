@@ -1,0 +1,8 @@
+export interface ViewState {
+    LOADED: 'LOADED' 
+    LOADING:'LOADING'
+    ERROR: 'ERROR' 
+    NOTFOUND: 'NOTFOUND'
+    UNAUTHORIZED: 'UNAUTHORIZED'
+    FORBIDDEN: 'FORBIDDEN'
+}
