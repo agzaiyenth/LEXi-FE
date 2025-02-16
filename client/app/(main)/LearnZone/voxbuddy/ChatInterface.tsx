@@ -64,7 +64,6 @@ export default function ChatInterface() {
     return () => {
       disconnect();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const handleWSMessage = useCallback(
     async (message: WSMessage) => {

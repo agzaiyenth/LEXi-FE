@@ -56,8 +56,14 @@ export default function HomeScreen() {
         </View>
         
         <View style={styles.welcomeSection}>
-          <Text style={styles.welcomeText}>Welcome,</Text>
-          <Text style={styles.userName}>{username || 'Guest'}</Text>
+        <Text style={styles.welcomeText}>
+  Welcome{' '} 
+  <Text style={styles.userName}>
+    {username ? username.charAt(0).toUpperCase() + username.slice(1) : 'Guest'}
+  </Text>,
+</Text>
+
+          
         </View>
 
         <View style={styles.greetingCard}>
@@ -161,6 +167,9 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     color: theme.colors.blacks.medium,
+    fontSize:theme.fonts.sizes.large,
+    fontWeight: "500",
+    paddingLeft:10,
   },
   userName: {
     fontSize: theme.fonts.sizes.large,
