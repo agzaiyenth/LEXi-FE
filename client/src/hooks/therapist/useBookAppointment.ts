@@ -1,6 +1,6 @@
 import { useState } from "react";
 import apiClient from "@/src/apiClient";
-import { AppointmentDto, IAppointment } from "@/types/therapist/appointment";
+import { AppointmentDto, IAppointment } from "@/src/types/therapist/appointment";
 
 export const useBookAppointment = () => {
     const [loading, setLoading] = useState<boolean>(false);

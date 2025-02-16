@@ -1,6 +1,5 @@
-import theme from "@/src/theme";
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 
 interface EmptyStateProps {
   param: string;
@@ -10,9 +9,9 @@ const EmptyState: React.FC<EmptyStateProps> = ({ param }) => {
   return (
     <View style={styles.container}>
       <Image
-          source={require("@/assets/images/therapist/therapist.jpg")}
-          style={styles.image} />
-                          
+        source={require("@/assets/images/therapist/therapist.jpg")}
+        style={styles.image} />
+
       <Text style={styles.text}>No {param} found!</Text>
     </View>
   );
@@ -23,11 +22,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    bottom:10,
-    backgroundColor:"#fff",
-    width:300,
-    borderRadius:20,
-    padding:10,
+    bottom: 10,
+    backgroundColor: "#fff",
+    width: 300,
+    borderRadius: 20,
+    padding: 10,
   },
   text: {
     fontSize: 18,
@@ -39,7 +38,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     marginBottom: 20,
-    top:10,
+    top: 10,
   },
 });
 

@@ -1,10 +1,11 @@
+import LoadingScreen from "@/src/components/loading";
 import { useFetchQuestion } from "@/src/hooks/detection/useFetchQuestion";
 import { useSubmitAnswer } from "@/src/hooks/detection/useSubmitAnswer";
 import theme from "@/src/theme";
-import { QuestionType } from "@/types/Detection/Question";
+import { QuestionType } from "@/src/types/Detection/Question";
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import AudioComparison from "./questions/AudioComparison";
 import AudioInputView from "./questions/AudioInputView";
@@ -53,10 +54,11 @@ export default function TestScreen({ route }: TestScreenProps) {
     fetchQuestion();
   };
 
-  if (loading || !question) return <ActivityIndicator size="large" />;
+  if (loading || !question) return <LoadingScreen />;
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
+      {/* TODO:ADD SKIP BUTTON WITH API */}
       <View style={styles.container}>
         {/* Header Card */}
         <Image

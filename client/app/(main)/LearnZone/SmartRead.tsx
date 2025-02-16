@@ -1,17 +1,16 @@
 // app/(main)/LearnZone/SmartRead.tsx
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import UploadScreen from './SmartRead/uploadScreen';
-import SpeechScreen from './SmartRead/speechScreen';
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
+import React from 'react';
+import { StyleSheet } from 'react-native';
 import SmartReadMain from './SmartRead/SmartReadMain';
+import SpeechScreen from './SmartRead/speechScreen';
+import UploadScreen from './SmartRead/uploadScreen';
 
 
 export type LearnZoneParamList = {
-  SpeechScreen: undefined; 
+  SpeechScreen: undefined;
   UploadScreen: undefined;
-  SmartReadMain: undefined; 
+  SmartReadMain: undefined;
 };
 
 const Stack = createStackNavigator<LearnZoneParamList>();
@@ -19,18 +18,18 @@ const Stack = createStackNavigator<LearnZoneParamList>();
 
 const SmartRead = () => {
   return (
-    
-      <Stack.Navigator
+
+    <Stack.Navigator
       screenOptions={{
-          headerShown: false, // Disable headers for a cleaner look
+        headerShown: false, // Disable headers for a cleaner look
       }}
-      >
-      <Stack.Screen name="SmartReadMain" component={SmartReadMain}/>
+    >
+      <Stack.Screen name="SmartReadMain" component={SmartReadMain} />
       <Stack.Screen name="UploadScreen" component={UploadScreen} />
       <Stack.Screen name="SpeechScreen" component={SpeechScreen} />
 
-      </Stack.Navigator>
-  
+    </Stack.Navigator>
+
   );
 };
 

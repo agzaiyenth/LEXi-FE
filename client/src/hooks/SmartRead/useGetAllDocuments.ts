@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import apiClient from "@/src/apiClient";
-import { FetchAllResponseDTO } from "@/types/SmartRead/Documents";
+import { FetchAllResponseDTO } from "@/src/types/SmartRead/Documents";
 
 
 export const useGetAllDocuments = () => {

@@ -1,5 +1,5 @@
 import theme from "@/src/theme";
-import { QuestionResponseDTO } from "@/types/Detection/Question";
+import { QuestionResponseDTO } from "@/src/types/Detection/Question";
 import React, { useState } from "react";
 import { View, Image, TextInput, StyleSheet, Text } from "react-native";
 

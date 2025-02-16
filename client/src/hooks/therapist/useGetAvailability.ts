@@ -1,7 +1,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import apiClient from "@/src/apiClient";
-import { IAvailability } from "@/types/therapist/availability";
+import { IAvailability } from "@/src/types/therapist/availability";
 
 export const useGetAvailability = (therapistId: string) => {
     const [availability, setAvailability] = useState<IAvailability[]>([]);

@@ -1,10 +1,8 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { LearnZoneParamList } from './index'; 
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Text, Image,  TouchableOpacity } from 'react-native';
-import GameB from './Game';
+import React from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { LearnZoneParamList } from './index';
 
 type LearnMainNavigationProp = StackNavigationProp<LearnZoneParamList, 'PlayMain'>;
 
@@ -13,7 +11,7 @@ const BalloonGame: React.FC = () => {
   return (
     <View style={styles.container}>
       {/* Back Button */}
-      <TouchableOpacity style={styles.backButton} onPress={() =>navigation.navigate('PlayMain')}>
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('PlayMain')}>
         <Text style={styles.backButtonText}>←</Text>
       </TouchableOpacity>
 
@@ -59,7 +57,7 @@ const BalloonGame: React.FC = () => {
       </View>
 
       {/* Next Button */}
-      <TouchableOpacity style={styles.nextButton} onPress={() =>navigation.navigate('Game')}>
+      <TouchableOpacity style={styles.nextButton} onPress={() => navigation.navigate('Game')}>
         <Text style={styles.nextButtonText}>Next</Text>
       </TouchableOpacity>
     </View>
@@ -71,7 +69,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#CCE5E1', // Reverted background color
     padding: 20,
-    paddingBottom: 70, 
+    paddingBottom: 70,
   },
   backButton: {
     position: 'absolute',
@@ -81,7 +79,7 @@ const styles = StyleSheet.create({
     width: 40,
     backgroundColor: '#003D35',
     borderRadius: 300,
-    padding:10,
+    padding: 10,
     zIndex: 10,
   },
   backButtonText: {
@@ -105,7 +103,7 @@ const styles = StyleSheet.create({
   },
   gameImage: {
     width: '100%', // Full width
-    height: 250, 
+    height: 250,
     borderRadius: 10,
     resizeMode: 'contain',
   },

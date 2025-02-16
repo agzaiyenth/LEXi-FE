@@ -1,20 +1,20 @@
 // app/(auth)/SignIn/index.tsx
-import { AntDesign, Feather, MaterialIcons } from '@expo/vector-icons';
+import LoadingScreen from '@/src/components/loading';
+import { useSession } from '@/src/ctx';
+import { useLogin } from '@/src/hooks/auth/useLogin';
+import theme from '@/src/theme';
+import { AntDesign, Feather } from '@expo/vector-icons';
+import { Link, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import {
-  ActivityIndicator,
   Image,
   SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import theme from '../../../src/theme';
-import { useLogin } from '@/src/hooks/auth/useLogin';
-import { Link, useRouter } from 'expo-router';
-import { useSession } from '@/src/ctx';
 import Toast from 'react-native-toast-message';
 
 const SignInScreen = () => {
@@ -35,29 +35,29 @@ const SignInScreen = () => {
     try {
       // Pass an object matching the LoginRequest interface
       const token = await login({ username, password });
-  
+
       Toast.show({
         type: 'success',
         text1: 'Login Successful!',
         text2: 'Welcome to LEXi ! 👋'
       });
-  
+
       console.log('Login successful:', token);
-  
+
       // Redirect to the main area of the app
       router.push('/(main)');
     } catch (err: any) {
-      
+
       Toast.show({
         type: 'error',
         text1: 'Login Failed!',
         text2: 'Try login in again'
       });
-  
+
       console.error('Login failed:', err.message);
     }
   };
-  
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.avatarContainer}>
@@ -78,7 +78,7 @@ const SignInScreen = () => {
           <Text style={styles.label}>Email</Text>
         </View>
         <View style={styles.inputForm}>
-        <Feather name="user" size={20} color="#666" />
+          <Feather name="user" size={20} color="#666" />
           <TextInput
             style={styles.input}
             placeholder="Enter your Username"
@@ -93,7 +93,7 @@ const SignInScreen = () => {
           <Text style={styles.label}>Password</Text>
         </View>
         <View style={styles.inputForm}>
-        <Feather name="lock" size={20} color="#666" />
+          <Feather name="lock" size={20} color="#666" />
           <TextInput
             style={styles.input}
             placeholder="Enter your Password"
@@ -114,7 +114,7 @@ const SignInScreen = () => {
           </View>
           <TouchableOpacity>
             <Link href={'/(auth)/ForgetPassword'}>
-            <Text style={styles.span}>Forgot password?</Text>
+              <Text style={styles.span}>Forgot password?</Text>
             </Link>
           </TouchableOpacity>
         </View>
@@ -126,7 +126,7 @@ const SignInScreen = () => {
           disabled={loading}
         >
           {loading ? (
-            <ActivityIndicator color="#fff" />
+            <LoadingScreen />
           ) : (
             <Text style={styles.submitButtonText}>Sign In</Text>
           )}
@@ -134,20 +134,20 @@ const SignInScreen = () => {
         {error && <Text style={styles.errorText}>{error}</Text>}
         {/* Sign Up Link */}
         <Link href={'/(auth)/Signup'}>
-        <Text style={styles.p}>
-          Don't have an account? <Text style={styles.span}>Sign Up</Text>
-        </Text>
+          <Text style={styles.p}>
+            Don't have an account? <Text style={styles.span}>Sign Up</Text>
+          </Text>
         </Link>
         <Text style={styles.p}>Or With</Text>
 
         {/* Social Buttons */}
         <View style={styles.flexRow}>
           <TouchableOpacity style={[styles.socialButton]}>
-          <AntDesign name="google" size={24} color={styles.socialIcons.backgroundColor} />
+            <AntDesign name="google" size={24} color={styles.socialIcons.backgroundColor} />
             <Text style={styles.socialButtonText}>Google</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.socialButton]}>
-          <AntDesign name="apple1" size={24} color={styles.socialIcons.backgroundColor}/>
+            <AntDesign name="apple1" size={24} color={styles.socialIcons.backgroundColor} />
             <Text style={styles.socialButtonText}>Apple</Text>
           </TouchableOpacity>
         </View>
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignItems: 'center',
   },
-  
+
   welcomeText: {
     fontSize: 24,
     fontWeight: 'bold',
@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
   socialButton: {
     flex: 1,
     flexDirection: "row",
-    gap:8,
+    gap: 8,
     height: 50,
     borderRadius: 10,
     justifyContent: 'center',
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary.medium2,
     marginHorizontal: 5,
   },
-  socialIcons:{
+  socialIcons: {
     backgroundColor: theme.colors.background.beige,
   },
   socialButtonText: {

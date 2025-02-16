@@ -1,6 +1,6 @@
-// app/apiClient.ts
-import axios from 'axios';
 import { BASE_URL } from '@/config';
+import axios from 'axios';
+import { signOutUser } from './utils/authUtils';
 
 let accessToken: string | null = null;
 
@@ -20,6 +20,16 @@ apiClient.interceptors.request.use(
     return config;
   },
   (error) => Promise.reject(error),
+);
+
+apiClient.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    if (error.response?.status === 401) {
+      await signOutUser(); // Call sign out function if token expires
+    }
+    return Promise.reject(error);
+  }
 );
 
 export default apiClient;

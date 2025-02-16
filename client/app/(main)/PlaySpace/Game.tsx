@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Animated,
-  Dimensions,
-  Alert,
-} from 'react-native';
 import BallSvg from '@/assets/images/games/ball.svg';
-import Ballr from '@/assets/images/games/ballr.svg';  
 import Ballb from '@/assets/images/games/ballb.svg';
 import Ballg from '@/assets/images/games/ballg.svg';
+import Ballr from '@/assets/images/games/ballr.svg';
+import React, { useEffect, useState } from 'react';
+import {
+  Alert,
+  Animated,
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 
 const BALLOON_SIZE = 250;
 const balloonPositions = [
-  { x: width * 0.0 - 30, y: height * 0.15 }, 
-  { x: width * 0.5 - 30, y: height * 0.15 }, 
-  { x: width * 0.001 - 30, y: height * 0.55 }, 
+  { x: width * 0.0 - 30, y: height * 0.15 },
+  { x: width * 0.5 - 30, y: height * 0.15 },
+  { x: width * 0.001 - 30, y: height * 0.55 },
   { x: width * 0.5 - 30, y: height * 0.55 },
 ];
 
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
   },
   balloon: {
     zIndex: 1,
-    
+
   },
 });
 
