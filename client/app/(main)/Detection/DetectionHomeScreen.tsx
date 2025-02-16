@@ -1,3 +1,4 @@
+import { useSession } from '@/src/ctx';
 import { useStartTest } from '@/src/hooks/detection/useStartTest';
 import theme from '@/src/theme';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -11,8 +12,7 @@ import { SwipeButton } from 'react-native-expo-swipe-button';
 
 export default function DetectionHomeScreen() {
   const navigation = useNavigation<StackNavigationProp<any, "DetectionHomeScreen">>();
-  // TODO Wirte getuser hook and use it here to get current user name
-  const currentUser = "User";
+ const { username } = useSession();
   const { startTest, loading } = useStartTest();
 
   const handleSwipeComplete = async () => {
@@ -33,7 +33,7 @@ export default function DetectionHomeScreen() {
         source={require('@/assets/images/auth/icon.png')}
         style={styles.logo}
       />
-      <Text style={styles.title}>Hey There {currentUser} !</Text>
+      <Text style={styles.title}>Hey There {username || 'Guest'}!</Text>
       <Text style={styles.subtitle}>
         Your personalized experience starts here. Let&apos;s get to know each other more!
       </Text>
