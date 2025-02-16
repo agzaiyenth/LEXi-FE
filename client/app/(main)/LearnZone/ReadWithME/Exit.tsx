@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, View, StyleSheet, Image } from "react-native";
-import theme from "../../../../src/theme";
+import theme from "@/src/theme";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 
 const Exit = () => {

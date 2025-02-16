@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, View, FlatList,StyleSheet}   from 'react-native';
-import theme from '../../../../src/theme';
+import theme from '@/src/theme';
 import Card from './Card';
 
 

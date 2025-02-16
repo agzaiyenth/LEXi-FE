@@ -1,4 +1,4 @@
-import theme from '../../../../src/theme';
+import theme from '@/src/theme';
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign'; 

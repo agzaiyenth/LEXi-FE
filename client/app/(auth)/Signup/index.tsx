@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import theme from '../../../src/theme';
+import theme from '@/src/theme';
 import { Link, useRouter } from 'expo-router';
 import Toast from 'react-native-toast-message';
 

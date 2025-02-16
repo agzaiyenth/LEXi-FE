@@ -2,7 +2,7 @@
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import theme from '../../src/theme';
+import theme from '@/src/theme';
 
 const { width: screenWidth } = Dimensions.get('window'); // Get the screen width
 

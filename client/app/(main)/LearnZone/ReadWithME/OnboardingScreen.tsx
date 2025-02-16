@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
-import theme from "../../../../src/theme";
+import theme from "@/src/theme";
 import ReadWithMeNavigator from "./ReadWithMeNavigator";
 
 const OnboardingScreen = () => {

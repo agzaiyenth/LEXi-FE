@@ -4,7 +4,7 @@ import React from 'react'
 // import { SplashScreen } from 'expo-router'
 import { Slot } from 'expo-router'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
-import { SessionProvider } from '../src/ctx'
+import { SessionProvider } from '@/src/ctx'
 import Toast from 'react-native-toast-message';
 import { useFonts } from 'expo-font'
 

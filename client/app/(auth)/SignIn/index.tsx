@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import theme from '../../../src/theme';
+import theme from '@/src/theme';
 import { useLogin } from '@/src/hooks/auth/useLogin';
 import { Link, useRouter } from 'expo-router';
 import { useSession } from '@/src/ctx';

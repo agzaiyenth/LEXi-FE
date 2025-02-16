@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
-import theme from "../../../../src/theme";
+import theme from "@/src/theme";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import Entypo from '@expo/vector-icons/Entypo';import Ionicons from '@expo/vector-icons/Ionicons';
 

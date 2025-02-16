@@ -12,7 +12,7 @@ import {
   View,
   Modal,
 } from 'react-native';
-import theme from '../../../../src/theme';
+import theme from '@/src/theme';
 import { LearnZoneParamList } from './navigator';
 import apiClient from '@/src/apiClient';
 import { StackNavigationProp } from '@react-navigation/stack';
