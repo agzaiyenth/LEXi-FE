@@ -1,5 +1,5 @@
 import * as SecureStore from 'expo-secure-store';
-import { useSession } from '../src/ctx';
+import { useSession } from '../ctx';
 
 // This function can be called globally to log out user
 export const signOutUser = async () => {
