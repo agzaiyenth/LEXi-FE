@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import HomeScreen from './Home'
 
-export class index extends Component {
+export class Index extends Component {
   render() {
     return (
       <HomeScreen/>
@@ -9,4 +9,4 @@ export class index extends Component {
   }
 }
 
-export default index
+export default Index
