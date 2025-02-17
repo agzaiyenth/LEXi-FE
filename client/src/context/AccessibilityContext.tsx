@@ -34,3 +34,34 @@ export const AccessibilityProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const increaseFontSize = () => setFontScale((prev) => Math.min(prev + 0.1, 2)); // Max font scale: 2
   const decreaseFontSize = () => setFontScale((prev) => Math.max(prev - 0.1, 1)); // Min font scale: 1
+
+  return (
+    <AccessibilityContext.Provider
+      value={{
+        highContrastMode,
+        largeTextMode,
+        darkMode,
+        monochromeMode,
+        screenReader,
+        fontScale,
+        toggleHighContrast,
+        toggleLargeText,
+        toggleDarkMode,
+        toggleMonochrome,
+        toggleScreenReader,
+        increaseFontSize,
+        decreaseFontSize,
+      }}
+    >
+      {children}
+    </AccessibilityContext.Provider>
+  );
+};
+
+export const useAccessibility = () => {
+  const context = useContext(AccessibilityContext);
+  if (!context) {
+    throw new Error('useAccessibility must be used within an AccessibilityProvider');
+  }
+  return context;
+};
