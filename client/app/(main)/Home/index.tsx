@@ -56,8 +56,14 @@ export default function HomeScreen() {
         </View>
         
         <View style={styles.welcomeSection}>
-          <Text style={styles.welcomeText}>Welcome,</Text>
-          <Text style={styles.userName}>{username || 'Guest'}</Text>
+        <Text style={styles.welcomeText}>
+  Welcome{' '} 
+  <Text style={styles.userName}>
+    {username ? username.charAt(0).toUpperCase() + username.slice(1) : 'Guest'}
+  </Text>,
+</Text>
+
+          
         </View>
 
         <View style={styles.greetingCard}>
@@ -70,7 +76,7 @@ export default function HomeScreen() {
         </View>
   <View style={styles.section}>
         <Text style={styles.sectionTitle}>Achievements</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} >
           <View style={styles.achievementCard}>
            
             <View style={[styles.achievementIcon, { backgroundColor: theme.colors.primary.dark3 }]}>
@@ -161,6 +167,9 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     color: theme.colors.blacks.medium,
+    fontSize:theme.fonts.sizes.large,
+    fontWeight: "500",
+    paddingLeft:10,
   },
   userName: {
     fontSize: theme.fonts.sizes.large,
@@ -185,8 +194,11 @@ const styles = StyleSheet.create({
   },
   section: {
     padding: 20,
+    paddingLeft:8,
+    paddingRight:0,
   },
   sectionTitle: {
+    paddingLeft:8,
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 15,

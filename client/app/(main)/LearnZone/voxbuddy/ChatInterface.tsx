@@ -71,7 +71,6 @@ export default function ChatInterface() {
     return () => {
       disconnect();
     };
-   
   }, []);
   const handleWSMessage = useCallback(
     async (message: WSMessage) => {
