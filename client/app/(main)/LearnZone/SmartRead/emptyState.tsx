@@ -1,6 +1,6 @@
 import theme from "@/src/theme";
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 
 interface EmptyStateProps {
   param: string;
@@ -31,4 +31,5 @@ const styles = StyleSheet.create({
         color: "#555",
         textAlign: "center",
       },
-});    
+});
+export default EmptyState;    
