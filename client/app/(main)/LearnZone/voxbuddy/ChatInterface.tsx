@@ -65,6 +65,7 @@ export default function ChatInterface() {
     }
   }, [connectionState]);
 
+  
   // Clean up on unmount
   useEffect(() => {
     return () => {

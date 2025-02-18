@@ -109,7 +109,7 @@ const UploadScreen = () => {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.headerContainer}>
-        <TouchableOpacity  onPress={() => navigation.navigate('SmartReadMain')}>
+        <TouchableOpacity  onPress={() => navigation.goBack()}>
         <Ionicons name="arrow-back-circle-outline" size={40} color="white" />
         </TouchableOpacity>
         <Text style={styles.headerText}>Smart Read</Text>
