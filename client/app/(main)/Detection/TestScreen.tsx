@@ -80,7 +80,10 @@ export default function TestScreen({ route }: TestScreenProps) {
         </View>
 
          {/* Progress Bar */}
-         <View style={styles.progressBarContainer}>
+        
+        <View style={styles.mainContentCard}>
+
+        <View style={styles.progressBarContainer}>
           <Progress.Bar 
             progress={progress / 15} 
             width={null}
@@ -91,7 +94,6 @@ export default function TestScreen({ route }: TestScreenProps) {
           />
         </View>
 
-        <View style={styles.mainContentCard}>
 
           <View>
             {question.questionType === QuestionType.MULTIPLE_CHOICE && (
@@ -147,6 +149,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.colors.primary.light3,
     padding: 0,
+  
   },
   headerContent: {
     padding: 16,
