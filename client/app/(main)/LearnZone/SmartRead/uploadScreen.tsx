@@ -109,10 +109,10 @@ const UploadScreen = () => {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate('SmartReadMain')}>
+        <TouchableOpacity  onPress={() => navigation.navigate('SmartReadMain')}>
         <Ionicons name="arrow-back-circle-outline" size={40} color="white" />
         </TouchableOpacity>
-        <Text style={styles.headerText}>SmartRead</Text>
+        <Text style={styles.headerText}>Smart Read</Text>
       </View>
 
       {/* Upload Section */}
@@ -185,11 +185,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: theme.spacing.large,
   },
+ 
   headerText: {
-    fontSize: theme.fonts.sizes.medium,
+    fontSize: theme.fonts.sizes.large,
     fontWeight: 'bold',
-    marginLeft: theme.spacing.small,
-    fontFamily: 'serif',
+    marginLeft: 80,
+    
     color: theme.colors.background.beige,
   },
   uploadContainer: {

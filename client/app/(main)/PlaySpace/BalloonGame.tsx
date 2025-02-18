@@ -5,20 +5,22 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { LearnZoneParamList } from './index';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-type LearnMainNavigationProp = StackNavigationProp<LearnZoneParamList, 'PlayMain'>;
+type LearnMainNavigationProp = StackNavigationProp<LearnZoneParamList, 'PlayMainScreen'>;
 
 const BalloonGame: React.FC = () => {
   const navigation = useNavigation<LearnMainNavigationProp>();
   return (
     <View style={styles.container}>
-      {/* Back Button */}
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('PlayMain')}>
-        <Text style={styles.backButtonText}>
-          <Ionicons name="arrow-back-circle-outline" size={40} color="white" /></Text>
-      </TouchableOpacity>
+      
 
       {/* Game Title */}
       <Text style={styles.header}>Pop The Balloon</Text>
+
+{/* Back Button */}
+<TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+        <Text style={styles.backButtonText}>
+          <Ionicons name="arrow-back-circle-outline" size={40} color="white" /></Text>
+      </TouchableOpacity>
 
       {/* Game Image */}
       <View style={styles.imageContainer}>
@@ -91,7 +93,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: '15%',
     left: '0%',
-    right:'0%'
+    right:'0%',
+    zIndex:1000,
   },
   header: {
     fontSize: 28,

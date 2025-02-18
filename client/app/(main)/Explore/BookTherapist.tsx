@@ -228,7 +228,7 @@ const BookTherapist = () => {
       {/*Go Back*/}
       <View style={styles.headerContent}>
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={24} color="#1F2937" />
+          <Ionicons name="arrow-back-circle-outline" size={40} color="white" />
         </TouchableOpacity>
       </View>
       

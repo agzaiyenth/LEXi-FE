@@ -13,7 +13,7 @@ import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react
 import { LearnZoneParamList } from './index';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-type LearnMainNavigationProp = StackNavigationProp<LearnZoneParamList, 'PlayMain'>;
+type LearnMainNavigationProp = StackNavigationProp<LearnZoneParamList, 'PlayMainScreen'>;
 interface Game {
   id: string;
   title: string;
