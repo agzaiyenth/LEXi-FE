@@ -12,6 +12,7 @@ import { useNavigation } from "expo-router";
 import React, { useCallback, useState } from "react";
 import { ActivityIndicator, Image, RefreshControl, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Toast from 'react-native-toast-message';
+import EmptyState from './EmptyState';
 
 export default function SmartReadMain() {
 
@@ -128,7 +129,7 @@ export default function SmartReadMain() {
 
                     </View>
                   </View>
-                ))) : (<Text>no documents found</Text>)}
+                ))) : (<EmptyState param="Documents"/>)}
             </View>
           </ScrollView>
           <TouchableOpacity style={styles.floatingButton} onPress={() =>
