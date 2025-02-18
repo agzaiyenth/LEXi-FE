@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.colors.primary.light3,
     padding: 0,
-  
+    height: '100%',
   },
   headerContent: {
     padding: 16,
@@ -202,7 +202,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: theme.colors.primary.dark2,
-    color: 'white'
+    color: 'white',
+    bottom: 10,
   },
   buttonText: {
     color: 'white'
