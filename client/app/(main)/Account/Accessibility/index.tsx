@@ -153,3 +153,80 @@ return (
 );
 };
 
+const styles = StyleSheet.create({
+container: {
+  flex: 1,
+  padding: 20,
+  backgroundColor: '#fff',
+},
+darkContainer: {
+  backgroundColor: '#222',
+},
+header: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  marginBottom: 20,
+},
+backButton: {
+  padding: 10,
+},
+headerTitle: {
+  fontSize: 18,
+  fontWeight: 'bold',
+  marginLeft: 10,
+  color: '#333',
+},
+darkText: {
+  color: '#fff',
+},
+optionRow: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  paddingVertical: 15,
+  borderBottomWidth: 1,
+  borderBottomColor: '#ddd',
+},
+label: {
+  fontSize: 16,
+  color: '#333',
+},
+largeText: {
+  fontSize: 20,
+},
+highContrastBackground: {
+  backgroundColor: 'yellow', // Adjust this if necessary
+},
+monochromeContainer: {
+  backgroundColor: 'gray', // This will give the background a monochrome (gray) look
+},
+fontSizeContainer: {
+  marginTop: 20,
+  paddingVertical: 15,
+  borderBottomWidth: 1,
+  borderBottomColor: '#ddd',
+},
+fontSizeLabel: {
+  fontSize: 18,
+  marginBottom: 10,
+  color: '#333',
+},
+fontSizeButtons: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+},
+fontSizeButton: {
+  paddingVertical: 10,
+  paddingHorizontal: 20,
+  backgroundColor: '#ccc',
+  borderRadius: 5,
+  alignItems: 'center',
+},
+fontSizeText: {
+  fontSize: 18,
+  fontWeight: 'bold',
+},
+});
+
+export default AccessibilityScreen;
