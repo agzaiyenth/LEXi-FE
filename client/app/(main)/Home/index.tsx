@@ -46,7 +46,7 @@ const features = [
     id: '5',
     title: 'PlaySpace',
     description: 'Engage in gamified learning activities designed to boost reading fluency and memory.',
-    image: 'https://placehold.co/600x400',
+    image: 'https://i.ibb.co/qMnPZ3N8/playzone.png',
     link: 'PlaySpaceMain'
   },
   {
@@ -90,7 +90,8 @@ function BlogCard({ item, index }: any) {
   return (
     <Animated.View
       entering={FadeInUp.delay(index * 100)}
-      style={styles.blogCard}>
+      style={styles.blogCard}
+      key={index}>
       <Image source={{ uri: item.image }} style={styles.blogImage} />
       <View style={styles.blogContent}>
         <View style={styles.blogHeader}>
@@ -110,7 +111,8 @@ function FeatureCard({ item, index }: any) {
   return (
     <Animated.View 
       entering={FadeInUp.delay(index * 100)} 
-      style={[styles.cardContainer, { zIndex: features.length - index }]}>
+      style={[styles.cardContainer, { zIndex: features.length - index }]}
+      key={index}>
       <View style={styles.card}>
         <Image source={{ uri: item.image }} style={styles.cardImage} />
         <LinearGradient
