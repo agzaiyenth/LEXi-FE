@@ -3,10 +3,12 @@ import LoadingScreen from "@/src/components/loading";
 import { useFetchDocument } from "@/src/hooks/SmartRead/useFetchDocument";
 import { theme } from "@/src/theme";
 import { Ionicons } from "@expo/vector-icons";
-import EvilIcons from "@expo/vector-icons/EvilIcons";
 import { useRoute } from "@react-navigation/native";
 import { Audio } from "expo-av";
 import React, { useEffect, useState } from "react";
+import { StackNavigationProp } from '@react-navigation/stack';
+import { useNavigation } from 'expo-router';
+import { LearnZoneParamList } from './navigator';
 import {
   Animated,
   ScrollView,
@@ -17,7 +19,9 @@ import {
 } from "react-native";
 import Markdown from "react-native-markdown-display";
 
+type NavigationProp = StackNavigationProp<LearnZoneParamList, 'SpeechScreen', 'SmartReadMain'>;
 export default function SpeechScreen() {
+  const navigation = useNavigation<NavigationProp>();
   const route = useRoute();
   const { fileId } = route.params as { fileId: number };
 
@@ -145,12 +149,15 @@ export default function SpeechScreen() {
       }
     }
   };
-
+  
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
         <Text style={styles.text}>Smart Read</Text>
-        <EvilIcons name="arrow-left" style={styles.leftarrow} />
+        <TouchableOpacity style={styles.backButton}onPress={() => navigation.goBack()}>
+                <Ionicons name="arrow-back-circle-outline" size={40} color="white" />
+                </TouchableOpacity>
+        
 
         <View style={styles.innercontainer}>
           <View style={styles.textContainer}>
@@ -235,14 +242,17 @@ const styles = StyleSheet.create({
   },
   text: {
     top: 35,
-    fontSize: theme.fonts.sizes.small,
+    fontSize: theme.fonts.sizes.large,
     lineHeight: 30,
     fontWeight: "400",
     textAlign: "center",
     color: theme.colors.background.offWhite,
   },
+  backButton:{
+    marginLeft:20,
+  },
   innercontainer: {
-    top: 80,
+    top: 35,
     backgroundColor: "#FDF4DE",
     borderRadius: 25,
     height: "90%",

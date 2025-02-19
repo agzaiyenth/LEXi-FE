@@ -7,7 +7,7 @@ import TestScreen from './TestScreen';
 
 export type DetectionSystemParamList = {
   DetectionHomeScreen: undefined;
-  TestScreen: undefined;
+  TestScreen: { sessionId: number };
   CompletedScreen: undefined;
 };
 
