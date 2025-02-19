@@ -133,3 +133,23 @@ return (
         }}
       />
     </View>
+
+    {/* Font Size Adjustment Section */}
+    <View style={styles.fontSizeContainer}>
+      <Text style={[styles.fontSizeLabel, { fontSize: 16 * fontScale }, darkMode && styles.darkText, highContrastMode && styles.highContrastBackground, monochromeMode && styles.monochromeContainer, largeTextMode && styles.largeText]}>
+        Adjust Text Size:
+      </Text>
+      <View style={styles.fontSizeButtons}>
+        <TouchableOpacity onPress={decreaseFontSize} style={[styles.fontSizeButton, { marginRight: 10 }, highContrastMode && styles.highContrastBackground, monochromeMode && styles.monochromeContainer]}>
+          <Text style={styles.fontSizeText}>A-</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={increaseFontSize} style={[styles.fontSizeButton, highContrastMode && styles.highContrastBackground, monochromeMode && styles.monochromeContainer]}>
+          <Text style={styles.fontSizeText}>A+</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+
+  </View>
+);
+};
+
