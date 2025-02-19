@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     bottom: 100,
-    height: 486,
+    height: 500,
     width: 300,
     borderRadius: 20,
     padding: 10,
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     marginBottom: -20,
+    left:-10,
     top: 100,
   },
   UploadButton: {
