@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from "@react-navigation/stack";
 
 export default function AccountScreen() {
-  const navigation = useNavigation<StackNavigationProp<any, "Detection">>();
+  const navigation = useNavigation<StackNavigationProp<any, "Detection", "Accessibility">>();
   const { username,signOut } = useSession();
   return (
     <ScrollView style={styles.container}>
@@ -48,7 +48,10 @@ export default function AccountScreen() {
           <Text style={styles.settingText}>Edit Profile</Text>
           <Ionicons name="chevron-forward" size={24} color="#666666" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.settingItem}>
+        <TouchableOpacity 
+          style={styles.settingItem}
+          onPress={() => navigation.navigate("Accessibility")}
+        >
           <Ionicons name="accessibility-outline" size={24} color="#666666" />
           <Text style={styles.settingText}>Accessibility</Text>
           <Ionicons name="chevron-forward" size={24} color="#666666" />
