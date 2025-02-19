@@ -2,26 +2,12 @@ import { useSession } from '@/src/ctx';
 import { theme } from '@/src/theme';
 import { Ionicons } from '@expo/vector-icons';
 import { useFonts } from "expo-font";
+import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation, useRouter } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
-import { Dimensions, FlatList, Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Dimensions, FlatList, Image, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import Animated, { FadeInUp } from 'react-native-reanimated';
-
-const screenWidth = Dimensions.get("window").width;
-
-const swipeData = [
-  { title: "SmartRead", description: "Read and summarize text easily", image: require("@/assets/images/icon.png") },
-  { title: "VoxBuddy", description: "Your AI voice companion", image: require("@/assets/images/icon.png") },
-  { title: "Detection", description: "Assess your dyslexia level", image: require("@/assets/images/icon.png") },
-  { title: "Play Space", description: "Engaging dyslexia-friendly games", image: require("@/assets/images/icon.png") },
-];
-
-const blogCards = [
-  { title: "How to Use SmartRead", description: "Learn how SmartRead can help you.", image: "📚", link: "/blog/smartread" },
-  { title: "VoxBuddy: Your New AI Assistant", description: "Discover how VoxBuddy can assist you.", image: "📚", link: "/blog/voxbuddy" },
-  { title: "Understanding Dyslexia Detection", description: "Assess your dyslexia level with our tool.", image: "📚", link: "/blog/detection" },
-  { title: "Dyslexia-Friendly Tools", description: "Explore tools to assist dyslexia users.", image: "📚", link: "/blog/tools" },
-];
+import Carousel from 'react-native-snap-carousel';
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const ITEM_WIDTH = SLIDER_WIDTH * 0.85;
@@ -30,29 +16,48 @@ const ITEM_HEIGHT = 400;
 const features = [
   {
     id: '1',
-    title: 'Rio de Janeiro',
-    description: 'Experience the vibrant culture',
-    image: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=800',
-    rating: 4.8,
-    reviews: 143,
+    title: 'SmartRead',
+    description: 'Simplify complex documents with real-time summarization and audio highlights.',
+    image: 'https://placehold.co/600x400',
+    link: 'SmartReadMain'
   },
   {
     id: '2',
-    title: 'Paris',
-    description: 'City of lights and romance',
-    image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800',
-    rating: 4.9,
-    reviews: 256,
+    title: 'VoiceFlow',
+    description: 'Convert speech to text instantly, reinforcing spelling and word recognition.',
+    image: 'https://placehold.co/600x400',
+    link: 'VoiceFlowMain'
   },
   {
     id: '3',
-    title: 'Tokyo',
-    description: 'Where tradition meets future',
-    image: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=800',
-    rating: 4.7,
-    reviews: 189,
+    title: 'VoxBuddy',
+    description: 'An AI-powered assistant offering personalized guidance and interactive learning support.',
+    image: 'https://placehold.co/600x400',
+    link: 'VoxBuddyMain'
   },
+  {
+    id: '4',
+    title: 'Read With Me',
+    description: 'An interactive reading companion that provides real-time pronunciation feedback.',
+    image: 'https://placehold.co/600x400',
+    link: 'ReadWithMeMain'
+  },
+  {
+    id: '5',
+    title: 'PlaySpace',
+    description: 'Engage in gamified learning activities designed to boost reading fluency and memory.',
+    image: 'https://placehold.co/600x400',
+    link: 'PlaySpaceMain'
+  },
+  {
+    id: '6',
+    title: 'Explore+',
+    description: 'Track your progress and connect with professional therapists through detailed insights.',
+    image: 'https://placehold.co/600x400',
+    link: 'ExplorePlusMain'
+  }
 ];
+
 
 const blogPosts = [
   {
@@ -100,28 +105,37 @@ function BlogCard({ item, index }: any) {
     </Animated.View>
   );
 }
+
+function FeatureCard({ item, index }: any) {
+  return (
+    <Animated.View 
+      entering={FadeInUp.delay(index * 100)} 
+      style={[styles.cardContainer, { zIndex: features.length - index }]}>
+      <View style={styles.card}>
+        <Image source={{ uri: item.image }} style={styles.cardImage} />
+        <LinearGradient
+          colors={['transparent', 'rgba(0,0,0,0.8)']}
+          style={styles.gradient}
+        />
+       
+        <View style={styles.cardContent}>
+         
+          <Text style={styles.cardTitle}>{item.title}</Text>
+          <Text style={styles.cardDescription}>{item.description}</Text>
+          <Pressable style={styles.seeMoreButton}>
+            <Text style={styles.buttonText}>See more</Text>
+            <Ionicons name="chevron-forward" size={20} color="white" />
+          </Pressable>
+        </View>
+      </View>
+    </Animated.View>
+  );
+}
 export default function HomeScreen() {
   const [fontsLoaded] = useFonts({
     OpenDyslexic: require("@/assets/fonts/open-dyslexic.ttf"),
   });
-  const navigation = useNavigation();
-  const { signOut, user } = useSession() as { signOut: () => void, user?: { name: string } };
-  //const username = user?.name;
-  const router = useRouter();
-  const flatListRef = useRef<FlatList>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const { session, username } = useSession();
-
-
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      let nextIndex = (currentIndex + 1) % swipeData.length;
-      setCurrentIndex(nextIndex);
-      flatListRef.current?.scrollToIndex({ index: nextIndex, animated: true });
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [currentIndex]);
+  const {  username } = useSession();
 
   return (
     <ScrollView style={styles.wrapper}>
@@ -175,22 +189,19 @@ export default function HomeScreen() {
           </ScrollView>
         </View>
         {/* Swipeable Feature Section */}
-        <FlatList
-          ref={flatListRef}
-          data={swipeData}
-          horizontal
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={(item, index) => index.toString()}
-          style={{ marginTop: 20 }}
-          renderItem={({ item }) => (
-            <View style={styles.swipeCard}>
-              <Image source={item.image} style={styles.cardImage} />
-              <Text style={styles.cardTitle}>{item.title}</Text>
-              <Text style={styles.cardDescription}>{item.description}</Text>
-            </View>
-          )}
+        <View style={styles.carouselContainer}>
+        <Carousel
+          data={features}
+          renderItem={({ item, index }) => <FeatureCard item={item} index={index} />}
+          sliderWidth={SLIDER_WIDTH}
+          itemWidth={ITEM_WIDTH}
+          layout="stack"
+          layoutCardOffset={18}
+          loop
+          autoplay
+          autoplayInterval={3000}
         />
+      </View>
 
         {/* Blog Cards Section */}
 
@@ -215,6 +226,100 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+  },
+  carouselContainer: {
+    height: 300,
+  },
+  cardContainer: {
+    padding: 10,
+    height: 300,
+  },
+  card: {
+    borderRadius: 20,
+    overflow: 'hidden',
+    height: '100%',
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  cardImage: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+  },
+  gradient: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: '70%',
+    borderRadius: 20,
+  },
+  heartButton: {
+    position: 'absolute',
+    top: 20,
+    right: 20,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  cardContent: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: 20,
+  },
+  ratingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  rating: {
+    color: 'white',
+    marginLeft: 4,
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  reviews: {
+    color: 'rgba(255,255,255,0.8)',
+    marginLeft: 4,
+    fontSize: 14,
+  },
+  cardTitle: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: '#ffffff',
+    marginBottom: 8,
+  },
+  cardDescription: {
+    fontSize: 16,
+    color: 'rgba(255,255,255,0.9)',
+    marginBottom: 16,
+  },
+  seeMoreButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    alignSelf: 'flex-start',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+  },
+  buttonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '600',
+    marginRight: 4,
   },
   headerContainer: {
     flexDirection: "row",
@@ -342,22 +447,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  cardImage: {
-    width: 100,
-    height: 100,
-    resizeMode: "contain",
-  },
-  cardTitle: {
-    fontSize: theme.fonts.sizes.medium,
-    fontWeight: "600",
-    color: theme.colors.blacks.dark,
-    marginTop: 10,
-  },
-  cardDescription: {
-    fontSize: theme.fonts.sizes.small,
-    color: theme.colors.blacks.medium,
-    textAlign: "center",
-  },
+ 
   blogSection: {
     padding: 24,
   },
