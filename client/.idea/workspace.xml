@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="52f8a21f-c71e-46b9-850d-4f0be02fb74f" name="Changes" comment="" />
+    <list default="true" id="52f8a21f-c71e-46b9-850d-4f0be02fb74f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/app/(auth)/SignIn/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(auth)/SignIn/index.tsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
