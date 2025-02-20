@@ -5,16 +5,26 @@ import React from "react";
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from "@react-navigation/stack";
+import { useAccessibility } from '../../../src/context/AccessibilityContext';
 
 export default function AccountScreen() {
   const navigation = useNavigation<StackNavigationProp<any, "Detection", "Accessibility">>();
   const { username,signOut } = useSession();
+
+  const { highContrastMode} = useAccessibility();
+  
+    const textStyle = {
+      // fontSize: 16 * fontScale, // Dynamically scale font size
+      color: highContrastMode ? 'yellow' : 'black',
+    };
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.signoutIcon}
           onPress={signOut}
+          
         >
           <Ionicons name="log-out-outline" size={24} color="white" />
         </TouchableOpacity>
@@ -22,19 +32,19 @@ export default function AccountScreen() {
           source={{ uri: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200' }}
           style={styles.avatar}
         />
-        <Text style={styles.name}>{username || 'Guest'}</Text>
+        <Text style={[styles.name, highContrastMode && styles.highContrastBackground]}>{username || 'Guest'}</Text>
         <View style={styles.statsRow}>
           <View style={styles.stat}>
-            <Text style={styles.statValue}>248</Text>
-            <Text style={styles.statLabel}>Streaks</Text>
+            <Text style={[styles.statValue, highContrastMode && styles.highContrastBackground]}>248</Text>
+            <Text style={[styles.statLabel, , highContrastMode && styles.highContrastBackground]}>Streaks</Text>
           </View>
           <View style={styles.stat}>
-            <Text style={styles.statValue}>85</Text>
-            <Text style={styles.statLabel}>Documents</Text>
+            <Text style={[styles.statValue, highContrastMode && styles.highContrastBackground]}>85</Text>
+            <Text style={[styles.statLabel, highContrastMode && styles.highContrastBackground]}>Documents</Text>
           </View>
           <View style={styles.stat}>
-            <Text style={styles.statValue}>15K</Text>
-            <Text style={styles.statLabel}>Read Hours</Text>
+            <Text style={[styles.statValue, highContrastMode && styles.highContrastBackground]}>15K</Text>
+            <Text style={[styles.statLabel, highContrastMode && styles.highContrastBackground]}>Read Hours</Text>
           </View>
         </View>
       </View>
@@ -42,10 +52,10 @@ export default function AccountScreen() {
 
 
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Settings</Text>
+        <Text style={[styles.sectionTitle, highContrastMode && styles.highContrastBackground]}>Settings</Text>
         <TouchableOpacity style={styles.settingItem}>
           <Ionicons name="person-outline" size={24} color="#666666" />
-          <Text style={styles.settingText}>Edit Profile</Text>
+          <Text style={[styles.settingText, highContrastMode && styles.highContrastBackground]}>Edit Profile</Text>
           <Ionicons name="chevron-forward" size={24} color="#666666" />
         </TouchableOpacity>
         <TouchableOpacity 
@@ -53,12 +63,12 @@ export default function AccountScreen() {
           onPress={() => navigation.navigate("Accessibility")}
         >
           <Ionicons name="accessibility-outline" size={24} color="#666666" />
-          <Text style={styles.settingText}>Accessibility</Text>
+          <Text style={[styles.settingText, highContrastMode && styles.highContrastBackground]}>Accessibility</Text>
           <Ionicons name="chevron-forward" size={24} color="#666666" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.settingItem}>
           <Ionicons name="analytics-outline" size={24} color="#666666" />
-          <Text style={styles.settingText}>Reports</Text>
+          <Text style={[styles.settingText, highContrastMode && styles.highContrastBackground]}>Reports</Text>
           <Ionicons name="chevron-forward" size={24} color="#666666" />
         </TouchableOpacity>
         <TouchableOpacity
@@ -66,7 +76,7 @@ export default function AccountScreen() {
           onPress={() => navigation.navigate("Detection")}
         >
           <Ionicons name="shield-outline" size={24} color="#666666" />
-          <Text style={styles.settingText}>Detection Test</Text>
+          <Text style={[styles.settingText, highContrastMode && styles.highContrastBackground]}>Detection Test</Text>
           <Ionicons name="chevron-forward" size={24} color="#666666" />
         </TouchableOpacity>
 
@@ -180,5 +190,11 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     marginLeft: 15,
+  },
+  highContrastBackground: {
+    backgroundColor: 'yellow', // Adjust this if necessary
+  },
+  monochromeContainer: {
+    backgroundColor: 'gray', // This will give the background a monochrome (gray) look
   },
 });
