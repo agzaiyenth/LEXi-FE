@@ -66,7 +66,7 @@ return (
         <AntDesign name="arrowleft" size={24} color={darkMode ? "#fff" : "#333"} />
       </TouchableOpacity>
 
-      <Text style={[styles.headerTitle, highContrastMode && styles.highContrastBackground, largeTextMode && styles.largeText, darkMode && styles.darkText, monochromeMode && styles.monochromeContainer]}>Accessibility</Text>
+      <Text style={[styles.headerTitle, highContrastMode && styles.highContrastBackground, largeTextMode && styles.largeText1, darkMode && styles.darkText, monochromeMode && styles.monochromeContainer]}>Accessibility</Text>
     </View>
 
     <View style={styles.optionRow}>
@@ -226,6 +226,9 @@ fontSizeButton: {
 fontSizeText: {
   fontSize: 18,
   fontWeight: 'bold',
+},
+largeText1: {
+  fontSize: 24,
 },
 });
 
