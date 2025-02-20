@@ -1,16 +1,17 @@
+import React from "react";
+import { Dimensions, Image, Pressable, ScrollView, StyleSheet, Text, View, Animated as RNAnimated } from "react-native";
+import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useSession } from '@/src/ctx';
 import { theme } from '@/src/theme';
-import { Ionicons } from '@expo/vector-icons';
 import { useFonts } from "expo-font";
-import { LinearGradient } from 'expo-linear-gradient';
-import React from "react";
-import { Dimensions, Image, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import Animated, { FadeInUp } from 'react-native-reanimated';
-import Carousel from 'react-native-snap-carousel';
 
+// Constants for carousel dimensions
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const ITEM_WIDTH = SLIDER_WIDTH * 0.85;
 
+// Your features data
 const features = [
   {
     id: '1',
@@ -42,6 +43,7 @@ const features = [
   },
 ];
 
+// Your blogPosts data remains the same…
 const blogPosts = [
   {
     id: '1',
@@ -69,29 +71,7 @@ const blogPosts = [
   },
 ];
 
-// No spread of the "key" prop inside the child.
-// We only accept the props we actually need:
-function BlogCard({ item, index }: any) {
-  return (
-    <Animated.View
-      entering={FadeInUp.delay(index * 100)}
-      style={styles.blogCard}
-    >
-      <Image source={{ uri: item.image }} style={styles.blogImage} />
-      <View style={styles.blogContent}>
-        <View style={styles.blogHeader}>
-          <Text style={styles.blogCategory}>{item.category}</Text>
-          <View style={styles.blogMeta}>
-            <Text style={styles.blogAuthor}>{item.author}</Text>
-            <Text style={styles.blogDate}> · {item.date}</Text>
-          </View>
-        </View>
-        <Text style={styles.blogTitle}>{item.title}</Text>
-      </View>
-    </Animated.View>
-  );
-}
-
+// FeatureCard remains the same
 function FeatureCard({ item, index }: any) {
   return (
     <Animated.View
@@ -117,6 +97,108 @@ function FeatureCard({ item, index }: any) {
   );
 }
 
+// BlogCard remains the same
+function BlogCard({ item, index }: any) {
+  return (
+    <Animated.View
+      entering={FadeInUp.delay(index * 100)}
+      style={styles.blogCard}
+    >
+      <Image source={{ uri: item.image }} style={styles.blogImage} />
+      <View style={styles.blogContent}>
+        <View style={styles.blogHeader}>
+          <Text style={styles.blogCategory}>{item.category}</Text>
+          <View style={styles.blogMeta}>
+            <Text style={styles.blogAuthor}>{item.author}</Text>
+            <Text style={styles.blogDate}> · {item.date}</Text>
+          </View>
+        </View>
+        <Text style={styles.blogTitle}>{item.title}</Text>
+      </View>
+    </Animated.View>
+  );
+}
+
+function InfiniteCarousel({ data }: any) {
+  const flatListRef = React.useRef(null);
+  const CONTENT_PADDING = 10;
+  const extendedData = [...data, ...data, ...data];
+  const initialIndex = data.length;
+  const [currentIndex, setCurrentIndex] = React.useState(initialIndex);
+
+  React.useEffect(() => {
+    if (flatListRef.current) {
+      flatListRef.current.scrollToIndex({
+        index: initialIndex,
+        animated: false,
+      });
+    }
+  }, []);
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      const nextIndex = currentIndex + 1;
+      setCurrentIndex(nextIndex);
+      flatListRef.current.scrollToIndex({
+        index: nextIndex,
+        animated: true,
+      });
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [currentIndex]);
+
+  const onMomentumScrollEnd = (event: any) => {
+    const offsetX = event.nativeEvent.contentOffset.x;
+    let newIndex = Math.round(offsetX / ITEM_WIDTH);
+    setCurrentIndex(newIndex);
+
+    if (newIndex >= data.length * 2) {
+      newIndex = newIndex - data.length;
+      setCurrentIndex(newIndex);
+      flatListRef.current.scrollToIndex({
+        index: newIndex,
+        animated: false,
+      });
+    } else if (newIndex < data.length) {
+      newIndex = newIndex + data.length;
+      setCurrentIndex(newIndex);
+      flatListRef.current.scrollToIndex({
+        index: newIndex,
+        animated: false,
+      });
+    }
+  };
+
+  const getItemLayout = (data: any, index: number) => ({
+    length: ITEM_WIDTH,
+    offset: ITEM_WIDTH * index,
+    index,
+  });
+
+  return (
+    <RNAnimated.FlatList
+      ref={flatListRef}
+      data={extendedData}
+      horizontal
+      pagingEnabled
+      showsHorizontalScrollIndicator={false}
+      snapToInterval={ITEM_WIDTH}
+      decelerationRate="fast"
+      contentContainerStyle={{ paddingHorizontal: CONTENT_PADDING }}
+      onMomentumScrollEnd={onMomentumScrollEnd}
+      keyExtractor={(_, index) => index.toString()}
+      renderItem={({ item, index }: any) => (
+        <View style={{ width: ITEM_WIDTH-40, marginHorizontal: 2 }}>
+          <FeatureCard item={item} index={index} />
+        </View>
+      )}
+      getItemLayout={getItemLayout}
+    />
+  );
+}
+
+
+// HomeScreen with updated infinite scroll carousel
 export default function HomeScreen() {
   const [fontsLoaded] = useFonts({
     OpenDyslexic: require("@/assets/fonts/open-dyslexic.ttf"),
@@ -151,7 +233,7 @@ export default function HomeScreen() {
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Achievements</Text>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} >
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <View style={styles.achievementCard}>
               <View style={[styles.achievementIcon, { backgroundColor: theme.colors.primary.dark3 }]}>
                 <Ionicons name="flame" size={24} color={theme.colors.background.offWhite} />
@@ -173,30 +255,15 @@ export default function HomeScreen() {
           </ScrollView>
         </View>
 
-        {/* Swipeable Feature Section */}
+        {/* Updated Infinite Scroll Carousel */}
         <View style={styles.carouselContainer}>
-          <Carousel
-            data={features}
-            // Notice we use key here, but we do NOT pass key via spread into FeatureCard.
-            renderItem={({ item, index }) => (
-              <FeatureCard item={item} index={index} />
-            )}
-            sliderWidth={SLIDER_WIDTH}
-            itemWidth={ITEM_WIDTH}
-            layout="stack"
-            layoutCardOffset={18}
-            loop
-            autoplay
-            autoplayInterval={3000}
-            vertical={false}
-          />
+          <InfiniteCarousel data={features} />
         </View>
 
         {/* Blog Cards Section */}
         <View style={styles.blogSection}>
           <Text style={styles.sectionTitleBlog}>Latest Articles</Text>
           {blogPosts.map((post, index) => (
-            // same fix for BlogCard
             <BlogCard key={post.id} item={post} index={index} />
           ))}
         </View>
@@ -216,6 +283,7 @@ const styles = StyleSheet.create({
   },
   carouselContainer: {
     height: 300,
+    marginVertical: 20,
   },
   cardContainer: {
     padding: 10,
@@ -227,10 +295,7 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: '#fff',
     shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
@@ -248,39 +313,12 @@ const styles = StyleSheet.create({
     height: '70%',
     borderRadius: 20,
   },
-  heartButton: {
-    position: 'absolute',
-    top: 20,
-    right: 20,
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: 'rgba(0,0,0,0.3)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   cardContent: {
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
     padding: 20,
-  },
-  ratingContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-  rating: {
-    color: 'white',
-    marginLeft: 4,
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  reviews: {
-    color: 'rgba(255,255,255,0.8)',
-    marginLeft: 4,
-    fontSize: 14,
   },
   cardTitle: {
     fontSize: 24,
@@ -335,23 +373,6 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: theme.fonts.sizes.large,
     fontWeight: "600",
-  }, statsRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
-    marginTop: 20,
-  },
-  stat: {
-    alignItems: 'center',
-  },
-  statValue: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  statLabel: {
-    fontSize: 14,
-    color: '#666666',
-    marginTop: 5,
   },
   section: {
     padding: 20,
@@ -416,7 +437,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
   mascotImage: {
     width: 120,
     height: 150,
@@ -424,17 +444,6 @@ const styles = StyleSheet.create({
     bottom: -20,
     left: -50,
   },
-  swipeCard: {
-    width: 330,
-    height: 180,
-    backgroundColor: theme.colors.primary.light2,
-    borderRadius: 16,
-    padding: 20,
-    marginHorizontal: 10,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
   blogSection: {
     padding: 24,
   },
@@ -450,10 +459,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     marginBottom: 16,
     shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 3,
     elevation: 3,
@@ -492,36 +498,5 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#1F2937',
     lineHeight: 24,
-  },
-  signOutButton: {
-    marginTop: 16,
-    padding: 12,
-    backgroundColor: theme.colors.primary.dark1,
-    borderRadius: 8,
-    alignItems: "center",
-  },
-  signOutText: {
-    color: theme.colors.background.offWhite,
-    fontSize: theme.fonts.sizes.medium,
-    fontWeight: "bold",
-  },
-  readMoreButton: {
-    marginTop: 10,
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    backgroundColor: theme.colors.primary.dark1,
-    borderRadius: 8,
-  },
-  readMoreText: {
-    color: theme.colors.background.offWhite,
-    fontSize: theme.fonts.sizes.small,
-    fontWeight: "bold",
-  },
-
-  blogGrid: {
-    marginTop: 15,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
   },
 });
