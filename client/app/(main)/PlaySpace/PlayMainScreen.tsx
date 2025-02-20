@@ -12,6 +12,7 @@ import React from 'react';
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { LearnZoneParamList } from './index';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import {useAccessibility } from '../../../src/context/AccessibilityContext';
 
 type LearnMainNavigationProp = StackNavigationProp<LearnZoneParamList, 'PlayMainScreen'>;
 interface Game {
@@ -70,7 +71,7 @@ const PlayMainScreen = () => {
   ];
   const renderGameCard = ({ item }: { item: Game }) => (
     <TouchableOpacity
-      style={styles.card}
+      style={[styles.card, darkMode && styles.darkContainer1]}
       onPress={() => {
         try {
           if (item.route) {
@@ -87,13 +88,16 @@ const PlayMainScreen = () => {
         source={typeof item.image === 'string' ? { uri: item.image } : item.image}
         style={styles.cardImage}
       />
-      <Text style={styles.cardTitle}>{item.title}</Text>
-      <Text style={styles.cardTheory}>{item.theory}</Text>
+      <Text style={[styles.cardTitle, darkMode && styles.darkText]}>{item.title}</Text>
+      <Text style={[styles.cardTheory, darkMode && styles.darkText]}>{item.theory}</Text>
     </TouchableOpacity>
   );
+    const { 
+      darkMode
+    } = useAccessibility();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, darkMode && styles.darkContainer]}>
       <Text style={styles.header}>PlaySpace</Text>
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
       <Ionicons name="arrow-back-circle-outline" size={40} color="white" />
@@ -159,6 +163,18 @@ const styles = StyleSheet.create({
   cardTheory: {
     fontSize: 12,
     color: theme.colors.primary.medium,
+  },
+  darkText: {
+    color: '#fff',
+  },
+  darkContainer: {
+    backgroundColor:  theme.colors.primary.dark1,
+  },
+  darkContainer1: {
+    backgroundColor:  theme.colors.primary.dark3,
+  },
+  darkContainer2: {
+    backgroundColor:  theme.colors.primary.dark2,
   },
 });
 
