@@ -98,7 +98,7 @@ const PlayMainScreen = () => {
 
   return (
     <View style={[styles.container, darkMode && styles.darkContainer]}>
-      <Text style={styles.header}>PlaySpace</Text>
+      <Text style={[styles.header, darkMode && styles.darkText]}>PlaySpace</Text>
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
       <Ionicons name="arrow-back-circle-outline" size={40} color="white" />
         </TouchableOpacity>
