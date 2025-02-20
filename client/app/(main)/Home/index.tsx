@@ -7,6 +7,7 @@ import { theme } from '@/src/theme';
 import { useRouter } from "expo-router";
 import { useFonts } from "expo-font";
 import { Ionicons } from '@expo/vector-icons';
+import {useAccessibility } from '../../../src/context/AccessibilityContext';
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -36,6 +37,10 @@ export default function HomeScreen() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { session,username } = useSession();
 
+  const { 
+    darkMode
+  } = useAccessibility();
+
 
 
   useEffect(() => {
@@ -48,15 +53,15 @@ export default function HomeScreen() {
   }, [currentIndex]);
 
   return (
-    <ScrollView style={styles.wrapper}>
+    <ScrollView style={[styles.wrapper, darkMode && styles.darkContainer]}>
       <View style={styles.container}>
         <View style={styles.headerContainer}>
           <Image source={require('@/assets/images/icon.png')} style={styles.welcomeImage} />
-          <Text style={styles.headerText}>LEXi</Text>
+          <Text style={[styles.headerText, darkMode && styles.darkText]}>LEXi</Text>
         </View>
         
         <View style={styles.welcomeSection}>
-        <Text style={styles.welcomeText}>
+        <Text style={[styles.welcomeText, darkMode && styles.darkText]}>
   Welcome{' '} 
   <Text style={styles.userName}>
     {username ? username.charAt(0).toUpperCase() + username.slice(1) : 'Guest'}
@@ -66,7 +71,7 @@ export default function HomeScreen() {
           
         </View>
 
-        <View style={styles.greetingCard}>
+        <View style={[styles.greetingCard, darkMode && styles.darkContainer2]}>
           <View style={styles.greetingTextContainer}>
             <Text style={styles.greetingText}>Hey There!{"\n"}How Are You?</Text>
           </View>
@@ -75,26 +80,26 @@ export default function HomeScreen() {
           </View>
         </View>
   <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Achievements</Text>
+        <Text style={[styles.sectionTitle, darkMode && styles.darkText]}>Achievements</Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} >
-          <View style={styles.achievementCard}>
+          <View style={[styles.achievementCard, darkMode && styles.darkContainer1]}>
            
-            <View style={[styles.achievementIcon, { backgroundColor: theme.colors.primary.dark3 }]}>
+            <View style={[styles.achievementIcon, { backgroundColor: theme.colors.primary.dark3 }, darkMode && styles.darkContainer]}>
               <Ionicons name="flame" size={24} color={theme.colors.background.offWhite} />
             </View>
-            <Text style={styles.achievementTitle}>30 Day Streak</Text>
+            <Text style={[styles.achievementTitle, darkMode && styles.darkText]}>30 Day Streak</Text>
           </View>
-          <View style={styles.achievementCard}>
-            <View style={[styles.achievementIcon, { backgroundColor: theme.colors.primary.dark3 }]}>
+          <View style={[styles.achievementCard, darkMode && styles.darkContainer1]}>
+            <View style={[styles.achievementIcon, { backgroundColor: theme.colors.primary.dark3 }, darkMode && styles.darkContainer]}>
               <Ionicons name="document-outline" size={24} color={theme.colors.background.offWhite} />
             </View>
-            <Text style={styles.achievementTitle}>100 Files</Text>
+            <Text style={[styles.achievementTitle, darkMode && styles.darkText]}>100 Files</Text>
           </View>
-          <View style={styles.achievementCard}>
-          <View style={[styles.achievementIcon, { backgroundColor: theme.colors.primary.dark3 }]}>
+          <View style={[styles.achievementCard, darkMode && styles.darkContainer1]}>
+          <View style={[styles.achievementIcon, { backgroundColor: theme.colors.primary.dark3 }, darkMode && styles.darkContainer]}>
               <Ionicons name="trophy" size={24} color={theme.colors.background.offWhite} />
             </View>
-            <Text style={styles.achievementTitle}>10K ReadTime</Text>
+            <Text style={[styles.achievementTitle, darkMode && styles.darkText]}>10K ReadTime</Text>
           </View>
         </ScrollView>
       </View>
@@ -108,10 +113,10 @@ export default function HomeScreen() {
           keyExtractor={(item, index) => index.toString()}
           style={{ marginTop: 20 }}
           renderItem={({ item }) => (
-            <View style={styles.swipeCard}>
+            <View style={[styles.swipeCard, darkMode && styles.darkContainer1]}>
               <Image source={item.image} style={styles.cardImage} />
-              <Text style={styles.cardTitle}>{item.title}</Text>
-              <Text style={styles.cardDescription}>{item.description}</Text>
+              <Text style={[styles.cardTitle, darkMode && styles.darkText]}>{item.title}</Text>
+              <Text style={[styles.cardDescription, darkMode && styles.darkText]}>{item.description}</Text>
             </View>
           )}
         />
@@ -354,5 +359,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
+  },
+  darkText: {
+    color: '#fff',
+  },
+  darkContainer: {
+    backgroundColor:  theme.colors.primary.dark1,
+  },
+  darkContainer1: {
+    backgroundColor:  theme.colors.primary.dark3,
+  },
+  darkContainer2: {
+    backgroundColor:  theme.colors.primary.dark2,
   },
 });
