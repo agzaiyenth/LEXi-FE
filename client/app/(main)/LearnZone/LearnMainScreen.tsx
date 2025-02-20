@@ -5,14 +5,19 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { LearnZoneParamList } from './index';
+import {useAccessibility } from '../../../src/context/AccessibilityContext';
 
 type LearnMainNavigationProp = StackNavigationProp<LearnZoneParamList, 'LearnMain'>;
 
 const LearnMainScreen = () => {
   const navigation = useNavigation<LearnMainNavigationProp>();
 
+  const { 
+    darkMode
+  } = useAccessibility();
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, darkMode && styles.darkContainer2]}>
       {/* Header Card */}
       <Image
         source={require('@/assets/images/learnZone/circle.png')}
@@ -23,9 +28,9 @@ const LearnMainScreen = () => {
         <Text style={styles.headerTitle}>LearnZone</Text>
       </View>
 
-      <View style={styles.mainContentCard}>
+      <View style={[styles.mainContentCard, darkMode && styles.darkContainer]}>
         <View style={styles.maincontenttitle}>
-          <Text style={styles.learningText}>Let's learn{'\n'}Something{'\n'}new</Text>
+          <Text style={[styles.learningText, darkMode && styles.darkText]}>Let's learn{'\n'}Something{'\n'}new</Text>
           <Image
             source={require('@/assets/images/learnZone/mascot.png')}
             style={styles.mascotImage}
@@ -33,7 +38,7 @@ const LearnMainScreen = () => {
         </View>
         {/* VoxBuddy Card */}
         <TouchableOpacity
-          style={styles.featureCard}
+          style={[styles.featureCard, darkMode && styles.darkContainer1]}
           onPress={() => navigation.navigate('VoxBuddy')}
         >
 
@@ -53,7 +58,7 @@ const LearnMainScreen = () => {
 
         {/* Bottom Row Cards */}
         <View style={styles.bottomRow}>
-          <TouchableOpacity style={[styles.smallCard, styles.readWithMeCard]}
+          <TouchableOpacity style={[styles.smallCard, styles.readWithMeCard, darkMode && styles.darkContainer1]}
             onPress={() => navigation.navigate('ReadWithMe')}
           >
             <Text style={styles.smallCardTitle}>ReadWithMe</Text>
@@ -65,7 +70,7 @@ const LearnMainScreen = () => {
             </TouchableOpacity>
           </TouchableOpacity>
 
-          <TouchableOpacity style={[styles.smallCard, styles.smartReadCard]}
+          <TouchableOpacity style={[styles.smallCard, styles.smartReadCard, darkMode && styles.darkContainer1]}
             onPress={() => navigation.navigate('SmartRead')}
           >
             <Text style={styles.smallCardTitle}>SmartRead</Text>
@@ -232,6 +237,18 @@ const styles = StyleSheet.create({
     right: -25,
     bottom: -20
 
+  },
+  darkText: {
+    color: '#fff',
+  },
+  darkContainer: {
+    backgroundColor:  theme.colors.primary.dark1,
+  },
+  darkContainer1: {
+    backgroundColor:  theme.colors.primary.dark3,
+  },
+  darkContainer2: {
+    backgroundColor:  theme.colors.primary.dark2,
   },
 });
 
