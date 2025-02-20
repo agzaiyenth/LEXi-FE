@@ -11,16 +11,23 @@ export default function AccountScreen() {
   const navigation = useNavigation<StackNavigationProp<any, "Detection", "Accessibility">>();
   const { username,signOut } = useSession();
 
-  const { highContrastMode} = useAccessibility();
-  
-    const textStyle = {
-      // fontSize: 16 * fontScale, // Dynamically scale font size
-      color: highContrastMode ? 'yellow' : 'black',
-    };
+ const { 
+    highContrastMode, 
+    largeTextMode, 
+    darkMode, 
+    monochromeMode
+  } = useAccessibility();
+
+  // const [fontScale] = useState(1);  // Default scale factor is 1 (normal size)
+
+  const textStyle = {
+    // fontSize: 16 * fontScale, // Dynamically scale font size
+    color: highContrastMode ? 'yellow' : 'black',
+  };
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.header}>
+    <ScrollView style={[styles.container, darkMode && styles.darkContainer]}>
+      <View style={[styles.header, darkMode && styles.darkContainer1]}>
         <TouchableOpacity
           style={styles.signoutIcon}
           onPress={signOut}
@@ -32,19 +39,19 @@ export default function AccountScreen() {
           source={{ uri: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200' }}
           style={styles.avatar}
         />
-        <Text style={[styles.name, highContrastMode && styles.highContrastBackground]}>{username || 'Guest'}</Text>
+        <Text style={[styles.name, highContrastMode && styles.highContrastBackground, largeTextMode && styles.largeText, monochromeMode && styles.monochromeContainer, darkMode && styles.darkText]}>{username || 'Guest'}</Text>
         <View style={styles.statsRow}>
           <View style={styles.stat}>
-            <Text style={[styles.statValue, highContrastMode && styles.highContrastBackground]}>248</Text>
-            <Text style={[styles.statLabel, , highContrastMode && styles.highContrastBackground]}>Streaks</Text>
+            <Text style={[styles.statValue, highContrastMode && styles.highContrastBackground, darkMode && styles.darkText]}>248</Text>
+            <Text style={[styles.statLabel, , highContrastMode && styles.highContrastBackground, darkMode && styles.darkText]}>Streaks</Text>
           </View>
           <View style={styles.stat}>
-            <Text style={[styles.statValue, highContrastMode && styles.highContrastBackground]}>85</Text>
-            <Text style={[styles.statLabel, highContrastMode && styles.highContrastBackground]}>Documents</Text>
+            <Text style={[styles.statValue, highContrastMode && styles.highContrastBackground, darkMode && styles.darkText]}>85</Text>
+            <Text style={[styles.statLabel, highContrastMode && styles.highContrastBackground, darkMode && styles.darkText]}>Documents</Text>
           </View>
           <View style={styles.stat}>
-            <Text style={[styles.statValue, highContrastMode && styles.highContrastBackground]}>15K</Text>
-            <Text style={[styles.statLabel, highContrastMode && styles.highContrastBackground]}>Read Hours</Text>
+            <Text style={[styles.statValue, highContrastMode && styles.highContrastBackground, darkMode && styles.darkText]}>15K</Text>
+            <Text style={[styles.statLabel, highContrastMode && styles.highContrastBackground, darkMode && styles.darkText]}>Read Hours</Text>
           </View>
         </View>
       </View>
@@ -52,32 +59,32 @@ export default function AccountScreen() {
 
 
       <View style={styles.section}>
-        <Text style={[styles.sectionTitle, highContrastMode && styles.highContrastBackground]}>Settings</Text>
-        <TouchableOpacity style={styles.settingItem}>
-          <Ionicons name="person-outline" size={24} color="#666666" />
-          <Text style={[styles.settingText, highContrastMode && styles.highContrastBackground]}>Edit Profile</Text>
-          <Ionicons name="chevron-forward" size={24} color="#666666" />
+        <Text style={[styles.sectionTitle, highContrastMode && styles.highContrastBackground, darkMode && styles.darkText]}>Settings</Text>
+        <TouchableOpacity style={[styles.settingItem, darkMode && styles.darkContainer1]}>
+          <Ionicons name="person-outline" size={24} style={[{ color: darkMode ? "#FFFFFF" : "#666666" }]}  />
+          <Text style={[styles.settingText, highContrastMode && styles.highContrastBackground, darkMode && styles.darkText]}>Edit Profile</Text>
+          <Ionicons name="chevron-forward" size={24} style={[{ color: darkMode ? "#FFFFFF" : "#666666" }]}  />
         </TouchableOpacity>
         <TouchableOpacity 
-          style={styles.settingItem}
+          style={[styles.settingItem, darkMode && styles.darkContainer1]}
           onPress={() => navigation.navigate("Accessibility")}
         >
-          <Ionicons name="accessibility-outline" size={24} color="#666666" />
-          <Text style={[styles.settingText, highContrastMode && styles.highContrastBackground]}>Accessibility</Text>
-          <Ionicons name="chevron-forward" size={24} color="#666666" />
+          <Ionicons name="accessibility-outline" size={24} style={[{ color: darkMode ? "#FFFFFF" : "#666666" }]}  />
+          <Text style={[styles.settingText, highContrastMode && styles.highContrastBackground, darkMode && styles.darkText]}>Accessibility</Text>
+          <Ionicons name="chevron-forward" size={24} style={[{ color: darkMode ? "#FFFFFF" : "#666666" }]}  />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.settingItem}>
-          <Ionicons name="analytics-outline" size={24} color="#666666" />
-          <Text style={[styles.settingText, highContrastMode && styles.highContrastBackground]}>Reports</Text>
-          <Ionicons name="chevron-forward" size={24} color="#666666" />
+        <TouchableOpacity style={[styles.settingItem, darkMode && styles.darkContainer1]}>
+          <Ionicons name="analytics-outline" size={24} style={[{ color: darkMode ? "#FFFFFF" : "#666666" }]}  />
+          <Text style={[styles.settingText, highContrastMode && styles.highContrastBackground, darkMode && styles.darkText]}>Reports</Text>
+          <Ionicons name="chevron-forward" size={24} style={[{ color: darkMode ? "#FFFFFF" : "#666666" }]}  />
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.settingItem}
+          style={[styles.settingItem, darkMode && styles.darkContainer1]}
           onPress={() => navigation.navigate("Detection")}
         >
-          <Ionicons name="shield-outline" size={24} color="#666666" />
-          <Text style={[styles.settingText, highContrastMode && styles.highContrastBackground]}>Detection Test</Text>
-          <Ionicons name="chevron-forward" size={24} color="#666666" />
+          <Ionicons name="shield-outline" size={24} style={[{ color: darkMode ? "#FFFFFF" : "#666666" }]}  />
+          <Text style={[styles.settingText, highContrastMode && styles.highContrastBackground, darkMode && styles.darkText]}>Detection Test</Text>
+          <Ionicons name="chevron-forward" size={24} style={[{ color: darkMode ? "#FFFFFF" : "#666666" }]}  />
         </TouchableOpacity>
 
       </View>
@@ -196,5 +203,17 @@ const styles = StyleSheet.create({
   },
   monochromeContainer: {
     backgroundColor: 'gray', // This will give the background a monochrome (gray) look
+  },
+  largeText: {
+    fontSize: 20,
+  },
+  darkText: {
+    color: '#fff',
+  },
+  darkContainer: {
+    backgroundColor:  theme.colors.primary.dark1,
+  },
+  darkContainer1: {
+    backgroundColor:  theme.colors.primary.dark3,
   },
 });

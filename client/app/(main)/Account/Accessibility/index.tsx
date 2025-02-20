@@ -157,10 +157,10 @@ const styles = StyleSheet.create({
 container: {
   flex: 1,
   padding: 20,
-  backgroundColor: '#fff',
+  backgroundColor: theme.colors.background.offWhite,
 },
 darkContainer: {
-  backgroundColor: '#222',
+  backgroundColor: theme.colors.primary.dark1,
 },
 header: {
   flexDirection: 'row',
