@@ -3,61 +3,44 @@ import { theme } from '@/src/theme';
 import { Ionicons } from '@expo/vector-icons';
 import { useFonts } from "expo-font";
 import { LinearGradient } from 'expo-linear-gradient';
-import { useNavigation, useRouter } from "expo-router";
-import React, { useEffect, useRef, useState } from "react";
-import { Dimensions, FlatList, Image, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { Dimensions, Image, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import Animated, { FadeInUp } from 'react-native-reanimated';
 import Carousel from 'react-native-snap-carousel';
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const ITEM_WIDTH = SLIDER_WIDTH * 0.85;
-const ITEM_HEIGHT = 400;
 
 const features = [
   {
     id: '1',
     title: 'SmartRead',
     description: 'Simplify complex documents with real-time summarization and audio highlights.',
-    image: 'https://placehold.co/600x400',
-    link: 'SmartReadMain'
-  },
-  {
-    id: '2',
-    title: 'VoiceFlow',
-    description: 'Convert speech to text instantly, reinforcing spelling and word recognition.',
-    image: 'https://placehold.co/600x400',
-    link: 'VoiceFlowMain'
+    image: 'https://i.ibb.co/HpXN19vB/3.png',
+    link: 'SmartRead'
   },
   {
     id: '3',
     title: 'VoxBuddy',
     description: 'An AI-powered assistant offering personalized guidance and interactive learning support.',
-    image: 'https://placehold.co/600x400',
-    link: 'VoxBuddyMain'
+    image: 'https://i.ibb.co/bgDMcJGJ/4.png',
+    link: 'VoxBuddy'
   },
   {
     id: '4',
     title: 'Read With Me',
     description: 'An interactive reading companion that provides real-time pronunciation feedback.',
-    image: 'https://placehold.co/600x400',
-    link: 'ReadWithMeMain'
+    image: 'https://i.ibb.co/WWssF7KS/2.png',
+    link: 'ReadWithMe'
   },
   {
     id: '5',
     title: 'PlaySpace',
     description: 'Engage in gamified learning activities designed to boost reading fluency and memory.',
-    image: 'https://i.ibb.co/qMnPZ3N8/playzone.png',
-    link: 'PlaySpaceMain'
+    image: 'https://i.ibb.co/8Dbkz1tM/1.png',
+    link: 'PlayMainScreen'
   },
-  {
-    id: '6',
-    title: 'Explore+',
-    description: 'Track your progress and connect with professional therapists through detailed insights.',
-    image: 'https://placehold.co/600x400',
-    link: 'ExplorePlusMain'
-  }
 ];
-
 
 const blogPosts = [
   {
@@ -86,12 +69,14 @@ const blogPosts = [
   },
 ];
 
+// No spread of the "key" prop inside the child.
+// We only accept the props we actually need:
 function BlogCard({ item, index }: any) {
   return (
     <Animated.View
       entering={FadeInUp.delay(index * 100)}
       style={styles.blogCard}
-      key={index}>
+    >
       <Image source={{ uri: item.image }} style={styles.blogImage} />
       <View style={styles.blogContent}>
         <View style={styles.blogHeader}>
@@ -109,19 +94,17 @@ function BlogCard({ item, index }: any) {
 
 function FeatureCard({ item, index }: any) {
   return (
-    <Animated.View 
-      entering={FadeInUp.delay(index * 100)} 
+    <Animated.View
+      entering={FadeInUp.delay(index * 100)}
       style={[styles.cardContainer, { zIndex: features.length - index }]}
-      key={index}>
+    >
       <View style={styles.card}>
         <Image source={{ uri: item.image }} style={styles.cardImage} />
         <LinearGradient
           colors={['transparent', 'rgba(0,0,0,0.8)']}
           style={styles.gradient}
         />
-       
         <View style={styles.cardContent}>
-         
           <Text style={styles.cardTitle}>{item.title}</Text>
           <Text style={styles.cardDescription}>{item.description}</Text>
           <Pressable style={styles.seeMoreButton}>
@@ -133,11 +116,12 @@ function FeatureCard({ item, index }: any) {
     </Animated.View>
   );
 }
+
 export default function HomeScreen() {
   const [fontsLoaded] = useFonts({
     OpenDyslexic: require("@/assets/fonts/open-dyslexic.ttf"),
   });
-  const {  username } = useSession();
+  const { username } = useSession();
 
   return (
     <ScrollView style={styles.wrapper}>
@@ -154,8 +138,6 @@ export default function HomeScreen() {
               {username ? username.charAt(0).toUpperCase() + username.slice(1) : 'Guest'}
             </Text>,
           </Text>
-
-
         </View>
 
         <View style={styles.greetingCard}>
@@ -166,11 +148,11 @@ export default function HomeScreen() {
             <Image source={require('@/assets/images/welcome.png')} style={styles.mascotImage} />
           </View>
         </View>
+
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Achievements</Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false} >
             <View style={styles.achievementCard}>
-
               <View style={[styles.achievementIcon, { backgroundColor: theme.colors.primary.dark3 }]}>
                 <Ionicons name="flame" size={24} color={theme.colors.background.offWhite} />
               </View>
@@ -190,30 +172,33 @@ export default function HomeScreen() {
             </View>
           </ScrollView>
         </View>
+
         {/* Swipeable Feature Section */}
         <View style={styles.carouselContainer}>
-        <Carousel
-          data={features}
-          renderItem={({ item, index }) => <FeatureCard item={item} index={index} />}
-          sliderWidth={SLIDER_WIDTH}
-          itemWidth={ITEM_WIDTH}
-          layout="stack"
-          layoutCardOffset={18}
-          loop
-          autoplay
-          autoplayInterval={3000}
-        />
-      </View>
+          <Carousel
+            data={features}
+            // Notice we use key here, but we do NOT pass key via spread into FeatureCard.
+            renderItem={({ item, index }) => (
+              <FeatureCard item={item} index={index} />
+            )}
+            sliderWidth={SLIDER_WIDTH}
+            itemWidth={ITEM_WIDTH}
+            layout="stack"
+            layoutCardOffset={18}
+            loop
+            autoplay
+            autoplayInterval={3000}
+            vertical={false}
+          />
+        </View>
 
         {/* Blog Cards Section */}
-
         <View style={styles.blogSection}>
-
           <Text style={styles.sectionTitleBlog}>Latest Articles</Text>
           {blogPosts.map((post, index) => (
+            // same fix for BlogCard
             <BlogCard key={post.id} item={post} index={index} />
           ))}
-
         </View>
       </View>
     </ScrollView>
@@ -449,7 +434,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
- 
+
   blogSection: {
     padding: 24,
   },
