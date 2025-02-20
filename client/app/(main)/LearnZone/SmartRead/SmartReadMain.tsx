@@ -6,13 +6,14 @@ import { useProcessDocument } from "@/src/hooks/SmartRead/useProcessDocument";
 import { theme } from "@/src/theme";
 import { FetchAllResponseDTO, ProcessDocRequestDTO } from "@/src/types/SmartRead/Documents";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import EvilIcons from "@expo/vector-icons/EvilIcons";
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "expo-router";
 import React, { useCallback, useState } from "react";
 import { ActivityIndicator, Image, RefreshControl, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Toast from 'react-native-toast-message';
 import EmptyState from './EmptyState';
+
 
 export default function SmartReadMain() {
 
@@ -70,7 +71,10 @@ export default function SmartReadMain() {
 
           {/* Header */}
           <Text style={styles.text}>Smart Read</Text>
-          <EvilIcons name="arrow-left" style={styles.backArrow} />
+          <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+          <Ionicons name="arrow-back-circle-outline" size={40} color="white" />
+        </TouchableOpacity>
+          
 
           {/*Main Content*/}
           <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
@@ -165,11 +169,15 @@ const styles = StyleSheet.create({
   },
   text: {
     top: 35,
-    fontSize: theme.fonts.sizes.small,
+    fontSize: theme.fonts.sizes.large,
     lineHeight: 30,
     fontWeight: "400",
     textAlign: "center",
     color: theme.colors.background.offWhite,
+  },
+  backButton:{
+    padding:10,
+    marginTop:-13,
   },
   innercontainer: {
     top: 80,

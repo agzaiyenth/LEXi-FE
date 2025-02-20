@@ -3,9 +3,10 @@ import React from 'react';
 import BalloonGame from './BalloonGame';
 import Game from './Game';
 import PlayMainScreen from './PlayMainScreen';
+import Home from '../Home/index'
 
 export type LearnZoneParamList = {
-  PlayMain: undefined;
+  PlayMainScreen: undefined;
   BalloonGame: undefined;
   Game: undefined;
 };
@@ -19,7 +20,7 @@ const PlaySpace = () => {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="PlayMain" component={PlayMainScreen} />
+      <Stack.Screen name="PlayMainScreen" component={PlayMainScreen} />
       <Stack.Screen name="BalloonGame" component={BalloonGame} />
       <Stack.Screen name="Game" component={Game} />
     </Stack.Navigator>

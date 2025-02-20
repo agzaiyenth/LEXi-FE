@@ -11,8 +11,9 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { LearnZoneParamList } from './index';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
-type LearnMainNavigationProp = StackNavigationProp<LearnZoneParamList, 'PlayMain'>;
+type LearnMainNavigationProp = StackNavigationProp<LearnZoneParamList, 'PlayMainScreen'>;
 interface Game {
   id: string;
   title: string;
@@ -94,6 +95,9 @@ const PlayMainScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>PlaySpace</Text>
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+      <Ionicons name="arrow-back-circle-outline" size={40} color="white" />
+        </TouchableOpacity>
       <FlatList
         data={games}
         renderItem={renderGameCard}
@@ -118,6 +122,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: theme.spacing.medium,
     color: theme.colors.primary.dark1,
+  },
+  backButton:{
+    marginTop:-65,
+    padding:12,
   },
   flatListContainer: {
     paddingHorizontal: theme.spacing.medium,
