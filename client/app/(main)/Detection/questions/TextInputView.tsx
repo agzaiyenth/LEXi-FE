@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   questionText: {
-    fontSize: 25,
+    fontSize: theme.fonts.sizes.s24,
     marginBottom:30,
     marginVertical: 10,
     textAlign: "center",

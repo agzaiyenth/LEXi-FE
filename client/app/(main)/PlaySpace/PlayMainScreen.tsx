@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     marginTop: theme.spacing.small,
   },
   cardTheory: {
-    fontSize: 12,
+    fontSize: theme.fonts.sizes.s12,
     color: theme.colors.primary.medium,
   },
 });

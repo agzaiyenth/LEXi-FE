@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   loadingText: {
-    fontSize: 18,
+    fontSize: theme.fonts.sizes.s18,
     color: '#333',
   },
 })

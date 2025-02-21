@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
   searchInput: {
     marginLeft: 10,
     flex: 1,
-    fontSize: 16,
+    fontSize: theme.fonts.sizes.s16,
   },
   seeAllCard: {
     backgroundColor: theme.colors.primary.medium2,
@@ -175,15 +175,15 @@ const styles = StyleSheet.create({
   seeAllText: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: theme.fonts.sizes.s14,
   }, noAppointmentsText: {
     textAlign: 'center',
     color: 'gray',
-    fontSize: 14,
+    fontSize: theme.fonts.sizes.s14,
     marginTop: 10,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: theme.fonts.sizes.s18,
     fontWeight: 'bold',
     marginBottom: 8,
   },
@@ -206,11 +206,11 @@ const styles = StyleSheet.create({
   },
   doctorName: {
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: theme.fonts.sizes.s14,
   },
   doctorSpecialty: {
     color: '#777',
-    fontSize: 12,
+    fontSize: theme.fonts.sizes.s12,
   },
   appointmentCard: {
     flexDirection: 'row',
@@ -230,19 +230,19 @@ const styles = StyleSheet.create({
   appointmentDate: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: theme.fonts.sizes.s16,
   },
   appointmentDay: {
     color: '#fff',
-    fontSize: 12,
+    fontSize: theme.fonts.sizes.s12,
   },
   appointmentDoctor: {
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: theme.fonts.sizes.s14,
   },
   appointmentSpecialty: {
     color: '#777',
-    fontSize: 12,
+    fontSize: theme.fonts.sizes.s12,
   },
   nearbyDoctorCard: {
     backgroundColor: theme.colors.primary.light2,

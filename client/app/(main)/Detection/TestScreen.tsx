@@ -176,11 +176,11 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   backButtonText: {
-    fontSize: 18,
+    fontSize: theme.fonts.sizes.s18,
     color: '#B4DCD6',
   },
   headerTitle: {
-    fontSize: 28,
+    fontSize: theme.fonts.sizes.s28,
     color: '#fff',
     textAlign: 'center',
     fontWeight: '500',
@@ -218,17 +218,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   difficultyText: {
-    fontSize: 16,
+    fontSize: theme.fonts.sizes.s16,
     color: "#457B9D",
     marginBottom: 5,
   },
   sessionText: {
-    fontSize: 16,
+    fontSize: theme.fonts.sizes.s16,
     color: "#457B9D",
     marginBottom: 5,
   },
   questionText: {
-    fontSize: 18,
+    fontSize: theme.fonts.sizes.s18,
     color: "#1D3557",
     marginBottom: 20,
     textAlign: "center",

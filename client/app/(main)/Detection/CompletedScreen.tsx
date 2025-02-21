@@ -47,13 +47,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    fontSize: 34,
+    fontSize: theme.fonts.sizes.s34,
     fontWeight: 'bold',
     marginBottom: 10,
     textAlign: 'center',
   },
   subtitle: {
-    fontSize: 18,
+    fontSize: theme.fonts.sizes.s18,
     textAlign: 'center',
     marginBottom: 40,
   },

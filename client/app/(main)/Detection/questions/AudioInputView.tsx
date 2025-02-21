@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   questionTitle: {
-    fontSize: 24,
+    fontSize: theme.fonts.sizes.s24,
     textAlign: 'center',
     paddingBottom: 20,
   },
