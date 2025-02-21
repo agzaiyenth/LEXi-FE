@@ -7,6 +7,7 @@ import { AntDesign, Feather } from '@expo/vector-icons';
 import { Link, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import {
+  ActivityIndicator,
   Image,
   SafeAreaView,
   StyleSheet,
@@ -126,7 +127,7 @@ const SignInScreen = () => {
           disabled={loading}
         >
           {loading ? (
-            <LoadingScreen />
+            <ActivityIndicator color="#fff" />
           ) : (
             <Text style={styles.submitButtonText}>Sign In</Text>
           )}
