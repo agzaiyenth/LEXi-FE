@@ -112,7 +112,7 @@ const PlayMainScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.primary.light,
+    backgroundColor: theme.colors.primary.light3,
     paddingTop: theme.spacing.large,
     minHeight: '100%',
   },
