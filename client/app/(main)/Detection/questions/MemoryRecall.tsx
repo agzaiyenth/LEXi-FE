@@ -108,6 +108,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "white",
-    fontSize: theme.fonts.sizes.s26,
+    fontSize: theme.fonts.sizes.s20,
   },
 });
