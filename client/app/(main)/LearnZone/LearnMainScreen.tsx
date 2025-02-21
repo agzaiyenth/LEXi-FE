@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     color: '#B4DCD6',
   },
   headerTitle: {
-    fontSize: theme.fonts.sizes.s18,
+    fontSize: theme.fonts.sizes.s28,
     color: '#fff',
     textAlign: 'center',
     fontWeight: '500',
