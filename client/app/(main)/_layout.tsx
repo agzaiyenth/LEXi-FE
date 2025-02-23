@@ -13,6 +13,7 @@ import ExploreScreen from './Explore';
 import AccountScreen from './Account';
 import DetectionFlow from './Detection';
 import LoadingScreen from '@/src/components/loading';
+import AccessibilityScreen from "./Account/Accessibility";
 
 // Create a Bottom Tab Navigator
 const Tab = createBottomTabNavigator();
@@ -41,6 +42,7 @@ export default function AppLayout() {
       <Tab.Screen name="Explore+" component={ExploreScreen} options={{ title: 'Explore' }} />
       <Tab.Screen name="Account" component={AccountScreen} options={{ title: 'Account' }} />
       <Tab.Screen name="Detection" component={DetectionFlow} options={{ title: 'Detection' }} />
+      <Tab.Screen name="Accessibility" component={AccessibilityScreen} options={{ title: 'Accessibility' }} />
     </Tab.Navigator>
   );
 }
@@ -50,7 +52,7 @@ const CustomTabBar = ({ state, descriptors, navigation }: any) => {
   return (
     <View style={styles.tabBar}>
       {state.routes.map((route: any, index: number) => {
-        if (route.name === 'Detection') {
+        if (route.name === 'Detection' || route.name === 'Accessibility') {
           return null; // Exclude the Detection tab from being rendered
         }
 
