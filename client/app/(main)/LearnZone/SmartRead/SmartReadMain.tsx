@@ -13,6 +13,7 @@ import React, { useCallback, useState } from "react";
 import { ActivityIndicator, Image, RefreshControl, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Toast from 'react-native-toast-message';
 import EmptyState from "./emptyState";
+import Svg, { Circle, Line } from "react-native-svg";
 
 
 
@@ -137,10 +138,20 @@ export default function SmartReadMain() {
                 ))) : (<EmptyState param="Documents"/>)}
             </View>
           </ScrollView>
-          <TouchableOpacity style={styles.floatingButton} onPress={() =>
+          
+
+          <TouchableOpacity style={styles.buttonUpload}onPress={() =>
             navigation.navigate('UploadScreen')}>
-            <AntDesign name="filetext1" size={24} color="#FFFF" />
+            <View style={styles.iconContainer}>
+              <Svg width="24" height="24" viewBox="0 0 24 24">
+                <Circle cx="12" cy="12" r="10" fill="#B0C4C7" />
+                <Line x1="12" y1="8" x2="12" y2="16" stroke="#2C858D" strokeWidth="2" />
+                <Line x1="8" y1="12" x2="16" y2="12" stroke="#2C858D" strokeWidth="2" />
+              </Svg>
+            </View>
+            <Text style={styles.textUpload}>Upload</Text>
           </TouchableOpacity>
+
         </View>
       </View>
 
@@ -260,6 +271,33 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+
+  buttonUpload: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#009EA5",
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    borderRadius: 30,
+    width:300, 
+    justifyContent: "center",
+    margin: 50,
+    marginBottom: 20,
+  },
+  iconContainer: {
+    backgroundColor: "#B0C4C7",
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 10,
+  },
+  textUpload: {
+    color: "#FFF9EF",
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });
 
