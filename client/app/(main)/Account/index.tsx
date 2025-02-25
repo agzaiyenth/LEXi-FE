@@ -100,11 +100,11 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   name: {
-    fontSize: 24,
+    fontSize: theme.fonts.sizes.s24,
     fontWeight: 'bold',
   },
   bio: {
-    fontSize: 16,
+    fontSize: theme.fonts.sizes.s16,
     color: '#666666',
     marginTop: 5,
   },
@@ -118,11 +118,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   statValue: {
-    fontSize: 20,
+    fontSize: theme.fonts.sizes.s20,
     fontWeight: 'bold',
   },
   statLabel: {
-    fontSize: 14,
+    fontSize: theme.fonts.sizes.s14,
     color: '#666666',
     marginTop: 5,
   },
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   sectionTitle: {
-    fontSize: 20,
+    fontSize: theme.fonts.sizes.s20,
     fontWeight: 'bold',
     marginBottom: 15,
   },
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   achievementTitle: {
-    fontSize: 14,
+    fontSize: theme.fonts.sizes.s14,
     fontWeight: '500',
     textAlign: 'center',
   },
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
   },
   settingText: {
     flex: 1,
-    fontSize: 16,
+    fontSize: theme.fonts.sizes.s16,
     marginLeft: 15,
   },
 });

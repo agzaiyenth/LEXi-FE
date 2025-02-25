@@ -4,6 +4,7 @@ import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { LearnZoneParamList } from "./index";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import theme from '@/src/theme';
 
 type LearnMainNavigationProp = StackNavigationProp<
   LearnZoneParamList,
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
     // zIndex: 10,
   },
   backButtonText: {
-    fontSize: 18,
+    fontSize: theme.fonts.sizes.s18,
     // color: '#FFFFFF',
     // fontWeight: 'bold',
     position: "absolute",
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
     zIndex: 1000,
   },
   header: {
-    fontSize: 28,
+    fontSize: theme.fonts.sizes.s28,
     fontWeight: "bold",
     textAlign: "center",
     marginVertical: 20,
@@ -124,7 +125,7 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   description: {
-    fontSize: 16,
+    fontSize: theme.fonts.sizes.s16,
     color: "#003D35",
     lineHeight: 24,
     textAlign: "justify",
@@ -148,13 +149,13 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   detailTitle: {
-    fontSize: 16, // Larger font size
+    fontSize: theme.fonts.sizes.s16, // Larger font size
     color: "#003D35",
     fontWeight: "bold",
     marginBottom: 5,
   },
   detailText: {
-    fontSize: 15,
+    fontSize: theme.fonts.sizes.s16,
     color: "#003D35",
   },
   nextButton: {
@@ -169,7 +170,7 @@ const styles = StyleSheet.create({
   },
   nextButtonText: {
     color: "#FFFFFF",
-    fontSize: 18,
+    fontSize: theme.fonts.sizes.s18,
     fontWeight: "bold",
   },
 });

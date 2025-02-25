@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   label: {
-    fontSize: 10,
+    fontSize: theme.fonts.sizes.s10,
     color: theme.colors.primary.dark1,
     marginTop: 5,
   },

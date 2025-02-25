@@ -114,11 +114,11 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   backButtonText: {
-    fontSize: 18,
+    fontSize: theme.fonts.sizes.s18,
     color: '#B4DCD6',
   },
   headerTitle: {
-    fontSize: 28,
+    fontSize: theme.fonts.sizes.s28,
     color: '#fff',
     textAlign: 'center',
     fontWeight: '500',
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   learningText: {
-    fontSize: 35,
+    fontSize: theme.fonts.sizes.s36,
     fontWeight: 'bold',
     color: '#4A4A4A',
   },
@@ -165,13 +165,13 @@ const styles = StyleSheet.create({
     height: 120,
   },
   featureTitle: {
-    fontSize: 26,
+    fontSize: theme.fonts.sizes.s26,
     color: '#fff',
     fontWeight: '500',
   },
   featureSubtitle: {
     maxWidth: 230,
-    fontSize: 15,
+    fontSize: theme.fonts.sizes.s14,
     color: '#fff',
     opacity: 0.8,
   },
@@ -193,13 +193,13 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   smallCardTitle: {
-    fontSize: 23,
+    fontSize: theme.fonts.sizes.s24,
     color: '#fff',
     fontWeight: '500',
     marginBottom: 4,
   },
   smallCardSubtitle: {
-    fontSize: 14,
+    fontSize: theme.fonts.sizes.s14,
     color: '#fff',
     opacity: 0.8,
     marginBottom: 16,

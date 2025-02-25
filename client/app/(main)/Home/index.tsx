@@ -357,13 +357,13 @@ const styles = StyleSheet.create({
     padding: 20
   },
   cardTitle: {
-    fontSize: 24,
+    fontSize: theme.fonts.sizes.s24,
     fontWeight: "700",
     color: "#ffffff",
     marginBottom: 8
   },
   cardDescription: {
-    fontSize: 16,
+    fontSize: theme.fonts.sizes.s16,
     color: "rgba(255,255,255,0.9)",
     marginBottom: 16
   },
@@ -378,7 +378,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "#ffffff",
-    fontSize: 16,
+    fontSize: theme.fonts.sizes.s16,
     fontWeight: "600",
     marginRight: 4
   },
@@ -432,7 +432,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   achievementTitle: {
-    fontSize: 14,
+    fontSize: theme.fonts.sizes.s14,
     fontWeight: '500',
     textAlign: 'center',
   },
@@ -476,7 +476,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     paddingLeft: 8,
-    fontSize: 20,
+    fontSize: theme.fonts.sizes.s20,
     fontWeight: "bold",
     marginBottom: 15
   },
@@ -484,7 +484,7 @@ const styles = StyleSheet.create({
     padding: 24
   },
   sectionTitleBlog: {
-    fontSize: 20,
+    fontSize: theme.fonts.sizes.s20,
     fontWeight: "700",
     color: "#1F2937",
     marginBottom: 16
@@ -513,7 +513,7 @@ const styles = StyleSheet.create({
   },
   blogCategory: {
     color: theme.colors.primary.medium2,
-    fontSize: 14,
+    fontSize: theme.fonts.sizes.s20,
     fontWeight: "600",
     marginBottom: 4
   },
@@ -522,15 +522,15 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   blogAuthor: {
-    fontSize: 14,
+    fontSize: theme.fonts.sizes.s14,
     color: "#6B7280"
   },
   blogDate: {
-    fontSize: 14,
+    fontSize: theme.fonts.sizes.s14,
     color: "#6B7280"
   },
   blogTitle: {
-    fontSize: 18,
+    fontSize: theme.fonts.sizes.s18,
     fontWeight: "700",
     color: "#1F2937",
     lineHeight: 24

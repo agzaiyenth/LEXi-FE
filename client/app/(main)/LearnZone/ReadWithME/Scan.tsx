@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   },
   text: {
     top: 35,
-    fontSize: 25,
+    fontSize: theme.fonts.sizes.s26,
     lineHeight: 30,
     fontWeight: "400",
     textAlign: "center",
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 20,
     left: 20,
-    fontSize: 60,
+    fontSize: theme.fonts.sizes.s40,
     color: theme.colors.background.offWhite,
   },
   Ellipse: {
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     top: -90,
     left: 90,
     color: theme.colors.blacks.medium,
-    fontSize: 20,
+    fontSize: theme.fonts.sizes.s20,
   },
   scanButton: {
     width: 200,
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   scanButtonText: {
-    fontSize: 23,
+    fontSize: theme.fonts.sizes.s24,
     textAlign: "center",
     padding: 3,
     color: theme.colors.background.beige,
