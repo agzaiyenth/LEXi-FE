@@ -50,3 +50,4 @@ build/
 # EAS Credentials
 .eas/
 credentials.json
+/.idea/
