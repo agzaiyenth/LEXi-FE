@@ -79,78 +79,87 @@ export default function SmartReadMain() {
           
 
           {/*Main Content*/}
-          <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-            <View style={styles.innercontainer} >
+          <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />} 
+           contentContainerStyle={styles.scrollViewContent}>
+            <View style={styles.secondcontainer} >
+              <View style={styles.innercontainer} >
 
-              {documents.length > 0 ? (
-                documents?.map((document: FetchAllResponseDTO) => (
-                  <View style={styles.cardContainer} key={document.id}>
-                    {/* Document Image */}
-                    <Image
-                      source={require("@/assets/images/auth/icon.png")}
-                      style={styles.image}
-                    />
+                  {documents.length > 0 ? (
+                    documents?.map((document: FetchAllResponseDTO) => (
+                      <View style={styles.cardContainer} key={document.id}>
+                        {/* Document Image */}
+                        <Image
+                          source={require("@/assets/images/auth/icon.png")}
+                          style={styles.image}
+                        />
 
-                    {/* Document Details */}
+                        {/* Document Details */}
 
-                    <View style={styles.detailsContainer}>
+                        <View style={styles.detailsContainer}>
 
-                      <Text style={styles.title}>{document.fileName}</Text>
+                          <Text style={styles.title}>{document.fileName}</Text>
 
-                      {/* Conditional Buttons */}
-                      {document.processed === true ? (
-                        <TouchableOpacity
-                          style={styles.playButton}
-                          onPress={() => navigation.navigate("SpeechScreen", { fileId: document.id })}
-                        >
-                          <AntDesign
-                            name="playcircleo"
-                            size={24}
-                            style={styles.playButtonIcon}
-                          />
-                          <Text style={styles.playButtonText}>View</Text>
-                        </TouchableOpacity>
-                      ) : (
-                        <TouchableOpacity
-                          style={styles.processButton}
-                          onPress={() => handleProcessing({ fileId: document.id, blobUrl: document.blobUrl })}
-                          disabled={processingDocs.includes(document.id)}
-                        >
-                          {processingDocs.includes(document.id) ? (<>
-                            <ActivityIndicator size="small" color={theme.colors.secondary.medium} />
-                            <Text style={styles.playButtonText}>Processing Hold Up!</Text>
-                          </>
-                          ) : (
-                            <>
+                          {/* Conditional Buttons */}
+                          {document.processed === true ? (
+                            <TouchableOpacity
+                              style={styles.playButton}
+                              onPress={() => navigation.navigate("SpeechScreen", { fileId: document.id })}
+                            >
                               <AntDesign
                                 name="playcircleo"
                                 size={24}
                                 style={styles.playButtonIcon}
                               />
-                              <Text style={styles.playButtonText}>Process</Text>
-                            </>
+                              <Text style={styles.playButtonText}>View</Text>
+                            </TouchableOpacity>
+                          ) : (
+                            <TouchableOpacity
+                              style={styles.processButton}
+                              onPress={() => handleProcessing({ fileId: document.id, blobUrl: document.blobUrl })}
+                              disabled={processingDocs.includes(document.id)}
+                            >
+                              {processingDocs.includes(document.id) ? (<>
+                                <ActivityIndicator size="small" color={theme.colors.secondary.medium} />
+                                <Text style={styles.playButtonText}>Processing Hold Up!</Text>
+                              </>
+                              ) : (
+                                <>
+                                  <AntDesign
+                                    name="playcircleo"
+                                    size={24}
+                                    style={styles.playButtonIcon}
+                                  />
+                                  <Text style={styles.playButtonText}>Process</Text>
+                                </>
+                              )}
+                            </TouchableOpacity>
                           )}
-                        </TouchableOpacity>
-                      )}
 
-                    </View>
-                  </View>
-                ))) : (<EmptyState param="Documents"/>)}
-            </View>
+                        </View>
+                      </View>
+                    ))) : (<EmptyState param="Documents"/>)}
+
+
+                      <TouchableOpacity style={styles.buttonUpload}onPress={() =>
+                                  navigation.navigate('UploadScreen')}>
+                        <View style={styles.iconContainer}>
+                          <Svg width="24" height="24" viewBox="0 0 24 24">
+                            <Circle cx="12" cy="12" r="10" fill="#B0C4C7" />
+                            <Line x1="12" y1="8" x2="12" y2="16" stroke="#2C858D" strokeWidth="2" />
+                            <Line x1="8" y1="12" x2="16" y2="12" stroke="#2C858D" strokeWidth="2" />
+                          </Svg>
+                        </View>
+                          <Text style={styles.textUpload}>Upload</Text>
+                      </TouchableOpacity>
+                
+              </View>  
+              
+            </View>  
+            
           </ScrollView>
           
 
-          <TouchableOpacity style={styles.buttonUpload}onPress={() =>
-            navigation.navigate('UploadScreen')}>
-            <View style={styles.iconContainer}>
-              <Svg width="24" height="24" viewBox="0 0 24 24">
-                <Circle cx="12" cy="12" r="10" fill="#B0C4C7" />
-                <Line x1="12" y1="8" x2="12" y2="16" stroke="#2C858D" strokeWidth="2" />
-                <Line x1="8" y1="12" x2="16" y2="12" stroke="#2C858D" strokeWidth="2" />
-              </Svg>
-            </View>
-            <Text style={styles.textUpload}>Upload</Text>
-          </TouchableOpacity>
+          
 
         </View>
       </View>
@@ -167,9 +176,10 @@ const styles = StyleSheet.create({
 
   },
   container: {
-    flex: 1,
+    height: "150%",
     backgroundColor: "#9AC3BB",
     position: "relative",
+    
   },
   backArrow: {
     position: "absolute",
@@ -192,17 +202,18 @@ const styles = StyleSheet.create({
     marginTop:-13,
   },
   innercontainer: {
+    flex: 1,
     top: 80,
     backgroundColor: "#FDF4DE",
     borderRadius: 25,
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    height: "140%",
     color: theme.colors.blacks.medium,
+    position: "relative",
+    paddingBottom:500,
   },
   cardContainer: {
-    top: -80,
     flexDirection: "row",
     padding: 10,
     backgroundColor: theme.colors.background.beige,
@@ -222,6 +233,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     width: 80,
+    
 
   },
   title: {
@@ -284,6 +296,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     margin: 50,
     marginBottom: 20,
+    top: 550,
+    position: "absolute",
   },
   iconContainer: {
     backgroundColor: "#B0C4C7",
@@ -298,6 +312,15 @@ const styles = StyleSheet.create({
     color: "#FFF9EF",
     fontSize: 18,
     fontWeight: "bold",
+  },
+  scrollViewContent: {
+    top: -50,
+    
+  },
+
+  secondcontainer: {
+   
+    
   },
 });
 
