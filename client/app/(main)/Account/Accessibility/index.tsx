@@ -48,6 +48,70 @@ const AccessibilityButton = ({ icon, label }: { icon: string; label: string }) =
   );
 };
 
-
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: theme.colors.primary.light3,
+    padding: 16,
+    alignItems: 'center',
+  },
+  backButton: {
+    position: 'absolute',
+    top: 28,
+    left: 22,
+    backgroundColor: theme.colors.primary.light2,
+    padding: 8,
+    borderRadius: 20,
+  },
+  header: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: theme.colors.background.offWhite,
+    marginBottom: 70,
+    marginTop: 20,
+  },
+  menuContainer: {
+    alignItems: 'center',
+  },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
+  button: {
+    width: 150,
+    height: 80,
+    backgroundColor: theme.colors.background.beige,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 10,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
+  },
+  buttonText: {
+    marginTop: 8,
+    fontSize: 14,
+    fontWeight: '500',
+    color: theme.colors.primary.dark1,
+    textAlign: 'center', // Center text for multiline labels
+  },
+  resetButton: {
+    backgroundColor: theme.colors.primary.medium,
+    width: '70%',
+    paddingVertical: 12,
+    borderRadius: 30,
+    alignItems: 'center',
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  resetText: {
+    color: '#fff',
+    fontSize: 17,
+    fontWeight: '500',
+  },
+});
 
 export default AccessibilityScreen;
