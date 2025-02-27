@@ -48,11 +48,11 @@ const styles = StyleSheet.create({
     padding: 12,
     justifyContent: "center",
     textAlign: "center",
-    fontSize: 40,
+    fontSize: theme.fonts.sizes.s40,
   },
   body: {
     paddingTop: 50,
-    fontSize: 15,
+    fontSize: theme.fonts.sizes.s14,
     lineHeight: 30,
     fontWeight: "400",
     textAlign: "center",
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   getStartedButtonText: {
     color: theme.colors.background.offWhite,
     textAlign: "center",
-    fontSize: 20,
+    fontSize: theme.fonts.sizes.s20,
   },
 });
 

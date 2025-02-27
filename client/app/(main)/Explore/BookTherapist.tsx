@@ -409,18 +409,18 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
   name: {
-    fontSize: 22,
+    fontSize: theme.fonts.sizes.s22,
     fontWeight: 'bold',
     color: '#1F2937',
     marginBottom: 4,
   },
   specialty: {
-    fontSize: 16,
+    fontSize: theme.fonts.sizes.s16,
     color: '#6B7280',
     marginBottom: 4,
   },
   price: {
-    fontSize: 16,
+    fontSize: theme.fonts.sizes.s16,
     color: theme.colors.primary.medium,
     fontWeight: 'bold',
   },
@@ -437,12 +437,12 @@ const styles = StyleSheet.create({
   },
   detailValue: {
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: theme.fonts.sizes.s16,
     color: '#1F2937',
   },
   detailLabel: {
     color: '#6B7280',
-    fontSize: 12,
+    fontSize: theme.fonts.sizes.s16,
     marginTop: 4,
   },
   tabsContainer: {
@@ -482,7 +482,7 @@ const styles = StyleSheet.create({
     color: 'gray',
   },
   dateText: {
-    fontSize: 16,
+    fontSize: theme.fonts.sizes.s16,
   },
   selectedDayText: {
     color: theme.colors.primary.medium,
@@ -579,7 +579,7 @@ const styles = StyleSheet.create({
   bookNowText: {
     color: '#FFFFFF',
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: theme.fonts.sizes.s16,
   },
   loaderContainer: {
     flex: 1,
@@ -588,7 +588,7 @@ const styles = StyleSheet.create({
   },
   noAvailabilityText: {
     color: 'gray',
-    fontSize: 14,
+    fontSize: theme.fonts.sizes.s16,
     textAlign: 'center',
     marginTop: 10,
   },
@@ -605,7 +605,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalText: {
-    fontSize: 18,
+    fontSize: theme.fonts.sizes.s18,
     fontWeight: 'bold',
     color: '#3B8C84',
     marginTop: 10,
@@ -623,7 +623,7 @@ const styles = StyleSheet.create({
   },
   badgeText: {
     color: 'white',
-    fontSize: 12,
+    fontSize: theme.fonts.sizes.s12,
     fontWeight: 'bold',
   },
   selectedBadge: {

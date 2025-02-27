@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     padding: 0,
   },
   questionTitle: {
-    fontSize: 24,
+    fontSize: theme.fonts.sizes.s24,
     textAlign: 'center',
     paddingBottom: 20,
   },
@@ -69,6 +69,6 @@ const styles = StyleSheet.create({
   },
   answerText: {
     color: 'white',
-    fontSize: 20,
+    fontSize: theme.fonts.sizes.s20,
   },
 });

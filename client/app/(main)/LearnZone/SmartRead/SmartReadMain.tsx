@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 20,
     left: 20,
-    fontSize: 60,
+    fontSize: theme.fonts.sizes.s60,
     color: theme.colors.background.offWhite,
     padding: 2,
   },
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
   },
   playButtonText: {
     color: theme.colors.secondary.medium,
-    fontSize: 16,
+    fontSize: theme.fonts.sizes.s16,
     fontWeight: "bold",
   },
 

@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 20,
     left: 20,
-    fontSize: 60,
+    fontSize: theme.fonts.sizes.s60,
     color: theme.colors.background.offWhite,
     padding: 2,
   },

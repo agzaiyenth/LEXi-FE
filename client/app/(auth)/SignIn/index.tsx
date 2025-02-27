@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
   },
 
   welcomeText: {
-    fontSize: 24,
+    fontSize: theme.fonts.sizes.s14,
     fontWeight: 'bold',
     marginBottom: 40,
     textAlign: 'center',
@@ -221,13 +221,13 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   checkboxLabel: {
-    fontSize: 14,
+    fontSize: theme.fonts.sizes.s14,
     color: 'black',
   },
   span: {
     color: theme.colors.primary.medium,
     fontWeight: '500',
-    fontSize: 14,
+    fontSize: theme.fonts.sizes.s14,
   },
   submitButton: {
     backgroundColor: theme.colors.primary.medium,
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
   submitButtonText: {
     color: theme.colors.background.beige,
     fontWeight: '500',
-    fontSize: 16,
+    fontSize: theme.fonts.sizes.s16,
   },
   socialButton: {
     flex: 1,
@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
   p: {
     textAlign: 'center',
     color: theme.colors.blacks.dark,
-    fontSize: 14,
+    fontSize: theme.fonts.sizes.s14,
     marginTop: 10,
   },
   logo: {

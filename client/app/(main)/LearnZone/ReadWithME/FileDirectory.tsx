@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   Topic: {
-    fontSize: 25,
+    fontSize: theme.fonts.sizes.s26,
     lineHeight: 30,
     fontWeight: "500",
     textAlign: "center",

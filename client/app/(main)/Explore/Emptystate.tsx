@@ -1,5 +1,6 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
+import theme from '@/src/theme';
 
 interface EmptyStateProps {
   param: string;
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   text: {
-    fontSize: 18,
+    fontSize: theme.fonts.sizes.s18,
     fontWeight: "bold",
     color: "#555",
     textAlign: "center",

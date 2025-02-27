@@ -65,12 +65,12 @@ export default function ChatInterface() {
     }
   }, [connectionState]);
 
-  
   // Clean up on unmount
   useEffect(() => {
     return () => {
       disconnect();
     };
+   
   }, []);
   const handleWSMessage = useCallback(
     async (message: WSMessage) => {
@@ -322,7 +322,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 24,
   },
   sectionTitle: {
-    fontSize: 26,
+    fontSize: theme.fonts.sizes.s26,
     fontWeight: '600',
     marginBottom: 8,
     color: theme.colors.blacks.medium

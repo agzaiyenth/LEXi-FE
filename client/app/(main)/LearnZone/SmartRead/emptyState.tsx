@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   text: {
-    fontSize: 28,
+    fontSize: theme.fonts.sizes.s28,
     fontWeight: "700",
     color: "#555",
     textAlign: "center",

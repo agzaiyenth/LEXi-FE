@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
   searchInput: {
     marginLeft: 10,
     flex: 1,
-    fontSize: 16,
+    fontSize: theme.fonts.sizes.s16,
   },
   filterContainer: {
     flexDirection: 'row',
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary.dark2,
   },
   filterText: {
-    fontSize: 14,
+    fontSize: theme.fonts.sizes.s14,
     color: '#333',
   },
   selectedFilterText: {
@@ -215,12 +215,12 @@ const styles = StyleSheet.create({
   },
   doctorName: {
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: theme.fonts.sizes.s16,
     textAlign: 'center',
   },
   doctorSpecialty: {
     color: theme.colors.primary.dark3,
-    fontSize: 14,
+    fontSize: theme.fonts.sizes.s14,
     textAlign: 'center',
   },
   availableTimeContainer: {
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
   },
   availableTimeTitle: {
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: theme.fonts.sizes.s14,
     marginBottom: 4,
   },
   dateContainer: {
@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
   },
   dateText: {
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: theme.fonts.sizes.s14,
     marginHorizontal: 8,
   },
   timeScroll: {
@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
   },
   noAvailabilityText: {
     color: 'gray',
-    fontSize: 14,
+    fontSize: theme.fonts.sizes.s14,
     textAlign: 'center',
     marginTop: 10,
   },

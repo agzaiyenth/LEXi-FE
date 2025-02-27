@@ -1,8 +1,8 @@
 import { Link, Stack } from 'expo-router';
 import React from 'react';
 import { StyleSheet } from 'react-native';
-
 import { Text, View } from '@/src/components/Themed';
+import theme from '@/src/theme';
 
 export default function NotFoundScreen() {
   return (
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
-    fontSize: 20,
+    fontSize: theme.fonts.sizes.s20,
     fontWeight: 'bold',
   },
   link: {
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   linkText: {
-    fontSize: 14,
+    fontSize: theme.fonts.sizes.s14,
     color: '#2e78b7',
   },
 });

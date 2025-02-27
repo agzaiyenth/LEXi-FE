@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 import { ExternalLink } from './ExternalLink';
 import { MonoText } from './StyledText';
 import { Text, View } from './Themed';
-
+import theme from '@/src/theme';
 import Colors from '@/constants/Colors';
 
 export default function EditScreenInfo({ path }: { path: string }) {
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
   },
   getStartedText: {
-    fontSize: 17,
+    fontSize: theme.fonts.sizes.s18,
     lineHeight: 24,
     textAlign: 'center',
   },
