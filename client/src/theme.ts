@@ -88,46 +88,77 @@ export const theme = {
 };
 
 // Add a method to toggle the contrast theme globally
-export const getCurrentTheme = (contrast: boolean) => {
-  return contrast
-    ? {
-        ...theme,
-        colors: {
-          ...theme.colors,
-          primary: {
-            dark1: "#0F1B21", // Much darker
-            dark2: "#12343b", 
-            dark3: "#025A5E", // Higher contrast
-            medium: "#1F8A80", 
-            medium2: "#A2DED0", 
-            light: "#D8F5F1", // Lighter for contrast
-            light2: "#E9F7F5",
-            light3: "#B0DFD9",
-          },
-          secondary: {
-            dark1: "#5E3D1E", // Darker for contrast
-            dark2: "#8D5A2B",
-            medium: "#E4792D", // More vibrant
-            light: "#FDD9A4",
-            light2: "#FFF4E5", // Higher contrast against text
-          },
-          accent: {
-            dark: "#472E3D",
-            medium: "#98394D",
-            light: "#FF3B4A", // More vibrant contrast
-          },
-          background: {
-            offWhite: "#FFFFFF", // Pure white for maximum contrast
-            beige: "#F5E6C6", 
-            dark: "#B3A38A", // Darker to contrast with text
-          },
-          blacks: {
-            medium: "#121212", // Adjusted for clarity
-            dark: "#000000",
-          },
-        },
-      }
-    : theme; // Default theme for normal contrast
+export const getCurrentTheme = (contrast: boolean, fontScale: number) => {
+  const baseTheme = {
+    ...theme,
+    fonts: {
+      ...theme.fonts,
+      sizes: {
+        small: Math.round(16 * fontScale),
+        medium: Math.round(20 * fontScale),
+        large: Math.round(30 * fontScale),
+        extraLarge: Math.round(40 * fontScale),
+        s10: Math.round(10 * fontScale),
+        s12: Math.round(12 * fontScale),
+        s14: Math.round(14 * fontScale),
+        s16: Math.round(16 * fontScale),
+        s18: Math.round(18 * fontScale),
+        s20: Math.round(20 * fontScale),
+        s22: Math.round(22 * fontScale),
+        s24: Math.round(24 * fontScale),
+        s26: Math.round(26 * fontScale),
+        s28: Math.round(28 * fontScale),
+        s30: Math.round(30 * fontScale),
+        s32: Math.round(32 * fontScale),
+        s34: Math.round(34 * fontScale),
+        s36: Math.round(36 * fontScale),
+        s38: Math.round(38 * fontScale),
+        s40: Math.round(40 * fontScale),
+        s60: Math.round(60 * fontScale),
+      },
+    },
+  };
+
+  if (!contrast) return baseTheme; // Return default theme if contrast is off
+
+
+  return {
+    ...baseTheme,
+    colors: {
+      ...theme.colors,
+      primary: {
+        dark1: "#0F1B21", // Much darker
+        dark2: "#12343b", 
+        dark3: "#025A5E", // Higher contrast
+        medium: "#1F8A80", 
+        medium2: "#A2DED0", 
+        light: "#D8F5F1", // Lighter for contrast
+        light2: "#E9F7F5",
+        light3: "#B0DFD9",
+      },
+      secondary: {
+        dark1: "#5E3D1E", // Darker for contrast
+        dark2: "#8D5A2B",
+        medium: "#E4792D", // More vibrant
+        light: "#FDD9A4",
+        light2: "#FFF4E5", // Higher contrast against text
+      },
+      accent: {
+        dark: "#472E3D",
+        medium: "#98394D",
+        light: "#FF3B4A", // More vibrant contrast
+      },
+      background: {
+        offWhite: "#FFFFFF", // Pure white for maximum contrast
+        beige: "#F5E6C6", 
+        dark: "#B3A38A", // Darker to contrast with text
+      },
+      blacks: {
+        medium: "#121212", // Adjusted for clarity
+        dark: "#000000",
+      },
+    },
+  };
 };
 
 export default theme;
