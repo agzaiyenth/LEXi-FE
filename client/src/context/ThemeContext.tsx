@@ -16,6 +16,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [highContrast, setHighContrast] = useState(defaultTheme.accessibility.highContrast);
   const [fontScale, setFontScale] = useState(1); // Default scale is 1
   const [colorFilter, setColorFilter] = useState(defaultTheme.accessibility.colorFilter); // Manage color filter state
+  const [fontType, setFontType] = useState<string>(defaultTheme.accessibility.fontType);
 
   // Function to toggle contrast
   const toggleContrast = () => {
@@ -30,18 +31,23 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setColorFilter((prev1) => !prev1);
   };
 
+  const toggleFontType = (newFontType: string) => {
+    setFontType(newFontType); // Update the font type
+  };
+
   // Reset to default theme settings
   const resetToDefault = () => {
     setHighContrast(false);
     setFontScale(1);
     setColorFilter(false);
+    setFontType("System");
   };
 
   // Dynamically update the theme based on the highContrast state
-  const updatedTheme = getCurrentTheme(highContrast, fontScale, colorFilter);
+  const updatedTheme = getCurrentTheme(highContrast, fontScale, colorFilter, fontType);
 
   return (
-    <ThemeContext.Provider value={{ theme: updatedTheme, toggleContrast, increaseFontSize, toggleColorFilter, resetToDefault }}>
+    <ThemeContext.Provider value={{ theme: updatedTheme, toggleContrast, increaseFontSize, toggleColorFilter, toggleFontType, resetToDefault }}>
       {children}
     </ThemeContext.Provider>
   );

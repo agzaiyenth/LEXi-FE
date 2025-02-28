@@ -85,15 +85,17 @@ export const theme = {
     highContrast: false,
     fontScale: 1, // 1 for normal, >1 for larger fonts
     colorFilter: false, // property for color filter
+    fontType: "System", // Default font type
   },
 };
 
 // Add a method to toggle the contrast theme globally
-export const getCurrentTheme = (contrast: boolean, fontScale: number, colorFilter: boolean) => {
+export const getCurrentTheme = (contrast: boolean, fontScale: number, colorFilter: boolean, fontType: string) => {
   const baseTheme = {
     ...theme,
     fonts: {
       ...theme.fonts,
+      regular: fontType, // Dynamically update the fontType
       sizes: {
         small: Math.round(16 * fontScale),
         medium: Math.round(20 * fontScale),
