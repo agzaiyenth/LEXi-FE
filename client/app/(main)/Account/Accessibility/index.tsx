@@ -12,7 +12,7 @@ type NavigationProps = StackNavigationProp<RootStackParamList, 'Account'>;
 
 const AccessibilityScreen = () => {
   const navigation = useNavigation<NavigationProps>();
-  const { theme, toggleContrast } = useTheme(); // Get the current theme and toggle function
+  const { theme, toggleContrast, increaseFontSize  } = useTheme(); // Get the current theme and toggle function
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.primary.light3 }]}>
@@ -27,13 +27,9 @@ const AccessibilityScreen = () => {
       <ScrollView contentContainerStyle={styles.menuContainer}>
         <View style={styles.grid}>
           <AccessibilityButton icon="palette" label="Colours" />
-          <AccessibilityButton
-            icon="contrast"
-            label="Contrast"
-            onPress={toggleContrast} // Toggle contrast mode
-          />
+          <AccessibilityButton icon="contrast" label="Contrast" onPress={toggleContrast} />
           <AccessibilityButton icon="format-size" label="Font" />
-          <AccessibilityButton icon="format-header-increase" label="Bigger Text" />
+          <AccessibilityButton icon="format-header-increase" label="Bigger Text" onPress={increaseFontSize}/>
           <AccessibilityButton icon="format-line-spacing" label="Line Height" />
           <AccessibilityButton icon="format-letter-spacing" label="Text Spacing" />
           <AccessibilityButton icon="keyboard-outline" label={"Alphabetical\nKeyboard"} />
