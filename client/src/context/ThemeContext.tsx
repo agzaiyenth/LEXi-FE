@@ -50,6 +50,25 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   };
 
+  // Function to load user preferences from the API
+  const loadUserPreference = async () => {
+    try {
+      if (!username) return;
+
+      const response = await apiClient.get(`/api/user/theme/${username}`);
+      const preferences = response.data;
+
+      if (preferences) {
+        setHighContrast(preferences.highContrast);
+        setFontScale(preferences.fontScale);
+        setColorFilter(preferences.colorFilter);
+        setFontType(preferences.fontType);
+      }
+    } catch (error) {
+      console.error('Error loading user preferences:', error);
+    }
+  };
+
   // Function to toggle contrast mode
   const toggleContrast = () => {
     setHighContrast((prev) => {
