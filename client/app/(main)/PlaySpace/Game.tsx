@@ -12,6 +12,15 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { LearnZoneParamList } from "./index";
+import Ionicons from "@expo/vector-icons/Ionicons";
+
+type LearnMainNavigationProp = StackNavigationProp<
+  LearnZoneParamList,
+  "PlayMainScreen"
+>;
 import theme from '@/src/theme';
 
 const { width, height } = Dimensions.get('window');
@@ -55,6 +64,7 @@ const levels = [
 ];
 
 const Game = () => {
+  const navigation = useNavigation<LearnMainNavigationProp>();
   const [currentLevel, setCurrentLevel] = useState(0);
   const [score, setScore] = useState(0);
   const [showQuestion, setShowQuestion] = useState(true);
@@ -139,9 +149,20 @@ const Game = () => {
   };
 
   return (
+
     <View style={styles.container}>
       {/* Score Display */}
+       
       <View style={styles.scoreContainer}>
+      
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => navigation.goBack()}
+      >
+        <Text style={styles.backButtonText}>
+          <Ionicons name="arrow-back-circle-outline" size={40} color="white" />
+        </Text>
+      </TouchableOpacity>
         <Text style={styles.scoreText}>Score: {score}</Text>
       </View>
 
@@ -189,6 +210,27 @@ const styles = StyleSheet.create({
     backgroundColor: '#95B9B2',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  backButton: {
+    position: "absolute",
+    top: 0,
+    left: 15,
+    height: 40,
+    width: 40,
+    // backgroundColor: '#003D35',
+    // borderRadius: 300,
+    padding: 10,
+    // zIndex: 10,
+  },
+  backButtonText: {
+    fontSize: 18,
+    // color: '#FFFFFF',
+    // fontWeight: 'bold',
+    position: "absolute",
+    top: "15%",
+    left: "0%",
+    right: "0%",
+    zIndex: 1000,
   },
   scoreText: {
     color: '#FFFFFF',
