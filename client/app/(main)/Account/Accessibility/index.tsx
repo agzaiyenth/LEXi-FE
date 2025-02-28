@@ -12,7 +12,7 @@ type NavigationProps = StackNavigationProp<RootStackParamList, 'Account'>;
 
 const AccessibilityScreen = () => {
   const navigation = useNavigation<NavigationProps>();
-  const { theme, toggleContrast, increaseFontSize  } = useTheme(); // Get the current theme and toggle function
+  const { theme, toggleContrast, increaseFontSize, resetToDefault } = useTheme(); // Get the current theme and toggle function
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.primary.light3 }]}>
@@ -36,7 +36,7 @@ const AccessibilityScreen = () => {
           <AccessibilityButton icon="format-align-left" label="Text Align" />
         </View>
       </ScrollView>
-      <TouchableOpacity style={styles.resetButton}>
+      <TouchableOpacity style={styles.resetButton} onPress={resetToDefault}>
         <Text style={styles.resetText}>RESET</Text>
       </TouchableOpacity>
     </View>
