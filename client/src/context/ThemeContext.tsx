@@ -25,11 +25,17 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setFontScale((prevScale) => (prevScale < 2 ? prevScale + 0.2 : prevScale)); // Limit to 2x scale
   };
 
+  // Reset to default theme settings
+  const resetToDefault = () => {
+    setHighContrast(false);
+    setFontScale(1);
+  };
+
   // Dynamically update the theme based on the highContrast state
   const updatedTheme = getCurrentTheme(highContrast, fontScale);
 
   return (
-    <ThemeContext.Provider value={{ theme: updatedTheme, toggleContrast, increaseFontSize  }}>
+    <ThemeContext.Provider value={{ theme: updatedTheme, toggleContrast, increaseFontSize, resetToDefault }}>
       {children}
     </ThemeContext.Provider>
   );
