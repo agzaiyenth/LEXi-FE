@@ -18,10 +18,10 @@ const AccessibilityScreen = () => {
     <View style={[styles.container, { backgroundColor: theme.colors.primary.light3 }]}>
       {/* Back Button */}
       <TouchableOpacity onPress={() => navigation.navigate('Account')} style={styles.backButton}>
-        <AntDesign name="arrowleft" size={24} color={theme.colors.primary.medium2} />
+        <AntDesign name="arrowleft" size={theme.fonts.sizes.s20 * theme.accessibility.fontScale} color={theme.colors.primary.medium2} />
       </TouchableOpacity>
 
-      <Text style={[styles.header, { color: theme.colors.background.offWhite }]}>
+      <Text style={[styles.header, { color: theme.colors.background.offWhite }, {fontSize: theme.fonts.sizes.s22 * theme.accessibility.fontScale }]}>
         Accessibility Menu
       </Text>
       <ScrollView contentContainerStyle={styles.menuContainer}>
@@ -37,7 +37,7 @@ const AccessibilityScreen = () => {
         </View>
       </ScrollView>
       <TouchableOpacity style={styles.resetButton} onPress={resetToDefault}>
-        <Text style={styles.resetText}>RESET</Text>
+        <Text style={[styles.resetText, { fontSize: theme.fonts.sizes.s16 * theme.accessibility.fontScale }]}>RESET</Text>
       </TouchableOpacity>
     </View>
   );
@@ -55,7 +55,7 @@ const AccessibilityButton = ({
   return (
     <TouchableOpacity style={styles.button} onPress={onPress}>
       <Icon name={icon} size={28} color={theme.colors.primary.dark1} />
-      <Text style={styles.buttonText}>{label}</Text>
+      <Text style={[styles.buttonText, { fontSize: theme.fonts.sizes.s14 * theme.accessibility.fontScale }]}>{label}</Text>
     </TouchableOpacity>
   );
 };
@@ -69,14 +69,13 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: 'absolute',
-    top: 28,
+    top: 30,
     left: 22,
     backgroundColor: theme.colors.primary.light2,
     padding: 8,
     borderRadius: 20,
   },
   header: {
-    fontSize: 22,
     fontWeight: 'bold',
     color: theme.colors.background.offWhite,
     marginBottom: 70,
@@ -105,7 +104,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     marginTop: 8,
-    fontSize: 14,
     fontWeight: '500',
     color: theme.colors.primary.dark1,
     textAlign: 'center', // Center text for multiline labels
@@ -121,7 +119,6 @@ const styles = StyleSheet.create({
   },
   resetText: {
     color: '#fff',
-    fontSize: 17,
     fontWeight: '500',
   },
 });
