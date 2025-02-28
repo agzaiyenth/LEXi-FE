@@ -71,6 +71,7 @@
     "react-native-screens": "~4.4.0",
     "react-native-snap-carousel": "^4.0.0-beta.6",
     "react-native-sound": "^0.11.2",
+    "react-native-svg": "^15.11.2",
     "react-native-svg-transformer": "^1.5.0",
     "react-native-toast-message": "^2.2.1",
     "react-native-tts": "^4.1.1",
