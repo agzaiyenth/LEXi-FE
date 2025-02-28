@@ -3,7 +3,7 @@ import { useFetchQuestion } from "@/src/hooks/detection/useFetchQuestion";
 import { useSubmitAnswer } from "@/src/hooks/detection/useSubmitAnswer";
 import theme from "@/src/theme";
 import { QuestionType } from "@/src/types/Detection/Question";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, NavigationProp } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -14,6 +14,7 @@ import MemoryRecall from "./questions/MemoryRecall";
 import MultipleChoiceView from "./questions/MultipleChoiceView";
 import SequenceOrderView from "./questions/SequenceOrderView";
 import TextInputView from "./questions/TextInputView";
+import * as Progress from 'react-native-progress';
 
 interface TestScreenProps {
   route: {
@@ -22,13 +23,20 @@ interface TestScreenProps {
     };
   };
 }
+type RootStackParamList = {
+  CompletedScreen: undefined;
+  // other routes can be added here
+};
+
 export default function TestScreen({ route }: TestScreenProps) {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const { sessionId } = route.params;
   const { question, loading, fetchQuestion } = useFetchQuestion(sessionId);
   const { submitAnswer, loading: submitting } = useSubmitAnswer();
 
   const [userAnswer, setUserAnswer] = useState<string>("");
+  const [progress, setProgress] = useState<number>(0);
+
   useEffect(() => {
     if (question && question.questionType === QuestionType.COMPLETED) {
       navigation.navigate("CompletedScreen");
@@ -52,6 +60,7 @@ export default function TestScreen({ route }: TestScreenProps) {
     await submitAnswer(answerData);
     setUserAnswer("");
     fetchQuestion();
+    setProgress(prev => prev + 1);
   };
 
   if (loading || !question) return <LoadingScreen />;
@@ -70,7 +79,21 @@ export default function TestScreen({ route }: TestScreenProps) {
           <Text style={styles.headerTitle}>Lets Answer!</Text>
         </View>
 
+         {/* Progress Bar */}
+        
         <View style={styles.mainContentCard}>
+
+        <View style={styles.progressBarContainer}>
+          <Progress.Bar 
+            progress={progress / 15} 
+            width={null}
+            color={theme.colors.primary.dark2}
+            unfilledColor={theme.colors.primary.light2}
+            borderWidth={0}
+            height={10}
+          />
+        </View>
+
 
           <View>
             {question.questionType === QuestionType.MULTIPLE_CHOICE && (
@@ -126,6 +149,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.colors.primary.light3,
     padding: 0,
+    height: '100%',
   },
   headerContent: {
     padding: 16,
@@ -152,11 +176,11 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   backButtonText: {
-    fontSize: 18,
+    fontSize: theme.fonts.sizes.s18,
     color: '#B4DCD6',
   },
   headerTitle: {
-    fontSize: 28,
+    fontSize: theme.fonts.sizes.s28,
     color: '#fff',
     textAlign: 'center',
     fontWeight: '500',
@@ -178,7 +202,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: theme.colors.primary.dark2,
-    color: 'white'
+    color: 'white',
+    bottom: 10,
   },
   buttonText: {
     color: 'white'
@@ -193,19 +218,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   difficultyText: {
-    fontSize: 16,
+    fontSize: theme.fonts.sizes.s16,
     color: "#457B9D",
     marginBottom: 5,
   },
   sessionText: {
-    fontSize: 16,
+    fontSize: theme.fonts.sizes.s16,
     color: "#457B9D",
     marginBottom: 5,
   },
   questionText: {
-    fontSize: 18,
+    fontSize: theme.fonts.sizes.s18,
     color: "#1D3557",
     marginBottom: 20,
     textAlign: "center",
+  },
+  progressBarContainer: {
+    paddingHorizontal: 16,
+    marginBottom: 16,
   },
 });

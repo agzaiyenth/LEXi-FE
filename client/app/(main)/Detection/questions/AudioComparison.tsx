@@ -116,14 +116,14 @@ const styles = StyleSheet.create({
   },
   playPauseText: {
     color: 'white',
-    fontSize: 18,
+    fontSize: theme.fonts.sizes.s18,
   },
   waveText: {
     color: 'white',
-    fontSize: 14,
+    fontSize:theme.fonts.sizes.s14,
   },
   questionTitle: {
-    fontSize: 24,
+    fontSize: theme.fonts.sizes.s24,
     textAlign: 'center',
     paddingBottom: 20,
   },
@@ -146,6 +146,6 @@ const styles = StyleSheet.create({
   },
   answerText: {
     color: 'white',
-    fontSize: 20,
+    fontSize: theme.fonts.sizes.s20,
   },
 });

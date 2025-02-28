@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     fontSize: theme.fonts.sizes.medium,
   },
   author: {
-    fontSize: 17,
+    fontSize: theme.fonts.sizes.s18,
     color: theme.colors.secondary.medium,
   },
   playButton: {

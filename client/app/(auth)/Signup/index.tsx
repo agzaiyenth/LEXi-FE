@@ -4,6 +4,7 @@ import { Feather } from '@expo/vector-icons';
 import { Link, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
+  ActivityIndicator,
   Image,
   SafeAreaView,
   StyleSheet,
@@ -161,7 +162,7 @@ const SignUpScreen = () => {
           disabled={loading}
         >
           {loading ? (
-            <LoadingScreen />
+            <ActivityIndicator color="#fff" />
           ) : (
             <Text style={styles.submitButtonText}>Sign Up</Text>
           )}
@@ -189,7 +190,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignItems: 'center',
   }, welcomeText: {
-    fontSize: 24,
+    fontSize: theme.fonts.sizes.s24,
     fontWeight: 'bold',
     marginBottom: 40,
     textAlign: 'center',
@@ -237,17 +238,17 @@ const styles = StyleSheet.create({
   submitButtonText: {
     color: theme.colors.background.beige,
     fontWeight: '500',
-    fontSize: 16,
+    fontSize: theme.fonts.sizes.s16,
   },
   span: {
     color: theme.colors.primary.medium,
     fontWeight: '500',
-    fontSize: 14,
+    fontSize: theme.fonts.sizes.s14,
   },
   p: {
     textAlign: 'center',
     color: theme.colors.blacks.dark,
-    fontSize: 14,
+    fontSize: theme.fonts.sizes.s14,
     marginTop: 10,
   },
   logo: {

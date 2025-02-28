@@ -12,6 +12,8 @@ import { useNavigation } from "expo-router";
 import React, { useCallback, useState } from "react";
 import { ActivityIndicator, Image, RefreshControl, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Toast from 'react-native-toast-message';
+import EmptyState from "./emptyState";
+
 
 
 export default function SmartReadMain() {
@@ -132,7 +134,7 @@ export default function SmartReadMain() {
 
                     </View>
                   </View>
-                ))) : (<Text>no documents found</Text>)}
+                ))) : (<EmptyState param="Documents"/>)}
             </View>
           </ScrollView>
           <TouchableOpacity style={styles.floatingButton} onPress={() =>
@@ -162,7 +164,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 20,
     left: 20,
-    fontSize: 60,
+    fontSize: theme.fonts.sizes.s60,
     color: theme.colors.background.offWhite,
     padding: 2,
   },
@@ -245,7 +247,7 @@ const styles = StyleSheet.create({
   },
   playButtonText: {
     color: theme.colors.secondary.medium,
-    fontSize: 16,
+    fontSize: theme.fonts.sizes.s16,
     fontWeight: "bold",
   },
 

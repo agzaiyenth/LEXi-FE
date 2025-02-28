@@ -21,6 +21,7 @@ type LearnMainNavigationProp = StackNavigationProp<
   LearnZoneParamList,
   "PlayMainScreen"
 >;
+import theme from '@/src/theme';
 
 const { width, height } = Dimensions.get('window');
 
@@ -233,7 +234,7 @@ const styles = StyleSheet.create({
   },
   scoreText: {
     color: '#FFFFFF',
-    fontSize: 20,
+    fontSize: theme.fonts.sizes.s20,
     fontWeight: 'bold',
   },
   questionContainer: {
@@ -243,7 +244,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   questionText: {
-    fontSize: 24,
+    fontSize: theme.fonts.sizes.s24,
     fontWeight: 'bold',
     marginBottom: 10,
     textAlign: 'center',
@@ -262,7 +263,7 @@ const styles = StyleSheet.create({
   },
   startButtonText: {
     color: '#FFFFFF',
-    fontSize: 18,
+    fontSize: theme.fonts.sizes.s18,
     fontWeight: 'bold',
   },
   balloonContainer: {
@@ -278,7 +279,7 @@ const styles = StyleSheet.create({
     top: '20%',
     left: 0,
     right: 0,
-    fontSize: 24,
+    fontSize: theme.fonts.sizes.s24,
     fontWeight: 'bold',
     color: '#FFFFFF',
     textAlign: 'center',

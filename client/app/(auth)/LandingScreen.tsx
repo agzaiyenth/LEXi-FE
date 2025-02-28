@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: theme.colors.background.beige,
-    fontSize: 16,
+    fontSize: theme.fonts.sizes.s16,
     fontWeight: 'bold',
   },
   registerButton: {

@@ -112,7 +112,7 @@ const PlayMainScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.primary.light,
+    backgroundColor: theme.colors.primary.light3,
     paddingTop: theme.spacing.large,
     minHeight: '100%',
   },
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     marginTop: theme.spacing.small,
   },
   cardTheory: {
-    fontSize: 12,
+    fontSize: theme.fonts.sizes.s12,
     color: theme.colors.primary.medium,
   },
 });

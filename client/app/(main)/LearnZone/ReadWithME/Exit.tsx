@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   },
   text: {
     top: 35,
-    fontSize: 25,
+    fontSize:theme.fonts.sizes.s26,
     lineHeight: 30,
     fontWeight: "400",
     textAlign: "center",
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 20,
     left: 20,
-    fontSize: 60,
+    fontSize: theme.fonts.sizes.s40,
     color: theme.colors.background.offWhite,
   },
   Ellipse: {
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     top: 80,
   },
   wellDoneText: {
-    fontSize: 40,
+    fontSize: theme.fonts.sizes.s40,
     fontWeight: "600",
     textAlign: "center",
     color: "#F19336",
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     top: 425,
   },
   feedback: {
-    fontSize: 20,
+    fontSize: theme.fonts.sizes.s20,
     lineHeight: 35,
     color: "#8F8877",
     position: "absolute",
