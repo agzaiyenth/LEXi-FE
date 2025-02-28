@@ -87,4 +87,47 @@ export const theme = {
   },
 };
 
+// Add a method to toggle the contrast theme globally
+export const getCurrentTheme = (contrast: boolean) => {
+  return contrast
+    ? {
+        ...theme,
+        colors: {
+          ...theme.colors,
+          primary: {
+            dark1: "#0F1B21", // Much darker
+            dark2: "#12343b", 
+            dark3: "#025A5E", // Higher contrast
+            medium: "#1F8A80", 
+            medium2: "#A2DED0", 
+            light: "#D8F5F1", // Lighter for contrast
+            light2: "#E9F7F5",
+            light3: "#B0DFD9",
+          },
+          secondary: {
+            dark1: "#5E3D1E", // Darker for contrast
+            dark2: "#8D5A2B",
+            medium: "#E4792D", // More vibrant
+            light: "#FDD9A4",
+            light2: "#FFF4E5", // Higher contrast against text
+          },
+          accent: {
+            dark: "#472E3D",
+            medium: "#98394D",
+            light: "#FF3B4A", // More vibrant contrast
+          },
+          background: {
+            offWhite: "#FFFFFF", // Pure white for maximum contrast
+            beige: "#F5E6C6", 
+            dark: "#B3A38A", // Darker to contrast with text
+          },
+          blacks: {
+            medium: "#121212", // Adjusted for clarity
+            dark: "#000000",
+          },
+        },
+      }
+    : theme; // Default theme for normal contrast
+};
+
 export default theme;
