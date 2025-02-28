@@ -4,6 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from 'expo-router';
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import completed from '@/assets/images/mascot/completed.png';
 
 
 export default function CompletedScreen() {
@@ -20,7 +21,7 @@ export default function CompletedScreen() {
         We are ready to use the app , Enjoy!
       </Text>
       <Image
-        source={require('@/assets/images/mascot/completed.png')}
+        source={completed}
         style={styles.avatar}
       />
       <TouchableOpacity

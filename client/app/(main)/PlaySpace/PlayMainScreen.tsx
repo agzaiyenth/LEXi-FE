@@ -12,6 +12,7 @@ import React from 'react';
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { LearnZoneParamList } from './index';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import BaloonImage from '@/assets/images/games/ballon.png';
 
 type LearnMainNavigationProp = StackNavigationProp<LearnZoneParamList, 'PlayMainScreen'>;
 interface Game {
@@ -29,7 +30,7 @@ const PlayMainScreen = () => {
       id: '1',
       title: 'Pop The Balloon',
       theory: 'Phonological Deficit',
-      image: require('@/assets/images/games/ballon.png'),
+      image: BaloonImage,
       route: 'BalloonGame'
     },
     {

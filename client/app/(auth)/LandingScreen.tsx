@@ -3,6 +3,8 @@ import theme from '@/src/theme';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import icon from '@/assets/images/auth/icon.png';
+import centerImage from '@/assets/images/auth/centerImage.png';
 
 const { width: screenWidth } = Dimensions.get('window'); // Get the screen width
 
@@ -15,7 +17,7 @@ export default function LandingScreen() {
       <View style={styles.topContent}>
         {/* Logo */}
         <Image
-          source={require('@/assets/images/auth/icon.png')}
+          source={icon}
           style={styles.logo}
           resizeMode="contain"
         />
@@ -27,7 +29,7 @@ export default function LandingScreen() {
       {/* Center Image */}
       <View style={styles.centerContent}>
         <Image
-          source={require('@/assets/images/auth/centerImage.png')}
+          source={centerImage}
           style={styles.centerImage}
           resizeMode="contain"
         />

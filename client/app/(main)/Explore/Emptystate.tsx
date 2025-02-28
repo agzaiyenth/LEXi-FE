@@ -1,6 +1,7 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import theme from '@/src/theme';
+import TherapistImage from '@/assets/images/therapist/therapist.jpg';
 
 interface EmptyStateProps {
   param: string;
@@ -10,7 +11,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({ param }) => {
   return (
     <View style={styles.container}>
       <Image
-        source={require("@/assets/images/therapist/therapist.jpg")}
+        source={TherapistImage}
         style={styles.image} />
 
       <Text style={styles.text}>No {param} found!</Text>

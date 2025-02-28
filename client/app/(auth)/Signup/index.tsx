@@ -1,4 +1,4 @@
-import LoadingScreen from '@/src/components/loading';
+import icon from '@/assets/images/auth/icon.png';
 import theme from '@/src/theme';
 import { Feather } from '@expo/vector-icons';
 import { Link, useRouter } from 'expo-router';
@@ -77,7 +77,7 @@ const SignUpScreen = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.avatarContainer}>
         <Image
-          source={require('@/assets/images/auth/icon.png')}
+          source={icon}
           style={styles.logo}
           resizeMode="contain"
         />

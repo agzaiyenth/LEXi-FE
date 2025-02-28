@@ -5,6 +5,9 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { LearnZoneParamList } from './index';
+import CircleImage from '@/assets/images/learnZone/circle.png';
+import MascotImage from '@/assets/images/learnZone/mascot.png';
+import SoundwaveImage from '@/assets/images/learnZone/soundwave.png';
 
 type LearnMainNavigationProp = StackNavigationProp<LearnZoneParamList, 'LearnMain'>;
 
@@ -15,7 +18,7 @@ const LearnMainScreen = () => {
     <View style={styles.container}>
       {/* Header Card */}
       <Image
-        source={require('@/assets/images/learnZone/circle.png')}
+        source={CircleImage}
         style={styles.headercircle}
       />
       <View style={styles.headerContent}>
@@ -27,7 +30,7 @@ const LearnMainScreen = () => {
         <View style={styles.maincontenttitle}>
           <Text style={styles.learningText}>Let's learn{'\n'}Something{'\n'}new</Text>
           <Image
-            source={require('@/assets/images/learnZone/mascot.png')}
+            source={MascotImage}
             style={styles.mascotImage}
           />
         </View>
@@ -39,7 +42,7 @@ const LearnMainScreen = () => {
 
           <View style={styles.featureContent}>
             <Image
-              source={require('@/assets/images/learnZone/soundwave.png')}
+              source={SoundwaveImage}
               style={styles.soundwave}
             />
             <Text style={styles.featureTitle}>VOXBUDDY</Text>

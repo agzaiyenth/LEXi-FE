@@ -5,6 +5,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { LearnZoneParamList } from "./index";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import theme from '@/src/theme';
+import BalloonImage from '@/assets/images/games/ballon.png';
 
 type LearnMainNavigationProp = StackNavigationProp<
   LearnZoneParamList,
@@ -31,7 +32,7 @@ const BalloonGame: React.FC = () => {
       {/* Game Image */}
       <View style={styles.imageContainer}>
         <Image
-          source={require("@/assets/images/games/ballon.png")}
+          source={BalloonImage}
           style={styles.gameImage}
         />
       </View>

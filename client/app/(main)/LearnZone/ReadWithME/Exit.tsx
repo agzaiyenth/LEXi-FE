@@ -2,6 +2,11 @@ import theme from "@/src/theme";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
+import EllipseImage from "@/assets/images/Ellipse.png";
+import RewardImage from "@/assets/images/reward.png";
+import Group24Image from "@/assets/images/Group 24.png";
+import StarsImage from "@/assets/images/Stars.png";
+import BooksBackdropImage from "@/assets/images/books-backdrop.png";
 
 const Exit = () => {
   return (
@@ -10,7 +15,7 @@ const Exit = () => {
         <Text style={styles.text}>Read With Me</Text>
         <EvilIcons name="arrow-left" style={styles.leftarrow} />
         <Image
-          source={require("@/assets/images/Ellipse.png")}
+          source={EllipseImage}
           style={styles.Ellipse}
           resizeMode="contain"
           accessible
@@ -18,14 +23,14 @@ const Exit = () => {
         />
         <View style={styles.innercontainer}>
           <Image
-            source={require("@/assets/images/reward.png")}
+            source={RewardImage}
             style={styles.reward}
             resizeMode="contain"
             accessible
             accessibilityLabel="Upload Icon"
           />
           <Image
-            source={require("@/assets/images/Group 24.png")}
+            source={Group24Image}
             style={styles.Group24}
             resizeMode="contain"
             accessible
@@ -33,7 +38,7 @@ const Exit = () => {
           />
           <Text style={styles.wellDoneText}>Well Done !</Text>
           <Image
-            source={require("@/assets/images/Stars.png")}
+            source={StarsImage}
             style={styles.Stars}
             resizeMode="contain"
             accessible
@@ -43,7 +48,7 @@ const Exit = () => {
             Total Words: 33 {"\n"} Correct Words: 25 {"\n"} Words Skipped: 8
           </Text>
           <Image
-            source={require("@/assets/images/books-backdrop.png")}
+            source={BooksBackdropImage}
             style={styles.booksBackdropPic}
             resizeMode="contain"
             accessible

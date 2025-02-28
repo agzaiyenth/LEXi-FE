@@ -7,6 +7,7 @@ import { useFonts } from 'expo-font'
 import { Slot } from 'expo-router'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
+import OpenDyslexia from '@/assets/fonts/open-dyslexic.ttf'
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -19,7 +20,7 @@ export {
 export default function RootLayout() {
 
  const [fontsLoaded] = useFonts({
-    OpenDyslexic: require("@/assets/fonts/open-dyslexic.ttf"), 
+    OpenDyslexic: OpenDyslexia, 
   });
 
   if (!fontsLoaded) {

@@ -17,6 +17,8 @@ import {
   View,
 } from 'react-native';
 import { LearnZoneParamList } from './navigator';
+import UploadIconImage from '@/assets/images/uploadIcon.png';
+import  IconPointingImage from '@/assets/images/icon-pointing.png';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -118,7 +120,7 @@ const UploadScreen = () => {
       {/* Upload Section */}
       <View style={styles.uploadContainer}>
         <Image
-          source={require('@/assets/images/uploadIcon.png')}
+          source={UploadIconImage}
           style={styles.uploadIcon}
           resizeMode="contain"
           accessible
@@ -139,7 +141,7 @@ const UploadScreen = () => {
       <View style={styles.footerContainer}>
         <Text style={styles.footerText}>UPLOAD YOUR FILES TO SUMMARIZE!</Text>
         <Image
-          source={require('@/assets/images/icon-pointing.png')}
+          source={IconPointingImage}
           style={styles.mascotIcon}
           resizeMode="contain"
         />

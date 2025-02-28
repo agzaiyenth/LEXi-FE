@@ -1,26 +1,27 @@
+import icon from "@/assets/images/icon.png";
+import welcome from "@/assets/images/welcome.png";
+import { useSession } from "@/src/ctx";
+import { theme } from "@/src/theme";
+import { Ionicons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import {
   Dimensions,
   Image,
   Pressable,
+  Animated as RNAnimated,
   ScrollView,
   StyleSheet,
   Text,
-  View,
-  Animated as RNAnimated
+  View
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
-import { useSession } from "@/src/ctx";
-import { theme } from "@/src/theme";
-import { useFonts } from "expo-font";
 import Animated, { FadeInUp } from "react-native-reanimated";
 
 // Constants for carousel dimensions
 const SLIDER_WIDTH = Dimensions.get("window").width;
 // Adjust ITEM_WIDTH to show partial side cards
 const ITEM_WIDTH = SLIDER_WIDTH * 0.70;
-const ITEM_MARGIN_HORIZONTAL = 0; 
+const ITEM_MARGIN_HORIZONTAL = 0;
 
 // Your features data
 const features = [
@@ -220,16 +221,13 @@ function InfiniteCarousel({ data }: any) {
 
 // HomeScreen remains unchanged except for the updated carousel
 export default function HomeScreen() {
-  const [fontsLoaded] = useFonts({
-    OpenDyslexic: require("@/assets/fonts/open-dyslexic.ttf")
-  });
   const { username } = useSession();
 
   return (
     <ScrollView style={styles.wrapper}>
       <View style={styles.container}>
         <View style={styles.headerContainer}>
-          <Image source={require("@/assets/images/icon.png")} style={styles.welcomeImage} />
+          <Image source={icon} style={styles.welcomeImage} />
           <Text style={styles.headerText}>LEXi</Text>
         </View>
 
@@ -242,15 +240,15 @@ export default function HomeScreen() {
             ,
           </Text>
         </View>
-  <View style={{paddingHorizontal: 16}}>
-        <View style={styles.greetingCard}>
-          <View style={styles.greetingTextContainer}>
-            <Text style={styles.greetingText}>Hey There!{"\n"}How Are You?</Text>
+        <View style={{ paddingHorizontal: 16 }}>
+          <View style={styles.greetingCard}>
+            <View style={styles.greetingTextContainer}>
+              <Text style={styles.greetingText}>Hey There!{"\n"}How Are You?</Text>
+            </View>
+            <View style={styles.greetingIcon}>
+              <Image source={welcome} style={styles.mascotImage} />
+            </View>
           </View>
-          <View style={styles.greetingIcon}>
-            <Image source={require("@/assets/images/welcome.png")} style={styles.mascotImage} />
-          </View>
-        </View>
         </View>
 
         <View style={styles.section}>
