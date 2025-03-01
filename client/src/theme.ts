@@ -86,11 +86,19 @@ export const theme = {
     fontScale: 1, // 1 for normal, >1 for larger fonts
     colorFilter: false, // property for color filter
     fontType: "System", // Default font type
+    lineHeight: 1, // Default line height
+    letterSpacing: 0, // Default text spacing
   },
 };
 
 // Add a method to toggle the contrast theme globally
-export const getCurrentTheme = (contrast: boolean, fontScale: number, colorFilter: boolean, fontType: string) => {
+export const getCurrentTheme = (
+  contrast: boolean, 
+  fontScale: number, 
+  colorFilter: boolean, 
+  fontType: string,
+  lineHeight: number,
+  letterSpacing: number) => {
   const baseTheme = {
     ...theme,
     fonts: {
@@ -119,6 +127,11 @@ export const getCurrentTheme = (contrast: boolean, fontScale: number, colorFilte
         s40: Math.round(40 * fontScale),
         s60: Math.round(60 * fontScale),
       },
+    },
+    accessibility: {
+      ...theme.accessibility,
+      lineHeight: lineHeight, // Dynamically set lineHeight
+      letterSpacing: letterSpacing, // Dynamically set letterSpacing
     },
   };
 
