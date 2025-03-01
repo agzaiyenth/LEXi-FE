@@ -171,14 +171,14 @@ export const getCurrentTheme = (contrast: boolean, fontScale: number, colorFilte
       colors: {
         ...theme.colors,
         primary: {
-          dark1: "#FF6347", // Example: Apply a red filter for demonstration
-          dark2: "#FF4500", // Darker red shade
-          dark3: "#FF0000", // Even darker red shade
+          dark1: "#a2727f",
+          dark2: "#c796d8", // Darker red shade
+          dark3: "#fd3939", // Even darker red shade
           medium: "#FF6347", // Medium red shade
           medium2: "#FF7F50", // Lighter red shade
           light: "#FFB6C1", // Light red/pink shade
-          light2: "#FF8C00", // Orange-ish red
-          light3: "#FF1493", // Bright pink shade
+          light2: "#d3f091", // Orange-ish red
+          light3: "#f58bb8", 
         },
         secondary: {
           dark1: "#8B4513", // Dark brown
@@ -193,7 +193,7 @@ export const getCurrentTheme = (contrast: boolean, fontScale: number, colorFilte
           light: "#E56B6F",
         },
         background: {
-          offWhite: "#FFF9EB", // Off-white with a hint of yellow
+          offWhite: "#e4f9f9",
           beige: "#F8ECD1", // Light beige
           dark: "#D9CAB3", // Darker beige
         },
