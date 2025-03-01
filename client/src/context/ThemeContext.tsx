@@ -10,6 +10,8 @@ const ThemeContext = createContext({
   increaseFontSize: () => {},
   toggleColorFilter: () => {},
   toggleFontType: (newFontType: string) => {},
+  increaseLineHeight: () => {},
+  increaseTextSpacing: () => {},
   resetToDefault: () => {},
   saveUserPreference: (preferences: any) => {},
 });
@@ -24,6 +26,8 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [fontScale, setFontScale] = useState(1); // Default font scale
   const [colorFilter, setColorFilter] = useState(false); // Default color filter state
   const [fontType, setFontType] = useState("System"); // Default font type
+  const [lineHeight, setLineHeight] = useState(1); // Default line height
+  const [textSpacing, setTextSpacing] = useState(1); // Default text spacing
   const [theme, setTheme] = useState(defaultTheme);
 
   useEffect(() => {
@@ -42,6 +46,8 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         fontScale: preferences.fontScale ?? fontScale,
         colorFilter: preferences.colorFilter ?? colorFilter,
         fontType: preferences.fontType ?? fontType,
+        lineHeight: preferences.lineHeight ?? lineHeight,
+        textSpacing: preferences.textSpacing ?? textSpacing,
       };
 
       await apiClient.post('/api/user/theme', validPreferences);
@@ -63,6 +69,8 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         setFontScale(preferences.fontScale);
         setColorFilter(preferences.colorFilter);
         setFontType(preferences.fontType);
+        setLineHeight(preferences.lineHeight);
+        setTextSpacing(preferences.textSpacing);
       }
     } catch (error) {
       console.error('Error loading user preferences:', error);
@@ -102,25 +110,54 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     saveUserPreference({ fontType: newFontType });
   };
 
+  const increaseLineHeight = () => {
+    setLineHeight((prevLineHeight) => {
+      const newLineHeight = prevLineHeight + 0.1;
+      saveUserPreference({ lineHeight: newLineHeight });
+      return newLineHeight;
+    });
+  };
+
+  const increaseTextSpacing = () => {
+    setTextSpacing((prevTextSpacing) => {
+      const newTextSpacing = prevTextSpacing + 0.1;
+      saveUserPreference({ textSpacing: newTextSpacing });
+      return newTextSpacing;
+    });
+  };
+
   // Function to reset to default theme settings
   const resetToDefault = () => {
     setHighContrast(false);
     setFontScale(1);
     setColorFilter(false);
     setFontType("System");
+    setLineHeight(1);
+    setTextSpacing(1);
     saveUserPreference({
       highContrast: false,
       fontScale: 1,
       colorFilter: false,
       fontType: "System",
+      lineHeight: 1,
+      textSpacing: 1,
     });
   };
 
   // Dynamically update the theme based on preferences
-  const updatedTheme = getCurrentTheme(highContrast, fontScale, colorFilter, fontType);
+  const updatedTheme = getCurrentTheme(highContrast, fontScale, colorFilter, fontType, lineHeight, textSpacing);
 
   return (
-    <ThemeContext.Provider value={{ theme: updatedTheme, toggleContrast, increaseFontSize, toggleColorFilter, toggleFontType, resetToDefault, saveUserPreference }}>
+    <ThemeContext.Provider value={{ 
+      theme: updatedTheme, 
+      toggleContrast, 
+      increaseFontSize, 
+      toggleColorFilter, 
+      toggleFontType,
+      increaseLineHeight,
+      increaseTextSpacing, 
+      resetToDefault, 
+      saveUserPreference }}>
       {children}
     </ThemeContext.Provider>
   );

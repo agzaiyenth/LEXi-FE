@@ -12,7 +12,14 @@ type NavigationProps = StackNavigationProp<RootStackParamList, 'Account'>;
 
 const AccessibilityScreen = () => {
   const navigation = useNavigation<NavigationProps>();
-  const { theme, toggleContrast, increaseFontSize, toggleColorFilter, toggleFontType, resetToDefault } = useTheme(); // Get the current theme and toggle function
+  const { theme, 
+    toggleContrast, 
+    increaseFontSize, 
+    toggleColorFilter, 
+    toggleFontType,
+    increaseLineHeight, 
+    increaseTextSpacing,
+    resetToDefault } = useTheme(); // Get the current theme and toggle function
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.primary.light3 }]}>
@@ -21,7 +28,10 @@ const AccessibilityScreen = () => {
         <AntDesign name="arrowleft" size={theme.fonts.sizes.s20 * theme.accessibility.fontScale} color={theme.colors.primary.medium2} />
       </TouchableOpacity>
 
-      <Text style={[styles.header, { color: theme.colors.background.offWhite }, {fontSize: theme.fonts.sizes.s22 * theme.accessibility.fontScale }]}>
+      <Text style={[styles.header, { color: theme.colors.background.offWhite }, 
+      {fontSize: theme.fonts.sizes.s22 * theme.accessibility.fontScale },
+        { letterSpacing: theme.accessibility.letterSpacing }
+        ]}>
         Accessibility Menu
       </Text>
       <ScrollView contentContainerStyle={styles.menuContainer}>
@@ -30,14 +40,16 @@ const AccessibilityScreen = () => {
           <AccessibilityButton icon="contrast" label="Contrast" onPress={toggleContrast} />
           <AccessibilityButton icon="format-size" label="Font" onPress={() => toggleFontType(theme.accessibility.fontType === "System" ? "OpenDyslexic" : "System")} />
           <AccessibilityButton icon="format-header-increase" label="Bigger Text" onPress={increaseFontSize}/>
-          <AccessibilityButton icon="format-line-spacing" label="Line Height" />
-          <AccessibilityButton icon="format-letter-spacing" label="Text Spacing" />
+          <AccessibilityButton icon="format-line-spacing" label="Line Height" onPress={increaseLineHeight} />
+          <AccessibilityButton icon="format-letter-spacing" label="Text Spacing" onPress={increaseTextSpacing} />
           <AccessibilityButton icon="keyboard-outline" label={"Alphabetical\nKeyboard"} />
           <AccessibilityButton icon="format-align-left" label="Text Align" />
         </View>
       </ScrollView>
       <TouchableOpacity style={styles.resetButton} onPress={resetToDefault}>
-        <Text style={[styles.resetText, { fontSize: theme.fonts.sizes.s16 * theme.accessibility.fontScale }]}>RESET</Text>
+        <Text style={[styles.resetText, 
+          { fontSize: theme.fonts.sizes.s16 * theme.accessibility.fontScale },
+          { letterSpacing: theme.accessibility.letterSpacing }]}>RESET</Text>
       </TouchableOpacity>
     </View>
   );
@@ -55,7 +67,11 @@ const AccessibilityButton = ({
   return (
     <TouchableOpacity style={styles.button} onPress={onPress}>
       <Icon name={icon} size={28} color={theme.colors.primary.dark1} />
-      <Text style={[styles.buttonText, { fontSize: theme.fonts.sizes.s14 * theme.accessibility.fontScale }]}>{label}</Text>
+      <Text style={[styles.buttonText, 
+      { fontSize: theme.fonts.sizes.s14 * theme.accessibility.fontScale },
+      { lineHeight: theme.fonts.sizes.s14 * theme.accessibility.lineHeight },
+      { letterSpacing: theme.accessibility.letterSpacing }
+      ]}>{label}</Text>
     </TouchableOpacity>
   );
 };
