@@ -12,6 +12,8 @@ const ThemeContext = createContext({
   toggleFontType: (newFontType: string) => {},
   increaseLineHeight: () => {},
   increaseTextSpacing: () => {},
+  toggleAlphabeticalKeyboard: () => {},
+  toggleTextAlign: () => {},
   resetToDefault: () => {},
   saveUserPreference: (preferences: any) => {},
 });
@@ -28,6 +30,8 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [fontType, setFontType] = useState("System"); // Default font type
   const [lineHeight, setLineHeight] = useState(1); // Default line height
   const [textSpacing, setTextSpacing] = useState(1); // Default text spacing
+  const [alphabeticalKeyboard, setAlphabeticalKeyboard] = useState(false); // Default keyboard setting
+  const [textAlign, setTextAlign] = useState("left"); // Default text alignment
   const [theme, setTheme] = useState(defaultTheme);
 
   useEffect(() => {
@@ -48,6 +52,8 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         fontType: preferences.fontType ?? fontType,
         lineHeight: preferences.lineHeight ?? lineHeight,
         textSpacing: preferences.textSpacing ?? textSpacing,
+        alphabeticalKeyboard: preferences.alphabeticalKeyboard ?? alphabeticalKeyboard,
+        textAlign: preferences.textAlign ?? textAlign,
       };
 
       await apiClient.post('/api/user/theme', validPreferences);
@@ -71,6 +77,8 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         setFontType(preferences.fontType);
         setLineHeight(preferences.lineHeight);
         setTextSpacing(preferences.textSpacing);
+        setAlphabeticalKeyboard(preferences.alphabeticalKeyboard);
+        setTextAlign(preferences.textAlign);
       }
     } catch (error) {
       console.error('Error loading user preferences:', error);
@@ -126,6 +134,22 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     });
   };
 
+  const toggleAlphabeticalKeyboard = () => {
+    setAlphabeticalKeyboard((prev) => {
+      const newValue = !prev;
+      saveUserPreference({ alphabeticalKeyboard: newValue });
+      return newValue;
+    });
+  };
+
+  const toggleTextAlign = () => {
+    setTextAlign((prevAlign) => {
+      const newValue = prevAlign === "left" ? "center" : "left";
+      saveUserPreference({ textAlign: newValue });
+      return newValue;
+    });
+  };  
+
   // Function to reset to default theme settings
   const resetToDefault = () => {
     setHighContrast(false);
@@ -134,6 +158,8 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setFontType("System");
     setLineHeight(1);
     setTextSpacing(1);
+    setAlphabeticalKeyboard(false);
+    setTextAlign("left");
     saveUserPreference({
       highContrast: false,
       fontScale: 1,
@@ -141,11 +167,21 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       fontType: "System",
       lineHeight: 1,
       textSpacing: 1,
+      alphabeticalKeyboard: false,
+      textAlign: "left",
     });
   };
 
   // Dynamically update the theme based on preferences
-  const updatedTheme = getCurrentTheme(highContrast, fontScale, colorFilter, fontType, lineHeight, textSpacing);
+  const updatedTheme = getCurrentTheme(
+    highContrast, 
+    fontScale, 
+    colorFilter, 
+    fontType, 
+    lineHeight, 
+    textSpacing, 
+    alphabeticalKeyboard, 
+    textAlign);
 
   return (
     <ThemeContext.Provider value={{ 
@@ -156,6 +192,8 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       toggleFontType,
       increaseLineHeight,
       increaseTextSpacing, 
+      toggleAlphabeticalKeyboard,
+      toggleTextAlign,
       resetToDefault, 
       saveUserPreference }}>
       {children}

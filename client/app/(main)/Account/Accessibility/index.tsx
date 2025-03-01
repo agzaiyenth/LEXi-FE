@@ -19,6 +19,8 @@ const AccessibilityScreen = () => {
     toggleFontType,
     increaseLineHeight, 
     increaseTextSpacing,
+    toggleAlphabeticalKeyboard, 
+    toggleTextAlign,
     resetToDefault } = useTheme(); // Get the current theme and toggle function
 
   return (
@@ -42,8 +44,8 @@ const AccessibilityScreen = () => {
           <AccessibilityButton icon="format-header-increase" label="Bigger Text" onPress={increaseFontSize}/>
           <AccessibilityButton icon="format-line-spacing" label="Line Height" onPress={increaseLineHeight} />
           <AccessibilityButton icon="format-letter-spacing" label="Text Spacing" onPress={increaseTextSpacing} />
-          <AccessibilityButton icon="keyboard-outline" label={"Alphabetical\nKeyboard"} />
-          <AccessibilityButton icon="format-align-left" label="Text Align" />
+          <AccessibilityButton icon="keyboard-outline" label={"Alphabetical\nKeyboard"} onPress={toggleAlphabeticalKeyboard} />
+          <AccessibilityButton icon="format-align-left" label="Text Align" onPress={toggleTextAlign} />
         </View>
       </ScrollView>
       <TouchableOpacity style={styles.resetButton} onPress={resetToDefault}>

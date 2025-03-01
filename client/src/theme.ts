@@ -88,6 +88,8 @@ export const theme = {
     fontType: "System", // Default font type
     lineHeight: 1, // Default line height
     letterSpacing: 0, // Default text spacing
+    alphabeticalKeyboard: false, // Default keyboard setting
+    textAlign: "left", // Default text alignment
   },
 };
 
@@ -98,7 +100,10 @@ export const getCurrentTheme = (
   colorFilter: boolean, 
   fontType: string,
   lineHeight: number,
-  letterSpacing: number) => {
+  letterSpacing: number,
+  alphabeticalKeyboard: boolean,
+  textAlign: string
+) => {
   const baseTheme = {
     ...theme,
     fonts: {
@@ -132,6 +137,8 @@ export const getCurrentTheme = (
       ...theme.accessibility,
       lineHeight: lineHeight, // Dynamically set lineHeight
       letterSpacing: letterSpacing, // Dynamically set letterSpacing
+      alphabeticalKeyboard: alphabeticalKeyboard, // Dynamically set keyboard type
+      textAlign: "center", // Dynamically set text alignment
     },
   };
 
