@@ -3,9 +3,14 @@ import axios from 'axios';
 import { signOutUser } from './utils/authUtils';
 
 let accessToken: string | null = null;
+let signOutFn: (() => void) | null = null;
 
 export const setAccessToken = (token: string | null) => {
   accessToken = token;
+};
+
+export const setSignOutFunction = (fn: () => void) => {
+  signOutFn = fn;
 };
 
 const apiClient = axios.create({
@@ -25,8 +30,8 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
-    if (error.response?.status === 401) {
-      await signOutUser(); // Call sign out function if token expires
+    if (error.response?.status === 401 && signOutFn) {
+      await signOutUser(signOutFn); // Pass the signOut function
     }
     return Promise.reject(error);
   }

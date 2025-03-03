@@ -1,6 +1,6 @@
 // app/ctx.tsx
 import React, { createContext, PropsWithChildren, useContext, useEffect } from 'react';
-import { setAccessToken } from './apiClient';
+import { setAccessToken, setSignOutFunction } from './apiClient';
 import { useStorageState } from './useStorageState';
 type AuthContextType = {
   signIn: (sessionToken: string, username: string) => void;
@@ -24,8 +24,14 @@ export const SessionProvider = ({ children }: PropsWithChildren) => {
   const [[isLoading, session], setSession] = useStorageState('session');
   const [[isUsernameLoading, username], setUsername] = useStorageState('username');
 
+  const handleSignOut = () => {
+    setSession(null);
+    setUsername(null);
+  };
+
   useEffect(() => {
     setAccessToken(session);
+    setSignOutFunction(handleSignOut);
   }, [session]);
 
   return (
@@ -36,10 +42,7 @@ export const SessionProvider = ({ children }: PropsWithChildren) => {
           setUsername(username);
           console.log('Stored:', username);
         },
-        signOut: () => {
-          setSession(null);
-          setUsername(null);
-        },
+        signOut: handleSignOut,
         session,
         username,
         isLoading: isLoading || isUsernameLoading,
