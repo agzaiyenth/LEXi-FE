@@ -4,6 +4,9 @@ import EvilIcons from "@expo/vector-icons/EvilIcons";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import EllipseImage from "@/assets/images/Ellipse.png";
+import ReadingTextImage from "@/assets/images/readingText.png";
+import Rectangle52Image from "@/assets/images/Rectangle 52.png";
 
 const Pronounce = () => {
   const handleBackward = () => {
@@ -23,7 +26,7 @@ const Pronounce = () => {
         <Text style={styles.text}>Read With Me</Text>
         <EvilIcons name="arrow-left" style={styles.leftarrow} />
         <Image
-          source={require("@/assets/images/Ellipse.png")}
+          source={EllipseImage}
           style={styles.Ellipse}
           resizeMode="contain"
           accessible
@@ -31,14 +34,14 @@ const Pronounce = () => {
         />
         <View style={styles.innercontainer}>
           <Image
-            source={require("@/assets/images/readingText.png")}
+            source={ReadingTextImage}
             style={styles.readingText}
             resizeMode="contain"
             accessible
             accessibilityLabel="Upload Icon"
           />
           <Image
-            source={require("@/assets/images/Rectangle 52.png")}
+            source={Rectangle52Image}
             style={styles.Rectangle52}
             resizeMode="contain"
             accessible

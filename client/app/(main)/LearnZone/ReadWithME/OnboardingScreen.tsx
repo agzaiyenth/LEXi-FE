@@ -1,6 +1,7 @@
 import theme from "@/src/theme";
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import CenterImage from "@/assets/images/auth/centerImage.png";
 
 const OnboardingScreen = () => {
   return (
@@ -12,7 +13,7 @@ const OnboardingScreen = () => {
           dolore asperiores cupiditate voluptatem
         </Text>
         <Image
-          source={require("@/assets/images/auth/centerImage.png")}
+          source={CenterImage}
           style={styles.centerImage}
           resizeMode="contain"
           accessible

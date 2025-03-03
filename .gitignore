@@ -1,2 +1,4 @@
 .idea
 client/.env
+/client/.idea
+client/.idea

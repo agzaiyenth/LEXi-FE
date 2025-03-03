@@ -13,6 +13,7 @@ import React, { useCallback, useState } from "react";
 import { ActivityIndicator, Image, RefreshControl, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Toast from 'react-native-toast-message';
 import EmptyState from "./emptyState";
+import IconImage from '@/assets/images/auth/icon.png';
 import Svg, { Circle, Line } from "react-native-svg";
 
 
@@ -89,7 +90,7 @@ export default function SmartReadMain() {
                       <View style={styles.cardContainer} key={document.id}>
                         {/* Document Image */}
                         <Image
-                          source={require("@/assets/images/auth/icon.png")}
+                          source={IconImage}
                           style={styles.image}
                         />
 

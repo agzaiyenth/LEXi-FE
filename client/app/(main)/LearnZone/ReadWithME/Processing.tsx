@@ -1,7 +1,12 @@
+import BooksBackdropImage from "@/assets/images/books-backdrop.png";
+import EclipseImage from "@/assets/images/Ellipse.png";
+import ProcessingImage from "@/assets/images/processing.png";
+import RectangleImage from "@/assets/images/RectangleBorder.png";
 import theme from "@/src/theme";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+
 const Processing = () => {
   return (
     <View style={styles.wrapper}>
@@ -9,7 +14,7 @@ const Processing = () => {
         <Text style={styles.text}>Read With Me</Text>
         <EvilIcons name="arrow-left" style={styles.leftarrow} />
         <Image
-          source={require("@/assets/images/Ellipse.png")}
+          source={EclipseImage}
           style={styles.Ellipse}
           resizeMode="contain"
           accessible
@@ -17,14 +22,14 @@ const Processing = () => {
         />
         <View style={styles.innercontainer}>
           <Image
-            source={require("@/assets/images/RectangleBorder.png")}
+            source={RectangleImage}
             style={styles.RectangleBorder}
             resizeMode="contain"
             accessible
             accessibilityLabel="Upload Icon"
           />
           <Image
-            source={require("@/assets/images/processing.png")}
+            source={ProcessingImage}
             style={styles.processing}
             resizeMode="contain"
             accessible
@@ -32,11 +37,11 @@ const Processing = () => {
             tintColor={"grey"}
           />
           <Image
-            source={require("@/assets/images/books-backdrop.png")}
+            source={BooksBackdropImage}
             style={styles.booksBackdropPic}
             resizeMode="contain"
             accessible
-            accessibilityLabel="Upload Icon"
+            accessibilityLabel="Books Backdrop Image"
 
           />
           <TouchableOpacity

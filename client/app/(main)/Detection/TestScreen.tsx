@@ -15,6 +15,7 @@ import MultipleChoiceView from "./questions/MultipleChoiceView";
 import SequenceOrderView from "./questions/SequenceOrderView";
 import TextInputView from "./questions/TextInputView";
 import * as Progress from 'react-native-progress';
+import CircleImage from '@/assets/images/learnZone/circle.png';
 
 interface TestScreenProps {
   route: {
@@ -71,7 +72,7 @@ export default function TestScreen({ route }: TestScreenProps) {
       <View style={styles.container}>
         {/* Header Card */}
         <Image
-          source={require('@/assets/images/learnZone/circle.png')}
+          source={CircleImage}
           style={styles.headercircle}
         />
         <View style={styles.headerContent}>

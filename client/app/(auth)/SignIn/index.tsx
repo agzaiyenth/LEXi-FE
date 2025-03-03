@@ -1,5 +1,5 @@
 // app/(auth)/SignIn/index.tsx
-import LoadingScreen from '@/src/components/loading';
+import icon from '@/assets/images/auth/icon.png';
 import { useSession } from '@/src/ctx';
 import { useLogin } from '@/src/hooks/auth/useLogin';
 import theme from '@/src/theme';
@@ -63,7 +63,7 @@ const SignInScreen = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.avatarContainer}>
         <Image
-          source={require('@/assets/images/auth/icon.png')}
+          source={icon}
           style={styles.logo}
           resizeMode="contain"
         />

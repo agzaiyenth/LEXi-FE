@@ -18,6 +18,7 @@ import {
   View
 } from 'react-native';
 import EmptyState from './Emptystate';
+import CircleImage from '@/assets/images/learnZone/circle.png';
 
 
 
@@ -222,7 +223,7 @@ const BookTherapist = () => {
   return (
     <View style={styles.container}>
       <Image
-        source={require('@/assets/images/learnZone/circle.png')}
+        source={CircleImage}
         style={styles.headercircle}
       />
       {/*Go Back*/}

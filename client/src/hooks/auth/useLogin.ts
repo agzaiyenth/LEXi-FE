@@ -34,7 +34,6 @@ export const useLogin = () => {
     } catch (err: any) {
       const errorMessage = err.response?.data?.message || 'An error occurred during login.';
       setError(errorMessage);
-      throw new Error(errorMessage);
     } finally {
       setLoading(false);
     }

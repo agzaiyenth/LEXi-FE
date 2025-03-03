@@ -1,3 +1,5 @@
+import IconImage from '@/assets/images/auth/icon.png';
+import MascotImage from '@/assets/images/mascot/mascot-finger.png';
 import LoadingScreen from '@/src/components/loading';
 import { useSession } from '@/src/ctx';
 import { useStartTest } from '@/src/hooks/detection/useStartTest';
@@ -13,7 +15,7 @@ import { SwipeButton } from 'react-native-expo-swipe-button';
 
 export default function DetectionHomeScreen() {
   const navigation = useNavigation<StackNavigationProp<any, "DetectionHomeScreen">>();
- const { username } = useSession();
+  const { username } = useSession();
   const { startTest, loading } = useStartTest();
 
   const handleSwipeComplete = async () => {
@@ -24,16 +26,16 @@ export default function DetectionHomeScreen() {
       Alert.alert("Error", "Failed to start test. Please try again.");
     }
   };
-if(loading){
-  return <LoadingScreen/>
-}
+  if (loading) {
+    return <LoadingScreen />
+  }
   return (
     <LinearGradient
       colors={[theme.colors.primary.light2, theme.colors.primary.light3]}
       style={styles.container}
     >
       <Image
-        source={require('@/assets/images/auth/icon.png')}
+        source={IconImage}
         style={styles.logo}
       />
       <Text style={styles.title}>Hey There {username || 'Guest'}!</Text>
@@ -41,7 +43,7 @@ if(loading){
         Your personalized experience starts here. Let&apos;s get to know each other more!
       </Text>
       <Image
-        source={require('@/assets/images/mascot/mascot-finger.png')}
+        source={MascotImage}
         style={styles.avatar}
       />
       <SwipeButton

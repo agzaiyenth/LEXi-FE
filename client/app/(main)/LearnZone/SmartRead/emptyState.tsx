@@ -3,6 +3,7 @@ import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "expo-router";
+import Asset12Image from "@/assets/images/Asset_12.png";
 
 interface EmptyStateProps {
   param: string;
@@ -15,7 +16,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({ param }) => {
     <View style={styles.container}>
       <Text style={styles.text}>No {param} found!</Text>
       <Image
-        source={require("@/assets/images/Asset_12.png")}
+        source={Asset12Image}
         style={styles.image}
       />
       <TouchableOpacity
