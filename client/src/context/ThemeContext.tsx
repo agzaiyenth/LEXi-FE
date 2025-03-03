@@ -25,7 +25,7 @@ export const useTheme = () => {
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { username } = useSession();
   const [highContrast, setHighContrast] = useState(false);
-  const [fontScale, setFontScale] = useState(1); // Default font scale
+  const [fontScale, setFontScale] = useState(1); // Initialize fontScale to 1
   const [colorFilter, setColorFilter] = useState(false); // Default color filter state
   const [fontType, setFontType] = useState("System"); // Default font type
   const [lineHeight, setLineHeight] = useState(1); // Default line height
@@ -97,11 +97,13 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   // Function to increase font size
   const increaseFontSize = () => {
     setFontScale((prevScale) => {
-      const newScale = prevScale < 2 ? prevScale + 0.2 : prevScale;
+      const adjustedScale = prevScale === 0 ? 1 : prevScale;
+      const newScale = adjustedScale < 2 ? adjustedScale + 0.01 : adjustedScale;
       saveUserPreference({ fontScale: newScale });
       return newScale;
     });
   };
+  
 
   // Function to toggle color filter
   const toggleColorFilter = () => {

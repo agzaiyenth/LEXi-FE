@@ -104,39 +104,44 @@ export const getCurrentTheme = (
   alphabeticalKeyboard: boolean,
   textAlign: string
 ) => {
+  const fontScale1 = Math.max(fontScale, 1);
+  const lineHeight1 = Math.max(lineHeight, 1);
+  const letterSpacing1 = Math.max(letterSpacing, 0);
+
   const baseTheme = {
     ...theme,
     fonts: {
       ...theme.fonts,
       regular: fontType, // Dynamically update the fontType
       sizes: {
-        small: Math.round(16 * fontScale),
-        medium: Math.round(20 * fontScale),
-        large: Math.round(30 * fontScale),
-        extraLarge: Math.round(40 * fontScale),
-        s10: Math.round(10 * fontScale),
-        s12: Math.round(12 * fontScale),
-        s14: Math.round(14 * fontScale),
-        s16: Math.round(16 * fontScale),
-        s18: Math.round(18 * fontScale),
-        s20: Math.round(20 * fontScale),
-        s22: Math.round(22 * fontScale),
-        s24: Math.round(24 * fontScale),
-        s26: Math.round(26 * fontScale),
-        s28: Math.round(28 * fontScale),
-        s30: Math.round(30 * fontScale),
-        s32: Math.round(32 * fontScale),
-        s34: Math.round(34 * fontScale),
-        s36: Math.round(36 * fontScale),
-        s38: Math.round(38 * fontScale),
-        s40: Math.round(40 * fontScale),
-        s60: Math.round(60 * fontScale),
+        small: Math.round(16 * fontScale1),
+        medium: Math.round(20 * fontScale1),
+        large: Math.round(30 * fontScale1),
+        extraLarge: Math.round(40 * fontScale1),
+        s10: Math.round(10 * fontScale1),
+        s12: Math.round(12 * fontScale1),
+        s14: Math.round(14 * fontScale1),
+        s16: Math.round(16 * fontScale1),
+        s18: Math.round(18 * fontScale1),
+        s20: Math.round(20 * fontScale1),
+        s22: Math.round(22 * fontScale1),
+        s24: Math.round(24 * fontScale1),
+        s26: Math.round(26 * fontScale1),
+        s28: Math.round(28 * fontScale1),
+        s30: Math.round(30 * fontScale1),
+        s32: Math.round(32 * fontScale1),
+        s34: Math.round(34 * fontScale1),
+        s36: Math.round(36 * fontScale1),
+        s38: Math.round(38 * fontScale1),
+        s40: Math.round(40 * fontScale1),
+        s60: Math.round(60 * fontScale1),
       },
     },
     accessibility: {
       ...theme.accessibility,
-      lineHeight: lineHeight, // Dynamically set lineHeight
-      letterSpacing: letterSpacing, // Dynamically set letterSpacing
+      fontScale: fontScale1,
+      lineHeight: lineHeight1, // Dynamically set lineHeight
+      letterSpacing: letterSpacing1, // Dynamically set letterSpacing
       alphabeticalKeyboard: alphabeticalKeyboard, // Dynamically set keyboard type
       textAlign: "center", // Dynamically set text alignment
     },
