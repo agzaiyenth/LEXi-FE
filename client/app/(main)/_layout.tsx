@@ -13,7 +13,7 @@ import AccountScreen from './Account';
 import DetectionFlow from './Detection';
 import LoadingScreen from '@/src/components/loading';
 import AccessibilityScreen from "./Account/Accessibility";
-import { ThemeProvider, useTheme } from '../../src/context/ThemeContext';
+import { ThemeProvider, useTheme } from '@/src/context/ThemeContext';
 import theme, { getCurrentTheme } from '@/src/theme';
 
 // Create a Bottom Tab Navigator

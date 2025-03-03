@@ -3,10 +3,10 @@ import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-nati
 import theme from '@/src/theme';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../../../src/types/common/navigation';
+import { RootStackParamList } from '@/src/types/common/navigation';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { useTheme } from '../../../../src/context/ThemeContext'; // Import the useTheme hook
+import { useTheme } from '@/src/context/ThemeContext'; // Import the useTheme hook
 
 type NavigationProps = StackNavigationProp<RootStackParamList, 'Account'>;
 
