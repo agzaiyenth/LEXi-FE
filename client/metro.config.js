@@ -1,24 +1,14 @@
-// Learn more https://docs.expo.io/guides/customizing-metro
-
-const { getDefaultConfig } = require("expo/metro-config");
+const { getDefaultConfig } = require("@expo/metro-config");
 const { withNativeWind } = require("nativewind/metro");
 
-module.exports = withNativeWind(
-  (() => {
-    const config = getDefaultConfig(__dirname);
+const config = getDefaultConfig(__dirname);
 
-    config.transformer = {
-      ...config.transformer,
-      babelTransformerPath: require.resolve("react-native-svg-transformer"),
-    };
+// Fix Metro bundler waiting issue
+config.resolver = config.resolver || {};
+config.resolver.blockList = [/\/android\/.*/]; // Prevent infinite looping in Android folder
 
-    config.resolver = {
-      ...config.resolver,
-      assetExts: config.resolver.assetExts.filter((ext) => ext !== "svg"), // Remove 'svg' from assetExts
-      sourceExts: [...config.resolver.sourceExts, "svg"], // Add 'svg' to sourceExts
-    };
+// Ensure SVGs are processed correctly
+config.resolver.assetExts = config.resolver.assetExts.filter((ext) => ext !== "svg");
+config.resolver.sourceExts = [...config.resolver.sourceExts, "svg"];
 
-    return config;
-  })(),
-  { input: "./global.css" }
-);
+module.exports = withNativeWind(config, { input: "./global.css" });
