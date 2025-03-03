@@ -81,7 +81,7 @@ export default function SmartReadMain() {
           {/*Main Content*/}
           <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />} 
            contentContainerStyle={styles.scrollViewContent}>
-            <View style={styles.secondcontainer} >
+           
               <View style={styles.innercontainer} >
 
                   {documents.length > 0 ? (
@@ -154,7 +154,7 @@ export default function SmartReadMain() {
                 
               </View>  
               
-            </View>  
+           
             
           </ScrollView>
           
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     color: theme.colors.blacks.medium,
     position: "relative",
-    paddingBottom:500,
+    paddingBottom:700,
   },
   cardContainer: {
     flexDirection: "row",
@@ -238,7 +238,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: theme.fonts.sizes.medium,
-
     color: theme.colors.blacks.dark,
     marginRight: 30,
 
@@ -318,9 +317,6 @@ const styles = StyleSheet.create({
     
   },
 
-  secondcontainer: {
-   
-    
-  },
+
 });
 
