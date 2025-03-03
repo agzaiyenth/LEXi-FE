@@ -56,7 +56,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         textAlign: preferences.textAlign ?? textAlign,
       };
 
-      await apiClient.post('/api/user/theme', validPreferences);
+      await apiClient.post('/accessibility', validPreferences);
     } catch (error) {
       console.error('Error saving user preferences:', error);
     }
@@ -67,7 +67,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     try {
       if (!username) return;
 
-      const response = await apiClient.get(`/api/user/theme/${username}`);
+      const response = await apiClient.get(`/accessibility/user`);
       const preferences = response.data;
 
       if (preferences) {
