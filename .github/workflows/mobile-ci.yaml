@@ -21,21 +21,21 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: client/package-lock.json
+          cache: 'yarn'
+          cache-dependency-path: client/yarn.lock
 
       - name: 🚀 Cache EAS Builds
         uses: actions/cache@v3
         with:
           path: ~/.expo
-          key: ${{ runner.os }}-expo-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-expo-${{ hashFiles('**/yarn.lock') }}
 
       - name: 📦 Install Dependencies
-        run: npm install
+        run: yarn install --frozen-lockfile
         working-directory: ./client
 
       - name: 🚀 Install EAS CLI
-        run: npm install -g eas-cli
+        run: yarn global add eas-cli
         working-directory: ./client
 
       # - name: ✅ Build for Android Preview (Expo Go)
@@ -57,21 +57,21 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: client/package-lock.json
+          cache: 'yarn'
+          cache-dependency-path: client/yarn.lock
 
       - name: 🚀 Cache EAS Builds
         uses: actions/cache@v3
         with:
           path: ~/.expo
-          key: ${{ runner.os }}-expo-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-expo-${{ hashFiles('**/yarn.lock') }}
 
       - name: 📦 Install Dependencies
-        run: npm install
+        run: yarn install --frozen-lockfile
         working-directory: ./client
 
       - name: 🚀 Install EAS CLI
-        run: npm install -g eas-cli
+        run: yarn global add eas-cli
         working-directory: ./client
 
       # - name: ✅ Build for iOS Preview (Expo Go)
