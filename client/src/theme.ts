@@ -189,42 +189,42 @@ export const getCurrentTheme = (
     };
   }
 
-  // Apply color filter (apply a tint across all colors)
+  // Apply color filter
   if (colorFilter) {
     finalTheme = {
       ...finalTheme,
       colors: {
         ...theme.colors,
         primary: {
-          dark1: "#a2727f",
-          dark2: "#c796d8", // Darker red shade
-          dark3: "#fd3939", // Even darker red shade
-          medium: "#FF6347", // Medium red shade
-          medium2: "#FF7F50", // Lighter red shade
-          light: "#FFB6C1", // Light red/pink shade
-          light2: "#d3f091", // Orange-ish red
-          light3: "#f58bb8", 
+          dark1: "rgba(38, 70, 83, 0.5)",  
+          dark2: "rgba(37, 77, 78, 0.5)",
+          dark3: "rgba(3, 118, 122, 0.5)",
+          medium: "rgba(42, 157, 143, 0.6)",
+          medium2: "rgba(152, 193, 185, 0.6)",
+          light: "rgba(168, 218, 220, 0.6)",
+          light2: "rgba(211, 224, 222, 1)",
+          light3: "rgba(154, 195, 187, 0.6)",
         },
         secondary: {
-          dark1: "#8B4513", // Dark brown
-          dark2: "#D2691E", // Chocolate brown
-          medium: "#F4A261", // Soft orange
-          light: "#FFD700", // Gold shade
-          light2: "#fef8ea", // Very light beige
+          dark1: "rgba(161, 126, 86, 0.6)",
+          dark2: "rgba(138, 107, 79, 0.6)",
+          medium: "rgba(244, 162, 97, 0.6)",
+          light: "rgba(252, 213, 165, 0.6)",
+          light2: "rgba(254, 248, 234, 0.6)",
         },
         accent: {
-          dark: "#6D597A",
-          medium: "#B56576",
-          light: "#E56B6F",
+          dark: "rgba(109, 89, 122, 0.6)",
+          medium: "rgba(181, 101, 118, 0.6)",
+          light: "rgba(229, 107, 111, 0.6)",
         },
         background: {
-          offWhite: "#e4f9f9",
-          beige: "#F8ECD1", // Light beige
-          dark: "#D9CAB3", // Darker beige
+          offWhite: "rgba(255, 249, 235, 0.9)",
+          beige: "rgba(248, 236, 209, 1)",
+          dark: "rgba(217, 202, 179, 0.6)",
         },
         blacks: {
-          medium: "#151717", // Dark charcoal
-          dark: "#000000", // Black
+          medium: "rgba(21, 23, 23, 0.6)",
+          dark: "rgba(0, 0, 0, 0.6)",
         },
       },
     };
