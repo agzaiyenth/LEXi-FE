@@ -187,11 +187,9 @@ const styles = StyleSheet.create({
   },
  
   headerText: {
-    fontSize: theme.fonts.sizes.large,
-    fontWeight: 'bold',
-    marginLeft: 80,
-    
-    color: theme.colors.background.beige,
+    fontSize: theme.fonts.sizes.large,   
+    marginLeft: 80,   
+    color: theme.colors.background.offWhite,
   },
   uploadContainer: {
     flex: 1,
@@ -202,6 +200,7 @@ const styles = StyleSheet.create({
     padding: theme.spacing.medium,
     borderWidth: 1,
     borderColor: theme.colors.primary.light,
+    top:20,
   },
   uploadIcon: {
     width: 80,
