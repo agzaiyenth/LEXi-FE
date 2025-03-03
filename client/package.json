@@ -80,6 +80,7 @@
     "@babel/core": "^7.26.0",
     "@types/react": "~18.3.12",
     "@types/react-native-snap-carousel": "^3.8.11",
+    "babel-plugin-module-resolver": "^5.0.2",
     "eslint": "^9.19.0",
     "eslint-plugin-react": "^7.37.4",
     "globals": "^15.14.0",
@@ -91,18 +92,17 @@
   },
   "private": true,
   "expo": {
-  "doctor": {
-    "reactNativeDirectoryCheck": {
-      "exclude": [
-        "react-native-audio-recorder-player",
-        "react-native-heroicons",
-        "react-native-notificated",
-        "react-native-sound",
-        "react-native-tts"
-      ],
-      "listUnknownPackages": false
+    "doctor": {
+      "reactNativeDirectoryCheck": {
+        "exclude": [
+          "react-native-audio-recorder-player",
+          "react-native-heroicons",
+          "react-native-notificated",
+          "react-native-sound",
+          "react-native-tts"
+        ],
+        "listUnknownPackages": false
+      }
     }
   }
-}
-
 }
