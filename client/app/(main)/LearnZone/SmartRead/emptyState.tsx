@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     width: 300,
     borderRadius: 20,
     padding: 10,
+    top: 4,
   },
   text: {
     fontSize: theme.fonts.sizes.s28,
