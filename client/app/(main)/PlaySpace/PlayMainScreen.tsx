@@ -105,11 +105,12 @@ const PlayMainScreen = () => {
         minHeight: '100%',
       },
       header: {
-        fontSize: theme.fonts.sizes.large,
         fontWeight: 'bold',
         textAlign: 'center',
         marginBottom: theme.spacing.medium,
         color: theme.colors.primary.dark1,
+        fontSize: theme.fonts.sizes.large * theme.accessibility.fontScale,
+        letterSpacing: theme.accessibility.letterSpacing,
       },
       backButton:{
         marginTop:-65,
@@ -139,14 +140,16 @@ const PlayMainScreen = () => {
         borderRadius: theme.spacing.small,
       },
       cardTitle: {
-        fontSize: theme.fonts.sizes.small,
         fontWeight: 'bold',
         color: theme.colors.primary.dark1,
         marginTop: theme.spacing.small,
+        fontSize: theme.fonts.sizes.small * theme.accessibility.fontScale,
+        letterSpacing: theme.accessibility.letterSpacing,
       },
       cardTheory: {
-        fontSize: theme.fonts.sizes.s12,
         color: theme.colors.primary.medium,
+        fontSize: theme.fonts.sizes.s12 * theme.accessibility.fontScale,
+        letterSpacing: theme.accessibility.letterSpacing,
       },
     }), [theme]
   );
