@@ -45,14 +45,16 @@ const LearnMainScreen = () => {
         marginRight: 10,
       },
       backButtonText: {
-        fontSize: theme.fonts.sizes.s18,
         color: '#B4DCD6',
+        fontSize: theme.fonts.sizes.s18 * theme.accessibility.fontScale,
+        letterSpacing: theme.accessibility.letterSpacing,
       },
       headerTitle: {
-        fontSize: theme.fonts.sizes.s28,
         color: '#fff',
         textAlign: 'center',
         fontWeight: '500',
+        fontSize: theme.fonts.sizes.s28 * theme.accessibility.fontScale,
+        letterSpacing: theme.accessibility.letterSpacing,
       },
       mainContentCard: {
         backgroundColor: '#FFF9EB',
@@ -74,9 +76,10 @@ const LearnMainScreen = () => {
         marginBottom: 50,
       },
       learningText: {
-        fontSize: theme.fonts.sizes.s36,
         fontWeight: 'bold',
         color: '#4A4A4A',
+        fontSize: theme.fonts.sizes.s36 * theme.accessibility.fontScale,
+        letterSpacing: theme.accessibility.letterSpacing,
       },
       mascotImage: {
         width: 180,
@@ -96,15 +99,17 @@ const LearnMainScreen = () => {
         height: 120,
       },
       featureTitle: {
-        fontSize: theme.fonts.sizes.s26,
         color: '#fff',
         fontWeight: '500',
+        fontSize: theme.fonts.sizes.s26 * theme.accessibility.fontScale,
+        letterSpacing: theme.accessibility.letterSpacing,
       },
       featureSubtitle: {
         maxWidth: 230,
-        fontSize: theme.fonts.sizes.s14,
         color: '#fff',
         opacity: 0.8,
+        fontSize: theme.fonts.sizes.s14 * theme.accessibility.fontScale,
+        letterSpacing: theme.accessibility.letterSpacing,
       },
       bottomRow: {
         flexDirection: 'row',
@@ -124,16 +129,18 @@ const LearnMainScreen = () => {
         marginLeft: 8,
       },
       smallCardTitle: {
-        fontSize: theme.fonts.sizes.s24,
         color: '#fff',
         fontWeight: '500',
         marginBottom: 4,
+        fontSize: theme.fonts.sizes.s24 * theme.accessibility.fontScale,
+        letterSpacing: theme.accessibility.letterSpacing,
       },
       smallCardSubtitle: {
-        fontSize: theme.fonts.sizes.s14,
         color: '#fff',
         opacity: 0.8,
         marginBottom: 16,
+        fontSize: theme.fonts.sizes.s14 * theme.accessibility.fontScale,
+        letterSpacing: theme.accessibility.letterSpacing,
       },
       arrow: {
         position: 'absolute',
