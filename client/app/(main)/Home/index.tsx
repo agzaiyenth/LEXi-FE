@@ -146,15 +146,17 @@ export default function HomeScreen() {
         padding: 20
       },
       cardTitle: {
-        fontSize: theme.fonts.sizes.s24,
         fontWeight: "700",
         color: "#ffffff",
-        marginBottom: 8
+        marginBottom: 8,
+        fontSize: theme.fonts.sizes.s24 * theme.accessibility.fontScale,
+        letterSpacing: theme.accessibility.letterSpacing,
       },
       cardDescription: {
-        fontSize: theme.fonts.sizes.s16,
         color: "rgba(255,255,255,0.9)",
-        marginBottom: 16
+        marginBottom: 16,
+        fontSize: theme.fonts.sizes.s16 * theme.accessibility.fontScale,
+        letterSpacing: theme.accessibility.letterSpacing,
       },
       seeMoreButton: {
         flexDirection: "row",
@@ -167,9 +169,10 @@ export default function HomeScreen() {
       },
       buttonText: {
         color: "#ffffff",
-        fontSize: theme.fonts.sizes.s16,
         fontWeight: "600",
-        marginRight: 4
+        marginRight: 4,
+        fontSize: theme.fonts.sizes.s16 * theme.accessibility.fontScale,
+        letterSpacing: theme.accessibility.letterSpacing,
       },
       headerContainer: {
         flexDirection: "row",
@@ -182,22 +185,25 @@ export default function HomeScreen() {
         marginRight: 10
       },
       headerText: {
-        fontSize: theme.fonts.sizes.large,
         fontWeight: "bold",
-        color: theme.colors.blacks.medium
+        color: theme.colors.blacks.medium,
+        fontSize: theme.fonts.sizes.large * theme.accessibility.fontScale,
+        letterSpacing: theme.accessibility.letterSpacing,
       },
       welcomeSection: {
         marginTop: 10,
       },
       welcomeText: {
         color: theme.colors.blacks.medium,
-        fontSize: theme.fonts.sizes.large,
         fontWeight: "500",
-        paddingLeft: 10
+        paddingLeft: 10,
+        fontSize: theme.fonts.sizes.large * theme.accessibility.fontScale,
+        letterSpacing: theme.accessibility.letterSpacing,
       },
       userName: {
-        fontSize: theme.fonts.sizes.large,
-        fontWeight: "600"
+        fontWeight: "600",
+        fontSize: theme.fonts.sizes.large * theme.accessibility.fontScale,
+        letterSpacing: theme.accessibility.letterSpacing,
       },
       achievementCard: {
         backgroundColor: theme.colors.primary.light2,
@@ -221,9 +227,10 @@ export default function HomeScreen() {
         marginBottom: 10,
       },
       achievementTitle: {
-        fontSize: theme.fonts.sizes.s14,
         fontWeight: '500',
         textAlign: 'center',
+        fontSize: theme.fonts.sizes.s14 * theme.accessibility.fontScale,
+        letterSpacing: theme.accessibility.letterSpacing,
       },
       greetingCard: {
         marginTop: 16,
@@ -265,18 +272,20 @@ export default function HomeScreen() {
       },
       sectionTitle: {
         paddingLeft: 8,
-        fontSize: theme.fonts.sizes.s20,
         fontWeight: "bold",
-        marginBottom: 15
+        marginBottom: 15,
+        fontSize: theme.fonts.sizes.s20 * theme.accessibility.fontScale,
+        letterSpacing: theme.accessibility.letterSpacing,
       },
       blogSection: {
         padding: 24
       },
       sectionTitleBlog: {
-        fontSize: theme.fonts.sizes.s20,
         fontWeight: "700",
         color: "#1F2937",
-        marginBottom: 16
+        marginBottom: 16,
+        fontSize: theme.fonts.sizes.s20 * theme.accessibility.fontScale,
+        letterSpacing: theme.accessibility.letterSpacing,
       },
       blogCard: {
         backgroundColor: theme.colors.background.beige,
@@ -302,27 +311,31 @@ export default function HomeScreen() {
       },
       blogCategory: {
         color: theme.colors.primary.medium2,
-        fontSize: theme.fonts.sizes.s20,
         fontWeight: "600",
-        marginBottom: 4
+        marginBottom: 4,
+        fontSize: theme.fonts.sizes.s20 * theme.accessibility.fontScale,
+        letterSpacing: theme.accessibility.letterSpacing,
       },
       blogMeta: {
         flexDirection: "row",
         alignItems: "center"
       },
       blogAuthor: {
-        fontSize: theme.fonts.sizes.s14,
-        color: "#6B7280"
+        color: "#6B7280",
+        fontSize: theme.fonts.sizes.s14 * theme.accessibility.fontScale,
+        letterSpacing: theme.accessibility.letterSpacing,
       },
       blogDate: {
-        fontSize: theme.fonts.sizes.s14,
-        color: "#6B7280"
+        color: "#6B7280",
+        fontSize: theme.fonts.sizes.s14 * theme.accessibility.fontScale,
+        letterSpacing: theme.accessibility.letterSpacing,
       },
       blogTitle: {
-        fontSize: theme.fonts.sizes.s18,
         fontWeight: "700",
         color: "#1F2937",
-        lineHeight: 24
+        lineHeight: 24,
+        fontSize: theme.fonts.sizes.s18 * theme.accessibility.fontScale,
+        letterSpacing: theme.accessibility.letterSpacing,
       },
     }), [theme]
   );  
