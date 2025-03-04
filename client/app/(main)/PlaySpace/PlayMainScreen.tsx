@@ -13,7 +13,7 @@ import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react
 import { LearnZoneParamList } from './index';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import BaloonImage from '@/assets/images/games/ballon.png';
-import { useTheme } from "../../../src/context/ThemeContext";
+import { useTheme } from "@/src/context/ThemeContext";
 
 type LearnMainNavigationProp = StackNavigationProp<LearnZoneParamList, 'PlayMainScreen'>;
 interface Game {
