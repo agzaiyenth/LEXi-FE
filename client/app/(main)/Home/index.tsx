@@ -1,10 +1,4 @@
-import icon from "@/assets/images/icon.png";
-import welcome from "@/assets/images/welcome.png";
-import { useSession } from "@/src/ctx";
-import { theme } from "@/src/theme";
-import { Ionicons } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
-import React from "react";
+import React, { useMemo } from "react";
 import {
   Dimensions,
   Image,
@@ -16,6 +10,7 @@ import {
   View
 } from "react-native";
 import Animated, { FadeInUp } from "react-native-reanimated";
+import { useTheme } from "@/src/context/ThemeContext";
 
 // Constants for carousel dimensions
 const SLIDER_WIDTH = Dimensions.get("window").width;
@@ -90,144 +85,18 @@ const blogPosts = [
   }
 ];
 
-// Wrap FeatureCard in React.memo for performance
-const FeatureCard = React.memo(function FeatureCard({ item, index }: any) {
-  return (
-    <Animated.View
-      entering={FadeInUp.delay(index * 100)}
-      style={[styles.cardContainer, { zIndex: features.length - index }]}
-    >
-      <View style={styles.card}>
-        <Image source={{ uri: item.image }} style={styles.cardImage} />
-        <LinearGradient
-          colors={["transparent", "rgba(0,0,0,0.8)"]}
-          style={styles.gradient}
-        />
-        <View style={styles.cardContent}>
-          <Text style={styles.cardTitle}>{item.title}</Text>
-          <Text style={styles.cardDescription}>{item.description}</Text>
-          <Pressable style={styles.seeMoreButton}>
-            <Text style={styles.buttonText}>See more</Text>
-            <Ionicons name="chevron-forward" size={20} color="white" />
-          </Pressable>
-        </View>
-      </View>
-    </Animated.View>
-  );
-});
-
-// Optionally wrap BlogCard as well
-const BlogCard = React.memo(function BlogCard({ item, index }: any) {
-  return (
-    <Animated.View
-      entering={FadeInUp.delay(index * 100)}
-      style={styles.blogCard}
-    >
-      <Image source={{ uri: item.image }} style={styles.blogImage} />
-      <View style={styles.blogContent}>
-        <View style={styles.blogHeader}>
-          <Text style={styles.blogCategory}>{item.category}</Text>
-          <View style={styles.blogMeta}>
-            <Text style={styles.blogAuthor}>{item.author}</Text>
-            <Text style={styles.blogDate}> · {item.date}</Text>
-          </View>
-        </View>
-        <Text style={styles.blogTitle}>{item.title}</Text>
-      </View>
-    </Animated.View>
-  );
-});
-
-// InfiniteCarousel to only fix features cards styling
-function InfiniteCarousel({ data }: any) {
-  const flatListRef = React.useRef<RNAnimated.FlatList<any>>(null);
-  // Triple the data for an infinite effect.
-  const extendedData = [...data, ...data, ...data];
-  const initialIndex = data.length;
-  const [currentIndex, setCurrentIndex] = React.useState(initialIndex);
-
-  // On mount, scroll to the middle copy.
-  React.useEffect(() => {
-    flatListRef.current?.scrollToIndex({
-      index: initialIndex,
-      animated: false
-    });
-  }, []);
-
-  // Auto-scroll every 3 seconds.
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      const nextIndex = currentIndex + 1;
-      setCurrentIndex(nextIndex);
-      flatListRef.current?.scrollToIndex({
-        index: nextIndex,
-        animated: true
-      });
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [currentIndex]);
-
-  const onMomentumScrollEnd = (e: any) => {
-    const offsetX = e.nativeEvent.contentOffset.x;
-    let newIndex = Math.round(offsetX / (ITEM_WIDTH + ITEM_MARGIN_HORIZONTAL * 2));
-    setCurrentIndex(newIndex);
-
-    if (newIndex >= data.length * 2) {
-      newIndex -= data.length;
-      setCurrentIndex(newIndex);
-      flatListRef.current?.scrollToIndex({ index: newIndex, animated: false });
-    } else if (newIndex < data.length) {
-      newIndex += data.length;
-      setCurrentIndex(newIndex);
-      flatListRef.current?.scrollToIndex({ index: newIndex, animated: false });
-    }
-  };
-
-  const getItemLayout = (_: any, index: number) => ({
-    length: ITEM_WIDTH + ITEM_MARGIN_HORIZONTAL * 2,
-    offset: (ITEM_WIDTH + ITEM_MARGIN_HORIZONTAL * 2) * index,
-    index
-  });
-
-  return (
-    <RNAnimated.FlatList
-      ref={flatListRef}
-      data={extendedData}
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      snapToInterval={ITEM_WIDTH + ITEM_MARGIN_HORIZONTAL * 2}
-      snapToAlignment="center"
-      decelerationRate="fast"
-      bounces={false}
-      onMomentumScrollEnd={onMomentumScrollEnd}
-      onScrollToIndexFailed={info => {
-        setTimeout(() => {
-          flatListRef.current?.scrollToIndex({ index: info.index, animated: true });
-        }, 500);
-      }}
-      getItemLayout={getItemLayout}
-      contentContainerStyle={{
-        paddingHorizontal: (SLIDER_WIDTH - ITEM_WIDTH) / 2
-      }}
-      keyExtractor={(_, idx) => idx.toString()}
-      renderItem={({ item, index }: any) => (
-        <View style={{ width: ITEM_WIDTH, marginHorizontal: ITEM_MARGIN_HORIZONTAL }}>
-          <FeatureCard item={item} index={index} />
-        </View>
-      )}
-    />
-  );
-}
-
 // HomeScreen remains unchanged except for the updated carousel
 export default function HomeScreen() {
+  const [fontsLoaded] = useFonts({
+    OpenDyslexic: require("@/assets/fonts/open-dyslexic.ttf")
+  });
   const { username } = useSession();
 
   return (
     <ScrollView style={styles.wrapper}>
       <View style={styles.container}>
         <View style={styles.headerContainer}>
-          <Image source={icon} style={styles.welcomeImage} />
+          <Image source={require("@/assets/images/icon.png")} style={styles.welcomeImage} />
           <Text style={styles.headerText}>LEXi</Text>
         </View>
 
@@ -240,15 +109,15 @@ export default function HomeScreen() {
             ,
           </Text>
         </View>
-        <View style={{ paddingHorizontal: 16 }}>
-          <View style={styles.greetingCard}>
-            <View style={styles.greetingTextContainer}>
-              <Text style={styles.greetingText}>Hey There!{"\n"}How Are You?</Text>
-            </View>
-            <View style={styles.greetingIcon}>
-              <Image source={welcome} style={styles.mascotImage} />
-            </View>
+  <View style={{paddingHorizontal: 16}}>
+        <View style={styles.greetingCard}>
+          <View style={styles.greetingTextContainer}>
+            <Text style={styles.greetingText}>Hey There!{"\n"}How Are You?</Text>
           </View>
+          <View style={styles.greetingIcon}>
+            <Image source={require("@/assets/images/welcome.png")} style={styles.mascotImage} />
+          </View>
+        </View>
         </View>
 
         <View style={styles.section}>
