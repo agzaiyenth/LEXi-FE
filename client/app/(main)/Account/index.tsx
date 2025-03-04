@@ -41,8 +41,9 @@ export default function AccountScreen() {
         marginBottom: 15,
       },
       name: {
-        fontSize: theme.fonts.sizes.s24,
         fontWeight: 'bold',
+        fontSize: theme.fonts.sizes.s24 * theme.accessibility.fontScale,
+        letterSpacing: theme.accessibility.letterSpacing,
       },
       bio: {
         fontSize: theme.fonts.sizes.s16,
@@ -59,21 +60,24 @@ export default function AccountScreen() {
         alignItems: 'center',
       },
       statValue: {
-        fontSize: theme.fonts.sizes.s20,
         fontWeight: 'bold',
+        fontSize: theme.fonts.sizes.s20 * theme.accessibility.fontScale,
+        letterSpacing: theme.accessibility.letterSpacing,
       },
       statLabel: {
-        fontSize: theme.fonts.sizes.s14,
         color: '#666666',
         marginTop: 5,
+        fontSize: theme.fonts.sizes.s14 * theme.accessibility.fontScale,
+        letterSpacing: theme.accessibility.letterSpacing,
       },
       section: {
         padding: 20,
       },
       sectionTitle: {
-        fontSize: theme.fonts.sizes.s20,
         fontWeight: 'bold',
         marginBottom: 15,
+        fontSize: theme.fonts.sizes.s20 * theme.accessibility.fontScale,
+        letterSpacing: theme.accessibility.letterSpacing,
       },
       achievementCard: {
         backgroundColor: theme.colors.background.beige,
@@ -116,8 +120,9 @@ export default function AccountScreen() {
       },
       settingText: {
         flex: 1,
-        fontSize: theme.fonts.sizes.s16,
         marginLeft: 15,
+        fontSize: theme.fonts.sizes.s16 * theme.accessibility.fontScale,
+        letterSpacing: theme.accessibility.letterSpacing,
       },
     }), [theme]
   );
