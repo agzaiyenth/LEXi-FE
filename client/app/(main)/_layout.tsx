@@ -5,6 +5,7 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useSession } from '@/src/ctx';
+import theme from '@/src/theme';
 import HomeScreen from '.';
 import LearnScreen from './LearnZone';
 import PlayScreen from './PlaySpace';
@@ -13,16 +14,12 @@ import AccountScreen from './Account';
 import DetectionFlow from './Detection';
 import LoadingScreen from '@/src/components/loading';
 import AccessibilityScreen from "./Account/Accessibility";
-import { ThemeProvider, useTheme } from '@/src/context/ThemeContext';
-import theme, { getCurrentTheme } from '@/src/theme';
 
 // Create a Bottom Tab Navigator
 const Tab = createBottomTabNavigator();
 
 export default function AppLayout() {
   const { session, isLoading } = useSession();
-  const { contrast } = useTheme();
-  const dynamicTheme = getCurrentTheme(contrast); // Get the current theme dynamically
 
   if (isLoading) {
     return <LoadingScreen />; // Show loading screen
@@ -33,29 +30,27 @@ export default function AppLayout() {
   }
 
   return (
-    <ThemeProvider>
-      <Tab.Navigator
-        screenOptions={{
-          headerShown: false, // Hide headers
-        }}
-        tabBar={(props) => <CustomTabBar {...props} theme={dynamicTheme} />} // Pass dynamic theme to CustomTabBar
-      >
-        <Tab.Screen name="Home" component={HomeScreen} options={{ title: 'Home' }} />
-        <Tab.Screen name="LearnZone" component={LearnScreen} options={{ title: 'Learn' }} />
-        <Tab.Screen name="PlaySpace" component={PlayScreen} options={{ title: 'Play' }} />
-        <Tab.Screen name="Explore+" component={ExploreScreen} options={{ title: 'Explore' }} />
-        <Tab.Screen name="Account" component={AccountScreen} options={{ title: 'Account' }} />
-        <Tab.Screen name="Detection" component={DetectionFlow} options={{ title: 'Detection' }} />
-        <Tab.Screen name="Accessibility" component={AccessibilityScreen} options={{ title: 'Accessibility' }} />
-      </Tab.Navigator>
-    </ThemeProvider>
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false, // Hide headers
+      }}
+      tabBar={(props) => <CustomTabBar {...props} />} // Use custom tab bar
+    >
+      <Tab.Screen name="Home" component={HomeScreen} options={{ title: 'Home' }} />
+      <Tab.Screen name="LearnZone" component={LearnScreen} options={{ title: 'Learn' }} />
+      <Tab.Screen name="PlaySpace" component={PlayScreen} options={{ title: 'Play' }} />
+      <Tab.Screen name="Explore+" component={ExploreScreen} options={{ title: 'Explore' }} />
+      <Tab.Screen name="Account" component={AccountScreen} options={{ title: 'Account' }} />
+      <Tab.Screen name="Detection" component={DetectionFlow} options={{ title: 'Detection' }} />
+      <Tab.Screen name="Accessibility" component={AccessibilityScreen} options={{ title: 'Accessibility' }} />
+    </Tab.Navigator>
   );
 }
 
 // Custom Bottom Navigation Bar
-const CustomTabBar = ({ state, descriptors, navigation, theme }: any) => {
+const CustomTabBar = ({ state, descriptors, navigation }: any) => {
   return (
-    <View style={[styles.tabBar, { backgroundColor: theme.colors.primary.light2 }]}>
+    <View style={styles.tabBar}>
       {state.routes.map((route: any, index: number) => {
         if (route.name === 'Detection' || route.name === 'Accessibility') {
           return null; // Exclude the Detection tab from being rendered
@@ -124,11 +119,14 @@ const CustomTabBar = ({ state, descriptors, navigation, theme }: any) => {
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+
+  },
   tabBar: {
     flexDirection: 'row',
     padding: theme.spacing.medium,
     paddingVertical: theme.spacing.small,
+    backgroundColor: theme.colors.primary.light2,
     borderTopLeftRadius: theme.spacing.large,
     borderTopRightRadius: theme.spacing.large,
     width: '100%',
