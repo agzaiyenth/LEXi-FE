@@ -8,12 +8,11 @@ It contains buttons that navigate to other screens in the LearnZone feature.
 import theme from '@/src/theme';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { LearnZoneParamList } from './index';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import BaloonImage from '@/assets/images/games/ballon.png';
-import { useTheme } from "@/src/context/ThemeContext";
 
 type LearnMainNavigationProp = StackNavigationProp<LearnZoneParamList, 'PlayMainScreen'>;
 interface Game {
@@ -94,66 +93,6 @@ const PlayMainScreen = () => {
     </TouchableOpacity>
   );
 
-  const { theme } = useTheme();
-
-  const styles = useMemo(() =>
-    StyleSheet.create({
-      container: {
-        flex: 1,
-        backgroundColor: theme.colors.primary.light3,
-        paddingTop: theme.spacing.large,
-        minHeight: '100%',
-      },
-      header: {
-        fontWeight: 'bold',
-        textAlign: 'center',
-        marginBottom: theme.spacing.medium,
-        color: theme.colors.primary.dark1,
-        fontSize: theme.fonts.sizes.large * theme.accessibility.fontScale,
-        letterSpacing: theme.accessibility.letterSpacing,
-      },
-      backButton:{
-        marginTop:-65,
-        padding:12,
-      },
-      flatListContainer: {
-        paddingHorizontal: theme.spacing.medium,
-      },
-      card: {
-        backgroundColor: theme.colors.primary.light2,
-        borderRadius: theme.spacing.small,
-        padding: theme.spacing.medium,
-        margin: theme.spacing.small,
-        flex: 1,
-        alignItems: 'center',
-        shadowColor: theme.colors.blacks.dark,
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        height: 200,
-        width: 150,
-        shadowRadius: theme.spacing.small / 2,
-        elevation: 2,
-      },
-      cardImage: {
-        width: 120,
-        height: 125,
-        borderRadius: theme.spacing.small,
-      },
-      cardTitle: {
-        fontWeight: 'bold',
-        color: theme.colors.primary.dark1,
-        marginTop: theme.spacing.small,
-        fontSize: theme.fonts.sizes.small * theme.accessibility.fontScale,
-        letterSpacing: theme.accessibility.letterSpacing,
-      },
-      cardTheory: {
-        color: theme.colors.primary.medium,
-        fontSize: theme.fonts.sizes.s12 * theme.accessibility.fontScale,
-        letterSpacing: theme.accessibility.letterSpacing,
-      },
-    }), [theme]
-  );
-
   return (
     <View style={styles.container}>
       <Text style={styles.header}>PlaySpace</Text>
@@ -170,5 +109,58 @@ const PlayMainScreen = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: theme.colors.primary.light3,
+    paddingTop: theme.spacing.large,
+    minHeight: '100%',
+  },
+  header: {
+    fontSize: theme.fonts.sizes.large,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: theme.spacing.medium,
+    color: theme.colors.primary.dark1,
+  },
+  backButton:{
+    marginTop:-65,
+    padding:12,
+  },
+  flatListContainer: {
+    paddingHorizontal: theme.spacing.medium,
+  },
+  card: {
+    backgroundColor: theme.colors.primary.light2,
+    borderRadius: theme.spacing.small,
+    padding: theme.spacing.medium,
+    margin: theme.spacing.small,
+    flex: 1,
+    alignItems: 'center',
+    shadowColor: theme.colors.blacks.dark,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    height: 200,
+    width: 150,
+    shadowRadius: theme.spacing.small / 2,
+    elevation: 2,
+  },
+  cardImage: {
+    width: 120,
+    height: 125,
+    borderRadius: theme.spacing.small,
+  },
+  cardTitle: {
+    fontSize: theme.fonts.sizes.small,
+    fontWeight: 'bold',
+    color: theme.colors.primary.dark1,
+    marginTop: theme.spacing.small,
+  },
+  cardTheory: {
+    fontSize: theme.fonts.sizes.s12,
+    color: theme.colors.primary.medium,
+  },
+});
 
 export default PlayMainScreen;

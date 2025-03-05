@@ -4,7 +4,7 @@ import { useSession } from "@/src/ctx";
 import { theme } from "@/src/theme";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import React, { useMemo } from "react";
+import React from "react";
 import {
   Dimensions,
   Image,
@@ -16,7 +16,6 @@ import {
   View
 } from "react-native";
 import Animated, { FadeInUp } from "react-native-reanimated";
-import { useTheme } from "@/src/context/ThemeContext";
 
 // Constants for carousel dimensions
 const SLIDER_WIDTH = Dimensions.get("window").width;
@@ -91,256 +90,7 @@ const blogPosts = [
   }
 ];
 
-// HomeScreen remains unchanged except for the updated carousel
-export default function HomeScreen() {
-  const { username } = useSession();
-
-  const { theme } = useTheme();
-
-  const styles = useMemo(() =>
-    StyleSheet.create({
-      wrapper: {
-        flex: 1,
-        backgroundColor: theme.colors.background.offWhite
-      },
-      container: {
-        flex: 1,
-        // padding: 16
-      },
-      carouselContainer: {
-        height: 300,
-      },
-      cardContainer: {
-        padding: 8,
-        height: 300
-      },
-      card: {
-        borderRadius: 20,
-        overflow: "hidden",
-        height: "100%",
-        backgroundColor: "#fff",
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5
-      },
-      cardImage: {
-        width: "100%",
-        height: "100%",
-        resizeMode: "cover"
-      },
-      gradient: {
-        position: "absolute",
-        left: 0,
-        right: 0,
-        bottom: 0,
-        height: "70%",
-        borderRadius: 20
-      },
-      cardContent: {
-        position: "absolute",
-        bottom: 0,
-        left: 0,
-        right: 0,
-        padding: 20
-      },
-      cardTitle: {
-        fontWeight: "700",
-        color: "#ffffff",
-        marginBottom: 8,
-        fontSize: theme.fonts.sizes.s24 * theme.accessibility.fontScale,
-        letterSpacing: theme.accessibility.letterSpacing,
-      },
-      cardDescription: {
-        color: "rgba(255,255,255,0.9)",
-        marginBottom: 16,
-        fontSize: theme.fonts.sizes.s16 * theme.accessibility.fontScale,
-        letterSpacing: theme.accessibility.letterSpacing,
-      },
-      seeMoreButton: {
-        flexDirection: "row",
-        alignItems: "center",
-        backgroundColor: "rgba(255,255,255,0.2)",
-        alignSelf: "flex-start",
-        paddingHorizontal: 16,
-        paddingVertical: 8,
-        borderRadius: 20
-      },
-      buttonText: {
-        color: "#ffffff",
-        fontWeight: "600",
-        marginRight: 4,
-        fontSize: theme.fonts.sizes.s16 * theme.accessibility.fontScale,
-        letterSpacing: theme.accessibility.letterSpacing,
-      },
-      headerContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-        padding: 16
-      },
-      welcomeImage: {
-        width: 40,
-        height: 40,
-        marginRight: 10
-      },
-      headerText: {
-        fontWeight: "bold",
-        color: theme.colors.blacks.medium,
-        fontSize: theme.fonts.sizes.large * theme.accessibility.fontScale,
-        letterSpacing: theme.accessibility.letterSpacing,
-      },
-      welcomeSection: {
-        marginTop: 10,
-      },
-      welcomeText: {
-        color: theme.colors.blacks.medium,
-        fontWeight: "500",
-        paddingLeft: 10,
-        fontSize: theme.fonts.sizes.large * theme.accessibility.fontScale,
-        letterSpacing: theme.accessibility.letterSpacing,
-      },
-      userName: {
-        fontWeight: "600",
-        fontSize: theme.fonts.sizes.large * theme.accessibility.fontScale,
-        letterSpacing: theme.accessibility.letterSpacing,
-      },
-      achievementCard: {
-        backgroundColor: theme.colors.primary.light2,
-        padding: 15,
-        borderRadius: 12,
-        marginRight: 15,
-        alignItems: 'center',
-        width: 120,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 3,
-      },
-      achievementIcon: {
-        width: 50,
-        height: 50,
-        borderRadius: 25,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: 10,
-      },
-      achievementTitle: {
-        fontWeight: '500',
-        textAlign: 'center',
-        fontSize: theme.fonts.sizes.s14 * theme.accessibility.fontScale,
-        letterSpacing: theme.accessibility.letterSpacing,
-      },
-      greetingCard: {
-        marginTop: 16,
-        backgroundColor: theme.colors.primary.dark1,
-        borderRadius: 16,
-        padding: 40,
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-      },
-      greetingTextContainer: {
-        flex: 1
-      },
-      greetingText: {
-        color: theme.colors.background.offWhite,
-        fontSize: theme.fonts.sizes.medium,
-        fontFamily: theme.fonts.regular2,
-        lineHeight: theme.fonts.sizes.medium * 1.2
-      },
-      greetingIcon: {
-        width: 50,
-        height: 50,
-        backgroundColor: theme.colors.background.offWhite,
-        borderRadius: 50,
-        alignItems: "center",
-        justifyContent: "center"
-      },
-      mascotImage: {
-        width: 120,
-        height: 150,
-        position: "absolute",
-        bottom: -20,
-        left: -50
-      },
-      section: {
-        padding: 20,
-        paddingLeft: 8,
-        paddingRight: 0
-      },
-      sectionTitle: {
-        paddingLeft: 8,
-        fontWeight: "bold",
-        marginBottom: 15,
-        fontSize: theme.fonts.sizes.s20 * theme.accessibility.fontScale,
-        letterSpacing: theme.accessibility.letterSpacing,
-      },
-      blogSection: {
-        padding: 24
-      },
-      sectionTitleBlog: {
-        fontWeight: "700",
-        color: "#1F2937",
-        marginBottom: 16,
-        fontSize: theme.fonts.sizes.s20 * theme.accessibility.fontScale,
-        letterSpacing: theme.accessibility.letterSpacing,
-      },
-      blogCard: {
-        backgroundColor: theme.colors.background.beige,
-        borderRadius: 16,
-        overflow: "hidden",
-        marginBottom: 16,
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3,
-        elevation: 3
-      },
-      blogImage: {
-        width: "100%",
-        height: 200,
-        resizeMode: "cover"
-      },
-      blogContent: {
-        padding: 16
-      },
-      blogHeader: {
-        marginBottom: 8
-      },
-      blogCategory: {
-        color: theme.colors.primary.medium2,
-        fontWeight: "600",
-        marginBottom: 4,
-        fontSize: theme.fonts.sizes.s20 * theme.accessibility.fontScale,
-        letterSpacing: theme.accessibility.letterSpacing,
-      },
-      blogMeta: {
-        flexDirection: "row",
-        alignItems: "center"
-      },
-      blogAuthor: {
-        color: "#6B7280",
-        fontSize: theme.fonts.sizes.s14 * theme.accessibility.fontScale,
-        letterSpacing: theme.accessibility.letterSpacing,
-      },
-      blogDate: {
-        color: "#6B7280",
-        fontSize: theme.fonts.sizes.s14 * theme.accessibility.fontScale,
-        letterSpacing: theme.accessibility.letterSpacing,
-      },
-      blogTitle: {
-        fontWeight: "700",
-        color: "#1F2937",
-        lineHeight: 24,
-        fontSize: theme.fonts.sizes.s18 * theme.accessibility.fontScale,
-        letterSpacing: theme.accessibility.letterSpacing,
-      },
-    }), [theme]
-  );  
-
-  // Wrap FeatureCard in React.memo for performance
+// Wrap FeatureCard in React.memo for performance
 const FeatureCard = React.memo(function FeatureCard({ item, index }: any) {
   return (
     <Animated.View
@@ -469,6 +219,10 @@ function InfiniteCarousel({ data }: any) {
   );
 }
 
+// HomeScreen remains unchanged except for the updated carousel
+export default function HomeScreen() {
+  const { username } = useSession();
+
   return (
     <ScrollView style={styles.wrapper}>
       <View style={styles.container}>
@@ -553,3 +307,230 @@ function InfiniteCarousel({ data }: any) {
   );
 }
 
+const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    backgroundColor: theme.colors.background.offWhite
+  },
+  container: {
+    flex: 1,
+    // padding: 16
+  },
+  carouselContainer: {
+    height: 300,
+  },
+  cardContainer: {
+    padding: 8,
+    height: 300
+  },
+  card: {
+    borderRadius: 20,
+    overflow: "hidden",
+    height: "100%",
+    backgroundColor: "#fff",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5
+  },
+  cardImage: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover"
+  },
+  gradient: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: "70%",
+    borderRadius: 20
+  },
+  cardContent: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: 20
+  },
+  cardTitle: {
+    fontSize: theme.fonts.sizes.s24,
+    fontWeight: "700",
+    color: "#ffffff",
+    marginBottom: 8
+  },
+  cardDescription: {
+    fontSize: theme.fonts.sizes.s16,
+    color: "rgba(255,255,255,0.9)",
+    marginBottom: 16
+  },
+  seeMoreButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "rgba(255,255,255,0.2)",
+    alignSelf: "flex-start",
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20
+  },
+  buttonText: {
+    color: "#ffffff",
+    fontSize: theme.fonts.sizes.s16,
+    fontWeight: "600",
+    marginRight: 4
+  },
+  headerContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 16
+  },
+  welcomeImage: {
+    width: 40,
+    height: 40,
+    marginRight: 10
+  },
+  headerText: {
+    fontSize: theme.fonts.sizes.large,
+    fontWeight: "bold",
+    color: theme.colors.blacks.medium
+  },
+  welcomeSection: {
+    marginTop: 10,
+  },
+  welcomeText: {
+    color: theme.colors.blacks.medium,
+    fontSize: theme.fonts.sizes.large,
+    fontWeight: "500",
+    paddingLeft: 10
+  },
+  userName: {
+    fontSize: theme.fonts.sizes.large,
+    fontWeight: "600"
+  },
+  achievementCard: {
+    backgroundColor: theme.colors.primary.light2,
+    padding: 15,
+    borderRadius: 12,
+    marginRight: 15,
+    alignItems: 'center',
+    width: 120,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  achievementIcon: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10,
+  },
+  achievementTitle: {
+    fontSize: theme.fonts.sizes.s14,
+    fontWeight: '500',
+    textAlign: 'center',
+  },
+  greetingCard: {
+    marginTop: 16,
+    backgroundColor: theme.colors.primary.dark1,
+    borderRadius: 16,
+    padding: 40,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  greetingTextContainer: {
+    flex: 1
+  },
+  greetingText: {
+    color: theme.colors.background.offWhite,
+    fontSize: theme.fonts.sizes.medium,
+    fontFamily: theme.fonts.regular2,
+    lineHeight: theme.fonts.sizes.medium * 1.2
+  },
+  greetingIcon: {
+    width: 50,
+    height: 50,
+    backgroundColor: theme.colors.background.offWhite,
+    borderRadius: 50,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  mascotImage: {
+    width: 120,
+    height: 150,
+    position: "absolute",
+    bottom: -20,
+    left: -50
+  },
+  section: {
+    padding: 20,
+    paddingLeft: 8,
+    paddingRight: 0
+  },
+  sectionTitle: {
+    paddingLeft: 8,
+    fontSize: theme.fonts.sizes.s20,
+    fontWeight: "bold",
+    marginBottom: 15
+  },
+  blogSection: {
+    padding: 24
+  },
+  sectionTitleBlog: {
+    fontSize: theme.fonts.sizes.s20,
+    fontWeight: "700",
+    color: "#1F2937",
+    marginBottom: 16
+  },
+  blogCard: {
+    backgroundColor: theme.colors.background.beige,
+    borderRadius: 16,
+    overflow: "hidden",
+    marginBottom: 16,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 3
+  },
+  blogImage: {
+    width: "100%",
+    height: 200,
+    resizeMode: "cover"
+  },
+  blogContent: {
+    padding: 16
+  },
+  blogHeader: {
+    marginBottom: 8
+  },
+  blogCategory: {
+    color: theme.colors.primary.medium2,
+    fontSize: theme.fonts.sizes.s20,
+    fontWeight: "600",
+    marginBottom: 4
+  },
+  blogMeta: {
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  blogAuthor: {
+    fontSize: theme.fonts.sizes.s14,
+    color: "#6B7280"
+  },
+  blogDate: {
+    fontSize: theme.fonts.sizes.s14,
+    color: "#6B7280"
+  },
+  blogTitle: {
+    fontSize: theme.fonts.sizes.s18,
+    fontWeight: "700",
+    color: "#1F2937",
+    lineHeight: 24
+  }
+});
