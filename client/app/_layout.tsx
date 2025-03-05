@@ -5,9 +5,11 @@ import LoadingScreen from '@/src/components/loading'
 import { SessionProvider } from '@/src/ctx'
 import { useFonts } from 'expo-font'
 import { Slot } from 'expo-router'
-import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { SafeAreaProvider , SafeAreaView} from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 import OpenDyslexia from '@/assets/fonts/open-dyslexic.ttf'
+import { StyleSheet } from 'react-native'
+import { theme } from "@/src/theme";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -30,11 +32,21 @@ export default function RootLayout() {
   return (
     <SessionProvider>
     <SafeAreaProvider>
+      <SafeAreaView style={styles.container}>
      
         <Slot />
         <Toast />
+      </SafeAreaView>
     </SafeAreaProvider>
     </SessionProvider>
   )
 }
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: theme.colors.background.offWhite,
+  },
+});
 
