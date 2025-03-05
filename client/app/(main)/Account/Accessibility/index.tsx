@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Modal } from 'react-native';
 import theme from '@/src/theme';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -11,6 +11,12 @@ type NavigationProps = StackNavigationProp<RootStackParamList, 'Account'>;
 
 const AccessibilityScreen = () => {
   const navigation = useNavigation<NavigationProps>();
+
+    // State for managing pop-up visibility
+    const [isColoursVisible, setColoursVisible] = useState(false);
+    const [isContrastVisible, setContrastVisible] = useState(false);
+    const [isFontVisible, setFontVisible] = useState(false);
+    const [isBiggerTextVisible, setBiggerTextVisible] = useState(false);
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.primary.light3 }]}>
@@ -24,10 +30,10 @@ const AccessibilityScreen = () => {
       </Text>
       <ScrollView contentContainerStyle={styles.menuContainer}>
         <View style={styles.grid}>
-          <AccessibilityButton icon="palette" label="Colours" />
-          <AccessibilityButton icon="contrast" label="Contrast" />
-          <AccessibilityButton icon="format-size" label="Font" />
-          <AccessibilityButton icon="format-header-increase" label="Bigger Text" />
+        <AccessibilityButton icon="palette" label="Colours" onPress={() => setColoursVisible(true)} />
+          <AccessibilityButton icon="contrast" label="Contrast" onPress={() => setContrastVisible(true)} />
+          <AccessibilityButton icon="format-size" label="Font" onPress={() => setFontVisible(true)} />
+          <AccessibilityButton icon="format-header-increase" label="Bigger Text" onPress={() => setBiggerTextVisible(true)} />
           <AccessibilityButton icon="format-line-spacing" label="Line Height" />
           <AccessibilityButton icon="format-letter-spacing" label="Text Spacing" />
           <AccessibilityButton icon="keyboard-outline" label={"Alphabetical\nKeyboard"} />
@@ -37,6 +43,11 @@ const AccessibilityScreen = () => {
       <TouchableOpacity style={styles.resetButton} >
         <Text style={styles.resetText}>RESET</Text>
       </TouchableOpacity>
+
+      <AccessibilityModal visible={isColoursVisible} onClose={() => setColoursVisible(false)} title="Colours" />
+      <AccessibilityModal visible={isContrastVisible} onClose={() => setContrastVisible(false)} title="Contrast" />
+      <AccessibilityModal visible={isFontVisible} onClose={() => setFontVisible(false)} title="Font" />
+      <AccessibilityModal visible={isBiggerTextVisible} onClose={() => setBiggerTextVisible(false)} title="Bigger Text" />
     </View>
   );
 };
@@ -56,6 +67,24 @@ const AccessibilityButton = ({
       <Text style={[styles.buttonText, {fontSize: theme.fonts.sizes.s14},
       ]}>{label}</Text>
     </TouchableOpacity>
+  );
+};
+
+// Accessibility Modal Component
+const AccessibilityModal = ({ visible, onClose, title }: { visible: boolean; onClose: () => void; title: string }) => {
+  return (
+    <Modal visible={visible} transparent animationType="slide">
+      <View style={styles.modalOverlay}>
+        <View style={styles.modalContainer}>
+          <Text style={styles.modalTitle}>{title}</Text>
+          <Text style={styles.modalContent}>Adjust settings related to {title.toLowerCase()}.</Text>
+
+          <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+            <Text style={styles.closeButtonText}>Close</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </Modal>
   );
 };
 
@@ -120,6 +149,41 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: '500',
   },
+    // Modal Styles
+    modalOverlay: {
+      flex: 1,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    modalContainer: {
+      width: '80%',
+      backgroundColor: '#fff',
+      padding: 20,
+      borderRadius: 12,
+      alignItems: 'center',
+    },
+    modalTitle: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      marginBottom: 10,
+    },
+    modalContent: {
+      fontSize: 16,
+      textAlign: 'center',
+      marginBottom: 20,
+    },
+    closeButton: {
+      backgroundColor: theme.colors.primary.medium,
+      paddingVertical: 10,
+      paddingHorizontal: 20,
+      borderRadius: 8,
+    },
+    closeButtonText: {
+      color: '#fff',
+      fontSize: 16,
+      fontWeight: 'bold',
+    },
 });
 
 export default AccessibilityScreen;
