@@ -14,6 +14,7 @@ import AccountScreen from './Account';
 import DetectionFlow from './Detection';
 import LoadingScreen from '@/src/components/loading';
 import AccessibilityScreen from "./Account/Accessibility";
+import { ThemeProvider } from '@/src/context/ThemeContext';
 
 // Create a Bottom Tab Navigator
 const Tab = createBottomTabNavigator();
@@ -30,20 +31,22 @@ export default function AppLayout() {
   }
 
   return (
-    <Tab.Navigator
-      screenOptions={{
-        headerShown: false, // Hide headers
-      }}
-      tabBar={(props) => <CustomTabBar {...props} />} // Use custom tab bar
-    >
-      <Tab.Screen name="Home" component={HomeScreen} options={{ title: 'Home' }} />
-      <Tab.Screen name="LearnZone" component={LearnScreen} options={{ title: 'Learn' }} />
-      <Tab.Screen name="PlaySpace" component={PlayScreen} options={{ title: 'Play' }} />
-      <Tab.Screen name="Explore+" component={ExploreScreen} options={{ title: 'Explore' }} />
-      <Tab.Screen name="Account" component={AccountScreen} options={{ title: 'Account' }} />
-      <Tab.Screen name="Detection" component={DetectionFlow} options={{ title: 'Detection' }} />
-      <Tab.Screen name="Accessibility" component={AccessibilityScreen} options={{ title: 'Accessibility' }} />
-    </Tab.Navigator>
+    <ThemeProvider>
+      <Tab.Navigator
+        screenOptions={{
+          headerShown: false, // Hide headers
+        }}
+        tabBar={(props) => <CustomTabBar {...props} />} // Use custom tab bar
+      >
+        <Tab.Screen name="Home" component={HomeScreen} options={{ title: 'Home' }} />
+        <Tab.Screen name="LearnZone" component={LearnScreen} options={{ title: 'Learn' }} />
+        <Tab.Screen name="PlaySpace" component={PlayScreen} options={{ title: 'Play' }} />
+        <Tab.Screen name="Explore+" component={ExploreScreen} options={{ title: 'Explore' }} />
+        <Tab.Screen name="Account" component={AccountScreen} options={{ title: 'Account' }} />
+        <Tab.Screen name="Detection" component={DetectionFlow} options={{ title: 'Detection' }} />
+        <Tab.Screen name="Accessibility" component={AccessibilityScreen} options={{ title: 'Accessibility' }} />
+      </Tab.Navigator>
+    </ThemeProvider>
   );
 }
 
