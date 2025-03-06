@@ -54,6 +54,54 @@ export default function AppLayout() {
 // Custom Bottom Navigation Bar
 const CustomTabBar = ({ state, descriptors, navigation }: any) => {
   const { theme } = useTheme(); // Use the theme from ThemeContext
+
+  const styles = StyleSheet.create({
+    container: {
+  
+    },
+    tabBar: {
+      flexDirection: 'row',
+      padding: theme.spacing.medium,
+      paddingVertical: theme.spacing.small,
+      backgroundColor: theme.colors.primary.light2,
+      borderTopLeftRadius: theme.spacing.large,
+      borderTopRightRadius: theme.spacing.large,
+      width: '100%',
+      elevation: 5,
+    },
+    tabButton: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical: theme.spacing.small,
+      backgroundColor: 'transparent',
+    },
+    focusedTabButton: {
+      backgroundColor: theme.colors.primary.medium2,
+      borderRadius: theme.spacing.medium,
+    },
+    iconContainer: {
+      position: 'relative',
+      alignItems: 'center',
+    },
+    underline: {
+      width: 30,
+      height: 4,
+      backgroundColor: theme.colors.background.offWhite,
+      borderRadius: 2,
+      position: 'absolute',
+      bottom: 0,
+    },
+    label: {
+      fontSize: theme.fonts.sizes.s10,
+      color: theme.colors.primary.dark1,
+      marginTop: 5,
+    },
+    focusedLabel: {
+      color: theme.colors.background.offWhite,
+    },
+  });
+  
   return (
     <View style={styles.tabBar}>
       {state.routes.map((route: any, index: number) => {
@@ -122,50 +170,3 @@ const CustomTabBar = ({ state, descriptors, navigation }: any) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-
-  },
-  tabBar: {
-    flexDirection: 'row',
-    padding: theme.spacing.medium,
-    paddingVertical: theme.spacing.small,
-    backgroundColor: theme.colors.primary.light2,
-    borderTopLeftRadius: theme.spacing.large,
-    borderTopRightRadius: theme.spacing.large,
-    width: '100%',
-    elevation: 5,
-  },
-  tabButton: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: theme.spacing.small,
-    backgroundColor: 'transparent',
-  },
-  focusedTabButton: {
-    backgroundColor: theme.colors.primary.medium2,
-    borderRadius: theme.spacing.medium,
-  },
-  iconContainer: {
-    position: 'relative',
-    alignItems: 'center',
-  },
-  underline: {
-    width: 30,
-    height: 4,
-    backgroundColor: theme.colors.background.offWhite,
-    borderRadius: 2,
-    position: 'absolute',
-    bottom: 0,
-  },
-  label: {
-    fontSize: theme.fonts.sizes.s10,
-    color: theme.colors.primary.dark1,
-    marginTop: 5,
-  },
-  focusedLabel: {
-    color: theme.colors.background.offWhite,
-  },
-});
