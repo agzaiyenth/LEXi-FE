@@ -15,6 +15,7 @@ import Toast from 'react-native-toast-message';
 import EmptyState from "./emptyState";
 import IconImage from '@/assets/images/auth/icon.png';
 import Svg, { Circle, Line } from "react-native-svg";
+import { useTheme } from '@/src/context/ThemeContext';
 
 
 
@@ -25,6 +26,7 @@ export default function SmartReadMain() {
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const { processDocument } = useProcessDocument();
   const [processingDocs, setProcessingDocs] = useState<number[]>([]);
+  const { theme } = useTheme();
 
 
 
@@ -66,6 +68,157 @@ export default function SmartReadMain() {
       <ErrorScreen />
     )
   } else {
+
+    const styles = StyleSheet.create({
+      wrapper: {
+        width: "100%",
+        height: "100%",
+    
+      },
+      container: {
+        height: "150%",
+        backgroundColor: "#9AC3BB",
+        position: "relative",
+        
+      },
+      backArrow: {
+        position: "absolute",
+        top: 20,
+        left: 20,
+        fontSize: theme.fonts.sizes.s60,
+        color: theme.colors.background.offWhite,
+        padding: 2,
+      },
+      text: {
+        top: 35,
+        fontSize: theme.fonts.sizes.large,
+        lineHeight: 30,
+        fontWeight: "400",
+        textAlign: "center",
+        color: theme.colors.background.offWhite,
+      },
+      backButton:{
+        padding:10,
+        marginTop:-13,
+      },
+      innercontainer: {
+        flex: 1,
+        top: 80,
+        backgroundColor: "#FDF4DE",
+        borderRadius: 25,
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        color: theme.colors.blacks.medium,
+        position: "relative",
+        paddingBottom:700,
+      },
+      cardContainer: {
+        flexDirection: "row",
+        padding: 10,
+        backgroundColor: theme.colors.background.beige,
+        borderRadius: 25,
+        alignItems: "center",
+        marginBottom: -2,
+        margin: 25,
+    
+      },
+      image: {
+        width: 80,
+        height: 80,
+        borderRadius: 10,
+        marginRight: 10,
+      },
+      detailsContainer: {
+        flex: 1,
+        justifyContent: "center",
+        width: 80,
+        
+    
+      },
+      title: {
+        fontSize: theme.fonts.sizes.medium,
+        color: theme.colors.blacks.dark,
+        marginRight: 30,
+    
+      },
+    
+      processButton: {
+        flexDirection: "row",
+        alignItems: "center",
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+        borderRadius: 5,
+        marginRight: 8,
+    
+      },
+    
+      playButton: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+        borderRadius: 25,
+        marginRight: 10,
+    
+      },
+      playButtonIcon: {
+        marginRight: 8,
+        color: theme.colors.secondary.medium,
+      },
+      playButtonText: {
+        color: theme.colors.secondary.medium,
+        fontSize: theme.fonts.sizes.s16,
+        fontWeight: "bold",
+      },
+    
+      floatingButton: {
+        position: 'absolute',
+        right: 20,
+        bottom: 40,
+        backgroundColor: '#009EA5',
+        padding: 16,
+        borderRadius: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+    
+      buttonUpload: {
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: "#009EA5",
+        paddingVertical: 12,
+        paddingHorizontal: 10,
+        borderRadius: 30,
+        width:300, 
+        justifyContent: "center",
+        margin: 50,
+        marginBottom: 20,
+        top: 550,
+        position: "absolute",
+      },
+      iconContainer: {
+        backgroundColor: "#B0C4C7",
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        justifyContent: "center",
+        alignItems: "center",
+        marginRight: 10,
+      },
+      textUpload: {
+        color: "#FFF9EF",
+        fontSize: 18,
+        fontWeight: "bold",
+      },
+      scrollViewContent: {
+        top: -50,
+        
+      },
+    
+    
+    });
 
     return (
 
@@ -169,155 +322,4 @@ export default function SmartReadMain() {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  wrapper: {
-    width: "100%",
-    height: "100%",
-
-  },
-  container: {
-    height: "150%",
-    backgroundColor: "#9AC3BB",
-    position: "relative",
-    
-  },
-  backArrow: {
-    position: "absolute",
-    top: 20,
-    left: 20,
-    fontSize: theme.fonts.sizes.s60,
-    color: theme.colors.background.offWhite,
-    padding: 2,
-  },
-  text: {
-    top: 35,
-    fontSize: theme.fonts.sizes.large,
-    lineHeight: 30,
-    fontWeight: "400",
-    textAlign: "center",
-    color: theme.colors.background.offWhite,
-  },
-  backButton:{
-    padding:10,
-    marginTop:-13,
-  },
-  innercontainer: {
-    flex: 1,
-    top: 80,
-    backgroundColor: "#FDF4DE",
-    borderRadius: 25,
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    color: theme.colors.blacks.medium,
-    position: "relative",
-    paddingBottom:700,
-  },
-  cardContainer: {
-    flexDirection: "row",
-    padding: 10,
-    backgroundColor: theme.colors.background.beige,
-    borderRadius: 25,
-    alignItems: "center",
-    marginBottom: -2,
-    margin: 25,
-
-  },
-  image: {
-    width: 80,
-    height: 80,
-    borderRadius: 10,
-    marginRight: 10,
-  },
-  detailsContainer: {
-    flex: 1,
-    justifyContent: "center",
-    width: 80,
-    
-
-  },
-  title: {
-    fontSize: theme.fonts.sizes.medium,
-    color: theme.colors.blacks.dark,
-    marginRight: 30,
-
-  },
-
-  processButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingVertical: 10,
-    paddingHorizontal: 10,
-    borderRadius: 5,
-    marginRight: 8,
-
-  },
-
-  playButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 10,
-    borderRadius: 25,
-    marginRight: 10,
-
-  },
-  playButtonIcon: {
-    marginRight: 8,
-    color: theme.colors.secondary.medium,
-  },
-  playButtonText: {
-    color: theme.colors.secondary.medium,
-    fontSize: theme.fonts.sizes.s16,
-    fontWeight: "bold",
-  },
-
-  floatingButton: {
-    position: 'absolute',
-    right: 20,
-    bottom: 40,
-    backgroundColor: '#009EA5',
-    padding: 16,
-    borderRadius: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  buttonUpload: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#009EA5",
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    borderRadius: 30,
-    width:300, 
-    justifyContent: "center",
-    margin: 50,
-    marginBottom: 20,
-    top: 550,
-    position: "absolute",
-  },
-  iconContainer: {
-    backgroundColor: "#B0C4C7",
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: 10,
-  },
-  textUpload: {
-    color: "#FFF9EF",
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  scrollViewContent: {
-    top: -50,
-    
-  },
-
-
-});
 

@@ -16,6 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { LearnZoneParamList } from "./index";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useTheme } from '@/src/context/ThemeContext';
 
 type LearnMainNavigationProp = StackNavigationProp<
   LearnZoneParamList,
@@ -148,6 +149,101 @@ const Game = () => {
     setShowQuestion(true);
   };
 
+  const { theme } = useTheme();
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#F0F8FF',
+    },
+    scoreContainer: {
+      height: 50,
+      width: '100%',
+      backgroundColor: '#95B9B2',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    backButton: {
+      position: "absolute",
+      top: 0,
+      left: 15,
+      height: 40,
+      width: 40,
+      // backgroundColor: '#003D35',
+      // borderRadius: 300,
+      padding: 10,
+      // zIndex: 10,
+    },
+    backButtonText: {
+      fontSize: 18,
+      // color: '#FFFFFF',
+      // fontWeight: 'bold',
+      position: "absolute",
+      top: "15%",
+      left: "0%",
+      right: "0%",
+      zIndex: 1000,
+    },
+    scoreText: {
+      color: '#FFFFFF',
+      fontSize: theme.fonts.sizes.s20,
+      fontWeight: 'bold',
+    },
+    questionContainer: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 20,
+    },
+    questionText: {
+      fontSize: theme.fonts.sizes.s24,
+      fontWeight: 'bold',
+      marginBottom: 10,
+      textAlign: 'center',
+    },
+    questionImage: {
+      width: 300,
+      height: 200,
+      borderRadius: 10,
+      marginBottom: 15,
+    },
+    startButton: {
+      backgroundColor: '#95B9B2',
+      paddingVertical: 10,
+      paddingHorizontal: 20,
+      borderRadius: 8,
+    },
+    startButtonText: {
+      color: '#FFFFFF',
+      fontSize: theme.fonts.sizes.s18,
+      fontWeight: 'bold',
+    },
+    balloonContainer: {
+      position: 'absolute',
+      alignItems: 'center',
+    },
+    balloonTouchable: {
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    balloonText: {
+      position: 'absolute',
+      top: '20%',
+      left: 0,
+      right: 0,
+      fontSize: theme.fonts.sizes.s24,
+      fontWeight: 'bold',
+      color: '#FFFFFF',
+      textAlign: 'center',
+      width: BALLOON_SIZE,
+      zIndex: 10,
+    },
+    balloon: {
+      zIndex: 1,
+  
+    },
+  });
+
   return (
 
     <View style={styles.container}>
@@ -199,97 +295,5 @@ const Game = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F0F8FF',
-  },
-  scoreContainer: {
-    height: 50,
-    width: '100%',
-    backgroundColor: '#95B9B2',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  backButton: {
-    position: "absolute",
-    top: 0,
-    left: 15,
-    height: 40,
-    width: 40,
-    // backgroundColor: '#003D35',
-    // borderRadius: 300,
-    padding: 10,
-    // zIndex: 10,
-  },
-  backButtonText: {
-    fontSize: 18,
-    // color: '#FFFFFF',
-    // fontWeight: 'bold',
-    position: "absolute",
-    top: "15%",
-    left: "0%",
-    right: "0%",
-    zIndex: 1000,
-  },
-  scoreText: {
-    color: '#FFFFFF',
-    fontSize: theme.fonts.sizes.s20,
-    fontWeight: 'bold',
-  },
-  questionContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  questionText: {
-    fontSize: theme.fonts.sizes.s24,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    textAlign: 'center',
-  },
-  questionImage: {
-    width: 300,
-    height: 200,
-    borderRadius: 10,
-    marginBottom: 15,
-  },
-  startButton: {
-    backgroundColor: '#95B9B2',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-  },
-  startButtonText: {
-    color: '#FFFFFF',
-    fontSize: theme.fonts.sizes.s18,
-    fontWeight: 'bold',
-  },
-  balloonContainer: {
-    position: 'absolute',
-    alignItems: 'center',
-  },
-  balloonTouchable: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  balloonText: {
-    position: 'absolute',
-    top: '20%',
-    left: 0,
-    right: 0,
-    fontSize: theme.fonts.sizes.s24,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
-    textAlign: 'center',
-    width: BALLOON_SIZE,
-    zIndex: 10,
-  },
-  balloon: {
-    zIndex: 1,
-
-  },
-});
 
 export default Game;

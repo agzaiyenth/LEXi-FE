@@ -6,6 +6,7 @@ import { LearnZoneParamList } from "./index";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import theme from '@/src/theme';
 import BalloonImage from '@/assets/images/games/ballon.png';
+import { useTheme } from '@/src/context/ThemeContext'; 
 
 type LearnMainNavigationProp = StackNavigationProp<
   LearnZoneParamList,
@@ -14,6 +15,104 @@ type LearnMainNavigationProp = StackNavigationProp<
 
 const BalloonGame: React.FC = () => {
   const navigation = useNavigation<LearnMainNavigationProp>();
+  const { theme } = useTheme();
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: "#CCE5E1", // Reverted background color
+      padding: 20,
+      paddingBottom: 70,
+    },
+    backButton: {
+      position: "absolute",
+      top: 40,
+      left: 20,
+      height: 40,
+      width: 40,
+      // backgroundColor: '#003D35',
+      // borderRadius: 300,
+      padding: 10,
+      // zIndex: 10,
+    },
+    backButtonText: {
+      fontSize: theme.fonts.sizes.s18,
+      // color: '#FFFFFF',
+      // fontWeight: 'bold',
+      position: "absolute",
+      top: "15%",
+      left: "0%",
+      right: "0%",
+      zIndex: 1000,
+    },
+    header: {
+      fontSize: theme.fonts.sizes.s28,
+      fontWeight: "bold",
+      textAlign: "center",
+      marginVertical: 20,
+      color: "#003D35",
+    },
+    imageContainer: {
+      alignItems: "center",
+      marginBottom: 20,
+    },
+    gameImage: {
+      width: "100%", // Full width
+      height: 250,
+      borderRadius: 10,
+      resizeMode: "contain",
+    },
+    description: {
+      fontSize: theme.fonts.sizes.s16,
+      color: "#003D35",
+      lineHeight: 24,
+      textAlign: "justify",
+      marginBottom: 20,
+    },
+    divider: {
+      height: 1,
+      backgroundColor: "#003D35",
+      opacity: 0.8,
+      marginVertical: 20,
+      alignSelf: "stretch",
+    },
+    detailsContainer: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      justifyContent: "space-between",
+      marginBottom: 30,
+    },
+    detailItem: {
+      width: "48%",
+      marginBottom: 15,
+    },
+    detailTitle: {
+      fontSize: theme.fonts.sizes.s16, // Larger font size
+      color: "#003D35",
+      fontWeight: "bold",
+      marginBottom: 5,
+    },
+    detailText: {
+      fontSize: theme.fonts.sizes.s16,
+      color: "#003D35",
+    },
+    nextButton: {
+      backgroundColor: "#003D35", // Matching color
+      borderRadius: 10,
+      paddingVertical: 15,
+      alignItems: "center",
+      position: "absolute",
+      bottom: 20,
+      left: 20,
+      right: 20,
+    },
+    nextButtonText: {
+      color: "#FFFFFF",
+      fontSize: theme.fonts.sizes.s18,
+      fontWeight: "bold",
+    },
+  });
+
   return (
     <View style={styles.container}>
       {/* Game Title */}
@@ -80,100 +179,5 @@ const BalloonGame: React.FC = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#CCE5E1", // Reverted background color
-    padding: 20,
-    paddingBottom: 70,
-  },
-  backButton: {
-    position: "absolute",
-    top: 40,
-    left: 20,
-    height: 40,
-    width: 40,
-    // backgroundColor: '#003D35',
-    // borderRadius: 300,
-    padding: 10,
-    // zIndex: 10,
-  },
-  backButtonText: {
-    fontSize: theme.fonts.sizes.s18,
-    // color: '#FFFFFF',
-    // fontWeight: 'bold',
-    position: "absolute",
-    top: "15%",
-    left: "0%",
-    right: "0%",
-    zIndex: 1000,
-  },
-  header: {
-    fontSize: theme.fonts.sizes.s28,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginVertical: 20,
-    color: "#003D35",
-  },
-  imageContainer: {
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  gameImage: {
-    width: "100%", // Full width
-    height: 250,
-    borderRadius: 10,
-    resizeMode: "contain",
-  },
-  description: {
-    fontSize: theme.fonts.sizes.s16,
-    color: "#003D35",
-    lineHeight: 24,
-    textAlign: "justify",
-    marginBottom: 20,
-  },
-  divider: {
-    height: 1,
-    backgroundColor: "#003D35",
-    opacity: 0.8,
-    marginVertical: 20,
-    alignSelf: "stretch",
-  },
-  detailsContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-    marginBottom: 30,
-  },
-  detailItem: {
-    width: "48%",
-    marginBottom: 15,
-  },
-  detailTitle: {
-    fontSize: theme.fonts.sizes.s16, // Larger font size
-    color: "#003D35",
-    fontWeight: "bold",
-    marginBottom: 5,
-  },
-  detailText: {
-    fontSize: theme.fonts.sizes.s16,
-    color: "#003D35",
-  },
-  nextButton: {
-    backgroundColor: "#003D35", // Matching color
-    borderRadius: 10,
-    paddingVertical: 15,
-    alignItems: "center",
-    position: "absolute",
-    bottom: 20,
-    left: 20,
-    right: 20,
-  },
-  nextButtonText: {
-    color: "#FFFFFF",
-    fontSize: theme.fonts.sizes.s18,
-    fontWeight: "bold",
-  },
-});
 
 export default BalloonGame;

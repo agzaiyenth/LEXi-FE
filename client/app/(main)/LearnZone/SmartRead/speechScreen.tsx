@@ -18,6 +18,7 @@ import {
   View
 } from "react-native";
 import Markdown from "react-native-markdown-display";
+import { useTheme } from '@/src/context/ThemeContext';
 
 type NavigationProp = StackNavigationProp<LearnZoneParamList, 'SpeechScreen', 'SmartReadMain'>;
 export default function SpeechScreen() {
@@ -149,6 +150,75 @@ export default function SpeechScreen() {
       }
     }
   };
+
+  const { theme } = useTheme();
+
+  const styles = StyleSheet.create({
+    wrapper: { width: "100%", height: "100%" },
+    container: { flex: 1, backgroundColor: "#9AC3BB", position: "relative" },
+    leftarrow: {
+      position: "absolute",
+      top: 20,
+      left: 20,
+      fontSize: theme.fonts.sizes.s60,
+      color: theme.colors.background.offWhite,
+      padding: 2,
+    },
+    text: {
+      top: 35,
+      fontSize: theme.fonts.sizes.large,
+      lineHeight: 30,
+      fontWeight: "400",
+      textAlign: "center",
+      color: theme.colors.background.offWhite,
+    },
+    backButton:{
+      marginLeft:20,
+    },
+    innercontainer: {
+      top: 35,
+      backgroundColor: "#FDF4DE",
+      borderRadius: 25,
+      height: "90%",
+      padding: 20,
+    },
+    textContainer: {
+      borderRadius: 25,
+      backgroundColor: theme.colors.secondary.light,
+      height: "73%",
+      padding: 30,
+    },
+    summaryText: {
+      fontSize: theme.fonts.sizes.medium,
+      fontFamily: theme.fonts.regular,
+      color: theme.colors.blacks.medium,
+      lineHeight: 30,
+    },
+    audioContainer: { marginTop: 20, alignItems: "center" },
+    audioWaveformContainer: {
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+      height: 64,
+    },
+    wave: {
+      width: 6,
+      marginHorizontal: 2,
+      backgroundColor: theme.colors.primary.medium,
+      borderRadius: 8,
+      height: "50%",
+    },
+    buttonContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      width: "70%",
+      marginTop: 20,
+    },
+    disabledButton: {
+      opacity: 0.5,
+    },
+  });
   
   return (
     <View style={styles.wrapper}>
@@ -229,72 +299,6 @@ export default function SpeechScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  wrapper: { width: "100%", height: "100%" },
-  container: { flex: 1, backgroundColor: "#9AC3BB", position: "relative" },
-  leftarrow: {
-    position: "absolute",
-    top: 20,
-    left: 20,
-    fontSize: theme.fonts.sizes.s60,
-    color: theme.colors.background.offWhite,
-    padding: 2,
-  },
-  text: {
-    top: 35,
-    fontSize: theme.fonts.sizes.large,
-    lineHeight: 30,
-    fontWeight: "400",
-    textAlign: "center",
-    color: theme.colors.background.offWhite,
-  },
-  backButton:{
-    marginLeft:20,
-  },
-  innercontainer: {
-    top: 35,
-    backgroundColor: "#FDF4DE",
-    borderRadius: 25,
-    height: "90%",
-    padding: 20,
-  },
-  textContainer: {
-    borderRadius: 25,
-    backgroundColor: theme.colors.secondary.light,
-    height: "73%",
-    padding: 30,
-  },
-  summaryText: {
-    fontSize: theme.fonts.sizes.medium,
-    fontFamily: theme.fonts.regular,
-    color: theme.colors.blacks.medium,
-    lineHeight: 30,
-  },
-  audioContainer: { marginTop: 20, alignItems: "center" },
-  audioWaveformContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    height: 64,
-  },
-  wave: {
-    width: 6,
-    marginHorizontal: 2,
-    backgroundColor: theme.colors.primary.medium,
-    borderRadius: 8,
-    height: "50%",
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    width: "70%",
-    marginTop: 20,
-  },
-  disabledButton: {
-    opacity: 0.5,
-  },
-});
 
 
 // import React, { useState, useEffect } from "react";
