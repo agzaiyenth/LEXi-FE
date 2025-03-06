@@ -15,13 +15,23 @@ const AccessibilityScreen = () => {
   const navigation = useNavigation<NavigationProps>();
 
     // State for managing pop-up visibility
-    // const [isColoursVisible, setColoursVisible] = useState(false);
+    const [isColoursVisible, setColoursVisible] = useState(false);
     const [isFontTypeVisible, setFontTypeVisible] = useState(false);
     const [isBiggerTextVisible, setBiggerTextVisible] = useState(false);
 
-    const { theme, updateFontSizeMultiplier, toggleContrast, updateFontType } = useTheme();
+    const { theme, updateFontSizeMultiplier, 
+      toggleContrast, updateFontType, activeColorFilter, 
+      setColorFilter, setColorIntensity, colorIntensity, resetAccessibilitySettings   } = useTheme();
 
-    const fontTypes = theme.fonts.availableFonts; // Get available fonts from the theme
+    const fontTypes = theme.accessibility.availableFonts; // Get available fonts from the theme
+
+    const FILTER_OPTIONS: { id: ColorFilterType; label: string }[] = [
+      { id: 'greyscale', label: 'Greyscale' },
+      { id: 'protanopia', label: 'Red/Green Filter (Protanopia)' },
+      { id: 'deuteranopia', label: 'Green/Red Filter (Deuteranopia)' },
+      { id: 'tritanopia', label: 'Blue/Yellow Filter (Tritanopia)' },
+      { id: 'tint', label: 'Color Tint' },
+    ];
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.primary.light3 }]}>
@@ -35,7 +45,7 @@ const AccessibilityScreen = () => {
       </Text>
       <ScrollView contentContainerStyle={styles.menuContainer}>
         <View style={styles.grid}>
-          {/* <AccessibilityButton icon="palette" label="Colours" onPress={() => setColoursVisible(true)} /> */}
+          <AccessibilityButton icon="palette" label="Colours" onPress={() => setColoursVisible(true)} />
           <AccessibilityButton icon="contrast" label="Contrast" onPress={toggleContrast} />
           <AccessibilityButton icon="format-size" label="Font" onPress={() => setFontTypeVisible(true)} />
           <AccessibilityButton icon="format-header-increase" label="Bigger Text" onPress={() => setBiggerTextVisible(true)} />
@@ -45,8 +55,11 @@ const AccessibilityScreen = () => {
           <AccessibilityButton icon="format-align-left" label="Text Align" />
         </View>
       </ScrollView>
-      <TouchableOpacity style={styles.resetButton} >
-        <Text style={styles.resetText}>RESET</Text>
+      <TouchableOpacity 
+        style={[styles.resetButton, { backgroundColor: theme.colors.primary.medium }]} 
+        onPress={resetAccessibilitySettings}  // Directly use destructured function
+      >
+        <Text style={[styles.resetText, { color: theme.colors.background.offWhite }, {fontSize: theme.fonts.sizes.s16}]}>RESET</Text>
       </TouchableOpacity>
 
       <AccessibilityModal 
@@ -60,7 +73,7 @@ const AccessibilityScreen = () => {
       <Modal visible={isFontTypeVisible} transparent animationType="slide">
         <View style={styles.modalOverlay}>
           <View style={styles.modalContainer}>
-            <Text style={styles.modalTitle}>Select Font Type</Text>
+            <Text style={[styles.modalTitle, { color: theme.colors.blacks.medium }, {fontSize: theme.fonts.sizes.s20}]}>Select Font Type</Text>
             <FlatList
               data={fontTypes}
               keyExtractor={(item) => item}
@@ -83,6 +96,57 @@ const AccessibilityScreen = () => {
         </View>
       </Modal>
 
+      <Modal visible={isColoursVisible} transparent animationType="slide">
+      <View style={styles.modalOverlay}>
+        <View style={styles.modalContainer}>
+          <Text style={styles.modalTitle}>Color Filters</Text>
+          
+          {FILTER_OPTIONS.map((option) => (
+            <View key={option.id} style={styles.filterContainer}>
+              <TouchableOpacity
+                onPress={() => setColorFilter(option.id === activeColorFilter ? null : option.id)}
+                style={[
+                  styles.filterButton,
+                  activeColorFilter === option.id && styles.selectedFilter
+                ]}
+              >
+                <Text style={styles.filterLabel}>{option.label}</Text>
+                {activeColorFilter === option.id && (
+                  <Icon name="check" size={20} color="#4CAF50" />
+                )}
+              </TouchableOpacity>
+              
+              {activeColorFilter === option.id && option.id !== 'greyscale' && (
+                <View style={styles.sliderContainer}>
+                  <Text style={styles.intensityText}>
+                    Intensity: {(colorIntensity * 100).toFixed(0)}%
+                  </Text>
+                  <Slider
+                    style={styles.slider}
+                    value={colorIntensity}
+                    onValueChange={setColorIntensity}
+                    minimumValue={0}
+                    maximumValue={1}
+                    step={0.1}
+                    minimumTrackTintColor="#2A9D8F"
+                    maximumTrackTintColor="#D3E0DE"
+                    thumbTintColor="#2A9D8F"
+                  />
+                </View>
+              )}
+            </View>
+          ))}
+
+          <TouchableOpacity 
+            onPress={() => setColoursVisible(false)} 
+            style={styles.closeButton}
+          >
+            <Text style={styles.closeButtonText}>Close</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </Modal>
+
     </View>
   );
 };
@@ -96,6 +160,7 @@ const AccessibilityButton = ({
   label: string;
   onPress?: () => void;
 }) => {
+  const { theme } = useTheme();
   return (
     <TouchableOpacity style={styles.button} onPress={onPress}>
       <Icon name={icon} size={28} color={theme.colors.primary.dark1} />
@@ -144,7 +209,6 @@ const AccessibilityModal = ({ visible, onClose, title, updateFontSizeMultiplier 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.primary.light3,
     padding: 16,
     alignItems: 'center',
   },
@@ -190,8 +254,7 @@ const styles = StyleSheet.create({
     textAlign: 'center', // Center text for multiline labels
   },
   resetButton: {
-    backgroundColor: theme.colors.primary.medium,
-    width: '70%',
+    width: '60%',
     paddingVertical: 12,
     borderRadius: 30,
     alignItems: 'center',
@@ -199,7 +262,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   resetText: {
-    color: '#fff',
     fontWeight: '500',
   },
     // Modal Styles
@@ -211,13 +273,12 @@ const styles = StyleSheet.create({
     },
     modalContainer: {
       width: '80%',
-      backgroundColor: '#fff',
+      backgroundColor: theme.colors.background.offWhite,
       padding: 20,
       borderRadius: 12,
       alignItems: 'center',
     },
     modalTitle: {
-      fontSize: 20,
       fontWeight: 'bold',
       marginBottom: 10,
     },
@@ -245,6 +306,41 @@ const styles = StyleSheet.create({
       marginVertical: 5,
       borderBottomWidth: 1,
       borderColor: theme.colors.primary.light2,
+    },
+    filterContainer: {
+      width: '100%',
+      marginVertical: 8,
+    },
+    filterButton: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      padding: 16,
+      borderRadius: 8,
+      backgroundColor: '#F8F9FA',
+    },
+    selectedFilter: {
+      backgroundColor: '#E9F5F4',
+      borderWidth: 2,
+      borderColor: '#2A9D8F',
+    },
+    filterLabel: {
+      fontSize: 16,
+      color: '#264653',
+    },
+    sliderContainer: {
+      width: '100%',
+      paddingHorizontal: 16,
+      marginTop: 8,
+    },
+    slider: {
+      width: '100%',
+      height: 40,
+    },
+    intensityText: {
+      fontSize: 14,
+      color: '#6C757D',
+      marginBottom: 8,
     },
 });
 
