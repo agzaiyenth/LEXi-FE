@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Modal } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Modal, FlatList } from 'react-native';
 import theme from '@/src/theme';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '@/src/types/common/navigation';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Slider from '@react-native-community/slider';
+import { useTheme } from '@/src/context/ThemeContext';
 
 type NavigationProps = StackNavigationProp<RootStackParamList, 'Account'>;
 
@@ -13,10 +15,13 @@ const AccessibilityScreen = () => {
   const navigation = useNavigation<NavigationProps>();
 
     // State for managing pop-up visibility
-    const [isColoursVisible, setColoursVisible] = useState(false);
-    const [isContrastVisible, setContrastVisible] = useState(false);
-    const [isFontVisible, setFontVisible] = useState(false);
+    // const [isColoursVisible, setColoursVisible] = useState(false);
+    const [isFontTypeVisible, setFontTypeVisible] = useState(false);
     const [isBiggerTextVisible, setBiggerTextVisible] = useState(false);
+
+    const { theme, updateFontSizeMultiplier, toggleContrast, updateFontType } = useTheme();
+
+    const fontTypes = theme.fonts.availableFonts; // Get available fonts from the theme
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.primary.light3 }]}>
@@ -30,9 +35,9 @@ const AccessibilityScreen = () => {
       </Text>
       <ScrollView contentContainerStyle={styles.menuContainer}>
         <View style={styles.grid}>
-        <AccessibilityButton icon="palette" label="Colours" onPress={() => setColoursVisible(true)} />
-          <AccessibilityButton icon="contrast" label="Contrast" onPress={() => setContrastVisible(true)} />
-          <AccessibilityButton icon="format-size" label="Font" onPress={() => setFontVisible(true)} />
+          {/* <AccessibilityButton icon="palette" label="Colours" onPress={() => setColoursVisible(true)} /> */}
+          <AccessibilityButton icon="contrast" label="Contrast" onPress={toggleContrast} />
+          <AccessibilityButton icon="format-size" label="Font" onPress={() => setFontTypeVisible(true)} />
           <AccessibilityButton icon="format-header-increase" label="Bigger Text" onPress={() => setBiggerTextVisible(true)} />
           <AccessibilityButton icon="format-line-spacing" label="Line Height" />
           <AccessibilityButton icon="format-letter-spacing" label="Text Spacing" />
@@ -44,10 +49,40 @@ const AccessibilityScreen = () => {
         <Text style={styles.resetText}>RESET</Text>
       </TouchableOpacity>
 
-      <AccessibilityModal visible={isColoursVisible} onClose={() => setColoursVisible(false)} title="Colours" />
-      <AccessibilityModal visible={isContrastVisible} onClose={() => setContrastVisible(false)} title="Contrast" />
-      <AccessibilityModal visible={isFontVisible} onClose={() => setFontVisible(false)} title="Font" />
-      <AccessibilityModal visible={isBiggerTextVisible} onClose={() => setBiggerTextVisible(false)} title="Bigger Text" />
+      <AccessibilityModal 
+        visible={isBiggerTextVisible} 
+        onClose={() => setBiggerTextVisible(false)} 
+        title="Bigger Text" 
+        updateFontSizeMultiplier={updateFontSizeMultiplier} 
+      />
+
+      {/* Font Type Modal */}
+      <Modal visible={isFontTypeVisible} transparent animationType="slide">
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContainer}>
+            <Text style={styles.modalTitle}>Select Font Type</Text>
+            <FlatList
+              data={fontTypes}
+              keyExtractor={(item) => item}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  style={styles.fontOption}
+                  onPress={() => {
+                    updateFontType(item); // Update font type
+                    setFontTypeVisible(false); // Close modal
+                  }}
+                >
+                  <Text style={{ fontFamily: item, fontSize: 18 }}>{item}</Text>
+                </TouchableOpacity>
+              )}
+            />
+            <TouchableOpacity onPress={() => setFontTypeVisible(false)} style={styles.closeButton}>
+              <Text style={styles.closeButtonText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
     </View>
   );
 };
@@ -70,14 +105,31 @@ const AccessibilityButton = ({
   );
 };
 
-// Accessibility Modal Component
-const AccessibilityModal = ({ visible, onClose, title }: { visible: boolean; onClose: () => void; title: string }) => {
+// Modify AccessibilityModal to include a slider
+const AccessibilityModal = ({ visible, onClose, title, updateFontSizeMultiplier }: { visible: boolean; onClose: () => void; title: string; updateFontSizeMultiplier: (size: number) => void }) => {
+  const [sliderValue, setSliderValue] = useState(1);
+
   return (
     <Modal visible={visible} transparent animationType="slide">
       <View style={styles.modalOverlay}>
         <View style={styles.modalContainer}>
           <Text style={styles.modalTitle}>{title}</Text>
-          <Text style={styles.modalContent}>Adjust settings related to {title.toLowerCase()}.</Text>
+          {/* <Text style={styles.modalContent}>Adjust settings related to {title.toLowerCase()}.</Text> */}
+
+          {title === "Bigger Text" && (
+            <>
+              <Slider
+                style={{ width: 200, height: 40 }}
+                minimumValue={1}
+                maximumValue={2}
+                step={0.1}
+                value={sliderValue}
+                onValueChange={(value) => setSliderValue(value)}
+                onSlidingComplete={(value) => updateFontSizeMultiplier(value)}
+              />
+              <Text>Font Size Multiplier: {sliderValue.toFixed(1)}</Text>
+            </>
+          )}
 
           <TouchableOpacity onPress={onClose} style={styles.closeButton}>
             <Text style={styles.closeButtonText}>Close</Text>
@@ -86,6 +138,7 @@ const AccessibilityModal = ({ visible, onClose, title }: { visible: boolean; onC
       </View>
     </Modal>
   );
+  
 };
 
 const styles = StyleSheet.create({
@@ -175,14 +228,23 @@ const styles = StyleSheet.create({
     },
     closeButton: {
       backgroundColor: theme.colors.primary.medium,
-      paddingVertical: 10,
-      paddingHorizontal: 20,
-      borderRadius: 8,
+      width: '35%',
+      paddingVertical: 6,
+      borderRadius: 30,
+      alignItems: 'center',
+      marginTop: 40,
+      marginBottom: 5,
     },
     closeButtonText: {
       color: '#fff',
-      fontSize: 16,
-      fontWeight: 'bold',
+      fontSize: 14,
+      fontWeight: '500',
+    },
+    fontOption: {
+      padding: 10,
+      marginVertical: 5,
+      borderBottomWidth: 1,
+      borderColor: theme.colors.primary.light2,
     },
 });
 
