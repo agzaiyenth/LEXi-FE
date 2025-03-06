@@ -186,8 +186,8 @@ const AccessibilityModal = ({ visible, onClose, title, updateFontSizeMultiplier 
               <Slider
                 style={{ width: 200, height: 40 }}
                 minimumValue={1}
-                maximumValue={2}
-                step={0.1}
+                maximumValue={1.5}
+                step={0.05}
                 value={sliderValue}
                 onValueChange={(value) => setSliderValue(value)}
                 onSlidingComplete={(value) => updateFontSizeMultiplier(value)}
