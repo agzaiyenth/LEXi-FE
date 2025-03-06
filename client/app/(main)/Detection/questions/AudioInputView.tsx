@@ -5,6 +5,7 @@ import { Audio } from 'expo-av';
 import * as FileSystem from 'expo-file-system';
 import theme from '@/src/theme';
 import { QuestionResponseDTO } from '@/src/types/Detection/Question';
+import { useTheme } from '@/src/context/ThemeContext';
 
 interface Props {
   question: QuestionResponseDTO;
@@ -171,6 +172,50 @@ const AudioInputView = ({ question, onSelect }: Props) => {
     encodeAudio();
   }, [recordingUri]);
 
+  const { theme } = useTheme();
+
+  const styles = StyleSheet.create({
+    container: {
+      marginHorizontal: 20,
+      marginBottom: 20,
+    },
+    questionTitle: {
+      fontSize: theme.fonts.sizes.s24,
+      textAlign: 'center',
+      paddingBottom: 20,
+    },
+    waveContainer: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'flex-end',
+      width: '100%',
+      height: 100,
+      marginBottom: 30,
+      borderRadius: 10,
+      overflow: 'hidden',
+    },
+    barWrapper: {
+      flex: 1,
+      marginHorizontal: 2,
+      justifyContent: 'flex-end',
+    },
+    bar: {
+      width: '100%',
+      backgroundColor: theme.colors.primary.dark2,
+      borderRadius: 4,
+    },
+    controlsRow: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+    },
+    iconButton: {
+      marginHorizontal: 15,
+      backgroundColor: theme.colors.primary.light3,
+      padding: 10,
+      borderRadius: 40,
+    },
+  });  
+
   return (
     <View style={styles.container}>
       <Text style={styles.questionTitle}>{question.questionText}</Text>
@@ -222,45 +267,3 @@ const AudioInputView = ({ question, onSelect }: Props) => {
 };
 
 export default AudioInputView;
-
-const styles = StyleSheet.create({
-  container: {
-    marginHorizontal: 20,
-    marginBottom: 20,
-  },
-  questionTitle: {
-    fontSize: theme.fonts.sizes.s24,
-    textAlign: 'center',
-    paddingBottom: 20,
-  },
-  waveContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'flex-end',
-    width: '100%',
-    height: 100,
-    marginBottom: 30,
-    borderRadius: 10,
-    overflow: 'hidden',
-  },
-  barWrapper: {
-    flex: 1,
-    marginHorizontal: 2,
-    justifyContent: 'flex-end',
-  },
-  bar: {
-    width: '100%',
-    backgroundColor: theme.colors.primary.dark2,
-    borderRadius: 4,
-  },
-  controlsRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  iconButton: {
-    marginHorizontal: 15,
-    backgroundColor: theme.colors.primary.light3,
-    padding: 10,
-    borderRadius: 40,
-  },
-});

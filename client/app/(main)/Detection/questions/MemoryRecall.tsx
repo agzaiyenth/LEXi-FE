@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import theme from "@/src/theme";
 import { QuestionResponseDTO } from "@/src/types/Detection/Question";
+import { useTheme } from '@/src/context/ThemeContext';
 
 interface Props {
   question: QuestionResponseDTO;
@@ -46,6 +47,45 @@ const MemoryRecall: React.FC<Props> = ({ question, onSelect }) => {
     });
   };
 
+  const { theme } = useTheme();
+
+  const styles = StyleSheet.create({
+    container: {
+      alignItems: "center",
+      borderRadius: 20,
+      padding: 20,
+      margin: 20,
+    },
+    questionText: {
+      fontSize: theme.fonts.sizes.s26,
+      marginBottom: 30,
+      marginVertical: 10,
+      textAlign: "center",
+      color: "#1D3557",
+    },
+    input: {
+      width: "90%",
+      padding: 10,
+      borderWidth: 1,
+      borderColor: theme.colors.primary.light3,
+      borderRadius: 20,
+      textAlign: "center",
+      color: "black",
+    },
+    button: {
+      backgroundColor: theme.colors.primary.light3,
+      paddingVertical: 15,
+      paddingHorizontal: 30,
+      borderRadius: 20,
+      alignSelf: "center",
+      marginTop: 20,
+    },
+    buttonText: {
+      color: "white",
+      fontSize: theme.fonts.sizes.s20,
+    },
+  });
+
   return (
     <View style={styles.container}>
       {!isAnswering && (
@@ -75,39 +115,3 @@ const MemoryRecall: React.FC<Props> = ({ question, onSelect }) => {
 
 export default MemoryRecall;
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    borderRadius: 20,
-    padding: 20,
-    margin: 20,
-  },
-  questionText: {
-    fontSize: theme.fonts.sizes.s26,
-    marginBottom: 30,
-    marginVertical: 10,
-    textAlign: "center",
-    color: "#1D3557",
-  },
-  input: {
-    width: "90%",
-    padding: 10,
-    borderWidth: 1,
-    borderColor: theme.colors.primary.light3,
-    borderRadius: 20,
-    textAlign: "center",
-    color: "black",
-  },
-  button: {
-    backgroundColor: theme.colors.primary.light3,
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    borderRadius: 20,
-    alignSelf: "center",
-    marginTop: 20,
-  },
-  buttonText: {
-    color: "white",
-    fontSize: theme.fonts.sizes.s20,
-  },
-});

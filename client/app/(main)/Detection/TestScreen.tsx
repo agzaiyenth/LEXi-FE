@@ -16,6 +16,7 @@ import SequenceOrderView from "./questions/SequenceOrderView";
 import TextInputView from "./questions/TextInputView";
 import * as Progress from 'react-native-progress';
 import CircleImage from '@/assets/images/learnZone/circle.png';
+import { useTheme } from '@/src/context/ThemeContext';
 
 interface TestScreenProps {
   route: {
@@ -63,6 +64,103 @@ export default function TestScreen({ route }: TestScreenProps) {
     fetchQuestion();
     setProgress(prev => prev + 1);
   };
+
+  const { theme } = useTheme();
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.primary.light3,
+      padding: 0,
+      height: '100%',
+    },
+    headerContent: {
+      padding: 16,
+      marginEnd: 4,
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 16,
+      justifyContent: 'center',
+    },
+    headercircle: {
+      width: 120,
+      height: 120,
+      position: 'absolute',
+      right: 0,
+      top: 0,
+    },
+    backButton: {
+      width: 30,
+      height: 30,
+      borderRadius: 15,
+      backgroundColor: '#fff',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginRight: 10,
+    },
+    backButtonText: {
+      fontSize: theme.fonts.sizes.s18,
+      color: '#B4DCD6',
+    },
+    headerTitle: {
+      fontSize: theme.fonts.sizes.s28,
+      color: '#fff',
+      textAlign: 'center',
+      fontWeight: '500',
+    },
+    mainContentCard: {
+      backgroundColor: '#FFF9EB',
+      borderRadius: 30,
+      padding: 16,
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      margin: 0,
+      height: '90%',
+    },
+    submitButtonContainer: {
+      padding: 15,
+      marginHorizontal: 40,
+      borderRadius: 20,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: theme.colors.primary.dark2,
+      color: 'white',
+      bottom: 10,
+    },
+    buttonText: {
+      color: 'white'
+    }
+    ,
+    card: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      borderRadius: 20,
+      padding: 20,
+      width: "90%",
+      alignItems: "center",
+    },
+    difficultyText: {
+      fontSize: theme.fonts.sizes.s16,
+      color: "#457B9D",
+      marginBottom: 5,
+    },
+    sessionText: {
+      fontSize: theme.fonts.sizes.s16,
+      color: "#457B9D",
+      marginBottom: 5,
+    },
+    questionText: {
+      fontSize: theme.fonts.sizes.s18,
+      color: "#1D3557",
+      marginBottom: 20,
+      textAlign: "center",
+    },
+    progressBarContainer: {
+      paddingHorizontal: 16,
+      marginBottom: 16,
+    },
+  });
 
   if (loading || !question) return <LoadingScreen />;
 
