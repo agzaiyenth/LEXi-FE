@@ -15,6 +15,7 @@ import DetectionFlow from './Detection';
 import LoadingScreen from '@/src/components/loading';
 import AccessibilityScreen from "./Account/Accessibility";
 import { ThemeProvider } from '@/src/context/ThemeContext';
+import { useTheme } from '@/src/context/ThemeContext'; // Import useTheme
 
 // Create a Bottom Tab Navigator
 const Tab = createBottomTabNavigator();
@@ -52,6 +53,7 @@ export default function AppLayout() {
 
 // Custom Bottom Navigation Bar
 const CustomTabBar = ({ state, descriptors, navigation }: any) => {
+  const { theme } = useTheme(); // Use the theme from ThemeContext
   return (
     <View style={styles.tabBar}>
       {state.routes.map((route: any, index: number) => {
