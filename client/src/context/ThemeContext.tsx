@@ -158,7 +158,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
   const applyColorModifications = (color: string) => {
     const contrastAdjusted = highContrast 
-      ? tinycolor(color).darken(20).toString()
+      ? tinycolor(color).darken(7).toString()
       : color;
     
     return activeColorFilter && colorFilters[activeColorFilter]
