@@ -11,6 +11,7 @@ import { useNavigation } from 'expo-router';
 import React, { useCallback, useState } from 'react';
 import { Image, RefreshControl, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import EmptyState from './Emptystate';
+import { useTheme } from '@/src/context/ThemeContext';
 
 
 
@@ -20,6 +21,129 @@ const TherapistHome = () => {
   const { therapists, loading: therapistsLoading, error: therapistsError, refetch } = useGetAllTherapists();
   const { appointments, loading: appointmentsLoading, error: appointmentsError } = useGetAppointments();
   const [refreshing, setRefreshing] = useState<boolean>(false);
+  const { theme } = useTheme();
+
+  const styles = StyleSheet.create({
+    container: {
+      padding: 16,
+      backgroundColor: theme.colors.background.offWhite,
+      height: '100%',
+    },
+    searchContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: '#f0f0f0',
+      borderRadius: 12,
+      padding: 10,
+      marginBottom: 16,
+    },
+    searchInput: {
+      marginLeft: 10,
+      flex: 1,
+      fontSize: theme.fonts.sizes.s16,
+    },
+    seeAllCard: {
+      backgroundColor: theme.colors.primary.medium2,
+      padding: 12,
+      borderRadius: 16,
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: 150,
+      marginRight: 20,
+    },
+    seeAllText: {
+      color: '#fff',
+      fontWeight: 'bold',
+      fontSize: theme.fonts.sizes.s14,
+    }, noAppointmentsText: {
+      textAlign: 'center',
+      color: 'gray',
+      fontSize: theme.fonts.sizes.s14,
+      marginTop: 10,
+    },
+    sectionTitle: {
+      fontSize: theme.fonts.sizes.s18,
+      fontWeight: 'bold',
+      marginBottom: 8,
+    },
+    horizontalScroll: {
+      marginBottom: 16,
+    },
+    doctorCard: {
+      backgroundColor: theme.colors.primary.light2,
+      padding: 12,
+      borderRadius: 16,
+      alignItems: 'center',
+      marginRight: 12,
+      width: 150,
+    },
+    doctorImage: {
+      width: 120,
+      height: 100,
+      borderRadius: 16,
+      marginBottom: 8,
+    },
+    doctorName: {
+      fontWeight: 'bold',
+      fontSize: theme.fonts.sizes.s14,
+    },
+    doctorSpecialty: {
+      color: '#777',
+      fontSize: theme.fonts.sizes.s12,
+    },
+    appointmentCard: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: theme.colors.primary.light2,
+      padding: 12,
+      borderRadius: 16,
+      marginBottom: 8,
+    },
+    appointmentDateContainer: {
+      backgroundColor: theme.colors.primary.medium2,
+      borderRadius: 8,
+      padding: 8,
+      alignItems: 'center',
+      marginRight: 12,
+    },
+    appointmentDate: {
+      color: '#fff',
+      fontWeight: 'bold',
+      fontSize: theme.fonts.sizes.s16,
+    },
+    appointmentDay: {
+      color: '#fff',
+      fontSize: theme.fonts.sizes.s12,
+    },
+    appointmentDoctor: {
+      fontWeight: 'bold',
+      fontSize: theme.fonts.sizes.s14,
+    },
+    appointmentSpecialty: {
+      color: '#777',
+      fontSize: theme.fonts.sizes.s12,
+    },
+    nearbyDoctorCard: {
+      backgroundColor: theme.colors.primary.light2,
+      padding: 16,
+      margin: 10,
+      borderRadius: 16,
+      alignItems: 'center',
+    },
+    titleContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+      alignContent: 'center',
+      justifyContent: 'space-between',
+      padding: 6,
+    },
+    emptyStateContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: 10,
+    },
+  });
 
   // Refresh data when pulling down
   const onRefresh = useCallback(() => {
@@ -144,126 +268,5 @@ const TherapistHome = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 16,
-    backgroundColor: theme.colors.background.offWhite,
-    height: '100%',
-  },
-  searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#f0f0f0',
-    borderRadius: 12,
-    padding: 10,
-    marginBottom: 16,
-  },
-  searchInput: {
-    marginLeft: 10,
-    flex: 1,
-    fontSize: theme.fonts.sizes.s16,
-  },
-  seeAllCard: {
-    backgroundColor: theme.colors.primary.medium2,
-    padding: 12,
-    borderRadius: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 150,
-    marginRight: 20,
-  },
-  seeAllText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: theme.fonts.sizes.s14,
-  }, noAppointmentsText: {
-    textAlign: 'center',
-    color: 'gray',
-    fontSize: theme.fonts.sizes.s14,
-    marginTop: 10,
-  },
-  sectionTitle: {
-    fontSize: theme.fonts.sizes.s18,
-    fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  horizontalScroll: {
-    marginBottom: 16,
-  },
-  doctorCard: {
-    backgroundColor: theme.colors.primary.light2,
-    padding: 12,
-    borderRadius: 16,
-    alignItems: 'center',
-    marginRight: 12,
-    width: 150,
-  },
-  doctorImage: {
-    width: 120,
-    height: 100,
-    borderRadius: 16,
-    marginBottom: 8,
-  },
-  doctorName: {
-    fontWeight: 'bold',
-    fontSize: theme.fonts.sizes.s14,
-  },
-  doctorSpecialty: {
-    color: '#777',
-    fontSize: theme.fonts.sizes.s12,
-  },
-  appointmentCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: theme.colors.primary.light2,
-    padding: 12,
-    borderRadius: 16,
-    marginBottom: 8,
-  },
-  appointmentDateContainer: {
-    backgroundColor: theme.colors.primary.medium2,
-    borderRadius: 8,
-    padding: 8,
-    alignItems: 'center',
-    marginRight: 12,
-  },
-  appointmentDate: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: theme.fonts.sizes.s16,
-  },
-  appointmentDay: {
-    color: '#fff',
-    fontSize: theme.fonts.sizes.s12,
-  },
-  appointmentDoctor: {
-    fontWeight: 'bold',
-    fontSize: theme.fonts.sizes.s14,
-  },
-  appointmentSpecialty: {
-    color: '#777',
-    fontSize: theme.fonts.sizes.s12,
-  },
-  nearbyDoctorCard: {
-    backgroundColor: theme.colors.primary.light2,
-    padding: 16,
-    margin: 10,
-    borderRadius: 16,
-    alignItems: 'center',
-  },
-  titleContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignContent: 'center',
-    justifyContent: 'space-between',
-    padding: 6,
-  },
-  emptyStateContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 10,
-  },
-});
 
 export default TherapistHome;

@@ -5,10 +5,121 @@ import React from "react";
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from "@react-navigation/stack";
+import { useTheme } from '@/src/context/ThemeContext'; // Import useTheme
 
 export default function AccountScreen() {
   const navigation = useNavigation<StackNavigationProp<any, "Detection", "Accessibility">>();
   const { username,signOut } = useSession();
+  const { theme } = useTheme(); // Use the theme from ThemeContext
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.background.offWhite,
+    },
+    header: {
+      alignItems: 'center',
+      padding: 20,
+      backgroundColor: theme.colors.primary.light2,
+      position: 'relative',
+      borderBottomLeftRadius: 40,
+      borderBottomRightRadius: 40,
+    },
+    signoutIcon: {
+      position: 'absolute',
+      top: 20,
+      right: 20,
+      padding: 10,
+      backgroundColor: theme.colors.primary.dark2,
+      borderRadius: 50,
+    },
+    avatar: {
+      width: 100,
+      height: 100,
+      borderRadius: 50,
+      marginBottom: 15,
+    },
+    name: {
+      fontSize: theme.fonts.sizes.s24,
+      fontWeight: 'bold',
+    },
+    bio: {
+      fontSize: theme.fonts.sizes.s16,
+      color: '#666666',
+      marginTop: 5,
+    },
+    statsRow: {
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      width: '100%',
+      marginTop: 20,
+    },
+    stat: {
+      alignItems: 'center',
+    },
+    statValue: {
+      fontSize: theme.fonts.sizes.s20,
+      fontWeight: 'bold',
+    },
+    statLabel: {
+      fontSize: theme.fonts.sizes.s14,
+      color: '#666666',
+      marginTop: 5,
+    },
+    section: {
+      padding: 20,
+    },
+    sectionTitle: {
+      fontSize: theme.fonts.sizes.s20,
+      fontWeight: 'bold',
+      marginBottom: 15,
+    },
+    achievementCard: {
+      backgroundColor: theme.colors.background.beige,
+      padding: 15,
+      borderRadius: 12,
+      marginRight: 15,
+      alignItems: 'center',
+      width: 120,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
+      elevation: 3,
+    },
+    achievementIcon: {
+      width: 50,
+      height: 50,
+      borderRadius: 25,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: 10,
+    },
+    achievementTitle: {
+      fontSize: theme.fonts.sizes.s14,
+      fontWeight: '500',
+      textAlign: 'center',
+    },
+    settingItem: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: theme.colors.background.offWhite,
+      padding: 15,
+      borderRadius: 12,
+      marginBottom: 10,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
+      elevation: 3,
+    },
+    settingText: {
+      flex: 1,
+      fontSize: theme.fonts.sizes.s16,
+      marginLeft: 15,
+    },
+  });
+  
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -74,111 +185,3 @@ export default function AccountScreen() {
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: theme.colors.background.offWhite,
-  },
-  header: {
-    alignItems: 'center',
-    padding: 20,
-    backgroundColor: theme.colors.primary.light2,
-    position: 'relative',
-    borderBottomLeftRadius: 40,
-    borderBottomRightRadius: 40,
-  },
-  signoutIcon: {
-    position: 'absolute',
-    top: 20,
-    right: 20,
-    padding: 10,
-    backgroundColor: theme.colors.primary.dark2,
-    borderRadius: 50,
-  },
-  avatar: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    marginBottom: 15,
-  },
-  name: {
-    fontSize: theme.fonts.sizes.s24,
-    fontWeight: 'bold',
-  },
-  bio: {
-    fontSize: theme.fonts.sizes.s16,
-    color: '#666666',
-    marginTop: 5,
-  },
-  statsRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
-    marginTop: 20,
-  },
-  stat: {
-    alignItems: 'center',
-  },
-  statValue: {
-    fontSize: theme.fonts.sizes.s20,
-    fontWeight: 'bold',
-  },
-  statLabel: {
-    fontSize: theme.fonts.sizes.s14,
-    color: '#666666',
-    marginTop: 5,
-  },
-  section: {
-    padding: 20,
-  },
-  sectionTitle: {
-    fontSize: theme.fonts.sizes.s20,
-    fontWeight: 'bold',
-    marginBottom: 15,
-  },
-  achievementCard: {
-    backgroundColor: theme.colors.background.beige,
-    padding: 15,
-    borderRadius: 12,
-    marginRight: 15,
-    alignItems: 'center',
-    width: 120,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  achievementIcon: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 10,
-  },
-  achievementTitle: {
-    fontSize: theme.fonts.sizes.s14,
-    fontWeight: '500',
-    textAlign: 'center',
-  },
-  settingItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: theme.colors.background.offWhite,
-    padding: 15,
-    borderRadius: 12,
-    marginBottom: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  settingText: {
-    flex: 1,
-    fontSize: theme.fonts.sizes.s16,
-    marginLeft: 15,
-  },
-});
