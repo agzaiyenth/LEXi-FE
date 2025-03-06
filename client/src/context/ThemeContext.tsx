@@ -1,13 +1,8 @@
-import React, { createContext, useContext, useState, useMemo } from 'react';
+import React, { createContext, useContext, useState, useMemo, useEffect } from 'react';
 import { theme as defaultTheme } from '@/src/theme';
 import tinycolor from 'tinycolor2';
-
-type ColorFilterType = 
-| 'greyscale'
-| 'protanopia'
-| 'deuteranopia'
-| 'tritanopia'
-| 'tint';
+import { useSession } from '../ctx';
+import apiClient from '../apiClient';
 
 // Define color matrices for different filters
 const PROTANOPIA_MATRIX = [
@@ -31,6 +26,13 @@ const TRITANOPIA_MATRIX = [
   0, 0, 0, 1, 0,
 ];
 
+type ColorFilterType = 
+| 'greyscale'
+| 'protanopia'
+| 'deuteranopia'
+| 'tritanopia'
+| 'tint';
+
 type ThemeContextType = {
   theme: typeof defaultTheme;
   updateFontSizeMultiplier: (multiplier: number) => void;
@@ -41,6 +43,7 @@ type ThemeContextType = {
   activeColorFilter: ColorFilterType | null;
   colorIntensity: number;
   resetAccessibilitySettings: () => void;
+  saveUserPreference: (preferences: any) => void;
 };
 
 const ThemeContext = createContext<ThemeContextType>({
@@ -53,6 +56,7 @@ const ThemeContext = createContext<ThemeContextType>({
   activeColorFilter: null,
   colorIntensity: 1,
   resetAccessibilitySettings: () => {},
+  saveUserPreference: (preferences: any) => {},
 });
 
 const applyColorMatrix = (color: string, matrix: number[], intensity: number) => {
@@ -89,11 +93,68 @@ const colorFilters = {
 };
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
+  const { username } = useSession();
+  
+  // Initialize state with valid defaults
   const [fontSizeMultiplier, setFontSizeMultiplier] = useState(1);
   const [highContrast, setHighContrast] = useState(false);
-  const [fontType, setFontType] = useState(defaultTheme.fonts.regular);
+  const [fontType, setFontType] = useState(defaultTheme.fonts.regular || "System");
   const [activeColorFilter, setActiveColorFilter] = useState<ColorFilterType | null>(null);
   const [colorIntensity, setColorIntensity] = useState(1);
+
+  // Load preferences on mount
+  useEffect(() => {
+    if (username) {
+      loadUserPreference();
+    }
+  }, [username]);
+
+  // Save preferences whenever any setting changes
+  useEffect(() => {
+    if (username) {
+      const preferences = {
+        userName: username,
+        highContrast,
+        fontScale: fontSizeMultiplier,
+        colorFilterType: activeColorFilter,
+        colorIntensity,
+        fontType,
+      };
+      saveUserPreference(preferences);
+    }
+  }, [highContrast, fontSizeMultiplier, activeColorFilter, colorIntensity, fontType, username]);
+
+  // Function to save user preferences
+  const saveUserPreference = async (preferences: any) => {
+    try {
+      if (!username) return;
+
+      await apiClient.post('/accessibility', preferences);
+    } catch (error) {
+      console.error('Error saving user preferences:', error);
+    }
+  };
+
+  // Function to load user preferences
+  const loadUserPreference = async () => {
+    try {
+      if (!username) return;
+
+      const response = await apiClient.get(`/accessibility/user`);
+      const preferences = response.data;
+
+      if (preferences) {
+        setHighContrast(preferences.highContrast);
+        setFontSizeMultiplier(preferences.fontScale);
+        setActiveColorFilter(preferences.colorFilterType);
+        setColorIntensity(preferences.colorIntensity);
+        setFontType(preferences.fontType);
+      }
+
+    } catch (error) {
+      console.error('Error loading preferences:', error);
+    }
+  };
 
   const applyColorModifications = (color: string) => {
     const contrastAdjusted = highContrast 
@@ -117,6 +178,8 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
       }), {});
     };
 
+    const fontSizeMultiplier1 = Math.max(fontSizeMultiplier, 1);
+    
     return {
       ...defaultTheme,
       colors: processColors(defaultTheme.colors),
@@ -125,7 +188,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
         sizes: Object.fromEntries(
           Object.entries(defaultTheme.fonts.sizes).map(([key, value]) => [
             key,
-            value * fontSizeMultiplier
+            value * fontSizeMultiplier1
           ])
         ),
         regular: fontType,
@@ -134,11 +197,20 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   }, [fontSizeMultiplier, highContrast, fontType, activeColorFilter, colorIntensity]);
 
   const resetAccessibilitySettings = () => {
+    setHighContrast(false);
+    setFontSizeMultiplier(1);
     setActiveColorFilter(null);
     setColorIntensity(1);
-    setFontSizeMultiplier(1);
-    setHighContrast(false);
     setFontType(defaultTheme.fonts.regular);
+
+    saveUserPreference({
+      userName: username,
+      highContrast: false,
+      fontScale: 1,
+      colorFilterType: null,
+      colorIntensity: 1,
+      fontType: defaultTheme.fonts.regular,
+    });
   };
 
   return (
@@ -152,7 +224,8 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
         setColorIntensity,
         activeColorFilter,
         colorIntensity,
-        resetAccessibilitySettings
+        resetAccessibilitySettings,
+        saveUserPreference
       }}
     >
       {children}
