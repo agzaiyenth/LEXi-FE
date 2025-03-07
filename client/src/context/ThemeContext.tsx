@@ -179,10 +179,16 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     const fontSizeMultiplier1 = Math.max(fontSizeMultiplier, 1);
-    
     return {
       ...defaultTheme,
       colors: processColors(defaultTheme.colors),
+      ...defaultTheme.spacing,
+      spacing: Object.fromEntries(
+        Object.entries(defaultTheme.spacing).map(([key, value]) => [
+          key,
+          fontSizeMultiplier > 1 ? value * 0.62 : value,
+        ])
+      ),
       fonts: {
         ...defaultTheme.fonts,
         sizes: Object.fromEntries(
