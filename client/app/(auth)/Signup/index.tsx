@@ -14,6 +14,7 @@ import {
   View
 } from 'react-native';
 import Toast from 'react-native-toast-message';
+import { useSignup } from '@/src/hooks/auth/useSignup';
 
 /**
  * SignUpScreen component for user registration.
@@ -24,13 +25,13 @@ import Toast from 'react-native-toast-message';
  */
 
 const SignUpScreen = () => {
+  const [fullName, setFullName] = useState('');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState({ username: '', email: '', password: '' });
+  const { signup, loading, error } = useSignup();
   const router = useRouter();
 
   /**
@@ -42,34 +43,18 @@ const SignUpScreen = () => {
    */
 
   const handleSignUp = async () => {
-
-    setLoading(true);
+    // Basic validation: check if password and confirmPassword match.
+    if (password !== confirmPassword) {
+      Toast.show({ type: 'error', text1: 'Passwords do not match' });
+      return;
+    }
 
     try {
-      const msg = await signUp({ username, email, password, confirmPassword });
-
-      //Success notification
-      Toast.show({
-        type: 'success',
-        text1: 'Sign Up Successful!',
-        text2: 'You can now Login'
-      });
-
-
-      console.log('Sign Up successful:' + msg);
-      //Redirect to sign-in
+      const response = await signup({ fullName, username, email, password });
+      console.log('Sign Up successful:', response);
       router.push('/(auth)/SignIn');
-
-    } catch (err: any) {
-      //error notification
-      Toast.show({
-        type: 'error',
-        text1: 'Sign Up Failed!',
-        text2: 'Try signing up again'
-      });
-      console.error('Sign Up failed:', err.message);
-    } finally {
-      setLoading(false);
+    } catch (err) {
+      console.error('Sign Up failed:', err);
     }
   };
 
@@ -89,6 +74,21 @@ const SignUpScreen = () => {
       {/* Form */}
       <View style={styles.form}>
 
+        {/* Full Name Input */}
+        <View style={styles.flexColumn}>
+          <Text style={styles.label}>Full Name</Text>
+        </View>
+        <View style={styles.inputForm}>
+          <Feather name="user" size={20} color="#666" />
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your Full Name"
+            value={fullName}
+            onChangeText={setFullName}
+          />
+        </View>
+        {error?.fullName && <Text style={styles.errorText}>{error.fullName}</Text>}
+
         {/* Username Input */}
         <View style={styles.flexColumn}>
           <Text style={styles.label}>Username</Text>
@@ -103,7 +103,7 @@ const SignUpScreen = () => {
             autoCapitalize="none"
           />
         </View>
-        {errors.username ? <Text style={styles.errorText}>{errors.username}</Text> : null}
+        {error?.username && <Text style={styles.errorText}>{error.username}</Text>}
 
         {/* Email Input */}
         <View style={styles.flexColumn}>
@@ -119,8 +119,7 @@ const SignUpScreen = () => {
             autoCapitalize="none"
           />
         </View>
-        {errors.email ? <Text style={styles.errorText}>{errors.email}</Text> : null}
-
+        {error?.email ? <Text style={styles.errorText}>{error?.email}</Text> : null}
         {/* Password Input */}
         <View style={styles.flexColumn}>
           <Text style={styles.label}>Password</Text>
@@ -138,9 +137,8 @@ const SignUpScreen = () => {
             <Feather name={showPassword ? 'eye' : 'eye-off'} size={20} color="#666" />
           </TouchableOpacity>
         </View>
-        {errors.password ? <Text style={styles.errorText}>{errors.password}</Text> : null}
+        {error?.password && <Text style={styles.errorText}>{error.password}</Text>}
 
-        {/* Confirm Password Input */}
         <View style={styles.flexColumn}>
           <Text style={styles.label}>Confirm Password</Text>
         </View>
@@ -186,18 +184,18 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   avatarContainer: {
-    marginTop: 40,
-    marginBottom: 20,
+    marginTop: 10,
+    marginBottom: 4,
     alignItems: 'center',
   }, welcomeText: {
     fontSize: theme.fonts.sizes.s24,
     fontWeight: 'bold',
-    marginBottom: 40,
+    marginBottom: 10,
     textAlign: 'center',
     fontFamily: 'serif',
   },
   form: {
-    gap: 10,
+    gap: 6,
     backgroundColor: theme.colors.background.offWhite,
     padding: 20,
     borderRadius: 20,
@@ -257,10 +255,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 });
-
-function signUp(arg0: { username: string; email: string; password: string; confirmPassword: string; }) {
-  throw new Error('Function not implemented.');
-}
 
 export default SignUpScreen;
 
