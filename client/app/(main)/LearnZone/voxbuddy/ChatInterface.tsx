@@ -1,5 +1,12 @@
 // app/(main)/LearnZone/voxbuddy/ChatInterface.tsx
-import { BASE_ENDPOINT } from '@/config';
+import { BASE_WS_URL } from '@/config';
+import { useAudioHandlers } from '@/src/hooks/voxBuddy/useAudioHandlers';
+import { WebSocketClient } from '@/src/hooks/voxBuddy/WebSocketClient';
+import theme from '@/src/theme';
+import { Message, WSMessage } from '@/src/types/voxbuddy/voxBuddy';
+import { Entypo, Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import React, {
   useCallback,
   useEffect,
@@ -14,21 +21,14 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import AudioReactiveVisualizer from './AudioReactiveVisualizer';
-import theme from '@/src/theme';
-import { Entypo, Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { WebSocketClient } from '@/src/hooks/voxBuddy/WebSocketClient';
-import { Message, WSMessage } from '@/src/types/voxbuddy/voxBuddy';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { LearnZoneParamList } from '../index';
-import { useAudioHandlers } from '@/src/hooks/voxBuddy/useAudioHandlers';
+import AudioReactiveVisualizer from './AudioReactiveVisualizer';
 
 export default function ChatInterface() {
   type LearnMainNavigationProp = StackNavigationProp<LearnZoneParamList, 'LearnMain'>;
-  
+
   const navigation = useNavigation<LearnMainNavigationProp>();
-  const [endpoint] = useState(`ws://${BASE_ENDPOINT}/realtime`);
+  const [endpoint] = useState(`${BASE_WS_URL}/realtime`);
   const [messages, setMessages] = useState<Message[]>([]);
   const [currentMessage, setCurrentMessage] = useState('');
   const [isRecording, setIsRecording] = useState(false);
@@ -70,7 +70,7 @@ export default function ChatInterface() {
     return () => {
       disconnect();
     };
-   
+
   }, []);
   const handleWSMessage = useCallback(
     async (message: WSMessage) => {
@@ -205,9 +205,9 @@ export default function ChatInterface() {
   // ----- Render -----
   return (
     <View style={styles.container}>
-        <View style={styles.headerContent}>
+      <View style={styles.headerContent}>
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        <Ionicons name="arrow-back-circle-outline" size={40} color="white" />
+          <Ionicons name="arrow-back-circle-outline" size={40} color="white" />
         </TouchableOpacity>
       </View>
 
@@ -405,18 +405,18 @@ const styles = StyleSheet.create({
   disabledButton: {
     backgroundColor: '#f5f5f5', // Light gray
     borderColor: '#bdbdbd', // Gray border
-},
-headerContent: {
-  padding: 10,
-  marginEnd: 0,
-  flexDirection: 'row',
-  alignItems: 'center',
-  marginTop:10,
+  },
+  headerContent: {
+    padding: 10,
+    marginEnd: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
 
-},
-backButton: {
-  marginBottom: 10,
-},
+  },
+  backButton: {
+    marginBottom: 10,
+  },
 
 
 });
