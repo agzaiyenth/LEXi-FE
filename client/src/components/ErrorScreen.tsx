@@ -22,7 +22,6 @@ export default function ErrorScreen() {
         />
         {/* Title */}
         <Text style={styles.heading}>Lexi</Text>
-        <Text style={styles.text}>Learning is for everyone</Text>
       </View>
 
       {/* Center Image */}
@@ -56,6 +55,7 @@ export default function ErrorScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+        backgroundColor: theme.colors.primary.medium2,
   },
   topContent: {
     flex: 1,
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: theme.fonts.sizes.extraLarge,
     fontWeight: 'bold',
-    color: "red",
+        color: theme.colors.background.beige,
   },
   centerImage: {
     width: screenWidth,
