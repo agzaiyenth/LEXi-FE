@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { View } from 'react-native'
 import TherapistHome from './TherapistHome'
 
 export default function ExploreMainScreen() {
@@ -9,5 +9,3 @@ export default function ExploreMainScreen() {
     </View>
   )
 }
-
-const styles = StyleSheet.create({})
