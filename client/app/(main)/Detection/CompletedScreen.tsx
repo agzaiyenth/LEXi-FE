@@ -5,36 +5,15 @@ import { useNavigation } from 'expo-router';
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import completed from '@/assets/images/mascot/completed.png';
+import { useTheme } from '@/src/context/ThemeContext';
 
 
 export default function CompletedScreen() {
  const navigation = useNavigation<StackNavigationProp<any, "Home">>();
  const { username } = useSession();
+ const { theme } = useTheme();
 
-  return (
-    <View
-
-      style={styles.container}
-    >
-      <Text style={styles.title}>Thank You {username || 'Guest'} !</Text>
-      <Text style={styles.subtitle}>
-        We are ready to use the app , Enjoy!
-      </Text>
-      <Image
-        source={completed}
-        style={styles.avatar}
-      />
-      <TouchableOpacity
-        style={styles.submitButtonContainer}
-        onPress={() => navigation.navigate("Home")}
-      >
-        <Text style={styles.buttonText}>Go To Home</Text>
-      </TouchableOpacity>
-    </View>
-  )
-}
-
-const styles = StyleSheet.create({
+ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -87,3 +66,26 @@ const styles = StyleSheet.create({
     color: 'white'
   }
 })
+
+  return (
+    <View
+
+      style={styles.container}
+    >
+      <Text style={styles.title}>Thank You {username || 'Guest'} !</Text>
+      <Text style={styles.subtitle}>
+        We are ready to use the app , Enjoy!
+      </Text>
+      <Image
+        source={completed}
+        style={styles.avatar}
+      />
+      <TouchableOpacity
+        style={styles.submitButtonContainer}
+        onPress={() => navigation.navigate("Home")}
+      >
+        <Text style={styles.buttonText}>Go To Home</Text>
+      </TouchableOpacity>
+    </View>
+  )
+}

@@ -13,6 +13,9 @@ import ExploreScreen from './Explore';
 import AccountScreen from './Account';
 import DetectionFlow from './Detection';
 import LoadingScreen from '@/src/components/loading';
+import AccessibilityScreen from "./Account/Accessibility";
+import { ThemeProvider } from '@/src/context/ThemeContext';
+import { useTheme } from '@/src/context/ThemeContext'; // Import useTheme
 
 // Create a Bottom Tab Navigator
 const Tab = createBottomTabNavigator();
@@ -29,28 +32,80 @@ export default function AppLayout() {
   }
 
   return (
-    <Tab.Navigator
-      screenOptions={{
-        headerShown: false, // Hide headers
-      }}
-      tabBar={(props) => <CustomTabBar {...props} />} // Use custom tab bar
-    >
-      <Tab.Screen name="Home" component={HomeScreen} options={{ title: 'Home' }} />
-      <Tab.Screen name="LearnZone" component={LearnScreen} options={{ title: 'Learn' }} />
-      <Tab.Screen name="PlaySpace" component={PlayScreen} options={{ title: 'Play' }} />
-      <Tab.Screen name="Explore+" component={ExploreScreen} options={{ title: 'Explore' }} />
-      <Tab.Screen name="Account" component={AccountScreen} options={{ title: 'Account' }} />
-      <Tab.Screen name="Detection" component={DetectionFlow} options={{ title: 'Detection' }} />
-    </Tab.Navigator>
+    <ThemeProvider>
+      <Tab.Navigator
+        screenOptions={{
+          headerShown: false, // Hide headers
+        }}
+        tabBar={(props) => <CustomTabBar {...props} />} // Use custom tab bar
+      >
+        <Tab.Screen name="Home" component={HomeScreen} options={{ title: 'Home' }} />
+        <Tab.Screen name="LearnZone" component={LearnScreen} options={{ title: 'Learn' }} />
+        <Tab.Screen name="PlaySpace" component={PlayScreen} options={{ title: 'Play' }} />
+        <Tab.Screen name="Explore+" component={ExploreScreen} options={{ title: 'Explore' }} />
+        <Tab.Screen name="Account" component={AccountScreen} options={{ title: 'Account' }} />
+        <Tab.Screen name="Detection" component={DetectionFlow} options={{ title: 'Detection' }} />
+        <Tab.Screen name="Accessibility" component={AccessibilityScreen} options={{ title: 'Accessibility' }} />
+      </Tab.Navigator>
+    </ThemeProvider>
   );
 }
 
 // Custom Bottom Navigation Bar
 const CustomTabBar = ({ state, descriptors, navigation }: any) => {
+  const { theme } = useTheme(); // Use the theme from ThemeContext
+
+  const styles = StyleSheet.create({
+    container: {
+  
+    },
+    tabBar: {
+      flexDirection: 'row',
+      padding: theme.spacing.medium,
+      paddingVertical: theme.spacing.small,
+      backgroundColor: theme.colors.primary.light2,
+      borderTopLeftRadius: theme.spacing.large,
+      borderTopRightRadius: theme.spacing.large,
+      width: '100%',
+      elevation: 5,
+    },
+    tabButton: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical: theme.spacing.small,
+      backgroundColor: 'transparent',
+    },
+    focusedTabButton: {
+      backgroundColor: theme.colors.primary.medium2,
+      borderRadius: theme.spacing.medium,
+    },
+    iconContainer: {
+      position: 'relative',
+      alignItems: 'center',
+    },
+    underline: {
+      width: 30,
+      height: 4,
+      backgroundColor: theme.colors.background.offWhite,
+      borderRadius: 2,
+      position: 'absolute',
+      bottom: 0,
+    },
+    label: {
+      fontSize: theme.fonts.sizes.s10,
+      color: theme.colors.primary.dark1,
+      marginTop: 5,
+    },
+    focusedLabel: {
+      color: theme.colors.background.offWhite,
+    },
+  });
+  
   return (
     <View style={styles.tabBar}>
       {state.routes.map((route: any, index: number) => {
-        if (route.name === 'Detection') {
+        if (route.name === 'Detection' || route.name === 'Accessibility') {
           return null; // Exclude the Detection tab from being rendered
         }
 
@@ -115,50 +170,3 @@ const CustomTabBar = ({ state, descriptors, navigation }: any) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-
-  },
-  tabBar: {
-    flexDirection: 'row',
-    padding: theme.spacing.medium,
-    paddingVertical: theme.spacing.small,
-    backgroundColor: theme.colors.primary.light2,
-    borderTopLeftRadius: theme.spacing.large,
-    borderTopRightRadius: theme.spacing.large,
-    width: '100%',
-    elevation: 5,
-  },
-  tabButton: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: theme.spacing.small,
-    backgroundColor: 'transparent',
-  },
-  focusedTabButton: {
-    backgroundColor: theme.colors.primary.medium2,
-    borderRadius: theme.spacing.medium,
-  },
-  iconContainer: {
-    position: 'relative',
-    alignItems: 'center',
-  },
-  underline: {
-    width: 30,
-    height: 4,
-    backgroundColor: theme.colors.background.offWhite,
-    borderRadius: 2,
-    position: 'absolute',
-    bottom: 0,
-  },
-  label: {
-    fontSize: theme.fonts.sizes.s10,
-    color: theme.colors.primary.dark1,
-    marginTop: 5,
-  },
-  focusedLabel: {
-    color: theme.colors.background.offWhite,
-  },
-});

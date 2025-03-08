@@ -7,6 +7,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import EllipseImage from "@/assets/images/Ellipse.png";
 import ReadingTextImage from "@/assets/images/readingText.png";
 import Rectangle52Image from "@/assets/images/Rectangle 52.png";
+import { useTheme } from '@/src/context/ThemeContext';
 
 const Pronounce = () => {
   const handleBackward = () => {
@@ -20,6 +21,74 @@ const Pronounce = () => {
   const handleForward = () => {
     console.log("Forward button pressed");
   };
+
+  const { theme } = useTheme();
+  const styles = StyleSheet.create({
+    wrapper: {
+      width: "100%",
+      height: "100%",
+      fontFamily: "Poppins",
+    },
+    container: {
+      flex: 1,
+      backgroundColor: "#9AC3BB",
+      position: "relative",
+    },
+    text: {
+      top: 35,
+      fontSize: theme.fonts.sizes.s26,
+      lineHeight: 30,
+      fontWeight: "400",
+      textAlign: "center",
+      color: theme.colors.background.offWhite,
+    },
+    leftarrow: {
+      position: "absolute",
+      top: 20,
+      left: 20,
+      fontSize: theme.fonts.sizes.s40,
+      color: theme.colors.background.offWhite,
+    },
+    Ellipse: {
+      width: 150,
+      height: 150,
+      alignSelf: "flex-end",
+      top: -30,
+    },
+    innercontainer: {
+      top: -70,
+      backgroundColor: "#FDF4DE",
+      borderRadius: 30,
+      flexDirection: "column", // Ensure a column layout for stacking
+      justifyContent: "center",
+      alignItems: "center", // Center items horizontally
+      height: "100%",
+    },
+    readingText: {
+      marginTop: 40,
+      width: 470,
+      height: 470,
+    },
+    Rectangle52: {
+      top: -80,
+      width: 400,
+    },
+    controls: {
+      zIndex: -1,
+      position: "relative",
+      flexDirection: "row",
+      justifyContent: "space-around",
+      alignItems: "center",
+  
+  
+      borderWidth: 3,
+    },
+    button: {
+      padding: 10,
+      zIndex: 1000,
+    },
+  });
+
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
@@ -68,68 +137,3 @@ const Pronounce = () => {
   );
 };
 export default Pronounce;
-const styles = StyleSheet.create({
-  wrapper: {
-    width: "100%",
-    height: "100%",
-    fontFamily: "Poppins",
-  },
-  container: {
-    flex: 1,
-    backgroundColor: "#9AC3BB",
-    position: "relative",
-  },
-  text: {
-    top: 35,
-    fontSize: theme.fonts.sizes.s26,
-    lineHeight: 30,
-    fontWeight: "400",
-    textAlign: "center",
-    color: theme.colors.background.offWhite,
-  },
-  leftarrow: {
-    position: "absolute",
-    top: 20,
-    left: 20,
-    fontSize: theme.fonts.sizes.s40,
-    color: theme.colors.background.offWhite,
-  },
-  Ellipse: {
-    width: 150,
-    height: 150,
-    alignSelf: "flex-end",
-    top: -30,
-  },
-  innercontainer: {
-    top: -70,
-    backgroundColor: "#FDF4DE",
-    borderRadius: 30,
-    flexDirection: "column", // Ensure a column layout for stacking
-    justifyContent: "center",
-    alignItems: "center", // Center items horizontally
-    height: "100%",
-  },
-  readingText: {
-    marginTop: 40,
-    width: 470,
-    height: 470,
-  },
-  Rectangle52: {
-    top: -80,
-    width: 400,
-  },
-  controls: {
-    zIndex: -1,
-    position: "relative",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-
-
-    borderWidth: 3,
-  },
-  button: {
-    padding: 10,
-    zIndex: 1000,
-  },
-});

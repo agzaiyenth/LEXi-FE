@@ -2,7 +2,6 @@
 import { BASE_WS_URL } from '@/config';
 import { useAudioHandlers } from '@/src/hooks/voxBuddy/useAudioHandlers';
 import { WebSocketClient } from '@/src/hooks/voxBuddy/WebSocketClient';
-import theme from '@/src/theme';
 import { Message, WSMessage } from '@/src/types/voxbuddy/voxBuddy';
 import { Entypo, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from '@react-navigation/native';
@@ -23,6 +22,7 @@ import {
 } from 'react-native';
 import { LearnZoneParamList } from '../index';
 import AudioReactiveVisualizer from './AudioReactiveVisualizer';
+import { useTheme } from '@/src/context/ThemeContext';
 
 export default function ChatInterface() {
   type LearnMainNavigationProp = StackNavigationProp<LearnZoneParamList, 'LearnMain'>;
@@ -199,6 +199,125 @@ export default function ChatInterface() {
     }
   };
 
+  const { theme } = useTheme();
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.primary.light2,
+    },
+    topHalf: {
+      flex: 3,
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      padding: 26,
+    },
+    bottomHalf: {
+      flex: 5,
+      backgroundColor: theme.colors.secondary.light2,
+      borderTopLeftRadius: 24,
+      borderTopRightRadius: 24,
+    },
+    sectionTitle: {
+      fontSize: theme.fonts.sizes.s26,
+      fontWeight: '600',
+      marginBottom: 8,
+      color: theme.colors.blacks.medium
+    },
+    input: {
+      borderWidth: 1,
+      borderColor: theme.colors.background.offWhite,
+      paddingHorizontal: 8,
+      paddingVertical: 6,
+      marginBottom: 16,
+      borderRadius: 4,
+    },
+    connectionStatus: {
+      textAlign: 'center',
+      marginVertical: 8,
+    },
+  
+    chatArea: {
+      flex: 1,
+      flexDirection: 'column',
+    },
+    messagesContainer: {
+      flex: 1,
+      padding: 12,
+    },
+    messageBubble: {
+      marginVertical: 6,
+      padding: 10,
+      borderRadius: 6,
+    },
+    userBubble: {
+      alignSelf: 'flex-end',
+      backgroundColor: theme.colors.primary.dark3, // light blue
+      maxWidth: '80%',
+      color: theme.colors.background.offWhite
+    },
+    assistantBubble: {
+      alignSelf: 'flex-start',
+      backgroundColor: theme.colors.primary.medium2, // light gray
+      maxWidth: '80%',
+      color: theme.colors.background.offWhite
+    },
+    statusBubble: {
+      alignSelf: 'center',
+      backgroundColor: '#f3f4f6', // slightly lighter gray
+      maxWidth: '80%',
+    },
+    inputRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      borderTopWidth: 1,
+      borderColor: '#ccc',
+      padding: 8,
+    },
+    messageInput: {
+      flex: 1,
+      borderWidth: 1,
+      borderColor: '#ccc',
+      paddingHorizontal: 8,
+      borderRadius: 9,
+      marginRight: 8,
+      height: 40,
+    },
+    iconButton: {
+      paddingHorizontal: 8,
+      paddingVertical: 8,
+      borderWidth: 1,
+      borderColor: '#9ac3bb',
+      borderRadius: 20,
+      marginRight: 6,
+      backgroundColor: '#9ac3bb',
+    },
+    recordingButton: {
+      backgroundColor: '#fee2e2', // light red
+    },
+    disabledInput: {
+      backgroundColor: '#e0e0e0', // Light gray
+      borderColor: '#bdbdbd', // Gray border
+    },
+    disabledButton: {
+      backgroundColor: '#f5f5f5', // Light gray
+      borderColor: '#bdbdbd', // Gray border
+    },
+    headerContent: {
+      padding: 10,
+      marginEnd: 0,
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginTop: 10,
+  
+    },
+    backButton: {
+      marginBottom: 10,
+    },
+  
+  
+  });
+
 
 
 
@@ -303,120 +422,3 @@ export default function ChatInterface() {
   );
 }
 
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: theme.colors.primary.light2,
-  },
-  topHalf: {
-    flex: 3,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 26,
-  },
-  bottomHalf: {
-    flex: 5,
-    backgroundColor: theme.colors.secondary.light2,
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
-  },
-  sectionTitle: {
-    fontSize: theme.fonts.sizes.s26,
-    fontWeight: '600',
-    marginBottom: 8,
-    color: theme.colors.blacks.medium
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: theme.colors.background.offWhite,
-    paddingHorizontal: 8,
-    paddingVertical: 6,
-    marginBottom: 16,
-    borderRadius: 4,
-  },
-  connectionStatus: {
-    textAlign: 'center',
-    marginVertical: 8,
-  },
-
-  chatArea: {
-    flex: 1,
-    flexDirection: 'column',
-  },
-  messagesContainer: {
-    flex: 1,
-    padding: 12,
-  },
-  messageBubble: {
-    marginVertical: 6,
-    padding: 10,
-    borderRadius: 6,
-  },
-  userBubble: {
-    alignSelf: 'flex-end',
-    backgroundColor: theme.colors.primary.dark3, // light blue
-    maxWidth: '80%',
-    color: theme.colors.background.offWhite
-  },
-  assistantBubble: {
-    alignSelf: 'flex-start',
-    backgroundColor: theme.colors.primary.medium2, // light gray
-    maxWidth: '80%',
-    color: theme.colors.background.offWhite
-  },
-  statusBubble: {
-    alignSelf: 'center',
-    backgroundColor: '#f3f4f6', // slightly lighter gray
-    maxWidth: '80%',
-  },
-  inputRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderTopWidth: 1,
-    borderColor: '#ccc',
-    padding: 8,
-  },
-  messageInput: {
-    flex: 1,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    paddingHorizontal: 8,
-    borderRadius: 9,
-    marginRight: 8,
-    height: 40,
-  },
-  iconButton: {
-    paddingHorizontal: 8,
-    paddingVertical: 8,
-    borderWidth: 1,
-    borderColor: '#9ac3bb',
-    borderRadius: 20,
-    marginRight: 6,
-    backgroundColor: '#9ac3bb',
-  },
-  recordingButton: {
-    backgroundColor: '#fee2e2', // light red
-  },
-  disabledInput: {
-    backgroundColor: '#e0e0e0', // Light gray
-    borderColor: '#bdbdbd', // Gray border
-  },
-  disabledButton: {
-    backgroundColor: '#f5f5f5', // Light gray
-    borderColor: '#bdbdbd', // Gray border
-  },
-  headerContent: {
-    padding: 10,
-    marginEnd: 0,
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 10,
-
-  },
-  backButton: {
-    marginBottom: 10,
-  },
-
-
-});

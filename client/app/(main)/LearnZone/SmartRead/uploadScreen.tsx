@@ -19,6 +19,7 @@ import {
 import { LearnZoneParamList } from './navigator';
 import UploadIconImage from '@/assets/images/uploadIcon.png';
 import  IconPointingImage from '@/assets/images/icon-pointing.png';
+import { useTheme } from '@/src/context/ThemeContext';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -107,6 +108,96 @@ const UploadScreen = () => {
     }
   };
 
+  const { theme } = useTheme();
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.primary.medium2,
+      padding: theme.spacing.medium,
+    },
+    headerContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: theme.spacing.large,
+    },
+   
+    headerText: {
+      fontSize: theme.fonts.sizes.large,   
+      marginLeft: 80,   
+      color: theme.colors.background.offWhite,
+    },
+    uploadContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: theme.colors.background.beige,
+      borderRadius: 20,
+      padding: theme.spacing.medium,
+      borderWidth: 1,
+      borderColor: theme.colors.primary.light,
+      top:20,
+    },
+    uploadIcon: {
+      width: 80,
+      height: 80,
+      marginBottom: theme.spacing.large,
+    },
+    fileTypesText: {
+      textAlign: 'center',
+      fontSize: theme.fonts.sizes.small,
+      color: theme.colors.primary.dark2,
+      marginBottom: theme.spacing.large,
+    },
+    browseButton: {
+      backgroundColor: theme.colors.primary.medium,
+      borderRadius: 10,
+      paddingVertical: theme.spacing.medium,
+      paddingHorizontal: theme.spacing.large,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    browseButtonText: {
+      color: theme.colors.background.beige,
+      fontSize: theme.fonts.sizes.medium,
+      fontWeight: 'bold',
+    },
+    footerContainer: {
+      alignItems: 'center',
+      marginTop: theme.spacing.large,
+    },
+    footerText: {
+      fontSize: theme.fonts.sizes.small,
+      fontWeight: '500',
+      color: theme.colors.primary.dark1,
+      marginBottom: theme.spacing.small,
+    },
+    mascotIcon: {
+      width: screenWidth * 0.4,
+      height: undefined,
+      aspectRatio: 1,
+    },
+    modalOverlay: {
+      flex: 1,
+      backgroundColor: 'rgba(0,0,0,0.5)',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    modalContainer: {
+      width: '80%',
+      backgroundColor: theme.colors.background.offWhite,
+      borderRadius: 20,
+      padding: theme.spacing.large,
+      alignItems: 'center',
+    },
+    modalText: {
+      marginTop: theme.spacing.medium,
+      fontSize: theme.fonts.sizes.medium,
+      color: theme.colors.primary.medium,
+      textAlign: 'center',
+    },
+  });
+
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
@@ -176,92 +267,5 @@ const UploadScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: theme.colors.primary.medium2,
-    padding: theme.spacing.medium,
-  },
-  headerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: theme.spacing.large,
-  },
- 
-  headerText: {
-    fontSize: theme.fonts.sizes.large,   
-    marginLeft: 80,   
-    color: theme.colors.background.offWhite,
-  },
-  uploadContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: theme.colors.background.beige,
-    borderRadius: 20,
-    padding: theme.spacing.medium,
-    borderWidth: 1,
-    borderColor: theme.colors.primary.light,
-    top:20,
-  },
-  uploadIcon: {
-    width: 80,
-    height: 80,
-    marginBottom: theme.spacing.large,
-  },
-  fileTypesText: {
-    textAlign: 'center',
-    fontSize: theme.fonts.sizes.small,
-    color: theme.colors.primary.dark2,
-    marginBottom: theme.spacing.large,
-  },
-  browseButton: {
-    backgroundColor: theme.colors.primary.medium,
-    borderRadius: 10,
-    paddingVertical: theme.spacing.medium,
-    paddingHorizontal: theme.spacing.large,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  browseButtonText: {
-    color: theme.colors.background.beige,
-    fontSize: theme.fonts.sizes.medium,
-    fontWeight: 'bold',
-  },
-  footerContainer: {
-    alignItems: 'center',
-    marginTop: theme.spacing.large,
-  },
-  footerText: {
-    fontSize: theme.fonts.sizes.small,
-    fontWeight: '500',
-    color: theme.colors.primary.dark1,
-    marginBottom: theme.spacing.small,
-  },
-  mascotIcon: {
-    width: screenWidth * 0.4,
-    height: undefined,
-    aspectRatio: 1,
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContainer: {
-    width: '80%',
-    backgroundColor: theme.colors.background.offWhite,
-    borderRadius: 20,
-    padding: theme.spacing.large,
-    alignItems: 'center',
-  },
-  modalText: {
-    marginTop: theme.spacing.medium,
-    fontSize: theme.fonts.sizes.medium,
-    color: theme.colors.primary.medium,
-    textAlign: 'center',
-  },
-});
 
 export default UploadScreen;

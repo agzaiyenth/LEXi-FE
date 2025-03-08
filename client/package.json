@@ -19,6 +19,7 @@
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-native-community/cli": "latest",
     "@react-native-community/netinfo": "^11.4.1",
+    "@react-native-community/slider": "^4.5.6",
     "@react-navigation/bottom-tabs": "^7.1.3",
     "@react-navigation/elements": "^2.2.4",
     "@react-navigation/native": "^7.0.14",
@@ -74,7 +75,8 @@
     "react-native-web": "~0.19.13",
     "rt-client": "^0.5.1",
     "stream-browserify": "^3.0.0",
-    "tailwindcss": "^3.4.15"
+    "tailwindcss": "^3.4.15",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",

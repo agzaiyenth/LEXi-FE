@@ -84,6 +84,7 @@ export const theme = {
   accessibility: {
     highContrast: false,
     fontScale: 1, // 1 for normal, >1 for larger fonts
+    availableFonts: ["System", "OpenDyslexic", "Sans-serif"],
   },
 };
 

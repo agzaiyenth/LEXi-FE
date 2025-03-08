@@ -11,6 +11,7 @@ import { useNavigation } from 'expo-router';
 import React from 'react';
 import { Alert, Image, StyleSheet, Text } from 'react-native';
 import { SwipeButton } from 'react-native-expo-swipe-button';
+import { useTheme } from '@/src/context/ThemeContext';
 
 
 export default function DetectionHomeScreen() {
@@ -26,6 +27,50 @@ export default function DetectionHomeScreen() {
       Alert.alert("Error", "Failed to start test. Please try again.");
     }
   };
+
+  const { theme } = useTheme();
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: theme.colors.primary.light2,
+      padding: 20,
+    },
+    logo: {
+      width: 100,
+      height: 100,
+      marginBottom: 20,
+    },
+    title: {
+      fontSize: theme.fonts.sizes.s34,
+      fontWeight: 'bold',
+      marginBottom: 10,
+      textAlign: 'center',
+    },
+    subtitle: {
+      fontSize: theme.fonts.sizes.s18,
+      textAlign: 'center',
+      marginBottom: 40,
+    },
+    avatar: {
+      width: 250,
+      height: 250,
+      marginBottom: 40,
+    },
+    swipeButtonContainer: {
+      backgroundColor: theme.colors.primary.dark2,
+      color: 'white',
+    },
+    swipeButtonTitle: {
+      color: 'white',
+    },
+    underlayTitle: {
+      color: 'white',
+    },
+  })
+  
   if (loading) {
     return <LoadingScreen />
   }
@@ -59,44 +104,3 @@ export default function DetectionHomeScreen() {
     </LinearGradient>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: theme.colors.primary.light2,
-    padding: 20,
-  },
-  logo: {
-    width: 100,
-    height: 100,
-    marginBottom: 20,
-  },
-  title: {
-    fontSize: theme.fonts.sizes.s34,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    textAlign: 'center',
-  },
-  subtitle: {
-    fontSize: theme.fonts.sizes.s18,
-    textAlign: 'center',
-    marginBottom: 40,
-  },
-  avatar: {
-    width: 250,
-    height: 250,
-    marginBottom: 40,
-  },
-  swipeButtonContainer: {
-    backgroundColor: theme.colors.primary.dark2,
-    color: 'white',
-  },
-  swipeButtonTitle: {
-    color: 'white',
-  },
-  underlayTitle: {
-    color: 'white',
-  },
-})

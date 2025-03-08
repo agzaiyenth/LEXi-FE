@@ -2,8 +2,98 @@ import theme from "@/src/theme";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useTheme } from '@/src/context/ThemeContext';
 
 const Scan = () => {
+  const { theme } = useTheme();
+
+  const styles = StyleSheet.create({
+    wrapper: {
+      width: "100%",
+      height: "100%",
+      fontFamily: "Poppins",
+    },
+    container: {
+      flex: 1,
+      backgroundColor: "#9AC3BB",
+    },
+    text: {
+      top: 35,
+      fontSize: theme.fonts.sizes.s26,
+      lineHeight: 30,
+      fontWeight: "400",
+      textAlign: "center",
+      color: theme.colors.background.offWhite,
+    },
+    leftarrow: {
+      position: "absolute",
+      top: 20,
+      left: 20,
+      fontSize: theme.fonts.sizes.s40,
+      color: theme.colors.background.offWhite,
+    },
+    Ellipse: {
+      width: 150,
+      height: 150,
+      alignSelf: "flex-end",
+      top: -30,
+    },
+    innercontainer: {
+      top: -70,
+      backgroundColor: "#FDF4DE",
+      borderRadius: 30,
+      flexDirection: "column", // Ensure a column layout for stacking
+      justifyContent: "center",
+      alignItems: "center", // Center items horizontally
+      height: "100%",
+    },
+    scanPicBorder: {
+      borderWidth: 5,
+      borderColor: "#F9BE7C",
+      borderStyle: "dotted",
+      padding: 10,
+      width: 350,
+      height: 250,
+      top: -180,
+    },
+    scanPic: {
+      marginLeft: 60,
+      marginTop: 10,
+      height: 200,
+      width: 200,
+    },
+    booksBackdropPic: {
+      marginLeft: 100,
+      top: 150,
+      height: 150,
+    },
+    lexiMoscot: {
+      left: -10,
+      top: 20,
+    },
+    scanText: {
+      textAlign: "center",
+      top: -90,
+      left: 90,
+      color: theme.colors.blacks.medium,
+      fontSize: theme.fonts.sizes.s20,
+    },
+    scanButton: {
+      width: 200,
+      height: 50,
+      left: 80,
+      top: -30,
+      backgroundColor: "#009FA5",
+      borderRadius: 50,
+    },
+    scanButtonText: {
+      fontSize: theme.fonts.sizes.s24,
+      textAlign: "center",
+      padding: 3,
+      color: theme.colors.background.beige,
+    },
+  });
+
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
@@ -58,89 +148,3 @@ const Scan = () => {
 };
 export default Scan;
 
-const styles = StyleSheet.create({
-  wrapper: {
-    width: "100%",
-    height: "100%",
-    fontFamily: "Poppins",
-  },
-  container: {
-    flex: 1,
-    backgroundColor: "#9AC3BB",
-  },
-  text: {
-    top: 35,
-    fontSize: theme.fonts.sizes.s26,
-    lineHeight: 30,
-    fontWeight: "400",
-    textAlign: "center",
-    color: theme.colors.background.offWhite,
-  },
-  leftarrow: {
-    position: "absolute",
-    top: 20,
-    left: 20,
-    fontSize: theme.fonts.sizes.s40,
-    color: theme.colors.background.offWhite,
-  },
-  Ellipse: {
-    width: 150,
-    height: 150,
-    alignSelf: "flex-end",
-    top: -30,
-  },
-  innercontainer: {
-    top: -70,
-    backgroundColor: "#FDF4DE",
-    borderRadius: 30,
-    flexDirection: "column", // Ensure a column layout for stacking
-    justifyContent: "center",
-    alignItems: "center", // Center items horizontally
-    height: "100%",
-  },
-  scanPicBorder: {
-    borderWidth: 5,
-    borderColor: "#F9BE7C",
-    borderStyle: "dotted",
-    padding: 10,
-    width: 350,
-    height: 250,
-    top: -180,
-  },
-  scanPic: {
-    marginLeft: 60,
-    marginTop: 10,
-    height: 200,
-    width: 200,
-  },
-  booksBackdropPic: {
-    marginLeft: 100,
-    top: 150,
-    height: 150,
-  },
-  lexiMoscot: {
-    left: -10,
-    top: 20,
-  },
-  scanText: {
-    textAlign: "center",
-    top: -90,
-    left: 90,
-    color: theme.colors.blacks.medium,
-    fontSize: theme.fonts.sizes.s20,
-  },
-  scanButton: {
-    width: 200,
-    height: 50,
-    left: 80,
-    top: -30,
-    backgroundColor: "#009FA5",
-    borderRadius: 50,
-  },
-  scanButtonText: {
-    fontSize: theme.fonts.sizes.s24,
-    textAlign: "center",
-    padding: 3,
-    color: theme.colors.background.beige,
-  },
-});

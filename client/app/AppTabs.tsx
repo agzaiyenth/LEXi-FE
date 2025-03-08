@@ -10,6 +10,7 @@ import AccountScreen from './(main)/Account';
 import DetectionFlow from './(main)/Detection';
 import theme from '@/src/theme';
 import { AppTabParamList } from '@/src/types/common/navigation';
+import AccessibilityScreen from "./(main)/Account/Accessibility";
 
 
 const Tab = createBottomTabNavigator<AppTabParamList>();
@@ -29,6 +30,7 @@ export default function AppTabs() {
       <Tab.Screen name="Explore" component={ExploreScreen} />
       <Tab.Screen name="Account" component={AccountScreen} />
       <Tab.Screen name="Detection" component={DetectionFlow} />
+      <Tab.Screen name="Accessibility" component={AccessibilityScreen} />
     </Tab.Navigator>
   );
 }
@@ -65,6 +67,8 @@ const CustomTabBar = ({ state, descriptors, navigation }:any) => {
             case 'Account':
               return 'account-circle';
             case 'Detection':
+              return 'pages';
+            case 'Accessibility':
               return 'pages';
             default:
               return 'home';
