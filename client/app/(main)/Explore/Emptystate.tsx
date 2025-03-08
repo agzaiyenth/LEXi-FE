@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import theme from '@/src/theme';
-import TherapistImage from '@/assets/images/therapist/therapist.jpg';
+import TherapistImage from '@/assets/images/therapist/therapist.png';
 
 interface EmptyStateProps {
   param: string;
@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     bottom: 10,
-    backgroundColor: "#fff",
     width: 300,
     borderRadius: 20,
     padding: 10,
