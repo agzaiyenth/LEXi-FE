@@ -16,6 +16,8 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { LearnZoneParamList } from "./index";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { FunctionComponent } from "react";
+import { SvgProps } from "react-native-svg";
 
 type LearnMainNavigationProp = StackNavigationProp<
   LearnZoneParamList,
@@ -69,8 +71,8 @@ const Game = () => {
   const [score, setScore] = useState(0);
   const [showQuestion, setShowQuestion] = useState(true);
   const [balloons, setBalloons] = useState<
-    { x: number; y: number; word: string; shakeAnim: Animated.Value; Svg: any }[]
-  >([]);
+  { x: number; y: number; word: string; shakeAnim: Animated.Value; Svg: FunctionComponent<SvgProps> }[]
+>([]);
 
   useEffect(() => {
     if (!showQuestion) startGame();
