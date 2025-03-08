@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
   startButtonText: { color: '#FFFFFF', fontSize: theme.fonts.sizes.s18, fontWeight: 'bold' },
   balloonContainer: { position: 'absolute', alignItems: 'center' },
   balloonTouchable: { alignItems: 'center', justifyContent: 'center' },
-  balloonText: { position: 'absolute', fontSize: theme.fonts.sizes.s24, fontWeight: 'bold', color: '#FFFFFF' },
+  balloonText: { position: 'absolute', top:'15%', fontSize: theme.fonts.sizes.s24, fontWeight: 'bold', color: '#FFFFFF' },
 });
 
 export default Game;
