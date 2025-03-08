@@ -1,7 +1,7 @@
-import BallSvg from '@/assets/images/games/ball.svg?react';
-import Ballb from '@/assets/images/games/ballb.svg?react';
-import Ballg from '@/assets/images/games/ballg.svg?react';
-import Ballr from '@/assets/images/games/ballr.svg?react';
+import BallSvg from '@/assets/images/games/ball.svg';
+import Ballb from '@/assets/images/games/ballb.svg';
+import Ballg from '@/assets/images/games/ballg.svg';
+import Ballr from '@/assets/images/games/ballr.svg';
 import React, { useEffect, useState } from 'react';
 import {
   Alert,
