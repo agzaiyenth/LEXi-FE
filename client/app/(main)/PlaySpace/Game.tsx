@@ -41,31 +41,57 @@ const balloonSvgs: FunctionComponent<SvgProps>[] = [BallSvg, Ballr, Ballb, Ballg
 
 const levels = [
   {
-    question: 'Which word matches "Tree"?',
-    word: 'Tree',
-    balloons: ['Free', 'Tree', 'Three', 'Bee'],
+    question: 'Which word matches "Their"?',
+    word: 'Their',
+    balloons: ['There', 'They\'re', 'Their', 'Thier'],
   },
   {
-    question: 'Which word matches "Cat"?',
-    word: 'Cat',
-    balloons: ['Kat', 'Bat', 'Cat', 'Rat'],
+    question: 'Which word matches "Desert"?',
+    word: 'Desert',
+    balloons: ['Dessert', 'Desert', 'Depart', 'Destert'],
   },
   {
-    question: 'Which word matches "Dog"?',
-    word: 'Dog',
-    balloons: ['Bog', 'Dog', 'Fog', 'Log'],
+    question: 'Which word matches "Vase"?',
+    word: 'Vase',
+    balloons: ['Base', 'Vase', 'Face', 'Phase'],
   },
   {
-    question: 'Which word matches "Log"?',
-    word: 'Log',
-    balloons: ['Bog', 'Dog', 'Fog', 'Log'],
+    question: 'Which word matches "Won"?',
+    word: 'Won',
+    balloons: ['One', 'On', 'Won', 'None'],
   },
   {
-    question: 'Which word matches "Bog"?',
-    word: 'Bog',
-    balloons: ['Bog', 'Dog', 'Fog', 'Log'],
+    question: 'Which word matches "Affect"?',
+    word: 'Affect',
+    balloons: ['Effect', 'Affect', 'Affact', 'Effact'],
+  },
+  {
+    question: 'Which word matches "Receive"?',
+    word: 'Receive',
+    balloons: ['Recieve', 'Receive', 'Recive', 'Reseve'],
+  },
+  {
+    question: 'Which word matches "Weather"?',
+    word: 'Weather',
+    balloons: ['Wether', 'Whether', 'Weather', 'Weater'],
+  },
+  {
+    question: 'Which word matches "Stationary"?',
+    word: 'Stationary',
+    balloons: ['Stationery', 'Stationary', 'Stashionary', 'Statonary'],
+  },
+  {
+    question: 'Which word matches "Separate"?',
+    word: 'Separate',
+    balloons: ['Seperate', 'Separate', 'Saprate', 'Saperate'],
+  },
+  {
+    question: 'Which word matches "Principal"?',
+    word: 'Principal',
+    balloons: ['Principle', 'Principal', 'Princible', 'Princple'],
   },
 ];
+
 
 const Game = () => {
   const navigation = useNavigation<LearnMainNavigationProp>();
