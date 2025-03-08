@@ -21,13 +21,32 @@ const TherapistHome = () => {
   const { therapists, loading: therapistsLoading, error: therapistsError, refetch } = useGetAllTherapists();
   const { appointments, loading: appointmentsLoading, error: appointmentsError } = useGetAppointments();
   const [refreshing, setRefreshing] = useState<boolean>(false);
+
+  // Refresh data when pulling down
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+
+    refetch().finally(() => setRefreshing(false));
+  }, [refetch]);
+
+  // Show only the latest 5 therapists
+  const latestTherapists = therapists.slice(0, 5);
+  if (therapistsLoading || appointmentsLoading) {
+    return <LoadingScreen />;
+  }
+
+  if (therapistsError) return <Text>Error: {therapistsError}</Text>;
+  if (appointmentsError) return <Text>Error: {appointmentsError}</Text>;
+
   const { theme } = useTheme();
 
   const styles = StyleSheet.create({
     container: {
-      padding: 16,
       backgroundColor: theme.colors.background.offWhite,
       height: '100%',
+    },
+    mainContainer: {
+      padding: 20,
     },
     searchContainer: {
       flexDirection: 'row',
@@ -41,7 +60,14 @@ const TherapistHome = () => {
       marginLeft: 10,
       flex: 1,
       fontSize: theme.fonts.sizes.s16,
-    },
+    },header: {
+        alignItems: 'center',
+        padding: 20,
+        backgroundColor: theme.colors.primary.light2,
+        position: 'relative',
+        borderBottomLeftRadius: 40,
+        borderBottomRightRadius: 40,
+      },
     seeAllCard: {
       backgroundColor: theme.colors.primary.medium2,
       padding: 12,
@@ -145,30 +171,17 @@ const TherapistHome = () => {
     },
   });
 
-  // Refresh data when pulling down
-  const onRefresh = useCallback(() => {
-    setRefreshing(true);
-
-    refetch().finally(() => setRefreshing(false));
-  }, [refetch]);
-
-  // Show only the latest 5 therapists
-  const latestTherapists = therapists.slice(0, 5);
-  if (therapistsLoading || appointmentsLoading) {
-    return <LoadingScreen />;
-  }
-
-  if (therapistsError) return <Text>Error: {therapistsError}</Text>;
-  if (appointmentsError) return <Text>Error: {appointmentsError}</Text>;
-
   return (
     <ScrollView style={styles.container}
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+        <View style={styles.header}>
       <View style={styles.searchContainer}>
         <Ionicons name="search" size={20} color="gray" />
         <TextInput placeholder="Search available doctor..." style={styles.searchInput} />
       </View>
+        </View>
 
+      <View style={styles.mainContainer}>  
       <View style={styles.titleContainer}>
         <Text style={styles.sectionTitle}>Therapists</Text>
         <TouchableOpacity onPress={() => navigation.navigate('AllDoctorsPage')}>
@@ -264,6 +277,7 @@ const TherapistHome = () => {
         </View>
 
       )}
+      </View>
     </ScrollView>
   );
 };

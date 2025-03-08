@@ -34,8 +34,16 @@ const SignInScreen = () => {
 
   const handleLogin = async () => {
     try {
-      // Pass an object matching the LoginRequest interface
-      const token = await login({ username, password });
+      const response = await login({ username, password });
+      if (!response?.accessToken) {
+        console.log('Login failed - No access token received');
+        Toast.show({
+          type: 'error',
+          text1: 'Login Failed!',
+          text2: 'No access token received. Please try again.'
+        });
+        return;
+      }
 
       Toast.show({
         type: 'success',
@@ -43,16 +51,13 @@ const SignInScreen = () => {
         text2: 'Welcome to LEXi ! 👋'
       });
 
-      console.log('Login successful:', token);
-
-      // Redirect to the main area of the app
+      console.log('Login successful:', response);
       router.push('/(main)');
     } catch (err: any) {
-
       Toast.show({
         type: 'error',
         text1: 'Login Failed!',
-        text2: 'Try login in again'
+        text2: err.message || 'Try logging in again'
       });
 
       console.error('Login failed:', err.message);
@@ -86,6 +91,7 @@ const SignInScreen = () => {
             value={username}
             onChangeText={setUsername}
             autoCapitalize="none"
+            editable={!loading}
           />
         </View>
 
@@ -101,6 +107,7 @@ const SignInScreen = () => {
             value={password}
             onChangeText={setPassword}
             secureTextEntry={!showPassword}
+            editable={!loading}
           />
           <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
             <Feather name={showPassword ? 'eye' : 'eye-off'} size={20} color="#666" />
@@ -122,12 +129,15 @@ const SignInScreen = () => {
 
         {/* Submit Button */}
         <TouchableOpacity
-          style={styles.submitButton}
+          style={[styles.submitButton, loading && styles.submitButtonDisabled]}
           onPress={handleLogin}
           disabled={loading}
         >
           {loading ? (
-            <ActivityIndicator color="#fff" />
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator color="#fff" size="small" />
+              <Text style={styles.submitButtonText}>Signing in...</Text>
+            </View>
           ) : (
             <Text style={styles.submitButtonText}>Sign In</Text>
           )}
@@ -236,6 +246,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 10,
+  },
+  submitButtonDisabled: {
+    opacity: 0.7,
+  },
+  loadingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
   },
   submitButtonText: {
     color: theme.colors.background.beige,
