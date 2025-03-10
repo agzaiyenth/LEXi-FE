@@ -6,12 +6,12 @@ It contains the ChatInterface component.
 */
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import Exit from "./ReadWithME/Exit";
+import ReadWithMeScreen from "./ReadWithME/ReadWithMeScreen";
 
 const ReadWithMe = () => {
   return (
     <View style={styles.container}>
-      <Exit />
+      <ReadWithMeScreen />
     </View>
   );
 };
