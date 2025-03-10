@@ -182,7 +182,7 @@ export default function ReadWithMeScreen() {
           onPressIn={startRecording}
           onPressOut={stopRecording}
         >
-          <Ionicons name="mic" size={50} color="white" />
+          <Ionicons name="mic" size={90} color={theme.colors.primary.dark2} />
         </TouchableOpacity>
       </View>
     </View>
@@ -236,13 +236,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   ringImage: {
-    width: 150, // Adjust size if necessary
-    height: 150, // Adjust size if necessary
+    width: 300, // Adjust size if necessary
+    height: 300, // Adjust size if necessary
     position: "absolute",
   },
   micButton: {
-    width: 80,
-    height: 80,
+    width: 120,
+    height: 100,
     borderRadius: 50,
     justifyContent: "center",
     alignItems: "center",
