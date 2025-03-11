@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Audio } from "expo-av";
 import Eclipse from "@/assets/Ellipse.png";
 import * as FileSystem from "expo-file-system";
-import { theme } from "@/src/theme"; // Import theme
+import { theme } from "@/src/theme"; 
 
 export default function ReadWithMeScreen() {
   const navigation = useNavigation();
