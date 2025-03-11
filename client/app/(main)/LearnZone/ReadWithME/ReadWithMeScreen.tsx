@@ -5,16 +5,18 @@ import { useNavigation } from "@react-navigation/native";
 import { Audio } from "expo-av";
 import Eclipse from "@/assets/Ellipse.png";
 import { StackNavigationProp } from "@react-navigation/stack";
-import * as FileSystem from "expo-file-system";
 import { theme } from "@/src/theme"; 
 
 export default function ReadWithMeScreen() {
-  const navigation = useNavigation<StackNavigationProp<any, "ReadWithMeScreen">>();
+
+  type RootStackParamList = {
+    ReadWithMeScreen: undefined;
+  };
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList, "ReadWithMeScreen">>();
   const [recording, setRecording] = useState<Audio.Recording | null>(null);
   const [recordingUri, setRecordingUri] = useState<string | null>(null);
   const [sound, setSound] = useState<Audio.Sound | null>(null);
   const [isRecording, setIsRecording] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
 
   const NUM_BARS = 15;
   const barHeights = useRef(Array.from({ length: NUM_BARS }, () => new Animated.Value(0))).current;
@@ -72,7 +74,7 @@ export default function ReadWithMeScreen() {
       await newRecording.prepareToRecordAsync({
         android: {
           extension: ".wav",
-          outputFormat: Audio.AndroidOutputFormat.WAVE,
+          outputFormat: Audio.AndroidOutputFormat.THREE_GPP, 
           audioEncoder: Audio.AndroidAudioEncoder.DEFAULT,
           sampleRate: 16000,
           numberOfChannels: 1,
@@ -117,34 +119,6 @@ export default function ReadWithMeScreen() {
     }
   };
 
-  const playRecording = async () => {
-    if (!recordingUri) return;
-    try {
-      const { sound: newSound } = await Audio.Sound.createAsync({ uri: recordingUri });
-      setSound(newSound);
-      await newSound.playAsync();
-      setIsPlaying(true);
-
-      newSound.setOnPlaybackStatusUpdate((status) => {
-        if (!status.isLoaded) return;
-        if (!status.isPlaying && status.positionMillis === status.durationMillis) {
-          setIsPlaying(false);
-        }
-      });
-    } catch (err) {
-      console.error("Failed to play recording", err);
-    }
-  };
-
-  const stopPlayback = async () => {
-    try {
-      await sound?.stopAsync();
-      setIsPlaying(false);
-    } catch (err) {
-      console.error("Failed to stop playback", err);
-    }
-  };
-
   return (
     <View style={styles.container}>
       {/* Header */}
@@ -160,20 +134,6 @@ export default function ReadWithMeScreen() {
         <Text style={styles.textPrompt}>Try to read</Text>
       </View>
 
-      {/* Animated Waveform */}
-      <View style={styles.waveContainer}>
-        {barHeights.map((barValue, idx) => {
-          const height = barValue.interpolate({
-            inputRange: [0, 1],
-            outputRange: ["10%", "100%"],
-          });
-          return (
-            <View style={styles.barWrapper} key={idx}>
-              <Animated.View style={[styles.bar, { height }]} />
-            </View>
-          );
-        })}
-      </View>
 
       {/* Mic Button inside Image Ring */}
       <View style={styles.micContainer}>
@@ -237,8 +197,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   ringImage: {
-    width: 300, // Adjust size if necessary
-    height: 300, // Adjust size if necessary
+    width: 300, 
+    height: 300, 
     position: "absolute",
   },
   micButton: {
@@ -247,6 +207,6 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "transparent", // No background
+    backgroundColor: "transparent", 
   },
 });
