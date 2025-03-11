@@ -4,11 +4,12 @@ import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { Audio } from "expo-av";
 import Eclipse from "@/assets/Ellipse.png";
+import { StackNavigationProp } from "@react-navigation/stack";
 import * as FileSystem from "expo-file-system";
 import { theme } from "@/src/theme"; 
 
 export default function ReadWithMeScreen() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<any, "ReadWithMeScreen">>();
   const [recording, setRecording] = useState<Audio.Recording | null>(null);
   const [recordingUri, setRecordingUri] = useState<string | null>(null);
   const [sound, setSound] = useState<Audio.Sound | null>(null);
